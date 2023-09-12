@@ -1,16 +1,15 @@
-package com.spring.jpa.domain.member;
+package com.spring.jpa.domain.User;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Controller;
 
 @Getter
 @Setter
 @Entity
 public class SiteUser {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(unique = true)
