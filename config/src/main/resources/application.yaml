@@ -1,0 +1,17 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+
+  profiles:
+    include: auth
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://lab.ssafy.com/s09-bigdata-dist-sub1/S09P21E101.git
+          default-label: yaml
+          search-paths: yaml/**
