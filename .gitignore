@@ -41,19 +41,19 @@ application-gitlab.yaml
 
 ### front ###
 # dependencies
-/node_modules
-/.pnp
+front/node_modules
+front/.pnp
 .pnp.js
 
 # testing
 /coverage
 
 # next.js
-/.next/
-/out/
+front/.next/
+out/
 
 # production
-/build
+front/build
 
 # misc
 .DS_Store
