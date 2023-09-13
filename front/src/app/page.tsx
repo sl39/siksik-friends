@@ -37,6 +37,9 @@ export default function Home() {
           height={37}
           priority
         />
+        <div>
+          안녕하세요 권인식입니다 ^^
+        </div>
       </div>
 
       <div className={styles.grid}>
