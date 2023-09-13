@@ -8,11 +8,11 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 
-# 빌드
-RUN npm run build
-
 # 앱 소스 복사
 COPY . .
+
+# 빌드
+RUN npm run build
 
 # 포트 3000으로 노출
 EXPOSE 3000
