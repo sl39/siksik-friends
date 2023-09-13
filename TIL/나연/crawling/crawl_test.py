@@ -2,7 +2,7 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import pandas as pd
 import csv
-import pyarrow.parquet as pq
+# import pyarrow.parquet as pq
 
 # 데이터프레임 생성
 df = pd.DataFrame(columns=['category', 'date', 'title', 'content'])
@@ -28,9 +28,14 @@ last_num = dict()
 
 # 130개 언론사에 대해
 for c in company:
+    i = 1
+
+    # 없는 기사
+    no_article = 0
+    while True:
     # 1번부터 100번 기사까지
-    for i in range(1, 3):
         article_num = f"{i:010d}"
+
         try:
             html = urlopen(f'https://n.news.naver.com/article/{c}/{article_num}')
             bsObject = BeautifulSoup(html, "html.parser")
@@ -58,8 +63,19 @@ for c in company:
             # DataFrame에 추가
             df.loc[len(df)] = [category, date, title, content]
 
-        except:
-            print(f'{c}번 언론사는 없음')
+            # 기사 번호 +1
+            i += 1
 
-# 데이터프레임을 CSV 파일로 저장
-df.to_csv("test.csv", index=False, encoding='utf-8-sig')
+            # 기사가 있으므로 다시 0으로
+            no_article = 0
+
+        except:
+            # 없는 기사 개수 + 1
+            no_article += 1
+            continue
+        
+        # 없는 기사가 연속으로 100개인 경우, 해당 언론사의 크롤링 멈춰
+        if no_article == 100:
+            break
+
+# df -> 뉴스 데이터, last_num -> 언론사별 마지막 기사 번호가 저장된 딕셔너리 (언론사 : 마지막 기사번호)
