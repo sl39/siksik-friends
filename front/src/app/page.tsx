@@ -1,16 +1,13 @@
-import Image from "next/image";
-import Face1 from "public/images/character/face1.png";
+// import Image from "next/image";
+import Link from "next/link";
 import styles from "./page.module.css";
 
 export default function Home() {
   return (
-    <>
-      <h1>뿌롱뜨</h1>
-      <Image src={Face1} width="80" height="100" alt="" />
-      <div className={styles.book} />
-      <div className={styles.page1} />
-      <div className={styles.page2} />
-      <div className={styles.page3} />
-    </>
+    <div className={styles.main}>
+      {/* <img src={Background} width="100%" height="100%" alt="~" /> */}
+      <h1>식식프렌즈</h1>
+      <Link href="/login">로그인</Link>
+    </div>
   );
 }
