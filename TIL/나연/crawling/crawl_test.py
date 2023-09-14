@@ -2,7 +2,8 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import pandas as pd
 import csv
-# import pyarrow.parquet as pq
+import pyarrow as pa
+import pyarrow.parquet as pq
 
 # 데이터프레임 생성
 df = pd.DataFrame(columns=['category', 'date', 'title', 'content'])
@@ -24,7 +25,7 @@ for c in company:
     # 없는 기사
     no_article = 0
     while True:
-    # 1번부터 100번 기사까지
+
         article_num = f"{i:010d}"
 
         try:
@@ -69,4 +70,6 @@ for c in company:
         if no_article == 100:
             break
 
+table = pa.Table.from_pandas(df)
+pq.write_table(table, 'news_data.parquet')
 # df -> 뉴스 데이터, last_num -> 언론사별 마지막 기사 번호가 저장된 딕셔너리 (언론사 : 마지막 기사번호)
