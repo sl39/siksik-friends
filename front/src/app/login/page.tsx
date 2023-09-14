@@ -1,7 +1,3 @@
 export default function Login() {
-  return (
-    <form>
-      <input type="text" name="" id="" />
-    </form>
-  );
+  return <h1>로그인</h1>;
 }
