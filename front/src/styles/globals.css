@@ -6,10 +6,8 @@
   --color-page2: #f5eecb;
   --color-page3: #f8ffff;
 }
-
 body {
-  width: 98vw;
-  height: 96vh;
-  margin: 2vh auto;
-  background-color: #f4f2e6;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
 }
