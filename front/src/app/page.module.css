@@ -1,20 +1,9 @@
-.book {
-  width: 100px;
-  height: 80px;
-  background-color: var(--color-book);
-}
-.page1 {
-  width: 100px;
-  height: 80px;
-  background-color: var(--color-page1);
-}
-.page2 {
-  width: 100px;
-  height: 80px;
-  background-color: var(--color-page2);
-}
-.page3 {
-  width: 100px;
-  height: 80px;
-  background-color: var(--color-page3);
+.main {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border: 1px solid black;
+  background-image: url("../../public/images/background2.png");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
