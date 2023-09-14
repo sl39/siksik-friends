@@ -1,5 +1,4 @@
 // import Image from "next/image";
-import Background from "public/images/background.png";
 import Link from "next/link";
 import styles from "./page.module.css";
 
