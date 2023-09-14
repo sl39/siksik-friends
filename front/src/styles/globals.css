@@ -10,4 +10,47 @@ body {
   margin: 0;
   width: 100vw;
   height: 100vh;
+  /* 차후 수정 */
+  min-width: 1080px;
+  background-color: var(--color-bg);
+
+  display: flex;
+  justify-content: center;
+}
+.book-cover {
+  background-color: var(--color-book);
+  width: 96%;
+  height: 80%;
+  margin: 130px auto 0;
+  border-radius: 10px;
+}
+.book-page1 {
+  height: 10px;
+  width: 94%;
+  background-color: var(--color-page1);
+  margin: auto;
+  position: relative;
+  top: 20px;
+}
+.book-page2 {
+  height: 20px;
+  width: 96%;
+  background-color: var(--color-page2);
+  margin: auto;
+  position: relative;
+  top: 20px;
+}
+.book-page {
+  width: 98%;
+  height: 92%;
+  background-color: var(--color-page3);
+  margin: auto;
+  position: relative;
+  top: 20px;
+}
+
+.main-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
