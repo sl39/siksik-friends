@@ -5,3 +5,4 @@ EXPOSE 8000
 ENTRYPOINT ["java", "-jar", "/gateway.jar"]
 
 #Testing Line
+#Success -인식
