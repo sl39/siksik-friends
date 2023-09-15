@@ -5,3 +5,4 @@ EXPOSE 8081
 ENTRYPOINT ["java", "-jar", "/auth.jar"]
 
 #Test Line
+#sucess - 인식
