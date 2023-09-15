@@ -1,8 +1,9 @@
 // 모달 여는 로직
+
 "use client";
-import ModalBtn from "@/components/button";
-import Modal from "@/components/modal";
+
 import { useState } from "react";
+import Modal from "@/components/modal";
 
 export default function Portal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,9 +21,9 @@ export default function Portal() {
 
   return (
     <>
-      <div onClick={handleOpenModal}>
+      <button onClick={handleOpenModal} onKeyDown={handleOpenModal}>
         <h1>나와라 모달!</h1>
-      </div>
+      </button>
       {isOpen && (
         <Modal isOpen={isOpen}>
           <h2>(children임) 여기에 넣고싶은 내용 넣기</h2>
