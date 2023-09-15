@@ -85,6 +85,8 @@
         "allowSeparatedGroups": true
       }
     ],
+    "react/require-default-props": "off",
+    "react/button-has-type": "off",
     "react/react-in-jsx-scope": "off", // react 17부턴 import 안해도돼서 기능 끔
     // 경고표시, 파일 확장자를 .ts나 .tsx 모두 허용함
     "react/jsx-filename-extension": ["warn", { "extensions": [".ts", ".tsx"] }],
@@ -92,6 +94,7 @@
     "@typescript-eslint/consistent-type-imports": "error",
     "no-null/no-null": 2,
     "curly": ["error", "multi-line", "consistent"],
-    "nonblock-statement-body-position": ["error", "beside"]
+    "nonblock-statement-body-position": ["error", "beside"],
+    "no-console": "off"
   }
 }

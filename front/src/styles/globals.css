@@ -15,7 +15,10 @@ body {
   /* 차후 수정 */
   min-width: 1080px;
   background-color: var(--color-bg);
-
+}
+.body-container {
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
 }
