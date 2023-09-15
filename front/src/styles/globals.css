@@ -5,6 +5,8 @@
   --color-page1: #e7d19f;
   --color-page2: #f5eecb;
   --color-page3: #f8ffff;
+
+  --color-gray: #666;
 }
 body {
   margin: 0;
@@ -53,4 +55,20 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
+  max-height: 100%;
+  overflow: auto;
+}
+
+/* 스크롤 CSS */
+.main-container::-webkit-scrollbar {
+  width: 10px;
+}
+.main-container::-webkit-scrollbar-thumb {
+  height: 30%; /* 스크롤바의 길이 */
+  background: var(--color-page1); /* 스크롤바의 색상 */
+  border-radius: 10px;
+}
+.main-container::-webkit-scrollbar-track {
+  /*스크롤바 뒷 배경 색상*/
+  background: var(--color-gray);
 }
