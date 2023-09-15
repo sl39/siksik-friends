@@ -1,8 +1,9 @@
+import "@/styles/globals.css";
 import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="error book-cover">
+    <div className="book-cover">
       <div className="book-page1" />
       <div className="book-page2" />
       <div className="book-page">

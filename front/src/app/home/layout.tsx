@@ -10,7 +10,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <div className="error book-cover">
+        <div className="book-cover">
           <div className="book-page1" />
           <div className="book-page2" />
           <div className="book-page">
