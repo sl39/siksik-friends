@@ -5,3 +5,4 @@ EXPOSE 8082
 ENTRYPOINT ["java", "-jar", "/member.jar"]
 
 #Testing Line
+#sucess -인식
