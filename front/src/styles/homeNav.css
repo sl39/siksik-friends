@@ -1,0 +1,28 @@
+.home-nav {
+  position: fixed;
+  top: 80px;
+  left: 20vw;
+  width: 60vw;
+  height: 130px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  border: 1px solid blue;
+}
+
+.nav-item {
+  background-color: var(--color-nav);
+  border: 1px solid grey;
+  border-radius: 20px 20px 0 0;
+  width: 150px;
+  height: 100px;
+}
+
+.nav-text {
+}
+
+.active {
+  height: 130px;
+  border-color: red;
+}
