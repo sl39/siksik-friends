@@ -1,6 +1,7 @@
 package com.ssf.auth.domain.member.entity;
 
 import com.ssf.auth.domain.member.Role;
+import com.ssf.auth.domain.member.SocialType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,4 +49,9 @@ public class Member {
     @Builder.Default
     @Enumerated(EnumType.STRING)
     private Role role = Role.GUEST;
+
+    @Column(nullable = false, length = 10)
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    private SocialType socialType = SocialType.NONE;
 }
