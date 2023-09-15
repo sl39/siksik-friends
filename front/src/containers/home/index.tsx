@@ -1,5 +1,5 @@
-import styles from "./home.module.css";
 import StartBtn from "@/containers/home/startBtn";
+import styles from "./home.module.css";
 
 export default function Home() {
   return (

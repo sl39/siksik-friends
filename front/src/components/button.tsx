@@ -3,7 +3,7 @@
 interface ButtonProps {
   text: string;
   onClick: () => void;
-  type: string;
+  type?: "submit" | "reset" | "button";
 }
 
 export default function Button({ text, onClick, type = "button" }: ButtonProps) {

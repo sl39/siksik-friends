@@ -13,7 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <div className="body-container">
           {children}
-          <div id="portal"></div>
+          <div id="portal" />
         </div>
       </body>
     </html>
