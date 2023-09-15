@@ -36,11 +36,11 @@ public class Member {
     @ColumnDefault("1000")
     private int score;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 255)
     @Builder.Default
     private String profile = "/profile.png";
 
     @CreationTimestamp
-    @Column(length = 20)
+    @Column(nullable = false, length = 20)
     private LocalDateTime signUpAt;
 }
