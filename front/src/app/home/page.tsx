@@ -1,4 +1,4 @@
-import HomeIndex from "@/containers/home";
+import HomeIndex from "@/components";
 
 // 메타데이터, 초기데이터만
 
