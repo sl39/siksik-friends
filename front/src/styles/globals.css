@@ -48,7 +48,10 @@ body {
   align-items: center;
   flex-direction: column;
   max-height: 100%;
+  box-sizing: border-box;
   overflow: auto;
+
+  padding-top: 35px;
 }
 
 /* 스크롤 CSS */
