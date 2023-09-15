@@ -1,11 +1,11 @@
 "use client";
+
 import "@/styles/homeNav.css";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Menu() {
-  const router = useRouter();
   const pathName = usePathname();
   useEffect(() => console.log(pathName), []);
   const navLink = [
