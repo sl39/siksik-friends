@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
@@ -39,7 +40,7 @@ public class Member {
     @Builder.Default
     private String profile = "/profile.png";
 
-    @UpdateTimestamp
+    @CreationTimestamp
     @Column(length = 20)
     private LocalDateTime signUpAt;
 }
