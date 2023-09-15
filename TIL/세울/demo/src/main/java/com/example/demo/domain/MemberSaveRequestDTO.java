@@ -23,5 +23,9 @@ public class MemberSaveRequestDTO {
     private String username;
 
     @NotBlank(message = "비밀번호를 입력해주세요.")
-    private String password;
+    private String password1;
+
+    @NotBlank(message = "비밀번호를 한번도 똑같이 입력해주세용")
+    private String password2;
+
 }

@@ -1,4 +1,4 @@
-package com.OAuth.global.config;
+package com.OAuth.spring.global.config;
 
 import com.OAuth.spring.member.service.OAuth2UserService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +31,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(config -> config.anyRequest().permitAll());
         http.oauth2Login(oauth2Login -> oauth2Login // OAuth2를 통한 로그인 사용
                 .loginPage("/login")
+                .successHandler(successHandler())
                 .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint // 사용자가 로그인에 성공하였을 경우,
                 .userService(oAuth2UserService))); // 해당 서비스 로직을 타도록 설정
 
