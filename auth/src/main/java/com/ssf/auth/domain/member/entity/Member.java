@@ -1,5 +1,6 @@
 package com.ssf.auth.domain.member.entity;
 
+import com.ssf.auth.domain.member.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -43,4 +43,9 @@ public class Member {
     @CreationTimestamp
     @Column(nullable = false, length = 20)
     private LocalDateTime signUpAt;
+
+    @Column(nullable = false, length = 20)
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.GUEST;
 }
