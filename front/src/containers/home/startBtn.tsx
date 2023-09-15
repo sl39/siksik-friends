@@ -1,5 +1,14 @@
+"use client";
+
 import Button from "@/components/button";
+import { useRouter } from "next/navigation";
 
 export default function StartBtn() {
-  return <Button text="Start!" onClick={() => console.log(1)} />;
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push("/game/wait");
+  };
+
+  return <Button text="Start!" onClick={handleClick} />;
 }
