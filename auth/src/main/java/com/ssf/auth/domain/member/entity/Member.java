@@ -11,12 +11,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "users")
+@Table
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Users {
+public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,9 +35,9 @@ public class Users {
     @ColumnDefault("1000")
     private int score;
 
-    @Column(nullable = false, length = 2083)
-    @ColumnDefault("/profile.png")
-    private String profile;
+    @Column(nullable = false)
+    @Builder.Default
+    private String profile = "/profile.png";
 
     @UpdateTimestamp
     @Column(length = 20)
