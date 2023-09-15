@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,9 +11,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        {children}
-        {/* 포탈 */}
-        <div id="portal"></div>
+        <div className="body-container">
+          {children}
+          <div id="portal"></div>
+        </div>
       </body>
     </html>
   );
