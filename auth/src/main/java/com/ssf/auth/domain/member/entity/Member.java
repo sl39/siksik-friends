@@ -42,7 +42,7 @@ public class Member {
     private String profile = "/profile.png";
 
     @CreationTimestamp
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 20, updatable = false)
     private LocalDateTime signUpAt;
 
     @Column(nullable = false, length = 20)
