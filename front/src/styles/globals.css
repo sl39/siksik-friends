@@ -15,7 +15,7 @@ body {
 .book-cover {
   background-color: var(--color-book);
   width: 96%;
-  height: 80%;
+  height: 85%;
   margin: 130px auto 0;
   border-radius: 10px;
 }
@@ -51,7 +51,7 @@ body {
   box-sizing: border-box;
   overflow: auto;
 
-  padding-top: 35px;
+  padding-top: 50px;
 }
 
 /* 스크롤 CSS */
