@@ -7,3 +7,4 @@ ENTRYPOINT ["java", "-jar", "/config.jar"]
 
 #Test Line
 #Sucess - 인식
+#application-auth.yaml EC2 to Docker Sucess - 인식
