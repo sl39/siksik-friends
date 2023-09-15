@@ -1,5 +1,6 @@
 package com.ssf.auth.domain.member.repositoryTest;
 
+import com.ssf.auth.domain.member.entity.MemberEntity;
 import com.ssf.auth.domain.member.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,27 @@ public class MemberRepositoryTest {
     @Test
     public void MemberRepository가Null이아님() {
         assertThat(memberRepository).isNotNull();
+    }
+
+    @Test
+    public void 멤버등록() {
+        // given
+        final MemberEntity memberEntity = MemberEntity.builder()
+                .email("test@test.com")
+                .password("password")
+                .nickname("nickname")
+                .profile("/profile.png")
+                .baild();
+
+        // when
+        final MemberEntity result = memberRepository.save(memberEntity);
+
+        // then
+        assertThat(result.getId()).isNotNull();
+        assertThat(result.getEmail()).isEqualTo("test@test.com");
+        assertThat(result.getPassword()).isEqualTo("password");
+        assertThat(result.getNickname()).isEqualTo("nickname");
+        assertThat(result.getProfile()).isEqualTo("/profile.png");
     }
 
 }
