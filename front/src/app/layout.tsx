@@ -11,10 +11,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <div className="body-container">
-          {children}
-          <div id="portal" />
-        </div>
+        <div className="body-container">{children}</div>
+        <div id="modal-root" />
       </body>
     </html>
   );
