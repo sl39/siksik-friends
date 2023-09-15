@@ -3,11 +3,10 @@
 import "@/styles/homeNav.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
 
 export default function Menu() {
   const pathName = usePathname();
-  useEffect(() => console.log(pathName), []);
+
   const navLink = [
     {
       name: "홈",
