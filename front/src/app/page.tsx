@@ -1,14 +1,14 @@
 import Link from "next/link";
-import Modal from "@/containers/modalPortal";
 import styles from "./page.module.css";
 
 export default function Home() {
   return (
     <div className={styles.main}>
-      <h1>식식프렌즈</h1>
-      <Link href="/login">로그인</Link> <br />
-      <Link href="/home">홈먼저 만들거야</Link>
-      <Modal />
+      <div className={styles.Logo}>식식프렌즈로고대체</div>
+      {/* 로그인은 모달이고 회원가입은 페이지 */}
+      <Link href="/login">
+        <div className={styles.login}>로그인</div>
+      </Link>
     </div>
   );
 }
