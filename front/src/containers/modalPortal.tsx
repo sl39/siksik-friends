@@ -10,12 +10,10 @@ export default function Portal() {
 
   /** 모달 활성화 */
   const handleOpenModal = () => {
-    console.log("나와라 모달");
     setIsOpen(true);
   };
   /** 모달 비활성화 */
   const handleCloseModal = () => {
-    console.log("닫혀라 모달");
     setIsOpen(false);
   };
 
