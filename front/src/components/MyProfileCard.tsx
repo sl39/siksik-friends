@@ -1,7 +1,7 @@
 import Image from "next/image";
-import styles from "./home.module.css";
+import styles from "./MyProfileCard.module.css";
+
 export default function Profile() {
-  // 데이터 페치 시 유저 정보를 불러와야 한다!!
   return (
     <div className={styles.profileContainer}>
       <div className={styles.image}>

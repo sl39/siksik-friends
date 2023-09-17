@@ -2,7 +2,8 @@ import styles from "./home.module.css";
 import Today from "./Today";
 import StartBtn from "@/containers/home/startBtn";
 import WordCloud from "./WordCloud";
-import Profile from "./Profile";
+// import Profile from "./Profile";
+import MyProfileCard from "@/components/MyProfileCard";
 
 export default function Home() {
   return (
@@ -13,7 +14,8 @@ export default function Home() {
         <WordCloud />
       </div>
       <div className={styles.right}>
-        <Profile />
+        {/* <Profile /> */}
+        <MyProfileCard />
         <StartBtn />
       </div>
     </div>
