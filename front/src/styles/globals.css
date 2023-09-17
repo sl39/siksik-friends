@@ -1,10 +1,16 @@
 body {
   margin: 0;
-  width: 100vw;
-  height: 100vh;
+  width: calc(100vw - 10px);
+  height: calc(100vh - 10px);
   /* 차후 수정 */
   min-width: 1080px;
+  min-height: 600px;
   background-color: var(--color-bg);
+}
+button,
+a {
+  all: unset;
+  cursor: pointer;
 }
 .body-container {
   width: 100%;
@@ -14,9 +20,10 @@ body {
 }
 .book-cover {
   background-color: var(--color-book);
-  width: 96%;
-  height: 85%;
-  margin: 130px auto 0;
+  width: 94%;
+  height: 90%;
+  position: relative;
+  top: 10%;
   border-radius: 10px;
 }
 .book-page1 {
@@ -50,8 +57,7 @@ body {
   max-height: 100%;
   box-sizing: border-box;
   overflow: auto;
-
-  padding-top: 50px;
+  padding-top: 20px;
 }
 
 /* 스크롤 CSS */
