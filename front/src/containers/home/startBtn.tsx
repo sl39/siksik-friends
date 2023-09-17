@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef, MouseEvent } from "react";
 import styles from "./home.module.css";
 import { useRouter } from "next/navigation";
 
