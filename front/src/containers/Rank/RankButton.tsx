@@ -1,4 +1,5 @@
 "use client";
+
 import { useRouter } from "next/navigation";
 import styles from "./Rank.module.css";
 
@@ -9,8 +10,8 @@ interface Props {
 export default function RankButton({ id }: Props) {
   const router = useRouter();
 
-  const onClick = (id: number) => {
-    router.push(`profile/${id}`);
+  const onClick = (userId: number) => {
+    router.push(`profile/${userId}`);
   };
   return (
     <button className={styles.RankButton} onClick={() => onClick(id)}>

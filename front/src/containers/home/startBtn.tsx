@@ -1,7 +1,7 @@
 "use client";
 
-import styles from "./home.module.css";
 import { useRouter } from "next/navigation";
+import styles from "./home.module.css";
 
 export default function StartBtn() {
   const router = useRouter();
@@ -11,10 +11,8 @@ export default function StartBtn() {
   };
 
   return (
-    <div onClick={handleClick} className={[styles.postIt].join(" ")}>
-      <button onClick={handleClick}>
-        <span>게임 시작!</span>
-      </button>
-    </div>
+    <button onClick={handleClick}>
+      <span className={[styles.postIt, styles.buttonFont].join(" ")}>게임 시작!</span>
+    </button>
   );
 }

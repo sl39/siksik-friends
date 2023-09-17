@@ -63,7 +63,7 @@
   width: 50px;
   background: var(--color-postIt-dark);
 }
-.postIt span {
+.buttonFont {
   font-size: 3rem;
   font-weight: bold;
 }

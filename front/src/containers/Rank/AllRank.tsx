@@ -1,5 +1,6 @@
 import styles from "./Rank.module.css";
 import RankItem from "./RankItem";
+
 export default function AllRank() {
   const rankArray = [
     { id: 1, rank: 1, name: "11", level: 10 },
@@ -16,9 +17,7 @@ export default function AllRank() {
   return (
     <div className={styles.RankArray}>
       {rankArray.map((item) => (
-        <>
-          <RankItem key={item.id} item={item} />
-        </>
+        <RankItem key={item.id} item={item} />
       ))}
     </div>
   );

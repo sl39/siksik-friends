@@ -1,6 +1,6 @@
+import StartBtn from "@/containers/home/startBtn";
 import styles from "./home.module.css";
 import Today from "./Today";
-import StartBtn from "@/containers/home/startBtn";
 import WordCloud from "./WordCloud";
 // import Profile from "./Profile";
 import MyProfileCard from "@/components/MyProfileCard";
