@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, MouseEvent } from "react";
 import styles from "./home.module.css";
 import { useRouter } from "next/navigation";
 
@@ -11,8 +12,10 @@ export default function StartBtn() {
   };
 
   return (
-    <div className={styles.start}>
-      <button onClick={handleClick}>게임 시작!</button>
+    <div onClick={handleClick} className={[styles.postIt].join(" ")}>
+      <button onClick={handleClick}>
+        <span>게임 시작!</span>
+      </button>
     </div>
   );
 }

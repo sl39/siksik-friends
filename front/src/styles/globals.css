@@ -10,6 +10,7 @@ body {
 button,
 a {
   all: unset;
+  cursor: pointer;
 }
 .body-container {
   width: 100%;

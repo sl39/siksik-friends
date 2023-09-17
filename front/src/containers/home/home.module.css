@@ -39,7 +39,35 @@
   height: 72vh;
   margin: 15px 0;
 }
+.profileContainer {
+  height: 60%;
+}
 
-.start {
-  border: 1px solid black;
+.postIt {
+  cursor: pointer;
+  position: absolute;
+  width: 25%;
+  height: 35%;
+  right: -5px;
+  bottom: 25px;
+
+  background-color: #ffff88;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.postIt::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: -40px;
+  height: 100%;
+  width: 50px;
+  background: #f8f861;
+}
+.postIt span {
+  font-size: 3rem;
+  font-weight: bold;
 }

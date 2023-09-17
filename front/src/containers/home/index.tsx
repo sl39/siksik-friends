@@ -2,6 +2,7 @@ import styles from "./home.module.css";
 import Today from "./Today";
 import StartBtn from "@/containers/home/startBtn";
 import WordCloud from "./WordCloud";
+import Profile from "./Profile";
 
 export default function Home() {
   return (
@@ -12,7 +13,7 @@ export default function Home() {
         <WordCloud />
       </div>
       <div className={styles.right}>
-        <div>간단 프로필</div>
+        <Profile />
         <StartBtn />
       </div>
     </div>
