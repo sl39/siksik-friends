@@ -95,6 +95,12 @@
     "no-null/no-null": 2,
     "curly": ["error", "multi-line", "consistent"],
     "nonblock-statement-body-position": ["error", "beside"],
-    "no-console": "off"
+    "no-console": "off",
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      {
+        "labelAttributes": ["htmlFor"]
+      }
+    ]
   }
 }

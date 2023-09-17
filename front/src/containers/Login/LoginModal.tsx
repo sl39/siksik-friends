@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { useState } from "react";
-// import { signIn, signOut, useSession } from "next-auth/react";
 import styles from "./Login.module.css";
 import Modal from "@/components/modal";
 import LoginForm from "./LoginForm";
+// import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function Portal() {
   // 세션을 이용하여 데이터를 불러온다.
@@ -43,9 +43,9 @@ export default function Portal() {
             <LoginForm />
 
             <Link href="/sign-up">
-              <div>회원가입</div>
+              <div className={styles.button}>회원가입</div>
             </Link>
-            <button>카카오 로그인</button>
+            <button className={styles.button}>카카오 로그인</button>
 
             {/* 닫기 버튼 로고로 바꿔야함 */}
             <button onClick={handleCloseModal} className={styles.closeButton}>

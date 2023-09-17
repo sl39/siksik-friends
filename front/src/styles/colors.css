@@ -1,5 +1,6 @@
 :root {
   /* color */
+  --color-temp: orange;
   --color-bg: #f4f2e6;
   --color-book: #dba741;
   --color-page1: #e7d19f;
@@ -10,6 +11,7 @@
 
   --color-nav: #c8c8c8;
   --color-nav-active: red;
+  --color-nav-font: white;
 
   /* 버튼 컬러 */
   /* 임시임시 바꿔야해 */
@@ -17,4 +19,8 @@
   --color-login-text: black;
 
   --color-close-btn: white;
+  --color-btn: grey;
+
+  --color-postIt: #ffff88;
+  --color-postIt-dark: #f8f861;
 }
