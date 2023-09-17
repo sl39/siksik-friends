@@ -1,7 +1,7 @@
 "use client";
 
+import styles from "./home.module.css";
 import { useRouter } from "next/navigation";
-import Button from "@/components/button";
 
 export default function StartBtn() {
   const router = useRouter();
@@ -10,5 +10,9 @@ export default function StartBtn() {
     router.push("/game/wait");
   };
 
-  return <Button text="Start!" onClick={handleClick} />;
+  return (
+    <div className={styles.start}>
+      <button onClick={handleClick}>게임 시작!</button>
+    </div>
+  );
 }
