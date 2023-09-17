@@ -4,7 +4,7 @@ import styles from "./Login.module.css";
 
 export default function LoginForm() {
   return (
-    <form className={styles.loginForm}>
+    <form className={styles.loginForm} action="#">
       <div>
         <label htmlFor="id">Email</label>
         <input type="text" id="id" name="id" />
