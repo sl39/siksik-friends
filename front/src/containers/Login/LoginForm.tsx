@@ -1,14 +1,15 @@
 "use client";
+
 import styles from "./Login.module.css";
 
-export default function LoginForm(params) {
+export default function LoginForm() {
   return (
     <form className={styles.loginForm} action="">
-      <label htmlFor="id">Email</label>
+      {/* <label htmlFor="id">Email</label>
       <input type="text" />
 
       <label htmlFor="password">비번</label>
-      <input type="text" />
+      <input type="text" /> */}
       <button>확인</button>
     </form>
   );

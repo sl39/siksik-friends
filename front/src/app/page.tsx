@@ -1,6 +1,5 @@
-import Link from "next/link";
-import styles from "./page.module.css";
 import LoginModal from "@/containers/Login/LoginModal";
+import styles from "./page.module.css";
 
 export default function Home() {
   return (
