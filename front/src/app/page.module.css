@@ -7,3 +7,14 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
+
+.Logo {
+  border: 1px solid white;
+  position: absolute;
+  /* 로고 확정 후 위치 이동 */
+  top: 30%;
+  left: calc(50% - 250px);
+  width: 500px;
+  height: 150px;
+  display: flex;
+}

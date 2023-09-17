@@ -10,4 +10,11 @@
 
   --color-nav: #c8c8c8;
   --color-nav-active: red;
+
+  /* 버튼 컬러 */
+  /* 임시임시 바꿔야해 */
+  --color-login-btn: orange;
+  --color-login-text: black;
+
+  --color-close-btn: white;
 }

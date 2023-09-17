@@ -1,7 +1,6 @@
-// 예제 변경중
-
 "use client";
 
+// 예제 변경중
 // import { useState } from "react";
 // import Input from "@/components/input";
 
