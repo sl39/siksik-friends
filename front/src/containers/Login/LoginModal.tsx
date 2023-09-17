@@ -43,9 +43,9 @@ export default function Portal() {
             <LoginForm />
 
             <Link href="/sign-up">
-              <div>회원가입</div>
+              <div className={styles.button}>회원가입</div>
             </Link>
-            <button>카카오 로그인</button>
+            <button className={styles.button}>카카오 로그인</button>
 
             {/* 닫기 버튼 로고로 바꿔야함 */}
             <button onClick={handleCloseModal} className={styles.closeButton}>
