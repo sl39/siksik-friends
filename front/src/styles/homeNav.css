@@ -1,9 +1,9 @@
 .home-nav {
-  position: fixed;
-  top: 50px;
+  position: absolute;
+  top: -50px;
   left: 20vw;
   width: 60vw;
-  height: 130px;
+  height: 100px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -14,13 +14,17 @@
   border-radius: 20px 20px 0 0;
   width: 230px;
   height: 80px;
+  cursor: pointer;
 }
 
 .nav-text {
   font-size: 40px;
+  color: var(--color-nav-font);
+  text-align: center;
+  padding-top: 12px;
 }
 
 .active {
-  height: 180px;
+  height: 120px;
   background-color: var(--color-nav-active);
 }

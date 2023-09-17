@@ -1,39 +1,31 @@
-/* 로그인 버튼 */
-.login {
-  border-radius: 4px;
-  /* 박스 테두리 효과, 호버 등등 줘야함 */
-
+.container {
   position: absolute;
-  bottom: 100px;
-  left: calc(50% - 100px);
-  width: 200px;
-  height: 50px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--color-login-btn);
-  color: var(--color-login-text);
-  font-size: 1.6rem;
+  border-radius: 30px;
+  background: white;
+  padding: 1rem;
+  width: auto;
+  height: auto;
 }
 
-/* 모달 */
-.container {
+.context {
   width: 400px;
-  height: 300px;
+  height: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
 }
-
 .title {
   font-size: 1.6rem;
   margin-bottom: 10px;
 }
 
-/* 로그인 폼 */
-.loginForm {
+/*  폼 */
+.form {
   height: 50%;
   display: flex;
   flex-direction: column;
@@ -41,10 +33,10 @@
   justify-content: space-between;
   margin: 0;
 }
-.loginForm div {
+.form div {
   height: 40px;
 }
-.loginForm div * {
+.form div * {
   height: inherit;
 }
 
@@ -70,4 +62,7 @@
   width: 180px;
   height: 40px;
   margin-bottom: 10px;
+}
+.check {
+  width: 80px;
 }
