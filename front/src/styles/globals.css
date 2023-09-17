@@ -1,12 +1,14 @@
 body {
   margin: 0;
-  width: 100vw;
-  height: 100vh;
+  width: calc(100vw - 10px);
+  height: calc(100vh - 10px);
   /* 차후 수정 */
   min-width: 1080px;
+  min-height: 600px;
   background-color: var(--color-bg);
 }
-button {
+button,
+a {
   all: unset;
 }
 .body-container {
@@ -17,9 +19,10 @@ button {
 }
 .book-cover {
   background-color: var(--color-book);
-  width: 96%;
-  height: 85%;
-  margin: 130px auto 0;
+  width: 94%;
+  height: 90%;
+  position: relative;
+  top: 10%;
   border-radius: 10px;
 }
 .book-page1 {
