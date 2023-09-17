@@ -1,9 +1,17 @@
+import AllRank from "./AllRank";
+import styles from "./Rank.module.css";
+import MyProfileCard from "@/components/MyProfileCard";
+
 export default function index() {
   return (
-    <div>
-      <div>프로필</div>
-      <div>등수</div>
-      <div>전체랭킹</div>
+    <div className={styles.container}>
+      <div className={styles.left}>
+        <MyProfileCard />
+        <div>내등수</div>
+      </div>
+      <div className={styles.right}>
+        <AllRank />
+      </div>
     </div>
   );
 }
