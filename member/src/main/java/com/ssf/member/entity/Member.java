@@ -37,7 +37,7 @@ public class Member {
 
     @Column(nullable = false)
     @ColumnDefault("1000")
-    private int score;
+    private Long score;
 
     @Column(nullable = false, length = 255)
     @Builder.Default

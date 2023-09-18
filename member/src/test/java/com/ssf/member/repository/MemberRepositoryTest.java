@@ -1,6 +1,7 @@
 package com.ssf.member.repository;
 
 import com.ssf.member.entity.Member;
+import com.ssf.member.entity.MemberDetailDTO;
 import com.ssf.member.enums.Role;
 import com.ssf.member.enums.SocialType;
 import jakarta.transaction.Transactional;
@@ -29,7 +30,7 @@ public class MemberRepositoryTest {
                 .email("test@test.com")
                 .password("123")
                 .nickname("se")
-                .score(1000)
+                .score(1000L)
                 .profile("image").build();
 
         //when
@@ -40,7 +41,7 @@ public class MemberRepositoryTest {
         assertThat(result.getEmail()).isEqualTo("test@test.com");
         assertThat(result.getPassword()).isEqualTo("123");
         assertThat(result.getNickname()).isEqualTo("se");
-        assertThat(result.getScore()).isEqualTo(1000);
+        assertThat(result.getScore()).isEqualTo(1000L);
         assertThat(result.getProfile()).isEqualTo("image");
         assertThat(result.getRole()).isEqualTo(Role.GUEST);
         assertThat(result.getSocialType()).isEqualTo(SocialType.NONE);
@@ -52,22 +53,21 @@ public class MemberRepositoryTest {
     @Test
     public void 멤버정보가져오기Test(){
         // given
-        final Member member = Member.builder()
+        final MemberDetailDTO memberDetailDTO = MemberDetailDTO.builder()
                 .email("test@test.com")
                 .nickname("se")
-                .score(1000)
+                .score(1000L)
                 .profile("image").build();
         // when
-        final Member member1 = memberRepository.findByEmail(member.getEmail());
+        final Member memberDetailDTO1 = memberRepository.findByEmail(memberDetailDTO.getEmail());
 
         // then
-        assertThat(member1).isNotNull();
-        assertThat(member1.getId()).isNotNull();
-        assertThat(member1.getEmail()).isEqualTo("test@test.com");
-        assertThat(member1.getNickname()).isEqualTo("se");
-        assertThat(member1.getScore()).isEqualTo(1000);
-        assertThat(member1.getProfile()).isEqualTo("image");
-
+        assertThat(memberDetailDTO1).isNotNull();
+        assertThat(memberDetailDTO1.getId()).isNotNull();
+        assertThat(memberDetailDTO1.getEmail()).isEqualTo("test@test.com");
+        assertThat(memberDetailDTO1.getNickname()).isEqualTo("se");
+        assertThat(memberDetailDTO1.getScore()).isEqualTo(1000L);
+        assertThat(memberDetailDTO1.getProfile()).isEqualTo("image");
 
     }
 }
