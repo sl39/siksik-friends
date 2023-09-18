@@ -1,6 +1,8 @@
 package com.ssf.member.repository;
 
 import com.ssf.member.entity.Member;
+import com.ssf.member.enums.Role;
+import com.ssf.member.enums.SocialType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -27,12 +29,7 @@ public class MemberRepositoryTest {
                 .password("123")
                 .nickname("se")
                 .score(1000)
-                .activated(false)
-                .profile("image")
-                .role("MEMBER")
-                .social_type("kakao")
-                .sign_up_at("2023-09-18")
-                .update_at("2023-09-18").build();
+                .profile("image").build();
 
         //when
         final Member result = memberRepository.save(member);
@@ -43,12 +40,11 @@ public class MemberRepositoryTest {
         assertThat(result.getPassword()).isEqualTo("123");
         assertThat(result.getNickname()).isEqualTo("se");
         assertThat(result.getScore()).isEqualTo(1000);
-        assertThat(result.isActivated()).isEqualTo(false);
         assertThat(result.getProfile()).isEqualTo("image");
-        assertThat(result.getRole()).isEqualTo("MEMBER");
-        assertThat(result.getSocial_type()).isEqualTo("kakao");
-        assertThat(result.getSign_up_at()).isEqualTo("2023-09-18");
-        assertThat(result.getUpdate_at()).isEqualTo("2023-09-18");
+        assertThat(result.getRole()).isEqualTo(Role.GUEST);
+        assertThat(result.getSocialType()).isEqualTo(SocialType.NONE);
+        assertThat(result.getSignUpAt()).isNotNull();
+        assertThat(result.getUpdateAt()).isNotNull();
 
     }
 
