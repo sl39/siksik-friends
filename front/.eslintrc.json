@@ -101,6 +101,10 @@
       {
         "labelAttributes": ["htmlFor"]
       }
-    ]
+    ],
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    // TS 아직 몰라서 any 쓸거다
+    "@typescript-eslint/no-explicit-any": ["off"]
   }
 }
