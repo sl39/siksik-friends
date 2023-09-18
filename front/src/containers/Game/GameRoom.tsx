@@ -37,6 +37,9 @@ export default function GameRoom() {
   useEffect(() => {
     fetchRoom();
     showAllRooms();
+    console.log("방목록");
+    // 경고를 무시하거나 eslint 규칙을 임시적으로 끄는 주석
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
