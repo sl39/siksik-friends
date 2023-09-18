@@ -1,5 +1,6 @@
 package com.ssf.auth.domain.member.service;
 
+import com.ssf.auth.domain.member.dto.MemberResponse;
 import com.ssf.auth.domain.member.entity.Member;
 import com.ssf.auth.domain.member.enums.MemberErrorResult;
 import com.ssf.auth.domain.member.enums.SocialType;
@@ -14,7 +15,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public Member createMember(final String email, final SocialType socialType) {
+    public MemberResponse createMember(final String email, final SocialType socialType) {
         final Member result = memberRepository.findByEmailAndSocialType(email, socialType);
 
         if (result != null) {
@@ -27,6 +28,11 @@ public class MemberService {
                 .nickname("nickname")
                 .build();
 
-        return memberRepository.save(member);
+        final Member savedMember =  memberRepository.save(member);
+
+        return MemberResponse.builder()
+                .email(savedMember.getEmail())
+                .socialType(savedMember.getSocialType())
+                .build();
     }
 }

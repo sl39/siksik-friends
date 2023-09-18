@@ -1,5 +1,6 @@
 package com.ssf.auth.domain.member.serviceTest;
 
+import com.ssf.auth.domain.member.dto.MemberResponse;
 import com.ssf.auth.domain.member.enums.MemberErrorResult;
 import com.ssf.auth.domain.member.enums.SocialType;
 import com.ssf.auth.domain.member.entity.Member;
@@ -47,10 +48,10 @@ public class MemberServiceTest {
         doReturn(member()).when(memberRepository).save(any(Member.class));
 
         // when
-        final Member result = target.createMember("test@test.com", SocialType.NONE);
+        final MemberResponse result = target.createMember("test@test.com", SocialType.NONE);
 
         // then
-        assertThat(result.getId()).isNotNull();
+        assertThat(result.getEmail()).isEqualTo("test@test.com");
         assertThat(result.getSocialType()).isEqualTo(SocialType.NONE);
 
         // verify
