@@ -46,4 +46,29 @@ public class MemberRepositoryTest {
         assertThat(result.getRole()).isEqualTo(Role.GUEST);
         assertThat(result.getSocialType()).isEqualTo(SocialType.NONE);
     }
+
+    @Test
+    public void 멤버조회() {
+        // given
+        final Member member = Member.builder()
+                .email("test@test.com")
+                .password("password")
+                .nickname("nickname")
+                .build();
+
+        // when
+        memberRepository.save(member);
+        final Member findResult = memberRepository.findByMemberAndSocialType("test@test.com", Role.GUEST);
+
+        // then
+        assertThat(findResult.getId()).isNotNull();
+        assertThat(findResult.getEmail()).isEqualTo("test@test.com");
+        assertThat(findResult.getPassword()).isEqualTo("password");
+        assertThat(findResult.getNickname()).isEqualTo("nickname");
+        assertThat(findResult.getProfile()).isEqualTo("/profile.png");
+        assertThat(findResult.getSignUpAt()).isNotNull();
+        assertThat(findResult.getUpdateAt()).isNotNull();
+        assertThat(findResult.getRole()).isEqualTo(Role.GUEST);
+        assertThat(findResult.getSocialType()).isEqualTo(SocialType.NONE);
+    }
 }
