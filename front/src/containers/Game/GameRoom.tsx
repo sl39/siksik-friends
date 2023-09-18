@@ -12,14 +12,16 @@ export default function GameRoom() {
 
   // 방 전체 목록 받아오는 함수 작성하기
   /** 방 목록 받아오기 */
-  const fetchRoom = async () => {
-    await setRooms([
+  const fetchRoom = () => {
+    setRooms([
       { id: 1, name: "ㄱㄱ", waiting: true },
       { id: 2, name: "ㄱㄱ", waiting: false },
       { id: 21, name: "ㄱㄱ", waiting: false },
       { id: 22, name: "ㄱㄱ", waiting: false },
       { id: 23, name: "ㄱㄱ", waiting: false },
       { id: 235, name: "ㄱㄱ", waiting: false },
+      { id: 2351, name: "ㄱㄱ", waiting: false },
+      { id: 2352, name: "ㄱㄱ", waiting: false },
     ]);
   };
 
@@ -35,6 +37,7 @@ export default function GameRoom() {
   useEffect(() => {
     fetchRoom();
     showAllRooms();
+    console.log(1);
   }, []);
 
   return (
@@ -55,11 +58,7 @@ export default function GameRoom() {
           새로고침
         </button>
       </div>
-      <div className={styles.rooms}>
-        {filteredRooms.map((room) => (
-          <GameRoomItem key={room.id} room={room} />
-        ))}
-      </div>
+      <div className={styles.rooms}>{filteredRooms?.map((room) => <GameRoomItem key={room.id} room={room} />)}</div>
     </div>
   );
 }

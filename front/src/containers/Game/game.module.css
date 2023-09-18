@@ -13,8 +13,8 @@
   margin: 15px 0;
 }
 .GameRoom {
-  /* background-color: var(--color-gray); */
-  border: 1px solid black;
+  background: rgba(255, 255, 255, 0.85);
+  /* border: 1px solid black; */
 
   border-radius: 10px;
   height: 70%;
@@ -23,11 +23,10 @@
 .roomBtn {
   display: flex;
   height: 20%;
-  border: 1px solid black;
+  justify-content: space-between;
 }
 .roomActionBtn {
   height: 10%;
-  border: 1px solid black;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -40,6 +39,16 @@
   width: 150px;
   text-align: center;
   margin: 10px;
+}
+.boxButton {
+  width: 200px;
+  height: 70px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #f2f2f2 0%, #dadcdf 100%);
+  margin: 10px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
 }
 .reload {
   border: 1px solid black;

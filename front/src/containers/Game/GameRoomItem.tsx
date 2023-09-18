@@ -9,7 +9,7 @@ interface GameRoomItemProps {
 export default function GameRoomItem({ room }: GameRoomItemProps) {
   const router = useRouter();
 
-  const enterRoom = (id) => {
+  const enterRoom = (id: number) => {
     router.push(`/game/room/${id}`);
   };
   return (
