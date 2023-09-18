@@ -3,6 +3,7 @@ package com.ssf.member.repository;
 import com.ssf.member.entity.Member;
 import com.ssf.member.enums.Role;
 import com.ssf.member.enums.SocialType;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -57,7 +58,7 @@ public class MemberRepositoryTest {
                 .score(1000)
                 .profile("image").build();
         // when
-        final Member member1 = memberRepository.findByEmail("test@test.com");
+        final Member member1 = memberRepository.findByEmail(member.getEmail());
 
         // then
         assertThat(member1).isNotNull();
