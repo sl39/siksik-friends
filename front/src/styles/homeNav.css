@@ -8,6 +8,14 @@
   flex-direction: row;
   justify-content: space-around;
 }
+.back-nav {
+  position: absolute;
+  top: -50px;
+  left: 10vw;
+  width: 60vw;
+  height: 100px;
+  display: flex;
+}
 
 .nav-item {
   background-color: var(--color-nav);
