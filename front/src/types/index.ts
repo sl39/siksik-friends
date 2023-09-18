@@ -4,3 +4,9 @@ export interface User {
   level: number;
   profile: string;
 }
+
+export interface Room {
+  id: number;
+  name: string;
+  waiting: boolean;
+}

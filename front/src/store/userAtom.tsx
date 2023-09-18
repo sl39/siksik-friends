@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import type { User } from "@/types/types";
+import type { User } from "@/types";
 // import { fetchData } from "@/services/api";
 
 // 아톰 선언

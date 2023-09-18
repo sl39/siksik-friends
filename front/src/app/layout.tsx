@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import "@/styles/colors.css";
 import "@/styles/levels.scss";
+import "@/styles/homeNav.css";
 
 import type { Metadata } from "next";
 
