@@ -2,6 +2,7 @@ package com.ssf.auth.domain.member.ControllerTest;
 
 import com.google.gson.Gson;
 import com.ssf.auth.domain.member.controller.MemberController;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,10 +21,14 @@ public class MemberControllerTest {
     private MockMvc mockMvc;
     private Gson gson;
 
+    @BeforeEach
+    public void init() {
+        mockMvc = MockMvcBuilders.standaloneSetup(target)
+                .build();
+    }
+
     @Test
     public void mockMvc가Null이아님() throws Exception {
-        mockMvc = MockMvcBuilders.standaloneSetup(target)
-                        .build();
         assertThat(target).isNotNull();
         assertThat(mockMvc).isNotNull();
     }
