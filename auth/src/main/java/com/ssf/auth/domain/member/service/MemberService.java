@@ -15,6 +15,10 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    private static final String EMAIL = "test@test.com";
+    private static final String PASSWORD = "password";
+    private static final String NICKNAME = "nickname";
+
     public MemberResponse createMember(final String email, final SocialType socialType) {
         final Member result = memberRepository.findByEmailAndSocialType(email, socialType);
 
@@ -23,9 +27,9 @@ public class MemberService {
         }
 
         final Member member = Member.builder()
-                .email("test@test.com")
-                .password("password")
-                .nickname("nickname")
+                .email(EMAIL)
+                .password(PASSWORD)
+                .nickname(NICKNAME)
                 .build();
 
         final Member savedMember =  memberRepository.save(member);

@@ -27,14 +27,19 @@ public class MemberServiceTest {
     @Mock
     private MemberRepository memberRepository;
 
+    private static final String EMAIL = "test@test.com";
+    private static final SocialType SOCIAL_TYPE = SocialType.NONE;
+    private static final String PASSWORD = "password";
+    private static final String NICKNAME = "nickname";
+
     @Test
     public void 멤버등록실패_이미존재함() {
 
         // given
-        doReturn(Member.builder().build()).when(memberRepository).findByEmailAndSocialType("test@test.com", SocialType.NONE);
+        doReturn(Member.builder().build()).when(memberRepository).findByEmailAndSocialType(EMAIL, SOCIAL_TYPE);
 
         // when
-        final MemberException result = assertThrows(MemberException.class, () -> target.createMember("test@test.com", SocialType.NONE));
+        final MemberException result = assertThrows(MemberException.class, () -> target.createMember(EMAIL, SOCIAL_TYPE));
 
         // then
         assertThat(result.getErrorResult()).isEqualTo(MemberErrorResult.DUPLICATED_MEMBER_REGISTER);
@@ -44,27 +49,27 @@ public class MemberServiceTest {
     public void 멤버등록성공() {
 
         // given
-        doReturn(null).when(memberRepository).findByEmailAndSocialType("test@test.com", SocialType.NONE);
+        doReturn(null).when(memberRepository).findByEmailAndSocialType(EMAIL, SOCIAL_TYPE);
         doReturn(member()).when(memberRepository).save(any(Member.class));
 
         // when
-        final MemberResponse result = target.createMember("test@test.com", SocialType.NONE);
+        final MemberResponse result = target.createMember(EMAIL, SOCIAL_TYPE);
 
         // then
-        assertThat(result.getEmail()).isEqualTo("test@test.com");
-        assertThat(result.getSocialType()).isEqualTo(SocialType.NONE);
+        assertThat(result.getEmail()).isEqualTo(EMAIL);
+        assertThat(result.getSocialType()).isEqualTo(SOCIAL_TYPE);
 
         // verify
-        verify(memberRepository, times(1)).findByEmailAndSocialType("test@test.com", SocialType.NONE);
+        verify(memberRepository, times(1)).findByEmailAndSocialType(EMAIL, SOCIAL_TYPE);
         verify(memberRepository, times(1)).save(any(Member.class));
     }
 
     private Member member() {
         return Member.builder()
                 .id(-1L)
-                .email("test@test.com")
-                .password("password")
-                .nickname("nickname")
+                .email(EMAIL)
+                .password(PASSWORD)
+                .nickname(NICKNAME)
                 .build();
     }
 }
