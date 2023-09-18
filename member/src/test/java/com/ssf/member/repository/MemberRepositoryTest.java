@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.*;
 
-@DataJpaTest
+@SpringBootTest
 public class MemberRepositoryTest {
     @Autowired
     private MemberRepository memberRepository;
@@ -32,7 +32,7 @@ public class MemberRepositoryTest {
                 .role("MEMBER")
                 .social_type("kakao")
                 .sign_up_at("2023-09-18")
-                .update_at("2023-09-18");
+                .update_at("2023-09-18").build();
 
         //when
         final Member result = memberRepository.save(member);
@@ -43,7 +43,7 @@ public class MemberRepositoryTest {
         assertThat(result.getPassword()).isEqualTo("123");
         assertThat(result.getNickname()).isEqualTo("se");
         assertThat(result.getScore()).isEqualTo(1000);
-        assertThat(result.getActivated()).isEqualTo(false);
+        assertThat(result.isActivated()).isEqualTo(false);
         assertThat(result.getProfile()).isEqualTo("image");
         assertThat(result.getRole()).isEqualTo("MEMBER");
         assertThat(result.getSocial_type()).isEqualTo("kakao");
