@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -44,6 +45,10 @@ public class Member {
     @CreationTimestamp
     @Column(nullable = false, length = 20, updatable = false)
     private LocalDateTime signUpAt;
+
+    @UpdateTimestamp
+    @Column(nullable = false, length = 20)
+    private LocalDateTime updateAt;
 
     @Column(nullable = false, length = 20)
     @Builder.Default

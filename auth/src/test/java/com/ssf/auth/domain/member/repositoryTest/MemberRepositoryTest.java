@@ -1,6 +1,7 @@
 package com.ssf.auth.domain.member.repositoryTest;
 
 import com.ssf.auth.domain.member.Role;
+import com.ssf.auth.domain.member.SocialType;
 import com.ssf.auth.domain.member.entity.Member;
 import com.ssf.auth.domain.member.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
@@ -41,6 +42,8 @@ public class MemberRepositoryTest {
         assertThat(result.getNickname()).isEqualTo("nickname");
         assertThat(result.getProfile()).isEqualTo("/profile.png");
         assertThat(result.getSignUpAt()).isNotNull();
+        assertThat(result.getUpdateAt()).isNotNull();
         assertThat(result.getRole()).isEqualTo(Role.GUEST);
+        assertThat(result.getSocialType()).isEqualTo(SocialType.NONE);
     }
 }
