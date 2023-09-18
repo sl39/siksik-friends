@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
@@ -59,15 +61,16 @@ public class MemberRepositoryTest {
                 .score(1000L)
                 .profile("image").build();
         // when
-        final Member memberDetailDTO1 = memberRepository.findByEmail(memberDetailDTO.getEmail());
+        final Optional<Member> memberDetailDTO1 = memberRepository.findByEmail(memberDetailDTO.getEmail());
+
 
         // then
         assertThat(memberDetailDTO1).isNotNull();
-        assertThat(memberDetailDTO1.getId()).isNotNull();
-        assertThat(memberDetailDTO1.getEmail()).isEqualTo("test@test.com");
-        assertThat(memberDetailDTO1.getNickname()).isEqualTo("se");
-        assertThat(memberDetailDTO1.getScore()).isEqualTo(1000L);
-        assertThat(memberDetailDTO1.getProfile()).isEqualTo("image");
+        assertThat(memberDetailDTO1.get().getId()).isNotNull();
+        assertThat(memberDetailDTO1.get().getEmail()).isEqualTo("test@test.com");
+        assertThat(memberDetailDTO1.get().getNickname()).isEqualTo("se");
+        assertThat(memberDetailDTO1.get().getScore()).isEqualTo(1000L);
+        assertThat(memberDetailDTO1.get().getProfile()).isEqualTo("image");
 
     }
 }
