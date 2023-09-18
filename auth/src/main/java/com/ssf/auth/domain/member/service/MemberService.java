@@ -21,6 +21,12 @@ public class MemberService {
             throw new MemberException(MemberErrorResult.DUPLICATED_MEMBER_REGISTER);
         }
 
-        return null;
+        final Member member = Member.builder()
+                .email("test@test.com")
+                .password("password")
+                .nickname("nickname")
+                .build();
+
+        return memberRepository.save(member);
     }
 }
