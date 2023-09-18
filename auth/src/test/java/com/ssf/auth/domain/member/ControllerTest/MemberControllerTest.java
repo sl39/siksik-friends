@@ -2,6 +2,7 @@ package com.ssf.auth.domain.member.ControllerTest;
 
 import com.google.gson.Gson;
 import com.ssf.auth.domain.member.controller.MemberController;
+import com.ssf.auth.domain.member.dto.MemberRequest;
 import com.ssf.auth.domain.member.enums.SocialType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,7 +50,7 @@ public class MemberControllerTest {
                 MockMvcRequestBuilders.post(url)
                         .content(gson.toJson(memberRequest("test@test.com", SocialType.NONE)))
                         .contentType(MediaType.APPLICATION_JSON)
-        )
+        );
     }
 
     private MemberRequest memberRequest(final String email, final SocialType socialType) {
