@@ -48,4 +48,25 @@ public class MemberRepositoryTest {
 
     }
 
+    @Test
+    public void 멤버정보가져오기Test(){
+        // given
+        final Member member = Member.builder()
+                .email("test@test.com")
+                .nickname("se")
+                .score(1000)
+                .profile("image").build();
+        // when
+        final Member member1 = memberRepository.findByEmail("test@test.com");
+
+        // then
+        assertThat(member1).isNotNull();
+        assertThat(member1.getId()).isNotNull();
+        assertThat(member1.getEmail()).isEqualTo("test@test.com");
+        assertThat(member1.getNickname()).isEqualTo("se");
+        assertThat(member1.getScore()).isEqualTo(1000);
+        assertThat(member1.getProfile()).isEqualTo("image");
+
+
+    }
 }
