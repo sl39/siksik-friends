@@ -14,7 +14,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class MemberServiceTest {
@@ -36,5 +37,33 @@ public class MemberServiceTest {
 
         // then
         assertThat(result.getErrorResult()).isEqualTo(MemberErrorResult.DUPLICATED_MEMBER_REGISTER);
+    }
+
+    @Test
+    public void 멤버등록성공() {
+
+        // given
+        doReturn(null).when(memberRepository).findByEmailAndSocialType("test@test.com", SocialType.NONE);
+        doReturn(member()).when(memberRepository).save(any(Member.class));
+
+        // when
+        final Member result = target.createMember("test@test.com", SocialType.NONE);
+
+        // then
+        assertThat(result.getId()).isNotNull();
+        assertThat(result.getSocialType()).isEqualTo(SocialType.NONE);
+
+        // verify
+        verify(memberRepository, times(1)).findByEmailAndSocialType("test@test.com", SocialType.NONE);
+        verify(memberRepository, times(1)).save(any(Member.class));
+    }
+
+    private Member member() {
+        return Member.builder()
+                .id(-1L)
+                .email("test@test.com")
+                .password("password")
+                .nickname("nickname")
+                .build();
     }
 }
