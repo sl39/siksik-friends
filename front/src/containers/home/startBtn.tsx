@@ -7,7 +7,7 @@ export default function StartBtn() {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push("/game/wait");
+    router.push("/game");
   };
 
   return (
