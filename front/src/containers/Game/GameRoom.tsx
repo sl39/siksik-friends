@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import type { Room } from "@/types";
 import GameRoomItem from "./GameRoomItem";
-import styles from "./game.module.css";
+import styles from "./game.module.scss";
 import EnterRoom from "./EnterRoom";
 
 export default function GameRoom() {
@@ -12,7 +12,7 @@ export default function GameRoom() {
 
   // 방 전체 목록 받아오는 함수 작성하기
   /** 방 목록 받아오기 */
-  const fetchRoom = () => {
+  const fetchRoom = async () => {
     setRooms([
       { id: 1, name: "ㄱㄱ", waiting: true },
       { id: 2, name: "ㄱㄱ", waiting: false },
@@ -37,7 +37,6 @@ export default function GameRoom() {
   useEffect(() => {
     fetchRoom();
     showAllRooms();
-    console.log(1);
   }, []);
 
   return (

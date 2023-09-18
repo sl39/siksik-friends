@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 import type { Room } from "@/types";
-import styles from "./game.module.css";
+import styles from "./game.module.scss";
 
 interface GameRoomItemProps {
   room: Room;

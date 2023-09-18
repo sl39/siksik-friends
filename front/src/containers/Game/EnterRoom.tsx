@@ -1,4 +1,4 @@
-import styles from "./game.module.css";
+import styles from "./game.module.scss";
 
 export default function EnterRoom() {
   return (
