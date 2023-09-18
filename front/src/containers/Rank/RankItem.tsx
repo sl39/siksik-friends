@@ -13,9 +13,9 @@ interface Props {
 export default function RankItem({ item }: Props) {
   return (
     <div className={styles.RankItem}>
-      <span>{item.rank}</span>
-      <span>{item.level}</span>
-      <span>{item.name}</span>
+      <span className={[styles.itemNum].join(" ")}>{item.rank}위</span>
+      <span className={[styles.rankLevel].join(" ")}>{item.level}</span>
+      <span className={[styles.rankName].join(" ")}>{item.name}</span>
       <RankButton id={item.id} />
     </div>
   );
