@@ -39,3 +39,23 @@
   border-radius: 3px;
   background-color: var(--color-temp);
 }
+
+.myRank {
+  width: 180px;
+  height: 180px;
+  border: 1px solid black;
+  border-radius: 50%;
+
+  margin: 30px auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.rankNum {
+  padding-top: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
