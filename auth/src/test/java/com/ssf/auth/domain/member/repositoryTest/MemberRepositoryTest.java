@@ -58,7 +58,7 @@ public class MemberRepositoryTest {
 
         // when
         memberRepository.save(member);
-        final Member findResult = memberRepository.findByMemberEmailAndSocialType("test@test.com", Role.GUEST);
+        final Member findResult = memberRepository.findByEmailAndSocialType("test@test.com", SocialType.NONE);
 
         // then
         assertThat(findResult.getId()).isNotNull();
