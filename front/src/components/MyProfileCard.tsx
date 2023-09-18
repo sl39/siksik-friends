@@ -1,31 +1,18 @@
 "use client";
 
 import Image from "next/image";
-// import { fetchData } from "@/services/api";
+// import { useUpdateAtom } from "jotai";
+// import userAtom from "@/store/userAtom";
 import styles from "./MyProfileCard.module.css";
 
-// interface UserData {
-//   id: number;
-//   level: number;
-//   name: string;
-// }
-
 export default function Profile() {
-  // const [user, setUser] = useRecoilState(userAtom);
-  // const getUserId = 1;
-  // const getUserData = async () => {
-  //   try {
-  //     const data = await fetchData<UserData>(`/920/${getUserId}`, "GET");
-  //     console.log(data.id);
-  //     setUser(data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  // const [user] = useUpdateAtom(userAtom);
 
   // useEffect(() => {
-  //   getUserData();
+  //   setUser(fetchUser());
   // }, []);
+
+  // if (!user) return <div>Loading...</div>;
 
   return (
     <div className={styles.profileContainer}>
@@ -34,7 +21,7 @@ export default function Profile() {
       </div>
       <div className={styles.nickname}>
         <span className={styles.level}>레벨</span>
-        {닉네임}
+        닉네임
       </div>
     </div>
   );
