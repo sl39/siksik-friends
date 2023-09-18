@@ -1,7 +1,7 @@
 package com.ssf.auth.domain.member.entity;
 
-import com.ssf.auth.domain.member.Role;
-import com.ssf.auth.domain.member.SocialType;
+import com.ssf.auth.domain.member.enums.Role;
+import com.ssf.auth.domain.member.enums.SocialType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
