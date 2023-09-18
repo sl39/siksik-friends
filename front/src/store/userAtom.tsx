@@ -1,12 +1,14 @@
-// import { atom } from "jotai";
+import { atom } from "jotai";
+import type { User } from "@/types/types";
 // import { fetchData } from "@/services/api";
 
-// interface UserData {
-//   id: number;
-//   // level: number;
-//   // name: string;
-// }
-// const getUserId = 1;
+// 아톰 선언
+export const userAtom = atom<User | null>({
+  id: 1,
+  name: "닉네임",
+  level: 1,
+  profile: "/images/character/rabbit.png",
+});
 
 // const fetchUser = async () => {
 //   try {
@@ -17,10 +19,3 @@
 //     throw err;
 //   }
 // };
-
-// const userAtom = atom<UserData | null>(
-//   {}, // 초기 상태
-//   async (get, set) => set(userAtom, await fetchUser()) // setter 부분에서 비동기 작업 수행
-// );
-
-// export default userAtom;
