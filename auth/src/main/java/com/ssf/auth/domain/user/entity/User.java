@@ -58,6 +58,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private SocialType socialType = SocialType.NONE;
 
+    public void authorizeUser(Role role) {
+        this.role = role;
+    }
+
     public void encodePassword(PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(this.password);
     }
