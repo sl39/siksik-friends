@@ -1,0 +1,145 @@
+.container {
+  display: flex;
+  width: 100%;
+}
+.left {
+  width: 70%;
+  height: 75vh;
+  margin: 15px;
+}
+.right {
+  width: 25%;
+  height: 75vh;
+  margin: 15px 0;
+}
+
+// 게임 목록
+.GameRoom {
+  background: rgba(255, 255, 255, 0.85);
+  /* border: 1px solid black; */
+
+  border-radius: 10px;
+  height: 70%;
+  padding: 10px 10px 30px;
+
+  .roomBtn {
+    display: flex;
+    height: 20%;
+    justify-content: space-between;
+  }
+
+  .roomActionBtn {
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .roundButton {
+    border-radius: 50px;
+    border: 0.3px solid black;
+    background-color: #fff;
+    height: 40px;
+    width: 150px;
+    text-align: center;
+    margin: 10px;
+  }
+  .boxButton {
+    width: 200px;
+    height: 70px;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #f2f2f2 0%, #dadcdf 100%);
+    margin: 10px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: center;
+  }
+  .reload {
+    border: 1px solid black;
+    width: 100px;
+  }
+
+  .rooms {
+    height: inherit;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    overflow: auto;
+  }
+  /* 스크롤 CSS */
+  .rooms::-webkit-scrollbar {
+    width: 10px;
+  }
+  .rooms::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: var(--color-page1); /* 스크롤바의 색상 */
+    border-radius: 10px;
+  }
+  .rooms::-webkit-scrollbar-track {
+    /*스크롤바 뒷 배경 색상*/
+    background: var(--color-gray);
+  }
+
+  .roomItem {
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 48%;
+    height: 100px;
+    margin: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+  }
+  .roomId {
+    font-size: 1.6rem;
+    width: 50px;
+    height: 50%;
+    text-align: center;
+  }
+  .roomData {
+    border-left: 1px solid black;
+    height: 90%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 15px;
+  }
+  .roomData .name {
+    font-size: 1.4rem;
+    padding: 3px;
+  }
+  .state {
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 3px;
+  }
+  .waiting {
+    color: green;
+  }
+  .playing {
+    color: grey;
+  }
+  .roomQuiz {
+    left: 0;
+    font-size: 1.1rem;
+  }
+}
+
+// 채팅
+.chatBox {
+  height: 25%;
+  background: var(--colors-common-white, #fff);
+  border: 1px solid black;
+  border-radius: 15px;
+  .chatLog {
+    height: 75%;
+    background: #fe9d13;
+  }
+  .chatInput {
+    border: 1px solid black;
+    height: 20%;
+  }
+}

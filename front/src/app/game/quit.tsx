@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function nav() {
+export default function BackNav() {
   return (
     <nav className="back-nav z-6">
       <Link href="/home" className="nav-item active">
