@@ -64,7 +64,7 @@ export default function SignUpForm() {
   const [checkEmail, setCheckEmail] = useState("");
   const [checkNickname, setCheckNickname] = useState("");
   /** 회원가입 POST 요청 */
-  const handleSignUp = async (e) => {
+  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = {
       email,

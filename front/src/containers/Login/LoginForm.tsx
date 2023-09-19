@@ -10,7 +10,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
 
   /** 로그인 로직 */
-  const onSubmit = (e) => {
+  const handleSignIn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // 로그인 로직 작성
     console.log(email, password);
@@ -18,7 +18,7 @@ export default function LoginForm() {
   };
 
   return (
-    <form className={styles.loginForm} onSubmit={(e) => onSubmit(e)}>
+    <form className={styles.loginForm} onSubmit={handleSignIn}>
       <div>
         <label htmlFor="email">Email</label>
         <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} id="email" name="email" />
