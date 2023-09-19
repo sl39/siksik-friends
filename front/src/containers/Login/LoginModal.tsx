@@ -5,22 +5,9 @@ import { useState } from "react";
 import styles from "./Login.module.css";
 import Modal from "@/components/modal";
 import LoginForm from "./LoginForm";
-// import { signIn, signOut, useSession } from "next-auth/react";
 
-export default function Portal() {
-  // 세션을 이용하여 데이터를 불러온다.
-  // const { data: session } = useSession();
-  // if (session) {
-  //   return (
-  //     <>
-  //       Signed in as {session.user.email} <br />
-  //       <button onClick={() => signOut()}>Sign out</button>
-  //     </>
-  //   );
-  // }
-
+export default function LoginModal() {
   const [isOpen, setIsOpen] = useState(false);
-
   /** 모달 활성화 */
   const handleOpenModal = () => {
     setIsOpen(true);
@@ -32,7 +19,7 @@ export default function Portal() {
 
   return (
     <>
-      {/* 밖에서 보이는 로그인 버튼 */}
+      {/* 홈에서 보이는 로그인 버튼 */}
       <button onClick={handleOpenModal} className={styles.login}>
         로그인
       </button>
