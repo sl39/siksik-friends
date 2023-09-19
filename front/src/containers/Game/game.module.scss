@@ -131,15 +131,105 @@
 // 채팅
 .chatBox {
   height: 25%;
-  background: var(--colors-common-white, #fff);
+  background: var(--colors-common-white, grey);
   border: 1px solid black;
   border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  box-sizing: border-box;
   .chatLog {
-    height: 75%;
-    background: #fe9d13;
+    height: 72%;
+    width: 98%;
+    background: var(--color-chat, white);
+    overflow: auto;
   }
   .chatInput {
-    border: 1px solid black;
     height: 20%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    input {
+      width: 92%;
+      height: 30px;
+    }
+    button {
+      border: 1px solid black;
+      border-radius: 15px;
+
+      box-sizing: border-box;
+      width: 5%;
+      height: 30px;
+      background-color: #fff;
+      text-align: center;
+    }
+  }
+}
+
+// 대기실 유저
+.waitingBox {
+  height: 65%;
+  width: 30%;
+  position: absolute;
+  margin: 5px 0;
+  display: flex;
+
+  .userBigBox {
+    width: 86%;
+    border-radius: 15px 0 0 15px;
+    background-color: var(--color-wait, red);
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .userBox {
+    width: 95%;
+    height: 96%;
+    overflow: auto;
+    background-color: var(--color-wait, white);
+    border-radius: 15px;
+    padding: 5px;
+  }
+  .userNav {
+    width: 13%;
+    border: 1px solid red;
+
+    button {
+      margin: 0 0 10px 0;
+      height: 120px;
+      width: 100%;
+      border: 1px solid red;
+      background-color: var(--color-wait, grey);
+      border-radius: 0 15px 15px 0;
+    }
+  }
+}
+
+.userItem {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid black;
+  padding: 4px 8px;
+  margin: 3px;
+  .profile {
+    width: 20%;
+    border: 1px solid black;
+    margin: 5px 0;
+  }
+  .userItemBox {
+    width: 78%;
+    padding: 0;
+  }
+  .subBox {
+    border: 1px solid black;
+    width: 100%;
+    height: 30px;
+    margin: 5px 0;
   }
 }
