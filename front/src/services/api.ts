@@ -2,9 +2,12 @@
 import axios from "axios";
 import type { AxiosResponse, Method } from "axios";
 
-axios.defaults.baseURL = process.env.NEXT_PUBLIC_AXIOS_URL;
+// axios.defaults.baseURL = process.env.NEXT_PUBLIC_AXIOS_URL;
+// axios.defaults.baseURL = "https://jsonplaceholder.typicode.com/";
+axios.defaults.baseURL = "http://192.168.30.127:8081/";
+const SERVER_ADDRESS = "http://192.168.30.127:8081";
 
-export const fetchData = async <T>(url: string, method: Method = "GET", data?: any, headers?: any): Promise<T> => {
+export const ApiAxios = async <T>(url: string, method: Method = "GET", data?: any, headers?: any): Promise<T> => {
   try {
     const response: AxiosResponse<T> = await axios.request({
       url,
@@ -18,3 +21,7 @@ export const fetchData = async <T>(url: string, method: Method = "GET", data?: a
     throw error;
   }
 };
+
+export const signUpAxios = axios.create({
+  baseURL: `${SERVER_ADDRESS}`,
+});

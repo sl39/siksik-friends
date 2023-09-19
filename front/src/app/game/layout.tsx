@@ -1,4 +1,4 @@
-import Exit from "./nav";
+import Exit from "./quit";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

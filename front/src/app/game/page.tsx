@@ -1,3 +1,5 @@
+import GameIndex from "@/containers/Game";
+
 export default function Game() {
-  return <div style={{ border: "1px solid black" }} />;
+  return <GameIndex />;
 }
