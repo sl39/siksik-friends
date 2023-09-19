@@ -19,11 +19,11 @@ public class UserServiceImpl implements UserService {
 
     public void signUp(UserSignUpDto userSignUpDto) throws Exception {
 
-        if (userRepository.findByEmail(userSignUpDto.getEmail()).isPresent()) {
+        if (userRepository.existsByEmail(userSignUpDto.getEmail())) {
             throw new Exception("이미 존재하는 이메일입니다.");
         }
 
-        if (userRepository.findByNickname(userSignUpDto.getNickname()).isPresent()) {
+        if (userRepository.existsByNickname(userSignUpDto.getNickname())) {
             throw new Exception("이미 존재하는 닉네임입니다.");
         }
 
@@ -40,21 +40,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void validEmail(String email) throws Exception {
-        if (userRepository.findByEmail(email).isPresent()) {
+        if (userRepository.existsByEmail(email)) {
             throw new Exception("이미 존재하는 이메일입니다.");
         }
     }
 
     @Override
     public void ValidNickname(String nickname) throws Exception {
-        if (userRepository.findByNickname(nickname).isPresent()) {
+        if (userRepository.existsByNickname(nickname)) {
             throw new Exception("이미 존재하는 닉네임입니다.");
         }
     }
 
     @Override
     public void signIn(UserSignInDto userSignInDto) throws Exception {
-        if (userRepository.findByEmail(userSignInDto.getEmail()).isEmpty()) {
+        if (!userRepository.existsByEmail(userSignInDto.getEmail())) {
             throw new Exception("이메일 또는 비밀번호를 확인하세요.");
         }
 
