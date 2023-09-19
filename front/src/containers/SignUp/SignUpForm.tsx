@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import axios from "axios";
+import { useAtom } from "jotai";
 import { signUpAxios } from "@/services/api";
+import { userAtom } from "@/store/userAtom";
 import styles from "./SignUp.module.css";
 
 // const validate = (vaules) => {
@@ -63,6 +65,7 @@ export default function SignUpForm() {
 
   const [checkEmail, setCheckEmail] = useState("");
   const [checkNickname, setCheckNickname] = useState("");
+
   /** 회원가입 POST 요청 */
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -72,6 +75,7 @@ export default function SignUpForm() {
       nickname,
       profile: "public/images/character/rabbit.png",
     };
+
     if (checkEmail || checkNickname === "") {
       console.log("중복 미확인");
     } else {
