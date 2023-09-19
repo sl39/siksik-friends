@@ -32,6 +32,7 @@ export default function Portal() {
 
   return (
     <>
+      {/* 밖에서 보이는 로그인 버튼 */}
       <button onClick={handleOpenModal} className={styles.login}>
         로그인
       </button>
@@ -45,7 +46,7 @@ export default function Portal() {
             <Link href="/sign-up">
               <div className={styles.button}>회원가입</div>
             </Link>
-            <button className={styles.button}>카카오 로그인</button>
+            {/* <button className={styles.button}>카카오 로그인</button> */}
 
             {/* 닫기 버튼 로고로 바꿔야함 */}
             <button onClick={handleCloseModal} className={styles.closeButton}>
