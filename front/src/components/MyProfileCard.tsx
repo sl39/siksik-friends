@@ -15,7 +15,7 @@ export default function Profile() {
       </div>
       <div className={styles.nickname}>
         <span className={styles.level}>{user?.level}</span>
-        {user?.name}
+        {user?.nickname}
         <span className={[styles.level, styles.dummy].join(" ")} />
       </div>
     </div>

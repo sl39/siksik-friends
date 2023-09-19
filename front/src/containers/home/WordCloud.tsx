@@ -115,7 +115,9 @@ export default function WordCloud() {
   };
 
   useEffect(() => {
-    fetchWord(path);
+    if (typeof window !== "undefined") {
+      fetchWord(path);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path]);
 
