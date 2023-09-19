@@ -22,6 +22,12 @@ export const ApiAxios = async <T>(url: string, method: Method = "GET", data?: an
   }
 };
 
-export const signUpAxios = axios.create({
+/** 서버 API Axios */
+export const serverAxios = axios.create({
   baseURL: `${SERVER_ADDRESS}`,
+});
+
+const WORD_CLOUD_ADDRESS = "http://192.168.30.103:7777/api/wc30";
+export const WordCloudAxios = axios.create({
+  baseURL: `${WORD_CLOUD_ADDRESS}`,
 });
