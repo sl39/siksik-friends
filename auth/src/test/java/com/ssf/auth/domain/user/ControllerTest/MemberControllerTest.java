@@ -1,9 +1,9 @@
-package com.ssf.auth.domain.member.ControllerTest;
+package com.ssf.auth.domain.user.ControllerTest;
 
 import com.google.gson.Gson;
-import com.ssf.auth.domain.member.controller.MemberController;
-import com.ssf.auth.domain.member.dto.MemberRequest;
-import com.ssf.auth.domain.member.enums.SocialType;
+import com.ssf.auth.domain.user.controller.UserController;
+import com.ssf.auth.domain.user.dto.UserRequest;
+import com.ssf.auth.domain.user.enums.SocialType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,12 +16,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 public class MemberControllerTest {
 
     @InjectMocks
-    private MemberController target;
+    private UserController target;
 
     private MockMvc mockMvc;
     private Gson gson;
@@ -51,10 +52,13 @@ public class MemberControllerTest {
                         .content(gson.toJson(memberRequest("test@test.com", SocialType.NONE)))
                         .contentType(MediaType.APPLICATION_JSON)
         );
+
+        // then
+        resultActions.andExpect(status().isBadRequest());
     }
 
-    private MemberRequest memberRequest(final String email, final SocialType socialType) {
-        return MemberRequest.builder()
+    private UserRequest memberRequest(final String email, final SocialType socialType) {
+        return UserRequest.builder()
                 .email(email)
                 .socialType(socialType)
                 .build();

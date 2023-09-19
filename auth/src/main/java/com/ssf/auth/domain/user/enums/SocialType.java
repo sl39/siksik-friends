@@ -1,4 +1,4 @@
-package com.ssf.auth.domain.member.enums;
+package com.ssf.auth.domain.user.enums;
 
 public enum SocialType {
 

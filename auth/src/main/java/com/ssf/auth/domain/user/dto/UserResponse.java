@@ -1,6 +1,6 @@
-package com.ssf.auth.domain.member.dto;
+package com.ssf.auth.domain.user.dto;
 
-import com.ssf.auth.domain.member.enums.SocialType;
+import com.ssf.auth.domain.user.enums.SocialType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @Builder
 @RequiredArgsConstructor
-public class MemberResponse {
+public class UserResponse {
 
     private final String email;
     private final SocialType socialType;

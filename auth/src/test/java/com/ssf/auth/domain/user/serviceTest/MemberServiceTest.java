@@ -1,12 +1,12 @@
-package com.ssf.auth.domain.member.serviceTest;
+package com.ssf.auth.domain.user.serviceTest;
 
-import com.ssf.auth.domain.member.dto.MemberResponse;
-import com.ssf.auth.domain.member.enums.MemberErrorResult;
-import com.ssf.auth.domain.member.enums.SocialType;
-import com.ssf.auth.domain.member.entity.Member;
-import com.ssf.auth.domain.member.exception.MemberException;
-import com.ssf.auth.domain.member.repository.MemberRepository;
-import com.ssf.auth.domain.member.service.MemberService;
+import com.ssf.auth.domain.user.dto.UserResponse;
+import com.ssf.auth.domain.user.enums.UserErrorResult;
+import com.ssf.auth.domain.user.enums.SocialType;
+import com.ssf.auth.domain.user.entity.User;
+import com.ssf.auth.domain.user.exception.UserException;
+import com.ssf.auth.domain.user.repository.UserRepository;
+import com.ssf.auth.domain.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,10 +22,10 @@ import static org.mockito.Mockito.*;
 public class MemberServiceTest {
 
     @InjectMocks
-    private MemberService target;
+    private UserService target;
 
     @Mock
-    private MemberRepository memberRepository;
+    private UserRepository memberRepository;
 
     private static final String EMAIL = "test@test.com";
     private static final SocialType SOCIAL_TYPE = SocialType.NONE;
@@ -36,13 +36,13 @@ public class MemberServiceTest {
     public void 멤버등록실패_이미존재함() {
 
         // given
-        doReturn(Member.builder().build()).when(memberRepository).findByEmailAndSocialType(EMAIL, SOCIAL_TYPE);
+        doReturn(User.builder().build()).when(memberRepository).findByEmailAndSocialType(EMAIL, SOCIAL_TYPE);
 
         // when
-        final MemberException result = assertThrows(MemberException.class, () -> target.createMember(EMAIL, SOCIAL_TYPE));
+        final UserException result = assertThrows(UserException.class, () -> target.createMember(EMAIL, SOCIAL_TYPE));
 
         // then
-        assertThat(result.getErrorResult()).isEqualTo(MemberErrorResult.DUPLICATED_MEMBER_REGISTER);
+        assertThat(result.getErrorResult()).isEqualTo(UserErrorResult.DUPLICATED_MEMBER_REGISTER);
     }
 
     @Test
@@ -50,10 +50,10 @@ public class MemberServiceTest {
 
         // given
         doReturn(null).when(memberRepository).findByEmailAndSocialType(EMAIL, SOCIAL_TYPE);
-        doReturn(member()).when(memberRepository).save(any(Member.class));
+        doReturn(member()).when(memberRepository).save(any(User.class));
 
         // when
-        final MemberResponse result = target.createMember(EMAIL, SOCIAL_TYPE);
+        final UserResponse result = target.createMember(EMAIL, SOCIAL_TYPE);
 
         // then
         assertThat(result.getEmail()).isEqualTo(EMAIL);
@@ -61,11 +61,11 @@ public class MemberServiceTest {
 
         // verify
         verify(memberRepository, times(1)).findByEmailAndSocialType(EMAIL, SOCIAL_TYPE);
-        verify(memberRepository, times(1)).save(any(Member.class));
+        verify(memberRepository, times(1)).save(any(User.class));
     }
 
-    private Member member() {
-        return Member.builder()
+    private User member() {
+        return User.builder()
                 .id(-1L)
                 .email(EMAIL)
                 .password(PASSWORD)

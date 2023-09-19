@@ -1,9 +1,9 @@
-package com.ssf.auth.domain.member.repositoryTest;
+package com.ssf.auth.domain.user.repositoryTest;
 
-import com.ssf.auth.domain.member.enums.Role;
-import com.ssf.auth.domain.member.enums.SocialType;
-import com.ssf.auth.domain.member.entity.Member;
-import com.ssf.auth.domain.member.repository.MemberRepository;
+import com.ssf.auth.domain.user.enums.Role;
+import com.ssf.auth.domain.user.enums.SocialType;
+import com.ssf.auth.domain.user.entity.User;
+import com.ssf.auth.domain.user.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -21,7 +21,7 @@ public class MemberRepositoryTest {
     private static final String PROFILE = "/profile.png";
 
     @Autowired
-    private MemberRepository memberRepository;
+    private UserRepository memberRepository;
 
     @Test
     public void MemberRepository가Null이아님() {
@@ -31,14 +31,14 @@ public class MemberRepositoryTest {
     @Test
     public void 멤버등록() {
         // given
-        final Member member = Member.builder()
+        final User member = User.builder()
                 .email(EMAIL)
                 .password(PASSWORD)
                 .nickname(NICKNAME)
                 .build();
 
         // when
-        final Member result = memberRepository.save(member);
+        final User result = memberRepository.save(member);
 
         // then
         assertThat(result.getId()).isNotNull();
@@ -55,7 +55,7 @@ public class MemberRepositoryTest {
     @Test
     public void 멤버조회() {
         // given
-        final Member member = Member.builder()
+        final User member = User.builder()
                 .email(EMAIL)
                 .password(PASSWORD)
                 .nickname(NICKNAME)
@@ -63,7 +63,7 @@ public class MemberRepositoryTest {
 
         // when
         memberRepository.save(member);
-        final Member findResult = memberRepository.findByEmailAndSocialType(EMAIL, SocialType.NONE);
+        final User findResult = memberRepository.findByEmailAndSocialType(EMAIL, SocialType.NONE);
 
         // then
         assertThat(findResult.getId()).isNotNull();

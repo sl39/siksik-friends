@@ -1,7 +1,7 @@
-package com.ssf.auth.domain.member.entity;
+package com.ssf.auth.domain.user.entity;
 
-import com.ssf.auth.domain.member.enums.Role;
-import com.ssf.auth.domain.member.enums.SocialType;
+import com.ssf.auth.domain.user.enums.Role;
+import com.ssf.auth.domain.user.enums.SocialType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Member {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

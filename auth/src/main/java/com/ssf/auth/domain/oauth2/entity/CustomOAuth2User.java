@@ -1,7 +1,7 @@
 package com.ssf.auth.domain.oauth2.entity;
 
 
-import com.ssf.auth.domain.member.enums.Role;
+import com.ssf.auth.domain.user.enums.Role;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
