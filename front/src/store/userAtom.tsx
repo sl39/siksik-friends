@@ -7,7 +7,14 @@ function getSavedUser(): User | null {
   const savedUser = localStorage.getItem("user");
   return savedUser ? JSON.parse(savedUser) : undefined;
 }
-export const userAtom = atom<User | null>(getSavedUser());
+export const localUser = atom<User | null>(getSavedUser());
+
+export const userAtom = atom<User | null>({
+  id: 1,
+  email: "temp",
+  nickname: "temp",
+  profile: "/images/character/rabbit.png",
+});
 
 // const userAtom = atom(getSavedUser());
 

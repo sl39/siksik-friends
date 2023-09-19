@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAtom } from "jotai";
+import type { User } from "@/types";
+import { localUser } from "@/store/userAtom";
+// import { serverAxios } from "@/services/api";
 import styles from "./Login.module.css";
 
 export default function LoginForm() {
@@ -9,11 +13,40 @@ export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  /** 로그인 로직 */
-  const handleSignIn = (e: React.FormEvent<HTMLFormElement>) => {
+  const setUser = useAtom(localUser)[1];
+
+  /** 로그인 POST */
+  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // 로그인 로직 작성
-    console.log(email, password);
+
+    // const formData = {
+    //   email,
+    //   password,
+    // };
+    // try {
+    //   const response = await serverAxios.post("/sign-in", formData);
+    //   console.log(response);
+
+    //   const newUser: User = {
+    //     id: Date.now(),
+    //     email: formData.email,
+    //   };
+    //   setUser(newUser);
+    //   // localStorage에 업데이트된 값을 저장
+    //   localStorage.setItem("user", JSON.stringify(newUser));
+    //   router.push("/home");
+    // } catch (error) {
+    //   console.log("로그인 에러", error);
+    // }
+
+    /**  서버 연결 전 임시 데이터 */
+    const tempUser: User = {
+      id: Date.now(),
+      email: "임시이메일",
+    };
+    setUser(tempUser);
+    // localStorage에 업데이트된 값을 저장
+    localStorage.setItem("user", JSON.stringify(tempUser));
     router.push("/home");
   };
 
@@ -26,7 +59,7 @@ export default function LoginForm() {
       <div>
         <label htmlFor="password">비밀번호</label>
         <input
-          type="text"
+          type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           id="password"
