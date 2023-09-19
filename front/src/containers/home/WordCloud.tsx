@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
+import zingchart from "zingchart/es6";
 import { WordCloudAxios } from "@/services/api";
 import styles from "./home.module.css";
+import "zingchart/modules-es6/zingchart-wordcloud.min.js";
 
-const ZingChart: any = dynamic(() => import("zingchart").then((mod) => mod.ZingChart), { ssr: false });
 interface Config {
   type: string;
   options: {
@@ -37,13 +37,34 @@ interface Config {
 export default function WordCloud() {
   // subpath: 101 경제 / 102 사회 / 103 생활문화 / 104 IT과학 / 105 세계
   const [path, setPath] = useState<number>(101);
+
+  type PathDataType = Record<number, string>;
+  const pathData: PathDataType = {
+    101: "경제",
+    102: "사회",
+    103: "생활/문화",
+    104: "IT/과학",
+    105: "세계",
+  };
   const [config, setConfig] = useState<Config | {}>({});
 
-  const FetchData = async () => {
+  const FetchData = async (newPath: number) => {
     try {
-      const response = await WordCloudAxios.get(`/${path}`);
-      console.log(response);
-      const words = response.data;
+      // const response = await WordCloudAxios.get(`/${newPath}`);
+      // console.log(response);
+      // const words = response.data;
+
+      // Axios 연결 전 임시 데이터
+      const words = [
+        {
+          text: `${newPath}`,
+          count: 1,
+        },
+        {
+          text: `${pathData[newPath]}`,
+          count: 2,
+        },
+      ];
 
       setConfig({
         type: "wordcloud",
@@ -93,19 +114,30 @@ export default function WordCloud() {
   };
 
   useEffect(() => {
-    FetchData();
-  }, []);
+    FetchData(path);
+  }, [path]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      zingchart.render({
+        id: "myChart",
+        data: config,
+        height: "90%",
+        width: "100%",
+      });
+    }
+  }, [config]);
 
   return (
     <div className={styles.wordCloud}>
-      {/* <div>
-        <button>경제</button>
-        <button>사회</button>
-        <button>생활/문화</button>
-        <button>IT/과학</button>
-        <button>세계</button>
-      </div> */}
-      {config && <ZingChart data={config} />}
+      <div className={styles.wordButton}>
+        <button onClick={() => setPath(101)}>경제</button>
+        <button onClick={() => setPath(102)}>사회</button>
+        <button onClick={() => setPath(103)}>생활/문화</button>
+        <button onClick={() => setPath(104)}>IT/과학</button>
+        <button onClick={() => setPath(105)}>세계</button>
+      </div>
+      <div id="myChart" />
     </div>
   );
 }
