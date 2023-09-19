@@ -1,8 +1,12 @@
+// 타입
+
 export interface User {
-  id: number;
-  name: string;
-  level: number;
-  profile: string;
+  id?: number;
+  name?: string;
+  password1?: string;
+  password2?: string;
+  profile?: string;
+  level?: number;
 }
 
 export interface Room {
