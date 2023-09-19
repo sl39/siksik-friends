@@ -9,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -34,7 +36,7 @@ public class UserServiceImpl implements UserService {
                 .profile(userSignUpDto.getProfile())
                 .build();
 
-        user.encodePassword(passwordEncoder);
+//        user.encodePassword(passwordEncoder);
         userRepository.save(user);
     }
 
@@ -46,8 +48,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void ValidNickname(String nickname) throws Exception {
+        if (userRepository.findByNickname(nickname).isPresent()) {
+            throw new Exception("이미 존재하는 닉네임입니다.");
+        }
+    }
+
+    @Override
     public void signIn(UserSignInDto userSignInDto) throws Exception {
         if (userRepository.findByEmail(userSignInDto.getEmail()).isEmpty()) {
+            throw new Exception("이메일 또는 비밀번호를 확인하세요.");
+        }
+
+        User input = User.builder()
+                .password(userSignInDto.getPassword())
+                .build();
+
+//        input.encodePassword(passwordEncoder);
+        String password = userRepository.findAllByEmail(userSignInDto.getEmail()).get().getPassword();
+
+        if (!password.equals(input.getPassword())) {
             throw new Exception("이메일 또는 비밀번호를 확인하세요.");
         }
     }

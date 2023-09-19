@@ -36,3 +36,7 @@ spring:
 #    url: jdbc:postgresql://j9e101.p.ssafy.io:5432/auth
 #    username: elefante
 #    password: E1efante1!
+
+#  sql:
+#    init:
+#      platform:
