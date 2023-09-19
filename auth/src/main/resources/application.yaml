@@ -30,3 +30,9 @@ spring:
     console:
       enabled: true
       path: /h2-console
+
+#  datasource:
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://j9e101.p.ssafy.io:5432/auth
+#    username: elefante
+#    password: E1efante1!
