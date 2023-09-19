@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import zingchart from "zingchart/es6";
-import { WordCloudAxios } from "@/services/api";
+// import { WordCloudAxios } from "@/services/api";
 import styles from "./home.module.css";
+// eslint-disable-next-line import/extensions
 import "zingchart/modules-es6/zingchart-wordcloud.min.js";
 
 interface Config {
@@ -46,9 +47,9 @@ export default function WordCloud() {
     104: "IT/과학",
     105: "세계",
   };
-  const [config, setConfig] = useState<Config | {}>({});
+  const [config, setConfig] = useState<Config | undefined>();
 
-  const FetchData = async (newPath: number) => {
+  const fetchWord = async (newPath: number) => {
     try {
       // const response = await WordCloudAxios.get(`/${newPath}`);
       // console.log(response);
@@ -114,17 +115,20 @@ export default function WordCloud() {
   };
 
   useEffect(() => {
-    FetchData(path);
+    fetchWord(path);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      zingchart.render({
-        id: "myChart",
-        data: config,
-        height: "90%",
-        width: "100%",
-      });
+      if (config !== undefined) {
+        zingchart.render({
+          id: "myChart",
+          data: config,
+          height: "90%",
+          width: "100%",
+        });
+      }
     }
   }, [config]);
 
