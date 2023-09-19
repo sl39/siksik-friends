@@ -22,6 +22,6 @@ export const ApiAxios = async <T>(url: string, method: Method = "GET", data?: an
   }
 };
 
-export const signUpAxios = axios.create({
+export const serverAxios = axios.create({
   baseURL: `${SERVER_ADDRESS}`,
 });

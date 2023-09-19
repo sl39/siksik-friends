@@ -2,9 +2,7 @@
 
 import { useState } from "react";
 import axios from "axios";
-import { useAtom } from "jotai";
-import { signUpAxios } from "@/services/api";
-import { userAtom } from "@/store/userAtom";
+import { serverAxios } from "@/services/api";
 import styles from "./SignUp.module.css";
 
 // const validate = (vaules) => {
@@ -66,7 +64,7 @@ export default function SignUpForm() {
   const [checkEmail, setCheckEmail] = useState("");
   const [checkNickname, setCheckNickname] = useState("");
 
-  /** 회원가입 POST 요청 */
+  /** 회원가입 POST */
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = {
@@ -80,7 +78,7 @@ export default function SignUpForm() {
       console.log("중복 미확인");
     } else {
       try {
-        const response = await signUpAxios.post("/sign-up", formData);
+        const response = await serverAxios.post("/sign-up", formData);
         console.log(response);
       } catch (error) {
         console.log("회원가입 에러", error);
@@ -94,7 +92,7 @@ export default function SignUpForm() {
       email,
     };
     try {
-      const response = await signUpAxios.get("/email", { params });
+      const response = await serverAxios.get("/email", { params });
       console.log(response);
       setCheckEmail("사용 가능한 이메일입니다.");
     } catch (error) {
@@ -112,7 +110,7 @@ export default function SignUpForm() {
       nickname,
     };
     try {
-      const response = await signUpAxios.get("/nickname", { params });
+      const response = await serverAxios.get("/nickname", { params });
       console.log(response);
       setCheckNickname("사용 가능한 닉네임입니다.");
     } catch (error) {

@@ -2,13 +2,14 @@ import { atom } from "jotai";
 import type { User } from "@/types";
 // import { fetchData } from "@/services/api";
 
-// 아톰 선언
-export const userAtom = atom<User | null>({
-  id: 1,
-  name: "닉네임",
-  level: 1,
-  profile: "/images/character/rabbit.png",
-});
+/** localStorage에 'user' 키의 데이터가 있으면 JSON.parse를 사용하여 객체로 변환한 후 반환 */
+function getSavedUser(): User | null {
+  const savedUser = localStorage.getItem("user");
+  return savedUser ? JSON.parse(savedUser) : undefined;
+}
+export const userAtom = atom<User | null>(getSavedUser());
+
+// const userAtom = atom(getSavedUser());
 
 // const fetchUser = async () => {
 //   try {
