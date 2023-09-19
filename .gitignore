@@ -38,3 +38,4 @@ out/
 
 ### yaml ###
 application-auth.yaml
+application-jwt.yaml
