@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import axios from "axios";
-import type User from "@/types";
-import { ApiAxios, signUpAxios } from "@/services/api";
+import { signUpAxios } from "@/services/api";
 import styles from "./SignUp.module.css";
 
 // const validate = (vaules) => {
@@ -35,7 +34,7 @@ export default function SignUpForm() {
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
   const [nickname, setNickname] = useState("");
-  const [profile, setProfile] = useState("public/images/character/rabbit.png");
+  // const [profile, setProfile] = useState("public/images/character/rabbit.png");
 
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
