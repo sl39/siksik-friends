@@ -1,4 +1,4 @@
-package com.ssf.auth.domain.user.entity;
+package com.ssf.auth.domain.user;
 
 import com.ssf.auth.domain.user.enums.Role;
 import com.ssf.auth.domain.user.enums.SocialType;
@@ -58,11 +58,17 @@ public class User {
     @Enumerated(EnumType.STRING)
     private SocialType socialType = SocialType.NONE;
 
+    private String refreshToken;
+
     public void authorizeUser(Role role) {
         this.role = role;
     }
 
     public void encodePassword(PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(this.password);
+    }
+
+    public void updateRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }
