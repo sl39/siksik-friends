@@ -1,20 +1,14 @@
 package com.ssf.member.service;
 
-import ch.qos.logback.core.spi.ErrorCodes;
-import com.ssf.member.entity.Member;
-import com.ssf.member.entity.MemberDetailDTO;
-import com.ssf.member.repository.MemberRepository;
-import org.junit.jupiter.api.Test;
+import com.ssf.domain.Member.Member.entity.dto.MemberDetailDTO;
+import com.ssf.domain.Member.Member.repository.MemberRepository;
+import com.ssf.domain.Member.Member.service.MemberDetailService;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.*;
 
 import static org.mockito.Mockito.doReturn;
 

@@ -1,12 +1,7 @@
-package com.ssf.member.entity;
+package com.ssf.domain.Member.Member.entity.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.ws.rs.POST;
+import com.ssf.domain.Member.Member.entity.Member;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Setter

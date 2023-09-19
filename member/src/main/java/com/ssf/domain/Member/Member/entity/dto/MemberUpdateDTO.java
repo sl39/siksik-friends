@@ -1,4 +1,4 @@
-package com.ssf.member.entity;
+package com.ssf.domain.Member.Member.entity.dto;
 
 import lombok.*;
 

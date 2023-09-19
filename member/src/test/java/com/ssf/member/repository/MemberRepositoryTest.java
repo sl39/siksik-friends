@@ -1,13 +1,12 @@
 package com.ssf.member.repository;
 
-import com.ssf.member.entity.Member;
-import com.ssf.member.entity.MemberDetailDTO;
-import com.ssf.member.enums.Role;
-import com.ssf.member.enums.SocialType;
-import jakarta.transaction.Transactional;
+import com.ssf.domain.Member.Member.entity.Member;
+import com.ssf.domain.Member.Member.entity.dto.MemberDetailDTO;
+import com.ssf.domain.Member.Member.enums.Role;
+import com.ssf.domain.Member.Member.enums.SocialType;
+import com.ssf.domain.Member.Member.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;

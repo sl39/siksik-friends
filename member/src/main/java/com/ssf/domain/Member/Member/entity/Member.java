@@ -1,7 +1,7 @@
-package com.ssf.member.entity;
+package com.ssf.domain.Member.Member.entity;
 
-import com.ssf.member.enums.Role;
-import com.ssf.member.enums.SocialType;
+import com.ssf.domain.Member.Member.enums.Role;
+import com.ssf.domain.Member.Member.enums.SocialType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.query.sql.internal.ParameterRecognizerImpl;
 
 import java.time.LocalDateTime;
 
@@ -60,6 +59,9 @@ public class Member {
     @Builder.Default
     @Enumerated(EnumType.STRING)
     private SocialType socialType = SocialType.NONE;
+
+//    @OneToMany(mappedBy = "member")
+//    private List<UserAchievements> userAchievementsList = new ArrayList<>();
 
 
 }

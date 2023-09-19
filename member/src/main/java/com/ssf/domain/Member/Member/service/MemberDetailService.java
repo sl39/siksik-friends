@@ -1,8 +1,8 @@
-package com.ssf.member.service;
+package com.ssf.domain.Member.Member.service;
 
-import com.ssf.member.entity.Member;
-import com.ssf.member.entity.MemberDetailDTO;
-import com.ssf.member.repository.MemberRepository;
+import com.ssf.domain.Member.Member.entity.dto.MemberDetailDTO;
+import com.ssf.domain.Member.Member.entity.Member;
+import com.ssf.domain.Member.Member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
