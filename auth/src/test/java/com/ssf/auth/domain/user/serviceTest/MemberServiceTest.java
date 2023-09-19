@@ -3,7 +3,7 @@ package com.ssf.auth.domain.user.serviceTest;
 import com.ssf.auth.domain.user.dto.UserResponse;
 import com.ssf.auth.domain.user.enums.UserErrorResult;
 import com.ssf.auth.domain.user.enums.SocialType;
-import com.ssf.auth.domain.user.entity.User;
+import com.ssf.auth.domain.user.User;
 import com.ssf.auth.domain.user.exception.UserException;
 import com.ssf.auth.domain.user.repository.UserRepository;
 import com.ssf.auth.domain.user.service.UserService;

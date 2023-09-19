@@ -2,7 +2,7 @@ package com.ssf.auth.domain.user.repositoryTest;
 
 import com.ssf.auth.domain.user.enums.Role;
 import com.ssf.auth.domain.user.enums.SocialType;
-import com.ssf.auth.domain.user.entity.User;
+import com.ssf.auth.domain.user.User;
 import com.ssf.auth.domain.user.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

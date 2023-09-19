@@ -2,14 +2,12 @@ package com.ssf.auth.domain.user.service;
 
 import com.ssf.auth.domain.user.dto.UserSignInDto;
 import com.ssf.auth.domain.user.dto.UserSignUpDto;
-import com.ssf.auth.domain.user.entity.User;
+import com.ssf.auth.domain.user.User;
 import com.ssf.auth.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @Transactional
