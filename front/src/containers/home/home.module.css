@@ -38,6 +38,15 @@
   margin-top: 20px;
   margin-left: 10px;
 }
+.wordButton {
+  width: 100%;
+  height: 10%;
+  margin-bottom: 10px;
+}
+.wordButton button {
+  border: 1px solid black;
+  height: 100%;
+}
 
 .postIt {
   cursor: pointer;
