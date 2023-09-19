@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.LocalDateTime;
 
 @Entity
-@Table
+@Table(name = "users")
 @Getter
 @Builder
 @AllArgsConstructor
