@@ -24,26 +24,26 @@ public class MemberController {
     private final MemberRepository memberRepository;
     private final MemberDeleteService memberDeleteService;
 
-    @GetMapping("/user/{email}")
-    public MemberDetailDTO findByEmail(@PathVariable String email) {
+    @GetMapping("/user/{userId}")
+    public MemberDetailDTO findByEmail(@PathVariable Long userId) {
         System.out.println("여기는 들어오나");
-        MemberDetailDTO memberDetailDTO = memberDetailService.findByEmail(email);
+        MemberDetailDTO memberDetailDTO = memberDetailService.findById(userId);
         return memberDetailDTO;
     }
-    @PutMapping("/user/{email}")
-    public Member updateMember(@PathVariable String email, MemberUpdateDTO memberUpdateDTO) {
+    @PutMapping("/user/{userId}")
+    public Member updateMember(@PathVariable Long userId, MemberUpdateDTO memberUpdateDTO) {
         System.out.println("PUT 요청이 들어오나?");
-        Member member = memberUpdateService.update(email,memberUpdateDTO);
+        Member member = memberUpdateService.update(userId,memberUpdateDTO);
         memberRepository.save(member);
 
 
         return member;
     }
 
-    @DeleteMapping("/user/{email}")
-    public String deleteByEmail(@PathVariable String email){
+    @DeleteMapping("/user/{userId}")
+    public String deleteById(@PathVariable Long userId){
 
-        memberDeleteService.deleteByEmail(email);
+        memberDeleteService.deleteById(userId);
         return "삭제 완";
     }
 }

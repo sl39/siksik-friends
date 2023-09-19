@@ -13,8 +13,8 @@ public class MemberDetailService {
     private final MemberRepository memberRepository;
 
 
-    public MemberDetailDTO findByEmail(String email){
-        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("해당이메일이 없습니다"));
+    public MemberDetailDTO findById(Long id){
+        Member member = memberRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당이메일이 없습니다"));
         System.out.println(member);
         return new MemberDetailDTO(member);
     }

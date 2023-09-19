@@ -12,9 +12,9 @@ public class MemberDeleteService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public void deleteByEmail(String email){
+    public void deleteById(Long id){
         System.out.println("여기는 delete");
-        memberRepository.deleteByEmail(email);
+        memberRepository.deleteById(id);
 
     }
 }

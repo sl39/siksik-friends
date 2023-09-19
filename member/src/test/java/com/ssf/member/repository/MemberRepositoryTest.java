@@ -61,7 +61,7 @@ public class MemberRepositoryTest {
                 .score(1000L)
                 .profile("image").build();
         // when
-        final Optional<Member> memberDetailDTO1 = memberRepository.findByEmail(memberDetailDTO.getEmail());
+        final Optional<Member> memberDetailDTO1 = memberRepository.findById(memberDetailDTO.getId());
 
 
         // then
