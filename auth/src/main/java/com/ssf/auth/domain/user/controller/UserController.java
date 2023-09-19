@@ -1,10 +1,7 @@
 package com.ssf.auth.domain.user.controller;
 
-import com.ssf.auth.domain.user.dto.UserSignInDto;
 import com.ssf.auth.domain.user.dto.UserSignUpDto;
 import com.ssf.auth.domain.user.service.UserService;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,11 +28,5 @@ public class UserController {
     public String validNickname(String nickname) throws Exception {
         userService.ValidNickname(nickname);
         return "사용 가능 닉네임";
-    }
-
-    @PostMapping("/sign-in")
-    public String signIn(@RequestBody UserSignInDto userSignInDto) throws Exception {
-        userService.signIn(userSignInDto);
-        return "로그인 성공";
     }
 }

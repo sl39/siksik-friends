@@ -1,8 +1,19 @@
 package com.ssf.auth.global.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssf.auth.domain.user.repository.UserRepository;
+import com.ssf.auth.global.jwt.filter.JwtAuthenticationProcessingFilter;
+import com.ssf.auth.global.jwt.service.JwtService;
+import com.ssf.auth.global.signin.filter.CustomJsonUsernamePasswordAuthenticationFilter;
+import com.ssf.auth.global.signin.handler.SignInFailureHandler;
+import com.ssf.auth.global.signin.handler.SignInSuccessHandler;
+import com.ssf.auth.global.signin.service.SignInService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -18,6 +29,11 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final SignInService signInService;
+    private final JwtService jwtService;
+    private final UserRepository userRepository;
+    private final ObjectMapper objectMapper;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
         http
@@ -30,9 +46,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
 //                        .requestMatchers("/test/**").permitAll()
                         .requestMatchers(new MvcRequestMatcher(introspector, "")).permitAll()
-                        .requestMatchers(new MvcRequestMatcher(introspector, "/**")).permitAll()
-                        .anyRequest().authenticated());
+                        .requestMatchers(new MvcRequestMatcher(introspector, "/sign-up")).permitAll()
+                        .requestMatchers(new MvcRequestMatcher(introspector, "/h2-console/**")).permitAll()
+                        .anyRequest().authenticated())
 //                .oauth2Login(Customizer.withDefaults());
+                .addFilterBefore(jwtAuthenticationProcessingFilter(), CustomJsonUsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -42,4 +60,35 @@ public class SecurityConfig {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
+    @Bean
+    public AuthenticationManager authenticationManager() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setPasswordEncoder(passwordEncoder());
+        provider.setUserDetailsService(signInService);
+        return new ProviderManager(provider);
+    }
+
+    @Bean
+    public SignInSuccessHandler signInSuccessHandler() {
+        return new SignInSuccessHandler(jwtService, userRepository);
+    }
+
+    @Bean
+    public SignInFailureHandler signInFailureHandler() {
+        return new SignInFailureHandler();
+    }
+
+    @Bean
+    public CustomJsonUsernamePasswordAuthenticationFilter customJsonUsernamePasswordAuthenticationFilter() {
+        CustomJsonUsernamePasswordAuthenticationFilter customJsonUsernamePasswordSignInFilter = new CustomJsonUsernamePasswordAuthenticationFilter(objectMapper);
+        customJsonUsernamePasswordSignInFilter.setAuthenticationManager(authenticationManager());
+        customJsonUsernamePasswordSignInFilter.setAuthenticationSuccessHandler(signInSuccessHandler());
+        customJsonUsernamePasswordSignInFilter.setAuthenticationFailureHandler(signInFailureHandler());
+        return customJsonUsernamePasswordSignInFilter;
+    }
+
+    @Bean
+    public JwtAuthenticationProcessingFilter jwtAuthenticationProcessingFilter() {
+        return new JwtAuthenticationProcessingFilter(jwtService, userRepository);
+    }
 }
