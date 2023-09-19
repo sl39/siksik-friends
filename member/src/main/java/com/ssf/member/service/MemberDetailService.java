@@ -1,26 +1,21 @@
 package com.ssf.member.service;
 
 import com.ssf.member.entity.Member;
+import com.ssf.member.entity.MemberDetailDTO;
 import com.ssf.member.repository.MemberRepository;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
+@RequiredArgsConstructor
 public class MemberDetailService {
-
 
     private final MemberRepository memberRepository;
 
-    public MemberDetailService(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
+
+    public MemberDetailDTO findByEmail(String email){
+        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("해당이메일이 없습니다"));
+        System.out.println(member);
+        return new MemberDetailDTO(member);
     }
-
-    public Member findByEmail(String email) {
-        return memberRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("USER_NOT_FOUND"));
-    }
-
-
 }
