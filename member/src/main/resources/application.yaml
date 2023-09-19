@@ -30,3 +30,7 @@ spring:
     console:
       enabled: true
       path: /h2-console
+  security:
+    user:
+      name: user
+      password: 1234
