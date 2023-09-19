@@ -38,6 +38,9 @@
   margin-top: 20px;
   margin-left: 10px;
 }
+.wordCloud button {
+  border: 1px solid black;
+}
 
 .postIt {
   cursor: pointer;
