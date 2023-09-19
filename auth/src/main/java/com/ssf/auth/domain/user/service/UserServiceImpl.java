@@ -1,5 +1,6 @@
 package com.ssf.auth.domain.user.service;
 
+import com.ssf.auth.domain.user.dto.UserSignInDto;
 import com.ssf.auth.domain.user.dto.UserSignUpDto;
 import com.ssf.auth.domain.user.entity.User;
 import com.ssf.auth.domain.user.repository.UserRepository;
@@ -35,5 +36,19 @@ public class UserServiceImpl implements UserService {
 
         user.encodePassword(passwordEncoder);
         userRepository.save(user);
+    }
+
+    @Override
+    public void validEmail(String email) throws Exception {
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw new Exception("이미 존재하는 이메일입니다.");
+        }
+    }
+
+    @Override
+    public void signIn(UserSignInDto userSignInDto) throws Exception {
+        if (userRepository.findByEmail(userSignInDto.getEmail()).isEmpty()) {
+            throw new Exception("이메일 또는 비밀번호를 확인하세요.");
+        }
     }
 }
