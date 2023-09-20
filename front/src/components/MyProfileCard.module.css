@@ -1,37 +1,49 @@
-.profileContainer {
-  height: 65%;
-  width: 85%;
-  border: 10px solid #d9d9d9;
-
-  stroke: #d9d9d9;
-  box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.25);
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.polaroid {
+  background: #fff;
+  padding: 1rem;
+  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.2);
 }
-.image {
-  border: 1px solid black;
-  margin: 10px;
-  height: 80%;
-}
-.nickname {
-  width: 100%;
-  margin: 10px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+.caption {
   font-size: 1.8rem;
   text-align: center;
+  line-height: 2em;
 }
-.level {
-  border: 1px solid black;
-  width: 50px;
-  height: 50px;
-  font-size: 1.4rem;
+.item {
+  display: inline-block;
+  margin-top: 12%;
+  margin-left: 15%;
+
+  /* transform: scale(calc(1.2 * var(--scale-factor) * vw), calc(1.2 * var(--scale-factor) * vw)) rotate(5deg); */
+  transform: scale(1, 1) rotate(5deg);
+  transition: all 0.35s;
+}
+.item .polaroid:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  transition: all 0.35s;
 }
 
-.dummy {
-  border: none;
-  width: 10px;
+.item:hover {
+  filter: none;
+  transform: scale(1.1, 1.1) rotate(0deg) !important;
+  transition: all 0.35s;
+  z-index: 6;
+}
+.item:hover .polaroid:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  transform: rotate(0deg);
+  height: 90%;
+  width: 90%;
+  bottom: 0%;
+  right: 5%;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.2);
+  transition: all 0.35s;
+}
+.img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid rgba(0, 0, 0, 0.2);
 }
