@@ -22,7 +22,8 @@ export const ApiAxios = async <T>(url: string, method: Method = "GET", data?: an
 };
 
 /** 서버 API Axios */
-const SERVER_ADDRESS = "http://192.168.30.127:8081";
+// const SERVER_ADDRESS = "http://192.168.30.127:8081";
+const SERVER_ADDRESS = "http://j9e101.p.ssafy.io:8081";
 export const serverAxios = axios.create({
   baseURL: `${SERVER_ADDRESS}`,
 });
