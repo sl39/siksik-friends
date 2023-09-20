@@ -2,7 +2,7 @@ package com.ssf.auth.domain.user.serviceTest;
 
 import com.ssf.auth.domain.user.dto.UserResponse;
 import com.ssf.auth.domain.user.enums.UserErrorResult;
-import com.ssf.auth.domain.user.enums.SocialType;
+import com.ssf.auth.domain.user.SocialType;
 import com.ssf.auth.domain.user.User;
 import com.ssf.auth.domain.user.exception.UserException;
 import com.ssf.auth.domain.user.repository.UserRepository;
@@ -13,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;

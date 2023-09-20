@@ -1,4 +1,4 @@
-package com.ssf.auth.domain.user.enums;
+package com.ssf.auth.domain.user;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

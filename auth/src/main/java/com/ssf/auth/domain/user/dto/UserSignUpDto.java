@@ -1,6 +1,5 @@
 package com.ssf.auth.domain.user.dto;
 
-import com.ssf.auth.domain.user.enums.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

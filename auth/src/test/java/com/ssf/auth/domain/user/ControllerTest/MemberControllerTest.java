@@ -3,7 +3,7 @@ package com.ssf.auth.domain.user.ControllerTest;
 import com.google.gson.Gson;
 import com.ssf.auth.domain.user.controller.UserController;
 import com.ssf.auth.domain.user.dto.UserRequest;
-import com.ssf.auth.domain.user.enums.SocialType;
+import com.ssf.auth.domain.user.SocialType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

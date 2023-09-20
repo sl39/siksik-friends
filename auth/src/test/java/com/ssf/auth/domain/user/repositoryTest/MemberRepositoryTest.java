@@ -1,7 +1,7 @@
 package com.ssf.auth.domain.user.repositoryTest;
 
-import com.ssf.auth.domain.user.enums.Role;
-import com.ssf.auth.domain.user.enums.SocialType;
+import com.ssf.auth.domain.user.Role;
+import com.ssf.auth.domain.user.SocialType;
 import com.ssf.auth.domain.user.User;
 import com.ssf.auth.domain.user.repository.UserRepository;
 import org.junit.jupiter.api.Test;

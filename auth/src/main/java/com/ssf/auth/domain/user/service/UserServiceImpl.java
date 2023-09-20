@@ -1,6 +1,5 @@
 package com.ssf.auth.domain.user.service;
 
-import com.ssf.auth.domain.user.dto.UserSignInDto;
 import com.ssf.auth.domain.user.dto.UserSignUpDto;
 import com.ssf.auth.domain.user.User;
 import com.ssf.auth.domain.user.repository.UserRepository;

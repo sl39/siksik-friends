@@ -1,7 +1,5 @@
 package com.ssf.auth.domain.user;
 
-import com.ssf.auth.domain.user.enums.Role;
-import com.ssf.auth.domain.user.enums.SocialType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
