@@ -29,4 +29,9 @@ public class UserController {
         userService.ValidNickname(nickname);
         return "사용 가능 닉네임";
     }
+
+    @GetMapping("/jwt-test")
+    public String jwtTest() {
+        return "jwtTest 요청 성공";
+    }
 }
