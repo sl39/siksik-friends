@@ -31,6 +31,7 @@
   justify-content: center;
   align-items: center;
 }
+/* 워드클라우드 */
 .wordCloud {
   border: solid 1px black;
   width: 90%;
@@ -38,14 +39,73 @@
   margin-top: 20px;
   margin-left: 10px;
 }
+
+/* 버튼 */
+
+.groupContainer {
+  height: 80px;
+  display: grid;
+  place-items: center;
+  justify-items: center;
+}
 .wordButton {
   width: 100%;
-  height: 10%;
   margin-bottom: 10px;
+  font-size: 0;
+  outline: 0;
 }
-.wordButton button {
-  border: 1px solid black;
+.button {
+  border: 3px solid var(--color-word-border);
+  color: var(--color-word-text);
+  background-color: var(--color-word-back);
+  text-align: center;
+
   height: 100%;
+  font-weight: 800;
+  font-size: 22px;
+  background: transparent;
+  min-width: 100px;
+  text-transform: uppercase;
+  border-radius: 8px;
+  display: inline-block;
+  padding: 10px 16px;
+  margin: 0 3px 0 0;
+  cursor: pointer;
+  transition-duration: 0.1s;
+  transition-timing-function: ease-in-out;
+}
+.button:first-of-type {
+  border-radius: 30px 12px 12px 30px;
+}
+.button:last-of-type {
+  border-radius: 12px 30px 30px 12px;
+}
+.button:hover {
+  border-color: var(--color-word-hover);
+  color: white;
+  background-color: var(--color-word-hover-back);
+}
+.active {
+  border-color: var(--color-word-hover);
+  color: white;
+  background-color: var(--color-word-hover-back);
+  padding: 16px 16px;
+  outline: 0;
+  border-radius: 12px;
+}
+.active:focus:first-of-type {
+  border-radius: 30px 12px 12px 30px;
+}
+.active:focus:last-of-type {
+  border-radius: 12px 30px 30px 12px;
+}
+@media only screen and (max-width: 767px) {
+  .button {
+    min-width: 80px;
+  }
+}
+.wordButton::-moz-focus-inner {
+  border: 0;
 }
 
 .postIt {

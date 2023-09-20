@@ -9,14 +9,12 @@ export default function Profile() {
   const [user] = useAtom(userAtom);
 
   return (
-    <div className={styles.profileContainer}>
-      <div className={styles.image}>
-        <Image src={`${user?.profile}`} alt="캐릭터 프로필" width={300} height={320} />
-      </div>
-      <div className={styles.nickname}>
-        <span className={styles.level}>{user?.level}</span>
-        {user?.nickname}
-        <span className={[styles.level, styles.dummy].join(" ")} />
+    <div className={[styles.item].join(" ")}>
+      <div className={styles.polaroid}>
+        <Image className={styles.img} src={`${user?.profile}`} alt="캐릭터 프로필" width={300} height={320} />
+        <div className={styles.caption}>
+          {user?.level} {user?.nickname}
+        </div>
       </div>
     </div>
   );
