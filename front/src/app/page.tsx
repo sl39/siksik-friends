@@ -5,7 +5,7 @@ import MainTitle from "@/containers/MainTitle";
 export default function Home() {
   return (
     <div className={styles.main}>
-      <div className={styles.Logo}>
+      <div className={`${styles.Logo}`}>
         <MainTitle data="식" />
         <MainTitle data="식" />
         <MainTitle data="프" />
