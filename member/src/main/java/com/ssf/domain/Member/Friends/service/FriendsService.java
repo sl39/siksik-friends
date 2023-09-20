@@ -19,40 +19,21 @@ public class FriendsService {
         this.memberRepository = memberRepository;
     }
 
-    private boolean findById(Long fromUserId,Long toUserId){
-        Optional<Friends> friends = friendsRepository.findByFromUserIdAndToUserId(fromUserId, toUserId);
-        if (friends.isEmpty()){
-            return true;
-        }
-        return false;
+    public Friends requestFriendService(Long fromUserId, Long toUserId){
+        Optional<Friends> friends = friendsRepository.findByFromUserIdAndToUserId(fromUserId, toUserId)
+                .ifPresentOrElse(
+                        m -> {throw new IllegalArgumentException("해당 이메일이 이미 존재합니다");},
+                        () ->{
+                            Friends friends1 =  Friends.builder()
+                                    .fromUserId(fromUserId)
+                                    .toUserId(toUserId)
+                                    .build();
+                        }
+                );
+
     }
 
-    public Friends save(Long fromUserId, Long toUserId){
-        if(findById(fromUserId,toUserId)){
-            if(findById(toUserId,fromUserId)){
-                return Friends.builder()
-                        .fromUserId(fromUserId)
-                        .toUserId(toUserId)
-                        .activated(false)
-                        .build();
-            }
-            Optional<Friends> friends = friendsRepository.findByFromUserIdAndToUserId(toUserId,fromUserId);
-            Friends setFriends = Friends.builder()
-                    .id(friends.get().getId())
-                    .fromUserId(toUserId)
-                    .toUserId(fromUserId)
-                    .activated(true)
-                    .build();
-            return setFriends;
-        }
-        else{
-            if(findById(toUserId,fromUserId)){
-                throw new IllegalArgumentException("이미 친구요청을 하셨습니다");
-            }
-            throw new IllegalArgumentException("이미 친구 입니다");
-                        
-        }
-    }
+
 
     public List<MemberFriendDTO> getFriends(Long userId){
         List<Friends> friendsList = friendsRepository.findByActivatedAndFromUserIdOrActivatedAndToUserId(true,userId,true, userId);

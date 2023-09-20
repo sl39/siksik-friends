@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -26,13 +27,13 @@ public class MemberController {
     private final MemberDeleteService memberDeleteService;
     private final MemberRanking memberRanking;
 
-    @GetMapping("/user/{userId}")
+    @GetMapping("/user/userinfo/{userId}")
     public MemberDetailDTO findByEmail(@PathVariable Long userId) {
         System.out.println("여기는 들어오나");
         MemberDetailDTO memberDetailDTO = memberDetailService.findById(userId);
         return memberDetailDTO;
     }
-    @PutMapping("/user/{userId}")
+    @PutMapping("/user/userinfo/{userId}")
     public String updateMember(@PathVariable Long userId, MemberUpdateDTO memberUpdateDTO) {
         System.out.println("PUT 요청이 들어오나?");
         Member member = memberUpdateService.update(userId,memberUpdateDTO);
@@ -42,29 +43,29 @@ public class MemberController {
         return "update complete";
     }
 
-    @DeleteMapping("/user/{userId}")
+    @DeleteMapping("/user/userinfo/{userId}")
     public String deleteById(@PathVariable Long userId){
 
         memberDeleteService.deleteById(userId);
         return "삭제 완";
     }
 
-    @GetMapping("/ranking")
-    public List getRanking(){
-        List<MemberFriendDTO> ranking = memberRanking.getRanking();
+    @GetMapping("/user/ranking")
+    public Map getRanking(){
+        Map<Long, MemberFriendDTO> ranking = memberRanking.getRanking();
         return ranking;
     }
 
-    @GetMapping("/ranking/{userId}")
-    public Long getUserRanking(@PathVariable Long userId){
-        List<MemberFriendDTO> ranking = memberRanking.getRanking();
-        Long i = 0L;
-        for(MemberFriendDTO memberFriendDTO: ranking){
-            if(memberFriendDTO.getId() == userId){
-                return i + 1;
-            }
-            i++;
-        }
-        return i;
-    }
+//    @GetMapping("/ranking/{userId}")
+//    public Long getUserRanking(@PathVariable Long userId){
+//        List<MemberFriendDTO> ranking = memberRanking.getRanking();
+//        Long i = 0L;
+//        for(MemberFriendDTO memberFriendDTO: ranking){
+//            if(memberFriendDTO.getId() == userId){
+//                return i + 1;
+//            }
+//            i++;
+//        }
+//        return i;
+//    }
 }

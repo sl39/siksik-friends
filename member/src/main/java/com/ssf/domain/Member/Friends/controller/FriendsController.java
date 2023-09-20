@@ -22,24 +22,22 @@ public class FriendsController {
     private final FriendsRepository friendsRepository;
     private final MemberRepository memberRepository;
 
-    @GetMapping("/friend/{userId}")
+
+    // 친구 목록
+    @GetMapping("/user/friend/{userId}")
     public List<MemberFriendDTO> getFriend(@PathVariable Long userId){
         memberRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("해당이메일이 없습니다"));
         List<MemberFriendDTO> friends = friendsService.getFriends(userId);
         return friends;
     }
 
-    @PostMapping("friend/{fromUserId}/{toUserId}")
-    public String registerFriend(@PathVariable Long fromUserId, @PathVariable Long toUserId){
-        memberRepository.findById(fromUserId).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다"));
-        memberRepository.findById(toUserId).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다"));
+    @PostMapping("/user/friend/{fromUserId}/{toUserId}")
+    public String requestFriend(@PathVariable Long fromUserId, @PathVariable Long toUserId){
 
-        Friends friends = friendsService.save(fromUserId, toUserId);
-        friendsRepository.save(friends);
-        return "친구성공!";
     }
-
-    @DeleteMapping("friend/{fromUserId}/{toUserId}")
+    
+    // 친구 삭제
+    @DeleteMapping("/user/friend/{fromUserId}/{toUserId}")
     public String deleteFriend(@PathVariable Long fromUserId, @PathVariable Long toUserId){
         Optional<Friends> friends = friendsService.delete(fromUserId, toUserId);
         Long id = friends.get().getId();
