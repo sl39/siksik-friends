@@ -51,7 +51,7 @@ export default function EnterRoom() {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const key = e.target.name;
     const { value } = e.target;
     setFormData({ ...formData, [key]: value });
