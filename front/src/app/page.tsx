@@ -5,13 +5,13 @@ import MainTitle from "@/containers/MainTitle";
 export default function Home() {
   return (
     <div className={styles.main}>
-      <div className={`${styles.Logo}`}>
-        <MainTitle data="식" />
-        <MainTitle data="식" />
-        <MainTitle data="프" />
-        <MainTitle data="렌" />
-        <MainTitle data="즈" />
-      </div>
+      <h1 className={styles.logo}>
+        <span>식</span>
+        <span>식</span>
+        <span>프</span>
+        <span>렌</span>
+        <span>즈</span>
+      </h1>
       <Login />
     </div>
   );

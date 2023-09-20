@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import "@/styles/colors.css";
 import "@/styles/levels.scss";
 // import "@/styles/button.scss";
-import { babelFatOne, poorStory, IBMPlexSans, notoSans } from "public/fonts/fonts";
+import { logo, poorStory, IBMPlexSans, notoSans } from "public/fonts/fonts";
 
 import "@/styles/homeNav.css";
 
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${babelFatOne.variable} ${poorStory.variable} ${IBMPlexSans.variable} ${notoSans.variable}`}>
+      <body className={`${logo.variable} ${poorStory.variable} ${IBMPlexSans.variable} ${notoSans.variable}`}>
         <div className="body-container">{children}</div>
         <div id="modal-root" />
       </body>

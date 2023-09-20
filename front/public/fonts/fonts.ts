@@ -1,4 +1,4 @@
-import { Bagel_Fat_One, Noto_Sans_KR, Poor_Story, IBM_Plex_Sans_KR } from "next/font/google";
+import { Noto_Sans_KR, Poor_Story, IBM_Plex_Sans_KR, Jua } from "next/font/google";
 
 export const notoSans = Noto_Sans_KR({
   weight: "400",
@@ -6,11 +6,11 @@ export const notoSans = Noto_Sans_KR({
   display: "swap",
   variable: "--font-noto",
 });
-export const babelFatOne = Bagel_Fat_One({
+export const logo = Jua({
   weight: "400",
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-babel-fat-one",
+  variable: "--font-logo",
 });
 
 // 게임 내 기본 글꼴
