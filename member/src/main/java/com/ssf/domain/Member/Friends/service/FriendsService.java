@@ -99,14 +99,36 @@ public class FriendsService {
     public List requestFriendList(Long fromUserId){
         memberRepository.findById(fromUserId).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다"));
         List<Friends> friendsList = friendsRepository.findByFromUserIdAndActivated(fromUserId, false);
-        return friendsList;
+        Set<Long> friendIds = new HashSet<>();
+        for(Friends friends: friendsList){
+            friendIds.add(friends.getToUserId());
+        }
+
+        List<Member> members = memberRepository.findByIdIn(friendIds);
+        List<MemberFriendDTO> memberFriendDTOList = new ArrayList<>();
+        for(Member member: members){
+            MemberFriendDTO memberFriendDTO = new MemberFriendDTO(member);
+            memberFriendDTOList.add(memberFriendDTO);
+        }
+        return memberFriendDTOList;
     }
     
     // 친구 요청 받은 목록 조회
     public List acceptFriendList(Long fromUserId){
         memberRepository.findById(fromUserId).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다"));
         List<Friends> friendsList = friendsRepository.findByToUserIdAndActivated(fromUserId, false);
-        return friendsList;
+        Set<Long> friendIds = new HashSet<>();
+        for(Friends friends: friendsList){
+            friendIds.add(friends.getFromUserId());
+        }
+
+        List<Member> members = memberRepository.findByIdIn(friendIds);
+        List<MemberFriendDTO> memberFriendDTOList = new ArrayList<>();
+        for(Member member: members){
+            MemberFriendDTO memberFriendDTO = new MemberFriendDTO(member);
+            memberFriendDTOList.add(memberFriendDTO);
+        }
+        return memberFriendDTOList;
     }
 
     // 친구 목록 조회

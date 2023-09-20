@@ -1,19 +1,14 @@
 package com.ssf.domain.Member.Friends.controller;
 
 import com.ssf.domain.Member.Friends.entity.Friends;
-import com.ssf.domain.Member.Friends.entity.FriendsDTO;
 import com.ssf.domain.Member.Friends.repository.FriendsRepository;
 import com.ssf.domain.Member.Friends.service.FriendsService;
 import com.ssf.domain.Member.Member.entity.dto.MemberFriendDTO;
 import com.ssf.domain.Member.Member.repository.MemberRepository;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.query.sql.internal.ParameterRecognizerImpl;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -35,14 +30,14 @@ public class FriendsController {
     // 친구 요청 한 목록 조회
     @GetMapping("/user/friend/request/{fromUserId}")
     public List requestFriend(@PathVariable Long fromUserId){
-        List<Friends> friendsList = friendsService.requestFriendList(fromUserId);
+        List<MemberFriendDTO> friendsList = friendsService.requestFriendList(fromUserId);
         return friendsList;
     }
 
     // 친구 요청 받은 목록 조회
     @GetMapping("/user/friend/accept/{fromUserId}")
     public List acceptFriend(@PathVariable Long fromUserId){
-        List<Friends> friendsList = friendsService.acceptFriendList(fromUserId);
+        List<MemberFriendDTO> friendsList = friendsService.acceptFriendList(fromUserId);
         return friendsList;
     }
     // 친구 요청
