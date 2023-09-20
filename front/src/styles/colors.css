@@ -23,4 +23,13 @@
 
   --color-postIt: #ffff88;
   --color-postIt-dark: #f8f861;
+
+  /* 워드클라우드 컬러 */
+  --color-word-border: #ffa500;
+  --color-word-text: #ffa500;
+  --color-word-back: #ff4500;
+  --color-word-hover: #ff6347;
+  --color-word-hover-back: #ff8c00;
+
+  --scale-factor: 0.01;
 }
