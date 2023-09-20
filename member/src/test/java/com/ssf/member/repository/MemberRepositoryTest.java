@@ -15,9 +15,12 @@ import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 public class MemberRepositoryTest {
-    @Autowired
-    private MemberRepository memberRepository;
 
+    private final MemberRepository memberRepository;
+
+    public MemberRepositoryTest(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     @Test
     public void MemberRepository가null이아님(){

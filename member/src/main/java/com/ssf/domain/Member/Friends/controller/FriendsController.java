@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -23,8 +24,10 @@ public class FriendsController {
     private final MemberRepository memberRepository;
 
     @GetMapping("/friend/{userId}")
-    public String getFriend(@PathVariable Long userId){
-        return "친구";
+    public List<Friends> getFriend(@PathVariable Long userId){
+        memberRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("해당이메일이 없습니다"));
+        List<Friends> friends = friendsService.getFriends(userId);
+        return friends;
     }
 
     @PostMapping("friend/{fromUserId}/{toUserId}")

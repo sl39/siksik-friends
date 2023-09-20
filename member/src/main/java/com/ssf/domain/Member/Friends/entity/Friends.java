@@ -28,16 +28,15 @@ public class Friends {
     @Column
     private Long toUserId;
 
-    @JoinColumn(name = "fromUserId")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Member fromUser;
+    @Column
+    private Long fromUserId;
 
     @Column
     private boolean activated = false;
 
-    public Friends(Long toUserId,Member fromUser, boolean activated){
+    public Friends(Long toUserId,Long fromUserId, boolean activated){
         this.toUserId = toUserId;
-        this.fromUser = fromUser;
+        this.fromUserId = fromUserId;
         this.activated = activated;
 
     }
