@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class CustomJsonUsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
-    private static final String DEFAULT_SIGN_IN_REQUEST_URL = "/sign-in";
+    private static final String DEFAULT_SIGN_IN_REQUEST_URL = "/auth/sign-in";
     private static final String HTTP_METHOD = "POST";
     private static final String CONTENT_TYPE = "application/json";
     private static final String USERNAME_KEY = "email";
