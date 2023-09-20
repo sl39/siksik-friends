@@ -48,9 +48,13 @@ public class SecurityConfig {
                         .requestMatchers(new MvcRequestMatcher(introspector, "")).permitAll()
                         .requestMatchers(new MvcRequestMatcher(introspector, "/sign-up")).permitAll()
                         .requestMatchers(new MvcRequestMatcher(introspector, "/h2-console/**")).permitAll()
-                        .anyRequest().authenticated())
+                        .requestMatchers(new MvcRequestMatcher(introspector, "/sign-in")).permitAll()
+                        .requestMatchers(new MvcRequestMatcher(introspector, "/email")).permitAll()
+                        .requestMatchers(new MvcRequestMatcher(introspector, "/nickname")).permitAll()
+                        .requestMatchers(new MvcRequestMatcher(introspector, "/jwt-test")).permitAll()
+                        .anyRequest().authenticated());
 //                .oauth2Login(Customizer.withDefaults());
-                .addFilterBefore(jwtAuthenticationProcessingFilter(), CustomJsonUsernamePasswordAuthenticationFilter.class);
+//                .addFilterAt(jwtAuthenticationProcessingFilter(), CustomJsonUsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
