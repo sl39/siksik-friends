@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { serverAxios } from "@/services/api";
+// import { serverAxios } from "@/services/api";
+import type { User } from "@/types";
 import UserItem from "./UserItem";
 import styles from "./game.module.scss";
 
 export default function WaitingUser() {
-  const [waitUser, setWaitUser] = useState([]);
+  const [waitUser, setWaitUser] = useState<Array<User>>([]);
 
   /** 대기실에 있는 유저 정보를 받아오는 함수. */
   const handleWaitUser = async () => {
