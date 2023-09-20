@@ -1,12 +1,17 @@
+import type { User } from "@/types";
 import styles from "./game.module.scss";
 
-export default function UserItem() {
+interface Props {
+  data: User;
+}
+
+export default function UserItem({ data }: Props) {
   return (
     <div className={styles.userItem}>
-      <div className={styles.profile}>프로필</div>
+      <div className={styles.profile}>{data.profile}</div>
       <div className={styles.userItemBox}>
-        <div className={styles.subBox}>레벨</div>
-        <div className={styles.subBox}>닉네임</div>
+        <div className={styles.subBox}>{data.level}</div>
+        <div className={styles.subBox}>{data.nickname}</div>
       </div>
     </div>
   );
