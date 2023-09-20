@@ -60,8 +60,8 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private SocialType socialType = SocialType.NONE;
 
-//    @OneToMany(mappedBy = "member")
-//    private List<UserAchievements> userAchievementsList = new ArrayList<>();
+    private String socialId;
 
+    private String refreshToken;
 
 }
