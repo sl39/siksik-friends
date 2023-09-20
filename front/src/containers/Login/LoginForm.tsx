@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAtom } from "jotai";
+// import { useAtom } from "jotai";
 import type { User } from "@/types";
 // import { localUser } from "@/store/userAtom";
 import { serverAxios } from "@/services/api";
