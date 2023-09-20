@@ -1,5 +1,7 @@
+import SimpleMyProfile from "@/components/SimpleMyProfile";
 import Chatting from "./Chatting";
 import GameRoom from "./GameRoom";
+import WaitingUser from "./WaitingUser";
 import styles from "./game.module.scss";
 
 export default function Index() {
@@ -9,7 +11,10 @@ export default function Index() {
         <GameRoom />
         <Chatting />
       </div>
-      <div className={styles.right}>xx</div>
+      <div className={styles.right}>
+        <WaitingUser />
+        <SimpleMyProfile />
+      </div>
     </div>
   );
 }
