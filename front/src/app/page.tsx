@@ -4,7 +4,9 @@ import styles from "./page.module.css";
 export default function Home() {
   return (
     <div className={styles.main}>
-      <div className={styles.Logo}>식식프렌즈 로고 가져오기</div>
+      <h1 data-shadow="식식프렌즈" className={styles.Logo}>
+        식식프렌즈로고로고
+      </h1>
       <Login />
     </div>
   );
