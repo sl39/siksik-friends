@@ -74,16 +74,16 @@ export default function SignUpForm() {
       profile: "public/images/character/rabbit.png",
     };
 
-    if (checkEmail || checkNickname === "") {
-      console.log("중복 미확인");
-    } else {
-      try {
-        const response = await serverAxios.post("/sign-up", formData);
-        console.log(response);
-      } catch (error) {
-        console.log("회원가입 에러", error);
-      }
+    // if (checkEmail || checkNickname === "") {
+    //   console.log("중복 미확인");
+    // } else {
+    try {
+      const response = await serverAxios.post("/sign-up", formData);
+      console.log(response);
+    } catch (error) {
+      console.log("회원가입 에러", error);
     }
+    // }
   };
 
   /** 이메일 중복 검사 */
