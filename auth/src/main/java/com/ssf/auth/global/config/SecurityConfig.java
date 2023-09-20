@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("", "/sign-up", "/email", "/nickname", "/jwt-test").permitAll()
+                        .requestMatchers("", "/auth/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/sign-in").permitAll()
                         .anyRequest().authenticated());
 
