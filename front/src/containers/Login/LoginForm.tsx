@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 // import { useAtom } from "jotai";
-// import type { User } from "@/types";
+import type { User } from "@/types";
 // import { localUser } from "@/store/userAtom";
-// import { serverAxios } from "@/services/api";
-import styles from "./Login.module.css";
+import { serverAxios } from "@/services/api";
+import styles from "./Login.module.scss";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -19,25 +19,25 @@ export default function LoginForm() {
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // const formData = {
-    //   email,
-    //   password,
-    // };
-    // try {
-    //   const response = await serverAxios.post("/sign-in", formData);
-    //   console.log(response);
+    const formData = {
+      email,
+      password,
+    };
+    try {
+      const response = await serverAxios.post("/sign-in", formData);
+      console.log(response);
 
-    //   const newUser: User = {
-    //     id: Date.now(),
-    //     email: formData.email,
-    //   };
-    //   setUser(newUser);
-    //   // localStorage에 업데이트된 값을 저장
-    //   localStorage.setItem("user", JSON.stringify(newUser));
-    //   router.push("/home");
-    // } catch (error) {
-    //   console.log("로그인 에러", error);
-    // }
+      const newUser: User = {
+        id: Date.now(),
+        email: formData.email,
+      };
+      // setUser(newUser);
+      // localStorage에 업데이트된 값을 저장
+      localStorage.setItem("user", JSON.stringify(newUser));
+      router.push("/home");
+    } catch (error) {
+      console.log("로그인 에러", error);
+    }
 
     /**  서버 연결 전 임시 데이터 */
     // const tempUser: User = {
@@ -47,7 +47,7 @@ export default function LoginForm() {
     // setUser(tempUser);
     // // localStorage에 업데이트된 값을 저장
     // localStorage.setItem("user", JSON.stringify(tempUser));
-    router.push("/home");
+    // router.push("/home");
   };
 
   return (
@@ -66,7 +66,7 @@ export default function LoginForm() {
           name="password"
         />
       </div>
-      <button type="submit" className={styles.button}>
+      <button type="submit" className={[styles.button, styles.btnAct].join(" ")}>
         확인
       </button>
     </form>
