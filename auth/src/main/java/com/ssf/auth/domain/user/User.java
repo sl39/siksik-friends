@@ -56,6 +56,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private SocialType socialType = SocialType.NONE;
 
+    private String socialId;
+
     private String refreshToken;
 
     public void authorizeUser(Role role) {
