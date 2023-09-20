@@ -1,0 +1,72 @@
+.container {
+  display: flex;
+  width: 100%;
+}
+.left {
+  width: 70%;
+  height: 75vh;
+  margin: 15px;
+  border: 1px solid black;
+}
+.right {
+  width: 25%;
+  height: 75vh;
+  margin: 15px 0;
+}
+
+.roomInfo {
+  border: 1px solid black;
+  height: 30%;
+}
+.chatting {
+  border: 1px solid black;
+  height: 70%;
+}
+
+.roomUser {
+  height: 70%;
+  width: 30%;
+  position: absolute;
+  margin: 5px 0;
+  display: flex;
+}
+
+.userBigBox {
+  width: 86%;
+  border-radius: 15px 0 0 15px;
+  background-color: var(--color-wait, red);
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.userBox {
+  width: 95%;
+  height: 96%;
+  overflow: auto;
+  background-color: var(--color-wait, white);
+  border-radius: 15px;
+  padding: 5px;
+}
+.userNav {
+  width: 13%;
+  border: 1px solid red;
+
+  button {
+    margin: 0 0 10px 0;
+    height: 120px;
+    width: 100%;
+    border: 1px solid red;
+    background-color: var(--color-wait, grey);
+    border-radius: 0 15px 15px 0;
+  }
+}
+
+// 겜시작 버튼
+.startBtn {
+  border: 1px solid black;
+  width: 450px;
+  height: 20%;
+  position: absolute;
+  bottom: 4%;
+}

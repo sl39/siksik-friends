@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { serverAxios } from "@/services/api";
 import styles from "./game.module.scss";
 import Modal from "@/components/gameModal";
-import { serverAxios } from "@/services/api";
 
 export default function EnterRoom() {
   const [openCreateRoom, setOpenCreateRoom] = useState(false);
@@ -53,7 +53,7 @@ export default function EnterRoom() {
 
   const handleChange = (e) => {
     const key = e.target.name;
-    const value = e.target.value;
+    const { value } = e.target;
     setFormData({ ...formData, [key]: value });
   };
 
@@ -84,7 +84,7 @@ export default function EnterRoom() {
           </Modal>
         )}
       </div>
-      <div id="game-modal" className="z-99"></div>
+      <div id="game-modal" className="z-99" />
       <button onClick={() => setOpenCreateRoom(true)} className={styles.boxButton}>
         방 만들기
       </button>
