@@ -1,6 +1,5 @@
-import styles from "./page.module.scss";
 import Login from "@/containers/Login/LoginModal";
-import MainTitle from "@/containers/MainTitle";
+import styles from "./page.module.scss";
 
 export default function Home() {
   return (
