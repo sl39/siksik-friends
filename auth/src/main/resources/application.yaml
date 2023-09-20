@@ -12,3 +12,34 @@ spring:
     config:
       name: auth
       profile: default
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+    show-sql: true
+
+#  datasource:
+#    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:tcp://localhost/~/test
+#    username: sa
+#
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2-console
+#
+  profiles:
+    include: jwt, auth
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://j9e101.p.ssafy.io:5432/auth
+    username: elefante
+    password: E1efante1!
+
+#  sql:
+#    init:
+#      platform:
