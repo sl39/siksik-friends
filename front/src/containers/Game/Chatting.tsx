@@ -108,7 +108,7 @@ export default function Chatting() {
   Impedit, aliquam dignissimos rerum id tenetur magni, facere cum sapiente architecto deserunt ex iste animi ullam eligendi. Non, illo eius aliquid illum voluptatum inventore, sint eos deserunt dolore dicta delectus!`;
 
   const [chat, setChat] = useState("");
-  const handleChat = (e) => {
+  const handleChat = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setChat("");
   };
