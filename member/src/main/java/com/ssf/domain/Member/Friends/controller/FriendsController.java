@@ -38,7 +38,12 @@ public class FriendsController {
         return "친구 요청";
     }
 
-    @PutMapping()
+    @PutMapping("/user/friend/{fromUserId}/{toUserId}")
+    public String acceptFriend(@PathVariable Long fromUserId, @PathVariable Long toUserId){
+        Friends friends = friendsService.acceptFriend(fromUserId, toUserId);
+        friendsRepository.save(friends);
+        return "친구 수락";
+    }
     
     // 친구 삭제
     @DeleteMapping("/user/friend/{fromUserId}/{toUserId}")
