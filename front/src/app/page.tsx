@@ -1,12 +1,17 @@
+import styles from "./page.module.scss";
 import Login from "@/containers/Login/LoginModal";
-import styles from "./page.module.css";
+import MainTitle from "@/containers/MainTitle";
 
 export default function Home() {
   return (
     <div className={styles.main}>
-      <h1 data-shadow="식식프렌즈" className={styles.Logo}>
-        식식프렌즈로고로고
-      </h1>
+      <div className={styles.Logo}>
+        <MainTitle data="식" />
+        <MainTitle data="식" />
+        <MainTitle data="프" />
+        <MainTitle data="렌" />
+        <MainTitle data="즈" />
+      </div>
       <Login />
     </div>
   );
