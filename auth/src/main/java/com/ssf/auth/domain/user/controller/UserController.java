@@ -12,25 +12,25 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/sign-up")
+    @PostMapping("/auth/sign-up")
     public String signUp(@RequestBody UserSignUpDto userSignUpDto) throws Exception {
         userService.signUp(userSignUpDto);
         return "회원가입 성공";
     }
 
-    @GetMapping("/email")
+    @GetMapping("/auth/email")
     public String validEmail(String email) throws Exception {
         userService.validEmail(email);
         return "사용 가능 이메일";
     }
 
-    @GetMapping("/nickname")
+    @GetMapping("/auth/nickname")
     public String validNickname(String nickname) throws Exception {
         userService.ValidNickname(nickname);
         return "사용 가능 닉네임";
     }
 
-    @GetMapping("/jwt-test")
+    @GetMapping("/auth/jwt-test")
     public String jwtTest() {
         return "jwtTest 요청 성공";
     }
