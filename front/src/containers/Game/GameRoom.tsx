@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { Room } from "@/types";
+import { serverAxios } from "@/services/api";
 import GameRoomItem from "./GameRoomItem";
 import styles from "./game.module.scss";
 import EnterRoom from "./EnterRoom";
@@ -13,16 +14,24 @@ export default function GameRoom() {
   // 방 전체 목록 받아오는 함수 작성하기
   /** 방 목록 받아오기 */
   const fetchRoom = async () => {
-    setRooms([
-      { id: 1, name: "ㄱㄱ", waiting: true },
-      { id: 2, name: "ㄱㄱ", waiting: false },
-      { id: 21, name: "ㄱㄱ", waiting: false },
-      { id: 22, name: "ㄱㄱ", waiting: false },
-      { id: 23, name: "ㄱㄱ", waiting: false },
-      { id: 235, name: "ㄱㄱ", waiting: false },
-      { id: 2351, name: "ㄱㄱ", waiting: false },
-      { id: 2352, name: "ㄱㄱ", waiting: false },
-    ]);
+    try {
+      // const response = await serverAxios("");
+      // console.log(response);
+      // setRooms(response.data);
+    } catch (err) {
+      console.log(err);
+      // 서버 요청 전 임시 Room
+      setRooms([
+        { id: 1, name: "ㄱㄱ", waiting: true },
+        { id: 2, name: "ㄱㄱ", waiting: false },
+        { id: 21, name: "ㄱㄱ", waiting: false },
+        { id: 22, name: "ㄱㄱ", waiting: false },
+        { id: 23, name: "ㄱㄱ", waiting: false },
+        { id: 235, name: "ㄱㄱ", waiting: false },
+        { id: 2351, name: "ㄱㄱ", waiting: false },
+        { id: 2352, name: "ㄱㄱ", waiting: false },
+      ]);
+    }
   };
 
   /** 대기 중인 방만 보여주는 함수 */
