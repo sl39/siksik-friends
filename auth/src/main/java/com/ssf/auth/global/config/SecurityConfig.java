@@ -11,6 +11,7 @@ import com.ssf.auth.global.signin.service.SignInService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -21,8 +22,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
-import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @Configuration
 @EnableWebSecurity
@@ -35,26 +34,18 @@ public class SecurityConfig {
     private final ObjectMapper objectMapper;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .securityMatcher("/**", "/api/**", "/login/**")
                 .authorizeHttpRequests(authorize -> authorize
-//                        .requestMatchers("/test/**").permitAll()
-                        .requestMatchers(new MvcRequestMatcher(introspector, "")).permitAll()
-                        .requestMatchers(new MvcRequestMatcher(introspector, "/sign-up")).permitAll()
-                        .requestMatchers(new MvcRequestMatcher(introspector, "/h2-console/**")).permitAll()
-                        .requestMatchers(new MvcRequestMatcher(introspector, "/sign-in")).permitAll()
-                        .requestMatchers(new MvcRequestMatcher(introspector, "/email")).permitAll()
-                        .requestMatchers(new MvcRequestMatcher(introspector, "/nickname")).permitAll()
-                        .requestMatchers(new MvcRequestMatcher(introspector, "/jwt-test")).permitAll()
+                        .requestMatchers("", "/sign-up", "/email", "/nickname", "/jwt-test").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/sign-in").permitAll()
                         .anyRequest().authenticated());
-//                .oauth2Login(Customizer.withDefaults());
-//                .addFilterAt(jwtAuthenticationProcessingFilter(), CustomJsonUsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
