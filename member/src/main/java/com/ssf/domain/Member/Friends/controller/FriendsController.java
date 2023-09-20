@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -23,14 +24,28 @@ public class FriendsController {
     private final MemberRepository memberRepository;
 
 
-    // 친구 목록
+    // 친구 목록 조회
     @GetMapping("/user/friend/{userId}")
     public List<MemberFriendDTO> getFriend(@PathVariable Long userId){
         memberRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("해당이메일이 없습니다"));
         List<MemberFriendDTO> friends = friendsService.getFriends(userId);
         return friends;
     }
+    
+    // 친구 요청 한 목록 조회
+    @GetMapping("/user/friend/request/{fromUserId}")
+    public List requestFriend(@PathVariable Long fromUserId){
+        List<Friends> friendsList = friendsService.requestFriendList(fromUserId);
+        return friendsList;
+    }
 
+    // 친구 요청 받은 목록 조회
+    @GetMapping("/user/friend/accept/{fromUserId}")
+    public List acceptFriend(@PathVariable Long fromUserId){
+        List<Friends> friendsList = friendsService.acceptFriendList(fromUserId);
+        return friendsList;
+    }
+    // 친구 요청
     @PostMapping("/user/friend/{fromUserId}/{toUserId}")
     public String requestFriend(@PathVariable Long fromUserId, @PathVariable Long toUserId){
         Friends friends = friendsService.requestFriendService(fromUserId, toUserId);
@@ -44,27 +59,30 @@ public class FriendsController {
 
     }
 
-    @DeleteMapping("/user/friend/resquest/{fromUserId}/{toUserId}")
+    // 친구 수락
+    @PutMapping("/user/friend/{fromUserId}/{toUserId}")
+    public String acceptFriend(@PathVariable Long fromUserId, @PathVariable Long toUserId){
+        Friends friends = friendsService.acceptFriend(fromUserId, toUserId);
+        friendsRepository.save(friends);
+        return "친구 수락";
+    }
+
+
+    // 친구 요청 취소
+    @DeleteMapping("/user/friend/request/{fromUserId}/{toUserId}")
     public String requestDeleteFriend(@PathVariable Long fromUserId, @PathVariable Long toUserId){
         Long FriendsId = friendsService.requestDelete(fromUserId, toUserId);
         friendsRepository.deleteById(FriendsId);
         return "요청 취소";
     }
-
+    
+    // 친구 요청 거절
     @DeleteMapping("/user/friend/accept/{fromUserId}/{toUserId}")
     public String acceptDeleteFriend(@PathVariable Long fromUserId, @PathVariable Long toUserId){
         Long FriendsId = friendsService.acceptDelete(fromUserId, toUserId);
         friendsRepository.deleteById(FriendsId);
         return "요청 거절";
 
-    }
-
-
-    @PutMapping("/user/friend/{fromUserId}/{toUserId}")
-    public String acceptFriend(@PathVariable Long fromUserId, @PathVariable Long toUserId){
-        Friends friends = friendsService.acceptFriend(fromUserId, toUserId);
-        friendsRepository.save(friends);
-        return "친구 수락";
     }
     
     // 친구 삭제

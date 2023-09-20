@@ -92,10 +92,22 @@ public class FriendsService {
             throw new IllegalArgumentException("이미 친구 입니다");
         }
         return friendsOptional.get().getId();
-        
-        
+
     }
 
+    // 친구 요청 한 목록 조회
+    public List requestFriendList(Long fromUserId){
+        memberRepository.findById(fromUserId).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다"));
+        List<Friends> friendsList = friendsRepository.findByFromUserIdAndActivated(fromUserId, false);
+        return friendsList;
+    }
+    
+    // 친구 요청 받은 목록 조회
+    public List acceptFriendList(Long fromUserId){
+        memberRepository.findById(fromUserId).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다"));
+        List<Friends> friendsList = friendsRepository.findByToUserIdAndActivated(fromUserId, false);
+        return friendsList;
+    }
 
     // 친구 목록 조회
     public List<MemberFriendDTO> getFriends(Long userId){
