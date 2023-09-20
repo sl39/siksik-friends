@@ -20,20 +20,25 @@ public class FriendsService {
     }
 
     public Friends requestFriendService(Long fromUserId, Long toUserId){
-        Optional<Friends> friends = friendsRepository.findByFromUserIdAndToUserId(fromUserId, toUserId)
-                .ifPresentOrElse(
-                        m -> {throw new IllegalArgumentException("해당 이메일이 이미 존재합니다");},
-                        () ->{
-                            Friends friends1 =  Friends.builder()
-                                    .fromUserId(fromUserId)
-                                    .toUserId(toUserId)
-                                    .build();
-                        }
-                );
+        checkUserId(fromUserId, toUserId);
+        Optional<Friends> friendsOptional = friendsRepository.findByFromUserIdAndToUserId(fromUserId, toUserId);
 
+        if (friendsOptional.isPresent()) {
+            throw new IllegalArgumentException("이미 요청을 했습니다");
+        }
+
+        Friends friends1 = Friends.builder()
+                .fromUserId(fromUserId)
+                .toUserId(toUserId)
+                .build();
+
+        return friends1;
     }
 
-
+    public void checkUserId(Long fromUserId, Long toUserId){
+        memberRepository.findById(fromUserId).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다"));
+        memberRepository.findById(toUserId).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다"));
+    }
 
     public List<MemberFriendDTO> getFriends(Long userId){
         List<Friends> friendsList = friendsRepository.findByActivatedAndFromUserIdOrActivatedAndToUserId(true,userId,true, userId);
@@ -54,8 +59,7 @@ public class FriendsService {
     }
 
     public Optional<Friends> delete(Long fromUserId, Long toUserId){
-        memberRepository.findById(fromUserId).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다"));
-        memberRepository.findById(toUserId).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다"));
+        checkUserId(fromUserId, toUserId);
         Optional<Friends> friends1 = friendsRepository.findByFromUserIdAndToUserIdAndActivated(fromUserId, toUserId, true);
         Optional<Friends> friends2 = friendsRepository.findByFromUserIdAndToUserIdAndActivated(toUserId,fromUserId, true);
 
