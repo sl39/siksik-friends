@@ -18,7 +18,11 @@ public class FriendsService {
         this.friendsRepository = friendsRepository;
         this.memberRepository = memberRepository;
     }
-    
+    public void checkUserId(Long fromUserId, Long toUserId){
+        memberRepository.findById(fromUserId).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다"));
+        memberRepository.findById(toUserId).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다"));
+    }
+
     // 친구 요청
     public Friends requestFriendService(Long fromUserId, Long toUserId){
         checkUserId(fromUserId, toUserId);
@@ -28,9 +32,19 @@ public class FriendsService {
             throw new IllegalArgumentException("이미 요청을 했습니다");
         }
 
+        Optional<Friends> friendsOptional1 = friendsRepository.findByFromUserIdAndToUserId(toUserId,fromUserId);
+        if (friendsOptional1.isEmpty()){
+            Friends friends1 = Friends.builder()
+                    .fromUserId(fromUserId)
+                    .toUserId(toUserId)
+                    .build();
+            return friends1;
+        }
         Friends friends1 = Friends.builder()
-                .fromUserId(fromUserId)
-                .toUserId(toUserId)
+                .id(friendsOptional1.get().getId())
+                .fromUserId(toUserId)
+                .toUserId(fromUserId)
+                .activated(true)
                 .build();
 
         return friends1;
@@ -50,20 +64,38 @@ public class FriendsService {
 
         Friends friends1 = Friends.builder()
                 .id(friendsOptional.get().getId())
-                .fromUserId(fromUserId)
-                .toUserId(toUserId)
+                .fromUserId(toUserId)
+                .toUserId(fromUserId)
                 .activated(true)
                 .build();
 
         return friends1;
     }
 
-
-
-    public void checkUserId(Long fromUserId, Long toUserId){
-        memberRepository.findById(fromUserId).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다"));
-        memberRepository.findById(toUserId).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다"));
+    // 친구 요청 취소
+    public Long requestDelete(Long fromUserId,Long toUserId){
+        checkUserId(fromUserId,toUserId);
+        Optional<Friends> friendsOptional = friendsRepository.findByFromUserIdAndToUserId(fromUserId,toUserId);
+        friendsOptional.orElseThrow(()->new IllegalArgumentException("친구 요청을 안했습니다"));
+        if(friendsOptional.get().isActivated()){
+            throw new IllegalArgumentException("이미 친구 입니다");
+        }
+        return friendsOptional.get().getId();
     }
+
+    // 들어온 요청 거절
+    public Long acceptDelete(Long fromUserId,Long toUserId){
+        checkUserId(fromUserId,toUserId);
+        Optional<Friends> friendsOptional = friendsRepository.findByFromUserIdAndToUserId(toUserId,fromUserId);
+        friendsOptional.orElseThrow(()->new IllegalArgumentException("친구 요청이 들어오지 않았습니다"));
+        if(friendsOptional.get().isActivated()){
+            throw new IllegalArgumentException("이미 친구 입니다");
+        }
+        return friendsOptional.get().getId();
+        
+        
+    }
+
 
     // 친구 목록 조회
     public List<MemberFriendDTO> getFriends(Long userId){

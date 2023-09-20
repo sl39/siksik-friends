@@ -34,9 +34,31 @@ public class FriendsController {
     @PostMapping("/user/friend/{fromUserId}/{toUserId}")
     public String requestFriend(@PathVariable Long fromUserId, @PathVariable Long toUserId){
         Friends friends = friendsService.requestFriendService(fromUserId, toUserId);
+        if(!friends.isActivated()){
+            friendsRepository.save(friends);
+            return "친구 요청";
+        }
         friendsRepository.save(friends);
-        return "친구 요청";
+
+        return "친구 수락";
+
     }
+
+    @DeleteMapping("/user/friend/resquest/{fromUserId}/{toUserId}")
+    public String requestDeleteFriend(@PathVariable Long fromUserId, @PathVariable Long toUserId){
+        Long FriendsId = friendsService.requestDelete(fromUserId, toUserId);
+        friendsRepository.deleteById(FriendsId);
+        return "요청 취소";
+    }
+
+    @DeleteMapping("/user/friend/accept/{fromUserId}/{toUserId}")
+    public String acceptDeleteFriend(@PathVariable Long fromUserId, @PathVariable Long toUserId){
+        Long FriendsId = friendsService.acceptDelete(fromUserId, toUserId);
+        friendsRepository.deleteById(FriendsId);
+        return "요청 거절";
+
+    }
+
 
     @PutMapping("/user/friend/{fromUserId}/{toUserId}")
     public String acceptFriend(@PathVariable Long fromUserId, @PathVariable Long toUserId){

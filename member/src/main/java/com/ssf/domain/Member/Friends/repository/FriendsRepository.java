@@ -9,12 +9,16 @@ import java.util.Optional;
 
 public interface FriendsRepository extends JpaRepository<Friends,Long> {
 
-    Optional<Friends> findByFromUserIdAndToUserId(final Long fromUserId,final Long userId);
 
-    List<Friends> findByActivatedAndFromUserIdOrActivatedAndToUserId(boolean activated, Long fromUserId, boolean activated2, Long toUserId);
+    Optional<Friends> findByFromUserIdAndToUserId(final Long fromUserId,final Long userId);
 
     Optional<Friends> findByFromUserIdAndToUserIdAndActivated(Long fromUserId, Long toUserId, boolean activated);
 
+    List<Friends> findByActivatedAndFromUserIdOrActivatedAndToUserId(boolean activated, Long fromUserId, boolean activated2, Long toUserId);
+
+    List<Friends> findByFromUserIdAndActivated(Long fromUserId, boolean activated);
+
+    List<Friends> findByToUserIdAndActivated(Long toUserId, boolean activated);
 
     @Override
     void deleteById(Long id);
