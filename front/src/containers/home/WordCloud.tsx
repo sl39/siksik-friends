@@ -10,7 +10,7 @@ import "zingchart/modules-es6/zingchart-wordcloud.min.js";
 interface Config {
   type: string;
   options: {
-    words: any; // 'words'의 실제 타입으로 대체하세요.
+    words: any;
     minLength: number;
     ignore: string[];
     maxItems: number;
@@ -136,12 +136,39 @@ export default function WordCloud() {
 
   return (
     <div className={styles.wordCloud}>
-      <div className={styles.wordButton}>
-        <button onClick={() => setPath(101)}>경제</button>
-        <button onClick={() => setPath(102)}>사회</button>
-        <button onClick={() => setPath(103)}>생활/문화</button>
-        <button onClick={() => setPath(104)}>IT/과학</button>
-        <button onClick={() => setPath(105)}>세계</button>
+      <div className={styles.groupContainer}>
+        <div className={styles.wordButton}>
+          <button
+            onClick={() => setPath(101)}
+            className={path === 101 ? `${styles.active} ${styles.button}` : `${styles.button}`}
+          >
+            경제
+          </button>
+          <button
+            onClick={() => setPath(102)}
+            className={path === 102 ? `${styles.active} ${styles.button}` : `${styles.button}`}
+          >
+            사회
+          </button>
+          <button
+            onClick={() => setPath(103)}
+            className={path === 103 ? `${styles.active} ${styles.button}` : `${styles.button}`}
+          >
+            생활/문화
+          </button>
+          <button
+            onClick={() => setPath(104)}
+            className={path === 104 ? `${styles.active} ${styles.button}` : `${styles.button}`}
+          >
+            IT/과학
+          </button>
+          <button
+            onClick={() => setPath(105)}
+            className={path === 105 ? `${styles.active} ${styles.button}` : `${styles.button}`}
+          >
+            세계
+          </button>
+        </div>
       </div>
       <div id="myChart" />
     </div>
