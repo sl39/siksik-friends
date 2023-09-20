@@ -12,10 +12,10 @@ export default function WaitingUser() {
   ];
 
   /** 대기실에 있는 유저 정보를 받아오는 함수. */
-  const handleWaitUser = () => {};
+  // const handleWaitUser = () => {};
 
   /** 나의 모든 친구 정보를 받아오는 함수 */
-  const handleFrireds = () => {};
+  // const handleFrireds = () => {};
 
   return (
     <div className={styles.waitingBox}>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { serverAxios } from "@/services/api";
-import styles from "./SignUp.module.css";
+import styles from "./SignUp.module.scss";
 
 // const validate = (vaules) => {
 //   const error = {};
@@ -74,16 +74,16 @@ export default function SignUpForm() {
       profile: "public/images/character/rabbit.png",
     };
 
-    if (checkEmail || checkNickname === "") {
-      console.log("중복 미확인");
-    } else {
-      try {
-        const response = await serverAxios.post("/sign-up", formData);
-        console.log(response);
-      } catch (error) {
-        console.log("회원가입 에러", error);
-      }
+    // if (checkEmail || checkNickname === "") {
+    //   console.log("중복 미확인");
+    // } else {
+    try {
+      const response = await serverAxios.post("/sign-up", formData);
+      console.log(response);
+    } catch (error) {
+      console.log("회원가입 에러", error);
     }
+    // }
   };
 
   /** 이메일 중복 검사 */
@@ -167,7 +167,7 @@ export default function SignUpForm() {
       </div>
       <div>{checkNickname}</div>
 
-      <button type="submit" className={styles.button}>
+      <button type="submit" className={[styles.button, styles.btnAct].join(" ")}>
         회원가입
       </button>
     </form>
