@@ -13,5 +13,9 @@ public interface FriendsRepository extends JpaRepository<Friends,Long> {
 
     List<Friends> findByActivatedAndFromUserIdOrActivatedAndToUserId(boolean activated, Long fromUserId, boolean activated2, Long toUserId);
 
+    Optional<Friends> findByFromUserIdAndToUserIdAndActivated(Long fromUserId, Long toUserId, boolean activated);
 
+
+    @Override
+    void deleteById(Long id);
 }
