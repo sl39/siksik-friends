@@ -3,7 +3,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { serverAxios } from "@/services/api";
-import styles from "./SignUp.module.css";
+import styles from "./SignUp.module.scss";
 
 // const validate = (vaules) => {
 //   const error = {};
@@ -167,7 +167,7 @@ export default function SignUpForm() {
       </div>
       <div>{checkNickname}</div>
 
-      <button type="submit" className={styles.button}>
+      <button type="submit" className={[styles.button, styles.btnAct].join(" ")}>
         회원가입
       </button>
     </form>
