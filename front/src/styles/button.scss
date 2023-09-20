@@ -1,0 +1,98 @@
+$bg: #fff;
+$text: #382b22;
+$light-orange: #ffe0d0;
+$orange: #ffdab9;
+$dark-orange: #ff7f50;
+$orange-border: #ff4500;
+$orange-shadow: #ffa07a;
+
+// 클레이모피즘
+.clay {
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 26px;
+  backdrop-filter: blur(6px);
+  box-shadow:
+    0px 10px 20px 0px rgba(145, 192, 255, 0.5),
+    inset 0px -8px 16px 0px rgba(145, 192, 255, 0.6),
+    inset 0px 11px 28px 0px rgb(255, 255, 255);
+}
+.button {
+  width: 300px;
+  height: 40px;
+
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+  border-radius: 13px;
+  background-size: 200% auto;
+  // color: white;
+  // /* text-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
+  // box-shadow: 0 0 20px #eee;
+  // border-radius: 10px;
+
+  &:hover {
+    background-position: right center; /* change the direction of the change here */
+  }
+}
+
+.btnAct,
+.btnAct:link,
+.btnAct:visited {
+  background-color: $orange;
+
+  &:hover,
+  &:focus {
+    transition-timing-function: cubic-bezier(0.6, 4, 0.3, 0.8);
+    animation: gelatine 0.5s 1;
+  }
+}
+@mixin transform($properties) {
+  -webkit-transform: $properties;
+  -ms-transform: $properties;
+  transform: $properties;
+}
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+
+  @keyframes #{$name} {
+    @content;
+  }
+}
+@include keyframes(gelatine) {
+  from,
+  to {
+    @include transform(scale(1, 1));
+  }
+  25% {
+    @include transform(scale(0.9, 1.1));
+  }
+  50% {
+    @include transform(scale(1.1, 0.9));
+  }
+  75% {
+    @include transform(scale(0.95, 1.05));
+  }
+  from,
+  to {
+    @include transform(scale(1, 1));
+  }
+  25% {
+    @include transform(scale(0.9, 1.1));
+  }
+  50% {
+    @include transform(scale(1.1, 0.9));
+  }
+  75% {
+    @include transform(scale(0.95, 1.05));
+  }
+}
