@@ -1,13 +1,9 @@
+import type { Rank } from "@/types";
 import styles from "./Rank.module.css";
 import RankButton from "./RankButton";
 
 interface Props {
-  item: {
-    id: number;
-    rank: number;
-    name: string;
-    level: number;
-  };
+  item: Rank;
 }
 
 export default function RankItem({ item }: Props) {

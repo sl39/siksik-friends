@@ -9,11 +9,17 @@ export default function Index() {
     <div className={styles.container}>
       <div className={styles.left}>
         <GameRoom />
-        <Chatting />
+        <div className={styles.chatBox}>
+          <Chatting />
+        </div>
       </div>
       <div className={styles.right}>
-        <WaitingUser />
-        <SimpleMyProfile />
+        <div className={styles.waitingBox}>
+          <WaitingUser />
+        </div>
+        <div className={styles.profileItem}>
+          <SimpleMyProfile />
+        </div>
       </div>
     </div>
   );
