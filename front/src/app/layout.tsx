@@ -2,11 +2,9 @@ import "@/styles/globals.css";
 import "@/styles/colors.css";
 import "@/styles/levels.scss";
 // import "@/styles/button.scss";
-import { logo, poorStory, IBMPlexSans, notoSans } from "public/fonts/fonts";
-
 import "@/styles/homeNav.css";
-
 import type { Metadata } from "next";
+import { IBMPlexSans, logo, notoSans, poorStory } from "public/fonts/fonts";
 
 export const metadata: Metadata = {
   title: "Elefante",
