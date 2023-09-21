@@ -1,5 +1,5 @@
 // import { atom, useAtom } from "jotai";
-// import type { User } from "@/types/types";
+// import type { User } from "@/types";
 
 // // auth 상태를 관리하는 atom
 // const authAtom = atom<User | null>(null);

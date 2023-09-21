@@ -10,9 +10,9 @@
 //   timeout: 2000,
 // });
 
-// // accessToken이 존재할 때, 해당 토큰을 헤더에 담아 요청할 수 있도록 해야 함
-// // interceptor: 요청 이전의 처리와 응답 이후의 처리
-// /** 요청 이전 헤더 세팅 */
+// accessToken이 존재할 때, 해당 토큰을 헤더에 담아 요청할 수 있도록 해야 함
+// interceptor: 요청 이전의 처리와 응답 이후의 처리
+/** 요청 이전 헤더 세팅 */
 // userApi.interceptors.request.use((config) => {
 //   const accessToken = sessionStorage.getItem("accessToken");
 //   // eslint-disable-next-line no-param-reassign

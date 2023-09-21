@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+// import { useRouter } from "next/navigation";
 import { serverAxios } from "@/services/api";
-import styles from "./SignUp.module.scss";
+import styles from "./form.module.scss";
 
 // const validate = (vaules) => {
 //   const error = {};
@@ -34,7 +35,8 @@ export default function SignUpForm() {
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
   const [nickname, setNickname] = useState("");
-  // const [profile, setProfile] = useState("public/images/character/rabbit.png");
+
+  // const router = useRouter();
 
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
@@ -71,15 +73,16 @@ export default function SignUpForm() {
       email,
       password: password1,
       nickname,
-      profile: "public/images/character/rabbit.png",
+      profile: "",
     };
 
-    // if (checkEmail || checkNickname === "") {
-    //   console.log("중복 미확인");
-    // } else {
     try {
       const response = await serverAxios.post("/sign-up", formData);
       console.log(response);
+
+      // 로그인 시키고 홈으로 에러
+      // await serverAxios.post("/sign-in", formData);
+      // router.push("/home");
     } catch (error) {
       console.log("회원가입 에러", error);
     }
@@ -96,12 +99,7 @@ export default function SignUpForm() {
       console.log(response);
       setCheckEmail("사용 가능한 이메일입니다.");
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response && error.response.status === 500) {
-        console.log("이메일 중복 확인", error);
-        setCheckEmail("이미 존재하는 이메일입니다.");
-      } else {
-        console.log("서버 오류가 발생했습니다.");
-      }
+      setCheckEmail("이미 존재하는 이메일입니다.");
     }
   };
   /** 닉네임 중복 검사 */
@@ -114,58 +112,69 @@ export default function SignUpForm() {
       console.log(response);
       setCheckNickname("사용 가능한 닉네임입니다.");
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response && error.response.status === 500) {
-        console.log("닉네임 중복 확인", error);
-        setCheckEmail("이미 존재하는 닉네임입니다.");
-      } else {
-        console.log("서버 오류가 발생했습니다.");
-      }
+      setCheckNickname("이미 존재하는 닉네임입니다.");
     }
   };
 
   return (
-    <form onSubmit={handleSignUp} className={`${styles.form} ${styles.formSignup}`}>
-      <div>
-        <label htmlFor="email">e-mail</label>
-        <input type="text" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+    <form onSubmit={handleSignUp} className={styles.form}>
+      <h1 className={styles.formTitle}>회원가입</h1>
+      <div className={styles["form-group"]}>
+        <input
+          className={styles["form-style"]}
+          type="text"
+          id="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+        />
         <button type="button" onClick={handleCheckEmail} className={[styles.button, styles.check].join(" ")}>
           중복확인
         </button>
+        <div>{checkEmail}</div>
       </div>
-      <div>{checkEmail}</div>
 
-      <div>
-        <label htmlFor="password1">비밀번호</label>
+      <div className={styles["form-group"]}>
         <input
+          className={styles["form-style"]}
           type={showPassword1 ? "text" : "password"}
           id="password1"
           value={password1}
+          placeholder="비밀번호"
           onChange={(e) => setPassword1(e.target.value)}
         />
         <button type="button" onClick={() => setShowPassword1(!showPassword1)}>
-          눈
+          view
         </button>
       </div>
-      <div>
-        <label htmlFor="password2">비밀번호 확인</label>
+      <div className={styles["form-group"]}>
         <input
+          className={styles["form-style"]}
           type={showPassword2 ? "text" : "password"}
           id="password2"
+          placeholder="비밀번호 확인"
           value={password2}
           onChange={(e) => setPassword2(e.target.value)}
         />
         <button type="button" onClick={() => setShowPassword2(!showPassword2)}>
-          눈
+          view
         </button>
       </div>
-      <div>
-        <label htmlFor="nickname">닉네임</label>
-        <input type="text" id="nickname" value={nickname} onChange={(e) => setNickname(e.target.value)} />
+
+      <div className={styles["form-group"]}>
+        <input
+          placeholder="닉네임"
+          className={styles["form-style"]}
+          type="text"
+          id="nickname"
+          value={nickname}
+          onChange={(e) => setNickname(e.target.value)}
+        />
         <button type="button" onClick={handleCheckNickname} className={[styles.button, styles.check].join(" ")}>
           중복확인
         </button>
+        <div>{checkNickname}</div>
       </div>
-      <div>{checkNickname}</div>
 
       <button type="submit" className={[styles.button, styles.btnAct].join(" ")}>
         회원가입

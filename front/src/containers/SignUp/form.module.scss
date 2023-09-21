@@ -1,0 +1,136 @@
+.form {
+  padding: auto;
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.form-group input::-webkit-input-placeholder {
+  color: #666;
+  opacity: 0.7;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+}
+.form-group input:focus::-webkit-input-placeholder {
+  opacity: 0;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+}
+.form-group {
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+.form-style {
+  padding: 13px 20px;
+  height: 30px;
+  width: 100%;
+  font-weight: 400;
+  border-radius: 4px;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: 0.5px;
+  outline: none;
+  color: #333;
+  background-color: #fff;
+  border: none;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+  box-shadow: 0 4px 8px 0 rgba(21, 21, 21, 0.2);
+}
+.form-style:focus,
+.form-style:active {
+  border: none;
+  outline: none;
+  box-shadow: 0 4px 8px 0 rgba(21, 21, 21, 0.2);
+}
+
+// 버튼
+$orange: #ffdab9;
+.button {
+  width: 300px;
+  height: 40px;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+  border-radius: 13px;
+  background-size: 200% auto;
+  // color: white;
+  // /* text-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
+  // box-shadow: 0 0 20px #eee;
+  // border-radius: 10px;
+
+  &:hover {
+    background-position: right center; /* change the direction of the change here */
+  }
+}
+.btnAct,
+.btnAct:link,
+.btnAct:visited {
+  background-color: $orange;
+
+  &:hover,
+  &:focus {
+    transition-timing-function: cubic-bezier(0.6, 4, 0.3, 0.8);
+    animation: gelatine 0.5s 1;
+  }
+}
+@mixin transform($properties) {
+  -webkit-transform: $properties;
+  -ms-transform: $properties;
+  transform: $properties;
+}
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+
+  @keyframes #{$name} {
+    @content;
+  }
+}
+@include keyframes(gelatine) {
+  from,
+  to {
+    @include transform(scale(1, 1));
+  }
+  25% {
+    @include transform(scale(0.9, 1.1));
+  }
+  50% {
+    @include transform(scale(1.1, 0.9));
+  }
+  75% {
+    @include transform(scale(0.95, 1.05));
+  }
+  from,
+  to {
+    @include transform(scale(1, 1));
+  }
+  25% {
+    @include transform(scale(0.9, 1.1));
+  }
+  50% {
+    @include transform(scale(1.1, 0.9));
+  }
+  75% {
+    @include transform(scale(0.95, 1.05));
+  }
+}
+
+.check {
+  width: 80px;
+  border-radius: 50px;
+  background: $orange;
+}
