@@ -26,6 +26,9 @@ export default function LoginForm() {
     try {
       const response = await serverAxios.post("/sign-in", formData);
       console.log(response);
+      // 토큰 저장
+      sessionStorage.setItem("accessToken", response.headers.authorization);
+      localStorage.setItem("refreshToken", response.headers["authorization-refresh"]);
 
       const newUser: User = {
         id: Date.now(),
@@ -61,7 +64,7 @@ export default function LoginForm() {
           type="text"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          id="email"
+          id="loginEmail"
           name="email"
         />
       </div>
@@ -72,7 +75,7 @@ export default function LoginForm() {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          id="password"
+          id="loginPassword"
           name="password"
           placeholder="비밀번호"
         />
