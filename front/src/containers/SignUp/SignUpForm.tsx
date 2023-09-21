@@ -76,11 +76,11 @@ export default function SignUpForm() {
     };
 
     try {
-      const response = await serverAxios.post("/sign-up", formData);
+      const response = await serverAxios.post("/auth/sign-up", formData);
       console.log(response);
 
       // 로그인 시키고 홈으로 에러
-      await serverAxios.post("/sign-in", formData);
+      await serverAxios.post("/auth/sign-in", formData);
       router.push("/home");
     } catch (error) {
       console.log("회원가입 에러", error);

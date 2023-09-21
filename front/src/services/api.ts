@@ -22,7 +22,6 @@ serverAxios.interceptors.request.use(
       if (config.headers && accessToken) {
         updateConfig.headers.authorization = `Bearer ${accessToken}`;
       }
-      console.log("인터셉터", updateConfig);
       return updateConfig;
     } catch (err) {
       console.error(`[_axios.interceptors.request] config : ${err}`);
