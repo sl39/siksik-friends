@@ -66,7 +66,7 @@ export default function GameRoom() {
             대기 방 보기
           </button>
         </div>
-        <button className={[styles.roundButton, styles.reload].join(" ")} onClick={fetchRoom}>
+        <button className={[styles.reload].join(" ")} onClick={fetchRoom}>
           새로고침
         </button>
       </div>

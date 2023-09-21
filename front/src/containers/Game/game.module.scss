@@ -14,48 +14,108 @@
 }
 
 // 게임 목록
+// 게임 버튼임
+@mixin createButton($width, $height, $radius, $gradientFirst, $gradientThird, $shadowColor) {
+  width: $width;
+  height: $height;
+  border-radius: $radius;
+  background-image: linear-gradient(135deg, $gradientFirst 0%, $gradientThird 100%);
+  box-shadow:
+    0 10px 1px 0px $shadowColor,
+    inset 0px -8px 16px 0px $shadowColor;
+
+  outline: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+  text-align: center;
+  font-weight: 600;
+}
+
+.roomBtn {
+  display: flex;
+  height: 10vh;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+.boxButton {
+  margin: 0 5px 5px;
+  font-size: 2rem;
+
+  transition: all 0.3s ease-in-out;
+  &:nth-child(1) {
+    @include createButton(200px, 8vh, 10px, #feb692, #ea5455, rgba(238, 103, 97, 0.5));
+  }
+  &:nth-child(2) {
+    @include createButton(200px, 8vh, 10px, #abdcff, #0396ff, rgba(30, 161, 255, 0.5));
+  }
+  &:nth-child(3) {
+    @include createButton(200px, 8vh, 10px, #81fbb8, #28c76f, rgba(60, 211, 128, 0.5));
+  }
+  &:hover {
+    transform: translatey(5px);
+    box-shadow: none;
+  }
+  &:active {
+    opacity: 0.5;
+  }
+}
+$roundBtn: #85c9ed;
+.roomActionBtn {
+  height: 10%;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.roundButton {
+  border-radius: 50px;
+  height: 4vh;
+  width: 150px;
+  text-align: center;
+  margin: 0 5px 10px;
+  padding: 5px;
+  font-size: 1.6rem;
+  transition: all 0.3s ease-in-out;
+  border: 2px solid $roundBtn;
+  background-color: #fff;
+  border-radius: 25px / 17px;
+  &:hover {
+    top: -1px;
+  }
+  &:active,
+  &:focus {
+    top: 1px;
+    background-color: $roundBtn;
+  }
+}
+.reload {
+  width: 110px;
+  border-radius: 50px;
+  height: 4vh;
+  text-align: center;
+  margin: 0 5px 10px;
+  padding: 5px;
+  font-size: 1.6rem;
+  transition: all 0.3s ease-in-out;
+  border: 2px solid $roundBtn;
+  background-color: #fff;
+  border-radius: 25px / 17px;
+  &:hover {
+    top: -1px;
+  }
+  &:active {
+    top: 1px;
+    background-color: $roundBtn;
+  }
+}
+
 .GameRoom {
   border: 1px solid black;
   background: rgba(255, 255, 255, 0.85);
   border-radius: 10px;
   height: 55vh;
   padding: 10px;
-
-  .roomBtn {
-    display: flex;
-    height: 20%;
-    justify-content: space-between;
-  }
-
-  .roomActionBtn {
-    height: 10%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .roundButton {
-    border-radius: 50px;
-    border: 0.3px solid black;
-    background-color: #fff;
-    height: 40px;
-    width: 150px;
-    text-align: center;
-    margin: 10px;
-  }
-  .boxButton {
-    width: 200px;
-    height: 70px;
-    border-radius: 10px;
-    background: linear-gradient(180deg, #f2f2f2 0%, #dadcdf 100%);
-    margin: 10px;
-    font-size: 1.8rem;
-    font-weight: bold;
-    text-align: center;
-  }
-  .reload {
-    border: 1px solid black;
-    width: 100px;
-  }
 
   .rooms {
     height: 40%;
