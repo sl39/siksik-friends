@@ -6,11 +6,8 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
-.buttonContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
+// 로고
 .logo {
   -webkit-font-smoothing: antialiased;
   display: flex;
@@ -78,6 +75,13 @@ $orange: #ffdab9;
 $dark-orange: #ff7a49;
 $orange-border: #f76127;
 $orange-shadow: #ffdab9;
+
+// Click to Start 버튼
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .start {
   position: absolute;
   top: 80vh;
@@ -96,7 +100,6 @@ $orange-shadow: #ffdab9;
   span {
     font-size: 1.8rem;
   }
-
   &.login {
     font-weight: 600;
 
@@ -154,6 +157,7 @@ $orange-shadow: #ffdab9;
   }
 }
 
+// Sign-up 페이지
 .container {
   position: relative;
   height: 80%;
@@ -163,61 +167,8 @@ $orange-shadow: #ffdab9;
   align-items: center;
   flex-direction: column;
 }
-.cardWrap {
-  position: relative;
-  width: 600px;
-  height: 700px;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  perspective: 800px;
-  margin: 0;
-  margin-top: 30px;
-}
-.cardWrapper {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  transition: all 600ms ease-out;
-}
-.card-front,
-.card-back {
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
-  background-position: bottom center;
-  background-repeat: no-repeat;
-  background-size: 300%;
-  position: absolute;
-  border-radius: 10px;
-  left: 0;
-  top: 0;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -o-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-.card-back {
-  transform: rotateY(180deg);
-}
 
-.center-wrap {
-  position: absolute;
-  width: 100%;
-  height: 95%;
-  margin: 10px 0;
-  top: 50%;
-  left: 0;
-  transform: translate3d(0, -50%, 35px) perspective(100px);
-  z-index: 20;
-  display: block;
-}
+// 상단 체크박스
 .label {
   padding-top: 10px;
   width: 20%;
@@ -225,11 +176,9 @@ $orange-shadow: #ffdab9;
   align-items: center;
   justify-content: center;
   position: relative;
-  // text-align: center;
   font-size: 2rem;
   font-weight: bold;
 }
-
 .checkbox:checked,
 .checkbox:not(:checked) {
   position: absolute;
@@ -270,13 +219,64 @@ $orange-shadow: #ffdab9;
   transform: translateX(44px) rotate(-270deg);
 }
 
+.cardWrap {
+  position: relative;
+  width: 30%;
+  height: 80%;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  perspective: 800px;
+  margin: 0;
+  margin-top: 30px;
+}
+.cardWrapper {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  transition: all 600ms ease-out;
+}
+.card-front,
+.card-back {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  background-size: 300%;
+  position: absolute;
+  border-radius: 10px;
+  left: 0;
+  top: 0;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.card-back {
+  transform: rotateY(180deg);
+}
+.center-wrap {
+  position: absolute;
+  width: 100%;
+  height: 95%;
+  top: 50%;
+  left: 0;
+  transform: translate3d(0, -50%, 35px) perspective(100px);
+  z-index: 20;
+  display: block;
+}
 .rotate {
   transform: rotateY(180deg);
 }
-.cursor {
-  cursor: pointer;
-}
-// 뒤로가기 버튼
+
+// 하단 뒤로가기 버튼
 $orange: #ffdab9;
 .button {
   width: 300px;
@@ -286,20 +286,14 @@ $orange: #ffdab9;
   text-align: center;
   border-radius: 13px;
   background-size: 200% auto;
-  // color: white;
-  // /* text-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
-  // box-shadow: 0 0 20px #eee;
-  // border-radius: 10px;
-
   &:hover {
-    background-position: right center; /* change the direction of the change here */
+    background-position: right center;
   }
 }
 .btnAct,
 .btnAct:link,
 .btnAct:visited {
   background-color: $orange;
-
   &:hover,
   &:focus {
     transition-timing-function: cubic-bezier(0.6, 4, 0.3, 0.8);

@@ -118,61 +118,69 @@ export default function SignUpForm() {
   return (
     <form onSubmit={handleSignUp} className={styles.form}>
       <h1 className={styles.formTitle}>회원가입</h1>
-      <div className={styles["form-group"]}>
-        <input
-          className={styles["form-style"]}
-          type="text"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-        />
-        <button type="button" onClick={handleCheckEmail} className={[styles.button, styles.check].join(" ")}>
-          중복확인
-        </button>
-        <div>{checkEmail}</div>
+      <div className={`${styles["form-group"]} ${styles.mb}`}>
+        <div className={styles.formCheck}>
+          <input
+            className={styles["form-style"]}
+            type="text"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+          />
+          <button type="button" onClick={handleCheckEmail} className={[styles.button, styles.check].join(" ")}>
+            중복확인
+          </button>
+        </div>
+        <div className={styles.checkText}>{checkEmail}</div>
       </div>
 
-      <div className={styles["form-group"]}>
-        <input
-          className={styles["form-style"]}
-          type={showPassword1 ? "text" : "password"}
-          id="password1"
-          value={password1}
-          placeholder="비밀번호"
-          onChange={(e) => setPassword1(e.target.value)}
-        />
-        <button type="button" onClick={() => setShowPassword1(!showPassword1)}>
-          view
-        </button>
+      <div className={`${styles["form-group"]} ${styles.mb}`}>
+        <div>
+          <input
+            className={styles["form-style"]}
+            type={showPassword1 ? "text" : "password"}
+            id="password1"
+            value={password1}
+            placeholder="비밀번호"
+            onChange={(e) => setPassword1(e.target.value)}
+          />
+          <button type="button" onClick={() => setShowPassword1(!showPassword1)}>
+            view
+          </button>
+        </div>
       </div>
-      <div className={styles["form-group"]}>
-        <input
-          className={styles["form-style"]}
-          type={showPassword2 ? "text" : "password"}
-          id="password2"
-          placeholder="비밀번호 확인"
-          value={password2}
-          onChange={(e) => setPassword2(e.target.value)}
-        />
-        <button type="button" onClick={() => setShowPassword2(!showPassword2)}>
-          view
-        </button>
+      <div className={`${styles["form-group"]} ${styles.mb}`}>
+        <div>
+          <input
+            className={styles["form-style"]}
+            type={showPassword2 ? "text" : "password"}
+            id="password2"
+            placeholder="비밀번호 확인"
+            value={password2}
+            onChange={(e) => setPassword2(e.target.value)}
+          />
+          <button type="button" onClick={() => setShowPassword2(!showPassword2)}>
+            view
+          </button>
+        </div>
       </div>
 
-      <div className={styles["form-group"]}>
-        <input
-          placeholder="닉네임"
-          className={styles["form-style"]}
-          type="text"
-          id="nickname"
-          value={nickname}
-          onChange={(e) => setNickname(e.target.value)}
-        />
-        <button type="button" onClick={handleCheckNickname} className={[styles.button, styles.check].join(" ")}>
-          중복확인
-        </button>
-        <div>{checkNickname}</div>
+      <div className={`${styles["form-group"]} ${styles.mb}`}>
+        <div className={styles.formCheck}>
+          <input
+            placeholder="닉네임"
+            className={styles["form-style"]}
+            type="text"
+            id="nickname"
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+          />
+          <button type="button" onClick={handleCheckNickname} className={[styles.button, styles.check].join(" ")}>
+            중복확인
+          </button>
+        </div>
+        <div className={styles.checkText}>{checkNickname}</div>
       </div>
 
       <button type="submit" className={[styles.button, styles.btnAct].join(" ")}>
