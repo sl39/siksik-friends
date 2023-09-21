@@ -1,4 +1,4 @@
-import styles from "./home.module.css";
+import styles from "./home.module.scss";
 
 export default function Today() {
   const todayDate = new Date();
