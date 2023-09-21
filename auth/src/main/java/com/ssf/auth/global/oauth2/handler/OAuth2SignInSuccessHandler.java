@@ -33,7 +33,7 @@ public class OAuth2SignInSuccessHandler implements AuthenticationSuccessHandler 
             if (customOAuth2User.getRole() == Role.GUEST) {
                 String accessToken = jwtService.createAccessToken(customOAuth2User.getEmail());
                 response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
-                response.sendRedirect("oauth2/sign-up");
+                response.sendRedirect("auth/oauth2/sign-up");
 
                 jwtService.sendAccessAndRefreshToken(response, accessToken, null);
 
