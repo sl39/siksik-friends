@@ -1,15 +1,15 @@
 import BackButton from "@/components/BackButton";
 import styles from "./SignUp.module.scss";
-import SignUpForm from "./SignUpForm";
+import SwitchLogin from "./SwitchLogin";
 
 export default function SignUp() {
   return (
     <div className={styles.container}>
-      <div className={styles.context}>
-        <div className={styles.title}>회원가입</div>
-        <SignUpForm />
-        <BackButton className={[styles.button, styles.btnAct].join(" ")} />
+      <div className={styles.forms}>
+        <SwitchLogin />
       </div>
+
+      <BackButton className={[styles.button, styles.btnAct].join(" ")} />
     </div>
   );
 }
