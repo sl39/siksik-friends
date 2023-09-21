@@ -24,7 +24,7 @@ import java.io.IOException;
 @Slf4j
 public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
-    private static final String NO_CHECK_URL = "/sign-in";
+    private static final String SIGN_IN_URL = "/auth/sign-in";
 
     private final JwtService jwtService;
     private final UserRepository userRepository;
@@ -34,7 +34,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
 
-        if (request.getRequestURI().equals(NO_CHECK_URL)) {
+        if (request.getRequestURI().equals(SIGN_IN_URL)) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -68,6 +68,8 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
     public void checkAccessTokenAndAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.info("checkAccessTokenAndAuthentication() 호출");
+
+        System.out.println(jwtService.extractAccessToken(request));
 
         jwtService.extractAccessToken(request)
                 .filter(jwtService::isTokenValid).flatMap(jwtService::extractEmail).flatMap(userRepository::findByEmail).ifPresent(this::saveAuthentication);
