@@ -1,9 +1,10 @@
 "use client";
-import styles from "@/app/page.module.scss";
-import BackButton from "@/components/BackButton";
+
+import { useState } from "react";
 import LoginForm from "@/containers/SignUp/LoginForm";
 import SignUpForm from "@/containers/SignUp/SignUpForm";
-import { useState } from "react";
+import styles from "@/app/page.module.scss";
+import BackButton from "@/components/BackButton";
 
 export default function Login() {
   const [isChecked, setIsChecked] = useState(false);
@@ -25,7 +26,7 @@ export default function Login() {
             id="reg-log"
             name="reg-log"
           />
-          <label htmlFor="reg-log"></label>
+          <label htmlFor="reg-log" />
           <span>Sign Up</span>
         </div>
 

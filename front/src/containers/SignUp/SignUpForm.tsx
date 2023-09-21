@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+// import { useRouter } from "next/navigation";
 import { serverAxios } from "@/services/api";
 import styles from "./form.module.scss";
-import { useRouter } from "next/navigation";
 
 // const validate = (vaules) => {
 //   const error = {};
@@ -36,7 +36,7 @@ export default function SignUpForm() {
   const [password2, setPassword2] = useState("");
   const [nickname, setNickname] = useState("");
 
-  const router = useRouter();
+  // const router = useRouter();
 
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
