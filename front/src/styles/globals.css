@@ -2,13 +2,16 @@ body {
   margin: 0;
   width: calc(100vw);
   height: calc(100vh);
-  /* 차후 수정 */
-  min-width: 1080px;
-  min-height: 600px;
+
+  min-width: 1280px;
+  min-height: 720px;
   background-color: var(--color-bg);
 
   font-family: var(--font-poor), sans-serif;
   font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 button,
 a {

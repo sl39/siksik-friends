@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import zingchart from "zingchart/es6";
 import { WordCloudAxios } from "@/services/api";
-import styles from "./home.module.css";
+import styles from "./home.module.scss";
 // eslint-disable-next-line import/extensions
 import "zingchart/modules-es6/zingchart-wordcloud.min.js";
 

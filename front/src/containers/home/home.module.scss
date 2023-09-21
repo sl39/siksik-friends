@@ -1,6 +1,6 @@
 .container {
   display: flex;
-  width: 100%;
+  width: 98%;
 }
 
 .left {
@@ -40,8 +40,7 @@
   margin-left: 10px;
 }
 
-/* 버튼 */
-
+/* 워드클라우드 버튼 */
 .groupContainer {
   height: 80px;
   display: grid;
@@ -108,31 +107,67 @@
   border: 0;
 }
 
-.postIt {
-  cursor: pointer;
-  position: absolute;
-  width: 24%;
-  height: 25%;
-  right: -5px;
-  bottom: 25px;
-
-  background-color: var(--color-postIt);
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.cardContainer {
+  width: 100%;
+  position: relative;
+  top: 10%;
+  left: -30px;
+  height: 70%;
+  transform: scale(1.1);
 }
-.postIt::before {
-  content: "";
+.buttonContainer {
   position: absolute;
-  top: 0px;
-  left: -40px;
-  height: 100%;
-  width: 50px;
-  background: var(--color-postIt-dark);
+  right: 3%;
+  bottom: 8%;
 }
-.buttonFont {
-  font-size: 3rem;
-  font-weight: bold;
+// 게임 시작
+.span {
+  --scale-factor: 50vh;
+  position: relative;
+  width: 100%;
+  padding-top: 25.92%;
+  display: block;
+  background-size: 100% 100%;
+  font-size: 28px;
+  text-decoration: none;
+  color: #333;
+  margin: 0;
+  transform: scale(calc(var(--scale-factor) / 100));
+}
+
+.background-button {
+  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/323909/yellow-shadow.png);
+
+  &:after {
+    content: attr(title);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/323909/yellow-top.png);
+    transition: all 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &:hover:after {
+    -webkit-transform: translate(2.5%, 5%);
+    transform: translate(2.5%, 5%);
+    text-shadow: 2px 2px 1px white;
+    color: black;
+  }
+  &:active:after {
+    -webkit-transform: translate(2.5%, 10%);
+    transform: translate(2.5%, 10%);
+    text-shadow: 2px 2px 1px white;
+    color: black;
+  }
+}
+.button-wrapper {
+  width: 355px;
+  display: inline-block;
+  margin: 20px;
 }

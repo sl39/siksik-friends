@@ -10,7 +10,6 @@
 }
 .item {
   display: inline-block;
-  margin-top: 12%;
   margin-left: 15%;
 
   /* transform: scale(calc(1.2 * var(--scale-factor) * vw), calc(1.2 * var(--scale-factor) * vw)) rotate(5deg); */
