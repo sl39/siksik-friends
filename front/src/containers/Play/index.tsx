@@ -1,9 +1,12 @@
+import Timer from "./Timer";
 import styles from "./play.module.scss";
 
 export default function GamePlay() {
   return (
     <>
-      <div className={styles.top}>타이머</div>
+      <div className={styles.top}>
+        <Timer />
+      </div>
       <div className={styles.container}>
         <div className={styles.left}>
           <div>문제정보</div>
