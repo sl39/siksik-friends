@@ -14,4 +14,4 @@ spring:
         git:
           uri: https://lab.ssafy.com/kimta2hwan/yaml.git
           default-label: master
-          search-paths: *
+#          search-paths: *
