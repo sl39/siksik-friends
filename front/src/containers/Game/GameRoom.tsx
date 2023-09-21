@@ -35,11 +35,11 @@ export default function GameRoom() {
       // 서버 요청 전 임시 Room
       setRooms([
         { id: 1, name: "ㄱㄱ", waiting: true },
-        { id: 2, name: "ㄱㄱ", waiting: false },
+        { id: 2, name: "ㄱㄱ", waiting: true },
         { id: 21, name: "ㄱㄱ", waiting: false },
         { id: 22, name: "ㄱㄱ", waiting: false },
-        { id: 23, name: "ㄱㄱ", waiting: false },
-        { id: 235, name: "ㄱㄱ", waiting: false },
+        { id: 23, name: "ㄱㄱ", waiting: true },
+        { id: 235, name: "ㄱㄱ", waiting: true },
         { id: 2351, name: "ㄱㄱ", waiting: false },
         { id: 2352, name: "ㄱㄱ", waiting: false },
       ]);
@@ -55,7 +55,7 @@ export default function GameRoom() {
   return (
     <div className={styles.GameRoom}>
       <div className={styles.roomBtn}>
-        <EnterRoom />
+        <EnterRoom rooms={rooms} />
       </div>
       <div className={styles.roomActionBtn}>
         <div>
