@@ -1,3 +1,5 @@
+import ProfileUpdate from "@/containers/Profile/ProfileUpdate";
+
 export default function page() {
-  return <div>수정이다</div>;
+  return <ProfileUpdate />;
 }

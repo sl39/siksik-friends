@@ -5,7 +5,7 @@ import axios from "axios";
 const SERVER_ADDRESS = process.env.NEXT_PUBLIC_AXIOS_URL;
 
 export const serverAxios = axios.create({
-  baseURL: `${SERVER_ADDRESS}`,
+  baseURL: `${SERVER_ADDRESS}/api`,
   // headers: { 'Content-Type': 'application/json' }
 });
 
