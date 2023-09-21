@@ -107,22 +107,33 @@
   border: 0;
 }
 
+// 프로필 카드
 .cardContainer {
   width: 100%;
+  height: 70vh;
   position: relative;
   top: 10%;
   left: -30px;
   height: 70%;
-  transform: scale(1.1);
+  margin-top: 50px;
+  transform: scale(1.2);
 }
+
+// 게임 시작 버튼
 .buttonContainer {
   position: absolute;
-  right: 3%;
-  bottom: 8%;
+  right: 0;
+  bottom: 0;
 }
-// 게임 시작
+.button-wrapper {
+  display: inline-block;
+  position: absolute;
+  bottom: 2vh;
+  right: 3vw;
+  width: 23vw;
+  height: 23vh;
+}
 .span {
-  --scale-factor: 50vh;
   position: relative;
   width: 100%;
   padding-top: 25.92%;
@@ -132,21 +143,23 @@
   text-decoration: none;
   color: #333;
   margin: 0;
-  transform: scale(calc(var(--scale-factor) / 100));
 }
 
 .background-button {
   background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/323909/yellow-shadow.png);
-
+  background-repeat: no-repeat;
+  background-size: cover;
   &:after {
     content: attr(title);
     width: 100%;
     height: 100%;
     position: absolute;
     top: 0;
-    left: 0;
+    right: 0;
     display: block;
     background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/323909/yellow-top.png);
+    background-repeat: no-repeat;
+    background-size: cover;
     transition: all 0.3s;
     display: flex;
     justify-content: center;
@@ -165,9 +178,4 @@
     text-shadow: 2px 2px 1px white;
     color: black;
   }
-}
-.button-wrapper {
-  width: 355px;
-  display: inline-block;
-  margin: 20px;
 }

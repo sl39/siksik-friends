@@ -7,8 +7,12 @@ export default function index() {
   return (
     <div className={styles.container}>
       <div className={styles.left}>
-        <MyProfileCard />
-        <MyRank />
+        <div className={styles.profile}>
+          <MyProfileCard />
+        </div>
+        <div className={styles.RankDiv}>
+          <MyRank />
+        </div>
       </div>
       <div className={styles.right}>
         <AllRank />
