@@ -2,7 +2,6 @@
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  border: 1px solid black;
   background-image: url("../../public/images/background2.png");
   background-size: cover;
   background-repeat: no-repeat;
@@ -152,5 +151,207 @@ $orange-shadow: #ffdab9;
         transform: translate3d(0, 0, -1em);
       }
     }
+  }
+}
+
+.container {
+  border: 1px solid red;
+  position: relative;
+  height: 80%;
+  margin-top: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.cardWrap {
+  position: relative;
+  width: 600px;
+  height: 700px;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  perspective: 800px;
+  margin: 0;
+  margin-top: 30px;
+}
+.cardWrapper {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  transition: all 600ms ease-out;
+}
+.card-front,
+.card-back {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  background-size: 300%;
+  position: absolute;
+  border-radius: 10px;
+  left: 0;
+  top: 0;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.card-back {
+  transform: rotateY(180deg);
+}
+
+.center-wrap {
+  position: absolute;
+  width: 100%;
+  height: 95%;
+  margin: 10px 0;
+  top: 50%;
+  left: 0;
+  transform: translate3d(0, -50%, 35px) perspective(100px);
+  z-index: 20;
+  display: block;
+}
+.label {
+  padding-top: 10px;
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  // text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.checkbox:checked,
+.checkbox:not(:checked) {
+  position: absolute;
+  left: -9999px;
+}
+.checkbox:checked + label,
+.checkbox:not(:checked) + label {
+  position: relative;
+  display: block;
+  text-align: center;
+  width: 60px;
+  height: 16px;
+  border-radius: 8px;
+  padding: 0;
+  margin: 10px 15px;
+  cursor: pointer;
+  background-color: #ffeba7;
+}
+.checkbox:checked + label:before,
+.checkbox:not(:checked) + label:before {
+  position: absolute;
+  display: block;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #ffeba7;
+  background-color: $dark-orange;
+  content: "";
+  z-index: 20;
+  top: -10px;
+  left: -10px;
+  line-height: 36px;
+  text-align: center;
+  font-size: 24px;
+  transition: all 0.5s ease;
+}
+.checkbox:checked + label:before {
+  transform: translateX(44px) rotate(-270deg);
+}
+
+.rotate {
+  transform: rotateY(180deg);
+}
+
+// 뒤로가기 버튼
+$orange: #ffdab9;
+.button {
+  width: 300px;
+  height: 50px;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+  border-radius: 13px;
+  background-size: 200% auto;
+  // color: white;
+  // /* text-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
+  // box-shadow: 0 0 20px #eee;
+  // border-radius: 10px;
+
+  &:hover {
+    background-position: right center; /* change the direction of the change here */
+  }
+}
+.btnAct,
+.btnAct:link,
+.btnAct:visited {
+  background-color: $orange;
+
+  &:hover,
+  &:focus {
+    transition-timing-function: cubic-bezier(0.6, 4, 0.3, 0.8);
+    animation: gelatine 0.5s 1;
+  }
+}
+@mixin transform($properties) {
+  -webkit-transform: $properties;
+  -ms-transform: $properties;
+  transform: $properties;
+}
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+
+  @keyframes #{$name} {
+    @content;
+  }
+}
+@include keyframes(gelatine) {
+  from,
+  to {
+    @include transform(scale(1, 1));
+  }
+  25% {
+    @include transform(scale(0.9, 1.1));
+  }
+  50% {
+    @include transform(scale(1.1, 0.9));
+  }
+  75% {
+    @include transform(scale(0.95, 1.05));
+  }
+  from,
+  to {
+    @include transform(scale(1, 1));
+  }
+  25% {
+    @include transform(scale(0.9, 1.1));
+  }
+  50% {
+    @include transform(scale(1.1, 0.9));
+  }
+  75% {
+    @include transform(scale(0.95, 1.05));
   }
 }
