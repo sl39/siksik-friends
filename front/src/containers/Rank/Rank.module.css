@@ -7,6 +7,12 @@
   height: 72vh;
   margin: 15px;
 }
+.profile {
+  width: 20vw;
+  display: flex;
+  justify-content: center;
+  margin: 5vh 0;
+}
 .right {
   width: 70%;
   height: 72vh;
@@ -61,6 +67,9 @@
 }
 
 /* 내 등수 */
+.RankDiv {
+  width: 100%;
+}
 .myRank {
   width: 180px;
   height: 180px;

@@ -136,12 +136,12 @@ $roundBtn: #85c9ed;
   }
   .rooms::-webkit-scrollbar-thumb {
     height: 30%; /* 스크롤바의 길이 */
-    background: var(--color-page1); /* 스크롤바의 색상 */
+    background: $roundBtn; /* 스크롤바의 색상 */
     border-radius: 10px;
   }
   .rooms::-webkit-scrollbar-track {
     /*스크롤바 뒷 배경 색상*/
-    background: var(--color-gray);
+    background: grey;
     border-radius: 10px;
   }
 
@@ -252,33 +252,84 @@ $roundBtn: #85c9ed;
   .userBigBox {
     width: 86%;
     padding: 5px;
-    border-radius: 15px 0 0 15px;
-    background-color: var(--color-wait, red);
+    border-radius: 15px 0 15px 15px;
+    background-color: var(--color-wait);
     display: flex;
     align-items: center;
     justify-content: center;
   }
   .userBox {
+    background-color: #f9f9f9;
+    background-image: linear-gradient(#e4e4e4 1px, transparent 1px);
     position: relative;
     width: 95%;
     height: 96%;
     overflow: auto;
-    background-color: var(--color-wait, white);
-    border-radius: 15px;
+    border-radius: 15px 0 0 15px;
     padding: 5px;
-  }
-  .userNav {
-    width: 13%;
-    border: 1px solid red;
-
-    button {
-      margin: 0 0 10px 0;
-      height: 120px;
-      width: 100%;
-      border: 1px solid red;
-      background-color: var(--color-wait, grey);
-      border-radius: 0 15px 15px 0;
+    /* 스크롤 CSS */
+    &::-webkit-scrollbar {
+      width: 10px;
+      height: inherit;
     }
+    &::-webkit-scrollbar-thumb {
+      height: 30%; /* 스크롤바의 길이 */
+      background: #e7d19f; /* 스크롤바의 색상 */
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-track {
+      /*스크롤바 뒷 배경 색상*/
+      background: var(--color-wait);
+    }
+  }
+}
+.userNav {
+  width: 14%;
+}
+.tab {
+  background-color: var(--color-wait);
+  &:active,
+  &:focus {
+    width: 120%;
+  }
+
+  filter: drop-shadow(3px -3px 2px rgba(0, 0, 0, 0.05));
+  margin: 0 0 2px 0;
+  height: 120px;
+  width: 100%;
+  border-radius: 0 15px 15px 0;
+  div {
+    font-size: 1.6rem;
+    word-wrap: break-word;
+    width: 1.7rem;
+    text-align: center;
+    margin-left: 30%;
+    border-radius: 5px;
+    color: #fff;
+
+    &:active,
+    &:focus {
+      z-index: 50;
+      position: relative;
+      background: white;
+      box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      color: black;
+      outline: 1px solid rgba(255, 255, 255, 0.7);
+      border: 1px solid black;
+    }
+  }
+}
+.tabOpen {
+  background-color: var(--color-wait);
+  width: 120%;
+  div {
+    z-index: 8;
+    background-color: white;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    color: black;
+    border: 1px solid black;
   }
 }
 

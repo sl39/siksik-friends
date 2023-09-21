@@ -8,11 +8,13 @@ import styles from "./game.module.scss";
 
 export default function WaitingUser() {
   const [waitUser, setWaitUser] = useState<Array<User>>([]);
+  const [openTab, setOpenTab] = useState(0);
 
   /** 대기실에 있는 유저 정보를 받아오는 함수. */
   const handleWaitUser = async () => {
-    console.log("wait");
-    setWaitUser([
+    setOpenTab(0);
+
+    await setWaitUser([
       { id: 1, nickname: "wait" },
       { id: 2, nickname: "2" },
       { id: 3, nickname: "3" },
@@ -31,8 +33,9 @@ export default function WaitingUser() {
 
   /** 나의 모든 친구 정보를 받아오는 함수 */
   const handleFriends = async () => {
-    console.log("friend");
-    setWaitUser([
+    setOpenTab(1);
+
+    await setWaitUser([
       { id: 1, nickname: "friend" },
       { id: 2, nickname: "2" },
       { id: 3, nickname: "3" },
@@ -63,9 +66,13 @@ export default function WaitingUser() {
           ))}
         </div>
       </div>
-      <div className={styles.userNav}>
-        <button onClick={handleWaitUser}>대기실</button>
-        <button onClick={handleFriends}>친구</button>
+      <div className={`${styles.userNav} ${styles.tabs}`}>
+        <button className={`${styles.tab} ${openTab === 0 ? styles.tabOpen : ""}`} onClick={handleWaitUser}>
+          <div>대기실</div>
+        </button>
+        <button className={`${styles.tab} ${openTab === 1 ? styles.tabOpen : ""}`} onClick={handleFriends}>
+          <div>친구</div>
+        </button>
       </div>
     </>
   );
