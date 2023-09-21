@@ -19,10 +19,7 @@ export default function Login() {
     <div className={styles.main}>
       <div className={styles.container}>
         <div className={styles.label}>
-          <button className={styles.cursor} onClick={() => handleChange(false)}>
-            Log In
-          </button>
-
+          <button onClick={() => handleChange(false)}>Log In</button>
           <input
             checked={isChecked}
             onChange={handleCheckboxChange}
