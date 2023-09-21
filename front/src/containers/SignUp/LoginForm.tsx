@@ -24,7 +24,7 @@ export default function LoginForm() {
       password,
     };
     try {
-      const response = await serverAxios.post("/sign-in", formData);
+      const response = await serverAxios.post("/auth/sign-in", formData);
       console.log(response);
       // 토큰 저장
       sessionStorage.setItem("accessToken", response.headers.authorization);
