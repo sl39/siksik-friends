@@ -14,6 +14,8 @@ interface EnterRoomsProps {
 
 export default function EnterRoom({ rooms }: EnterRoomsProps) {
   console.log("엔터룸프롭스", rooms);
+
+  // 방 찾기, 방 생성 모달
   const [openCreateRoom, setOpenCreateRoom] = useState(false);
   const [openSearchRoom, setOpenSearchRoom] = useState(false);
   const [searchRoom, setSearchRoom] = useState("");

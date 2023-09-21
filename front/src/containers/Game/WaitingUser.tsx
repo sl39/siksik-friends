@@ -55,7 +55,7 @@ export default function WaitingUser() {
   }, []);
 
   return (
-    <div className={styles.waitingBox}>
+    <>
       <div className={styles.userBigBox}>
         <div className={styles.userBox}>
           {waitUser.map((item) => (
@@ -67,6 +67,6 @@ export default function WaitingUser() {
         <button onClick={handleWaitUser}>대기실</button>
         <button onClick={handleFriends}>친구</button>
       </div>
-    </div>
+    </>
   );
 }

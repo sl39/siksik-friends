@@ -4,23 +4,22 @@
 }
 .left {
   width: 70%;
-  height: 75vh;
-  margin: 15px;
+  height: 80vh;
+  margin: 0 10px;
 }
 .right {
   width: 25%;
-  height: 75vh;
-  margin: 15px 0;
+  height: 80vh;
+  margin: 0;
 }
 
 // 게임 목록
 .GameRoom {
+  border: 1px solid black;
   background: rgba(255, 255, 255, 0.85);
-  /* border: 1px solid black; */
-
   border-radius: 10px;
-  height: 70%;
-  padding: 10px 10px 30px;
+  height: 55vh;
+  padding: 10px;
 
   .roomBtn {
     display: flex;
@@ -59,7 +58,7 @@
   }
 
   .rooms {
-    height: inherit;
+    height: 40%;
 
     display: flex;
     flex-direction: row;
@@ -70,6 +69,7 @@
   /* 스크롤 CSS */
   .rooms::-webkit-scrollbar {
     width: 10px;
+    height: inherit;
   }
   .rooms::-webkit-scrollbar-thumb {
     height: 30%; /* 스크롤바의 길이 */
@@ -136,15 +136,16 @@
 
 // 채팅
 .chatBox {
-  height: 25%;
-  background: var(--colors-common-white, grey);
+  margin-top: 1%;
+  height: 20vh;
+  background: var(--colors-chat);
   border: 1px solid black;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
+  padding: 5px 0 10px 0;
   box-sizing: border-box;
   .chatLog {
     height: 72%;
@@ -179,22 +180,22 @@
 
 // 대기실 유저
 .waitingBox {
-  height: 65%;
+  height: 58vh;
   width: 30%;
   position: absolute;
-  margin: 5px 0;
   display: flex;
 
   .userBigBox {
     width: 86%;
+    padding: 5px;
     border-radius: 15px 0 0 15px;
     background-color: var(--color-wait, red);
-    padding: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
   .userBox {
+    position: relative;
     width: 95%;
     height: 96%;
     overflow: auto;
@@ -217,6 +218,7 @@
   }
 }
 
+// 대기실 유저 프로필
 .userItem {
   display: flex;
   justify-content: space-between;
@@ -238,4 +240,13 @@
     height: 30px;
     margin: 5px 0;
   }
+}
+
+// 내 프로필
+.profileItem {
+  width: 28%;
+  height: 10vh;
+  bottom: 10vh;
+  position: absolute;
+  border: 1px solid black;
 }
