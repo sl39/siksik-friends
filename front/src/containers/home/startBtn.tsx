@@ -12,7 +12,7 @@ export default function StartBtn() {
 
   return (
     <button onClick={handleClick} className={styles["button-wrapper"]}>
-      <span className={`${styles.span} ${styles["background-button"]}`} title="게임 시작!"></span>
+      <span className={`${styles.span} ${styles["background-button"]}`} title="게임 시작!" />
     </button>
   );
 }

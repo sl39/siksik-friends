@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import type { User } from "@/types";
 import { serverAxios } from "@/services/api";
 import styles from "./form.module.scss";
 
