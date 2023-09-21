@@ -12,11 +12,16 @@ export default function Login() {
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
+  const handleChange = (v: boolean) => {
+    setIsChecked(v);
+  };
   return (
     <div className={styles.main}>
       <div className={styles.container}>
         <div className={styles.label}>
-          <span>Log In</span>
+          <button className={styles.cursor} onClick={() => handleChange(false)}>
+            Log In
+          </button>
 
           <input
             checked={isChecked}
@@ -27,7 +32,9 @@ export default function Login() {
             name="reg-log"
           />
           <label htmlFor="reg-log" />
-          <span>Sign Up</span>
+          <button className={styles.cursor} onClick={() => handleChange(true)}>
+            Sign Up
+          </button>
         </div>
 
         <div className={styles.cardWrap}>
