@@ -155,7 +155,6 @@ $orange-shadow: #ffdab9;
 }
 
 .container {
-  border: 1px solid red;
   position: relative;
   height: 80%;
   margin-top: 5%;
@@ -274,7 +273,9 @@ $orange-shadow: #ffdab9;
 .rotate {
   transform: rotateY(180deg);
 }
-
+.cursor {
+  cursor: pointer;
+}
 // 뒤로가기 버튼
 $orange: #ffdab9;
 .button {

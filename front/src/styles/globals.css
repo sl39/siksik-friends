@@ -8,6 +8,7 @@ body {
   background-color: var(--color-bg);
 
   font-family: var(--font-poor), sans-serif;
+  font-size: 1.6rem;
 }
 button,
 a {
