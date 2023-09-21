@@ -2,11 +2,18 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+// import { Varela } from "next/font/google";
 import { serverAxios } from "@/services/api";
+import type { Room } from "@/types";
 import styles from "./game.module.scss";
 import Modal from "@/components/gameModal";
 
-export default function EnterRoom() {
+interface EnterRoomsProps {
+  rooms: Room[];
+}
+
+export default function EnterRoom({ rooms }: EnterRoomsProps) {
+  console.log("엔터룸프롭스", rooms);
   const [openCreateRoom, setOpenCreateRoom] = useState(false);
   const [openSearchRoom, setOpenSearchRoom] = useState(false);
   const [searchRoom, setSearchRoom] = useState("");
@@ -57,10 +64,29 @@ export default function EnterRoom() {
     setFormData({ ...formData, [key]: value });
   };
 
+  const randomOnClick = () => {
+    const arr: number[] = [];
+    rooms.forEach((element: Room) => {
+      if (element.waiting) {
+        arr.push(element.id);
+      }
+    });
+    console.log(arr);
+    if (arr.length === 0) {
+      return undefined;
+    }
+    const randomIndex = Math.floor(Math.random() * arr.length);
+    const randomRoomNum = arr[randomIndex];
+    router.push(`/game/room/${randomRoomNum}`);
+    return 0;
+  };
+
   return (
     <>
       <div>
-        <button className={styles.boxButton}>빠른시작</button>
+        <button className={styles.boxButton} onClick={() => randomOnClick()}>
+          빠른시작
+        </button>
         <button className={styles.boxButton} onClick={() => setOpenSearchRoom(true)}>
           방 찾기
         </button>
