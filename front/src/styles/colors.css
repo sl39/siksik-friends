@@ -31,5 +31,8 @@
   --color-word-hover: #ff6347;
   --color-word-hover-back: #ff8c00;
 
+  /* 게임 유저 */
+  --color-wait: #ff6347;
+
   --scale-factor: 0.01;
 }
