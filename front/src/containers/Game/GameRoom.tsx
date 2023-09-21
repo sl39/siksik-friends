@@ -9,18 +9,21 @@ import styles from "./game.module.scss";
 import EnterRoom from "./EnterRoom";
 
 export default function GameRoom() {
+  const [roomBtn, setRoomBtn] = useState(-1);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [filteredRooms, setFilteredRooms] = useState<Room[]>([]);
 
   // 방 전체 목록 받아오는 함수 작성하기
 
   /** 대기 중인 방만 보여주는 함수 */
-  const showWaitingRooms = () => {
-    setFilteredRooms(rooms.filter((room) => room.waiting));
+  const showWaitingRooms = async () => {
+    setRoomBtn(1);
+    await setFilteredRooms(rooms.filter((room) => room.waiting));
   };
   /** 모든 방을 보여주는 함수 */
-  const showAllRooms = () => {
-    setFilteredRooms(rooms);
+  const showAllRooms = async () => {
+    setRoomBtn(0);
+    await setFilteredRooms(rooms);
   };
 
   /** 방 목록 받아오기 */
@@ -43,11 +46,11 @@ export default function GameRoom() {
         { id: 2351, name: "ㄱㄱ", waiting: false },
         { id: 2352, name: "ㄱㄱ", waiting: false },
       ]);
-      showAllRooms();
     }
+    showAllRooms();
   };
   useEffect(() => {
-    fetchRoom().then(showAllRooms);
+    fetchRoom();
     // 경고를 무시하거나 eslint 규칙을 임시적으로 끄는 주석
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -59,10 +62,13 @@ export default function GameRoom() {
       </div>
       <div className={styles.roomActionBtn}>
         <div>
-          <button className={styles.roundButton} onClick={showAllRooms}>
+          <button className={`${styles.roundButton} ${roomBtn === 0 ? styles.activeRoom : ""}`} onClick={showAllRooms}>
             모든 방 보기
           </button>
-          <button className={styles.roundButton} onClick={showWaitingRooms}>
+          <button
+            className={`${styles.roundButton} ${roomBtn === 1 ? styles.activeRoom : ""}`}
+            onClick={showWaitingRooms}
+          >
             대기 방 보기
           </button>
         </div>
