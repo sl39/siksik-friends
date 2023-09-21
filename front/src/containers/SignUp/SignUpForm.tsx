@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-// import axios from "axios";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { serverAxios } from "@/services/api";
 import styles from "./form.module.scss";
 
@@ -36,7 +35,7 @@ export default function SignUpForm() {
   const [password2, setPassword2] = useState("");
   const [nickname, setNickname] = useState("");
 
-  // const router = useRouter();
+  const router = useRouter();
 
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
@@ -81,8 +80,8 @@ export default function SignUpForm() {
       console.log(response);
 
       // 로그인 시키고 홈으로 에러
-      // await serverAxios.post("/sign-in", formData);
-      // router.push("/home");
+      await serverAxios.post("/sign-in", formData);
+      router.push("/home");
     } catch (error) {
       console.log("회원가입 에러", error);
     }

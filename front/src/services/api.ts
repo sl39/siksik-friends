@@ -20,7 +20,7 @@ serverAxios.interceptors.request.use(
     // eslint-disable-next-line no-param-reassign
     try {
       if (config.headers && accessToken) {
-        updateConfig.headers.Authorization = `Bearer ${accessToken}`;
+        updateConfig.headers.authorization = `Bearer ${accessToken}`;
       }
       console.log("인터셉터", updateConfig);
       return updateConfig;
