@@ -7,14 +7,13 @@ import SignUpForm from "./SignUpForm";
 
 export default function SwitchButton() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const switcherItems = ["로그인", "회원가입"];
 
   return (
     <>
       <div className={`${styles.formWrapper} ${activeIndex === 0 ? `${styles.isActive}` : ""}`}>
         <button className={`${styles.switcher} ${styles.switcherLogin}`} onClick={() => setActiveIndex(0)}>
           로그인
-          <span className={styles.underline}></span>
+          <span className={styles.underline} />
         </button>
         <fieldset>
           <legend>Please, enter your email, password and password confirmation for sign up.</legend>
@@ -25,7 +24,7 @@ export default function SwitchButton() {
       <div className={`${styles.formWrapper} ${activeIndex === 1 ? `${styles.isActive}` : ""}`}>
         <button className={`${styles.switcher}  ${styles.switcherSignUp}`} onClick={() => setActiveIndex(1)}>
           회원가입
-          <span className={styles.underline}></span>
+          <span className={styles.underline} />
         </button>
         <fieldset>
           <legend>Please, enter your email, password and password confirmation for sign up.</legend>
