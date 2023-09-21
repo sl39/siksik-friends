@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { serverAxios } from "@/services/api";
+import type { Rank } from "@/types";
 import styles from "./Rank.module.css";
 import RankItem from "./RankItem";
-import { serverAxios } from "@/services/api";
-import { Rank } from "@/types";
 
 export default function AllRank() {
   const [ranks, setRanks] = useState<Array<Rank>>([]);

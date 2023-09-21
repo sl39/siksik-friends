@@ -1,6 +1,6 @@
+import type { Rank } from "@/types";
 import styles from "./Rank.module.css";
 import RankButton from "./RankButton";
-import { Rank } from "@/types";
 
 interface Props {
   item: Rank;

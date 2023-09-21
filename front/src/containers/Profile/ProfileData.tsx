@@ -1,4 +1,3 @@
-import Link from "next/link";
 import styles from "./Profile.module.css";
 
 export default function ProfileData() {
@@ -6,10 +5,7 @@ export default function ProfileData() {
 
   return (
     <div className={styles.profileData}>
-      <div className={styles.profileNav}>
-        <Link href={`/home/profile/${userId}`}>정보</Link>
-        <Link href={`/home/profile/${userId}/data`}>데이터</Link>
-      </div>
+      <div>내 프로필 정보 보여주기</div>
     </div>
   );
 }
