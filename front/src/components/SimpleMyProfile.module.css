@@ -1,7 +1,6 @@
-.container {
+.profileBtn {
+  height: auto;
+  position: relative;
   border: 1px solid black;
-  height: 23%;
-  width: 30%;
-  position: absolute;
-  bottom: 5%;
+  bottom: 1vh;
 }

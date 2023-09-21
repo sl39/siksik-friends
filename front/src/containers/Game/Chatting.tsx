@@ -113,12 +113,12 @@ export default function Chatting() {
     setChat("");
   };
   return (
-    <div className={styles.chatBox}>
+    <>
       <div className={styles.chatLog}>{chatLog}</div>
       <form onSubmit={handleChat} className={styles.chatInput}>
         <input type="text" value={chat} onChange={(e) => setChat(e.target.value)} />
-        <button type="submit">전송</button>
+        <button type="submit">ㄱ</button>
       </form>
-    </div>
+    </>
   );
 }
