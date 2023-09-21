@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import type { User } from "@/types";
 // import { localUser } from "@/store/userAtom";
 import { serverAxios } from "@/services/api";
-import styles from "./Login.module.scss";
+import styles from "./SignUp.module.scss";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -51,7 +51,7 @@ export default function LoginForm() {
   };
 
   return (
-    <form className={styles.loginForm} onSubmit={handleSignIn}>
+    <form className={`${styles.form} ${styles.formLogin}`} onSubmit={handleSignIn}>
       <div>
         <label htmlFor="email">Email</label>
         <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} id="email" name="email" />
