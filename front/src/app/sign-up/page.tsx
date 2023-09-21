@@ -19,9 +19,9 @@ export default function Login() {
     <div className={styles.main}>
       <div className={styles.container}>
         <div className={styles.label}>
-          <span className={styles.cursor} onClick={() => handleChange(false)}>
+          <button className={styles.cursor} onClick={() => handleChange(false)}>
             Log In
-          </span>
+          </button>
 
           <input
             checked={isChecked}
@@ -32,9 +32,9 @@ export default function Login() {
             name="reg-log"
           />
           <label htmlFor="reg-log" />
-          <span className={styles.cursor} onClick={() => handleChange(true)}>
+          <button className={styles.cursor} onClick={() => handleChange(true)}>
             Sign Up
-          </span>
+          </button>
         </div>
 
         <div className={styles.cardWrap}>
