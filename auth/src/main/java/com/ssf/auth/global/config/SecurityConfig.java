@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssf.auth.domain.user.repository.UserRepository;
 import com.ssf.auth.global.jwt.filter.JwtAuthenticationProcessingFilter;
 import com.ssf.auth.global.jwt.service.JwtService;
+import com.ssf.auth.global.oauth2.handler.OAuth2SignInFailureHandler;
+import com.ssf.auth.global.oauth2.handler.OAuth2SignInSuccessHandler;
+import com.ssf.auth.global.oauth2.service.CustomOAuth2UserService;
 import com.ssf.auth.global.signin.filter.CustomJsonUsernamePasswordAuthenticationFilter;
 import com.ssf.auth.global.signin.handler.SignInFailureHandler;
 import com.ssf.auth.global.signin.handler.SignInSuccessHandler;
@@ -32,6 +35,9 @@ public class SecurityConfig {
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private final ObjectMapper objectMapper;
+    private final OAuth2SignInSuccessHandler oAth2SignInSuccessHandler;
+    private final OAuth2SignInFailureHandler oAuth2SignInFailureHandler;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -42,10 +48,16 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("", "/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS, "/sign-in").permitAll()
-                        .anyRequest().authenticated());
+                .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
+                        .requestMatchers("", "/**", "index.html").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/auth/sign-in").permitAll()
+                        .anyRequest().authenticated())
+                .oauth2Login(oAuth2LoginConfigurer -> oAuth2LoginConfigurer
+                        .successHandler(oAth2SignInSuccessHandler)
+                        .failureHandler(oAuth2SignInFailureHandler)
+                        .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
+                                .userService(customOAuth2UserService))
+                );
 
         return http.build();
     }
