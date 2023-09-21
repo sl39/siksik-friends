@@ -1,7 +1,14 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import styles from "./Rank.module.css";
 import RankItem from "./RankItem";
+import { serverAxios } from "@/services/api";
+import { Rank } from "@/types";
 
 export default function AllRank() {
+  const [ranks, setRanks] = useState<Array<Rank>>([]);
+
   const rankArray = [
     { id: 1, rank: 1, name: "11", level: 10 },
     { id: 2, rank: 2, name: "11", level: 10 },
@@ -14,10 +21,28 @@ export default function AllRank() {
     { id: 9, rank: 9, name: "11", level: 10 },
     { id: 10, rank: 10, name: "11", level: 10 },
   ];
+
+  const rankData = async () => {
+    try {
+      const response = await serverAxios("/user/ranking");
+      console.log(response);
+      setRanks(response.data);
+    } catch (err) {
+      console.log("랭킹 조회 에러", err);
+    }
+  };
+
+  useEffect(() => {
+    rankData();
+  }, []);
+
   return (
     <div className={styles.RankArray}>
       {rankArray.map((item) => (
         <RankItem key={item.id} item={item} />
+      ))}
+      {ranks.map((rank) => (
+        <RankItem key={rank.id} item={rank} />
       ))}
     </div>
   );
