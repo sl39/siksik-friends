@@ -1,8 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import styles from "./Profile.module.css";
 import { serverAxios } from "@/services/api";
+import styles from "./Profile.module.css";
 
 export default function UpdateButton() {
   const router = useRouter();
