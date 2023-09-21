@@ -12,6 +12,6 @@ spring:
     config:
       server:
         git:
-          uri: https://lab.ssafy.com/s09-bigdata-dist-sub2/S09P22E101.git
-          default-label: yaml
-          search-paths: yaml/**
+          uri: https://lab.ssafy.com/kimta2hwan/yaml.git
+          default-label: master
+          search-paths: *
