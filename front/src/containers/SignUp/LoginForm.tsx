@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { serverAxios } from "@/services/api";
+// import { userAtom } from "@/store/userAtom";
 import styles from "./form.module.scss";
-import { userAtom } from "@/store/userAtom";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -26,8 +26,8 @@ export default function LoginForm() {
       localStorage.setItem("refreshToken", response.headers["authorization-refresh"]);
 
       // id 저장
-      console.log(response.headers.id);
-      // router.push("/home");
+      // console.log(response.headers.id);
+      router.push("/home");
     } catch (error) {
       console.log("로그인 에러", error);
     }
