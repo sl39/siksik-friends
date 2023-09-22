@@ -18,6 +18,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -50,14 +51,17 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
                         .requestMatchers("", "/**", "index.html").permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS, "/auth/sign-in").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/api/auth/sign-in").permitAll()
                         .anyRequest().authenticated())
-                .oauth2Login(oAuth2LoginConfigurer -> oAuth2LoginConfigurer
-                        .successHandler(oAth2SignInSuccessHandler)
-                        .failureHandler(oAuth2SignInFailureHandler)
-                        .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
-                                .userService(customOAuth2UserService))
-                );
+//                .oauth2Login(oAuth2LoginConfigurer -> oAuth2LoginConfigurer
+//                        .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
+//                                .userService(customOAuth2UserService))
+//                        .successHandler(oAth2SignInSuccessHandler)
+//                        .failureHandler(oAuth2SignInFailureHandler)
+//                        .redirectionEndpoint(redirectionEndpointConfig -> redirectionEndpointConfig
+//                                .baseUri("/api/auth/sign-in/oauth2/code/"))
+//                );
+                .oauth2Login(Customizer.withDefaults());
 
         return http.build();
     }

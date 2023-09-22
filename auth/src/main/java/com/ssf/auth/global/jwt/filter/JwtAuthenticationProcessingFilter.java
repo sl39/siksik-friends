@@ -24,7 +24,7 @@ import java.io.IOException;
 @Slf4j
 public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
-    private static final String SIGN_IN_URL = "/auth/sign-in";
+    private static final String SIGN_IN_URL = "/api/auth/sign-in";
 
     private final JwtService jwtService;
     private final UserRepository userRepository;
@@ -33,6 +33,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
+        log.info("JWT 필터 호출");
 
         if (request.getRequestURI().equals(SIGN_IN_URL)) {
             filterChain.doFilter(request, response);
