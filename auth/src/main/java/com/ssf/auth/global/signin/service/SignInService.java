@@ -17,10 +17,10 @@ public class SignInService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("해당 이메일이 존재하지 않습니다."));
+                .orElseThrow(() -> new UsernameNotFoundException("해당 회원이 존재하지 않습니다."));
 
         return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getEmail())
+                .username(String.valueOf(user.getId()))
                 .password(user.getPassword())
                 .roles(user.getRole().name())
                 .build();
