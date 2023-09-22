@@ -61,6 +61,14 @@
   box-shadow: 0 4px 8px 0 rgba(21, 21, 21, 0.2);
 }
 
+.loginForm {
+  .formDiv {
+    position: relative;
+    top: 5%;
+    height: 300px;
+  }
+}
+
 // 버튼
 $orange: #ffdab9;
 .button {

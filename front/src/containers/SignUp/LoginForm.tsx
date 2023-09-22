@@ -34,7 +34,7 @@ export default function LoginForm() {
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSignIn}>
+    <form className={`${styles.form} ${styles.loginForm}`} onSubmit={handleSignIn}>
       <h1 className={styles.formTitle}>로그인</h1>
 
       <div className={styles.formDiv}>

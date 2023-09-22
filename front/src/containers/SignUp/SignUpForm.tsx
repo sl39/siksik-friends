@@ -5,30 +5,6 @@ import { useRouter } from "next/navigation";
 import { serverAxios } from "@/services/api";
 import styles from "./form.module.scss";
 
-// const validate = (vaules) => {
-//   const error = {};
-
-//   // 이름
-//   if (!values.name) {
-//     errors.name = "이름을 입력해주세요.";
-//     return errors;
-//   }
-//   if (!/^[가-힣a-zA-Z]+$/.test(values.name)) {
-//     errors.name = "이름은 한글 또는 영어로만 입력해주세요.";
-//     return errors;
-//   }
-//   // 닉네임
-//   if (!values.nickname) {
-//     errors.nickname = "닉네임을 입력해주세요.";
-//   } else if (values.nickname.length < 2 || values.nickname.length > 5) {
-//     errors.nickname = "닉네임은 2~5자로 작성해주세요.";
-//   } else if (!/^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ]{2,5}$/.test(values.nickname)) {
-//     errors.nickname = "닉네임에는 한글, 영어, 숫자만 사용할 수 있습니다.";
-//   }
-
-//   return errors;
-// };
-
 export default function SignUpForm() {
   const [email, setEmail] = useState<string>("");
   const [password1, setPassword1] = useState("");
@@ -39,28 +15,6 @@ export default function SignUpForm() {
 
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
-
-  // 유효성 검사
-  // const [errors, setErrors] = useState(() => validate(values));
-  // useEffect(() => {
-  //   setErrors(validate(values));
-  // }, [values]);
-  // const handleFieldChange = (e) => {
-  //   handleChange(e);
-  //   const { name, value } = e.target;
-  //   const newErrors = validate({ ...values, [name]: value });
-  //   setErrors(newErrors);
-  // };
-  // // 유효성 검사 후 다음버튼 활성화
-  // const inputStyle = (fieldName) => {
-  //   if (errors[fieldName] !== undefined) {
-  //     return `${classes.inputBox} ${classes.inputError}`;
-  //   }
-  //   if (values[fieldName] !== "") {
-  //     return `${classes.inputBox} ${classes.inputFilled}`;
-  //   }
-  //   return classes.inputBox;
-  // };
 
   const [checkEmail, setCheckEmail] = useState("");
   const [checkNickname, setCheckNickname] = useState("");
@@ -73,7 +27,6 @@ export default function SignUpForm() {
 
   /** 회원가입 POST */
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log("회원가입 버튼");
     e.preventDefault();
     const formData = {
       email,
@@ -92,7 +45,6 @@ export default function SignUpForm() {
     } catch (error) {
       console.log("회원가입 에러", error);
     }
-    // }
   };
 
   /** 이메일 중복 검사 */
