@@ -51,7 +51,7 @@ public class SecurityConfig {
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
-                        .requestMatchers("", "/", "index.html", "/api/auth/email", "/api/auth/nickname").permitAll()
+                        .requestMatchers("", "/**", "index.html").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/api/auth/sign-in").permitAll()
                         .anyRequest().authenticated());
 //                .oauth2Login(oAuth2LoginConfigurer -> oAuth2LoginConfigurer
