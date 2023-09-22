@@ -2,7 +2,7 @@ package com.ssf.auth.global.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssf.auth.domain.user.repository.UserRepository;
-import com.ssf.auth.global.jwt.filter.JwtAuthenticationProcessingFilter;
+//import com.ssf.auth.global.jwt.filter.JwtAuthenticationProcessingFilter;
 import com.ssf.auth.global.jwt.service.JwtService;
 import com.ssf.auth.global.oauth2.handler.OAuth2SignInFailureHandler;
 import com.ssf.auth.global.oauth2.handler.OAuth2SignInSuccessHandler;
@@ -98,8 +98,8 @@ public class SecurityConfig {
         return customJsonUsernamePasswordSignInFilter;
     }
 
-    @Bean
-    public JwtAuthenticationProcessingFilter jwtAuthenticationProcessingFilter() {
-        return new JwtAuthenticationProcessingFilter(jwtService, userRepository);
-    }
+//    @Bean
+//    public JwtAuthenticationProcessingFilter jwtAuthenticationProcessingFilter() {
+//        return new JwtAuthenticationProcessingFilter(jwtService, userRepository);
+//    }
 }
