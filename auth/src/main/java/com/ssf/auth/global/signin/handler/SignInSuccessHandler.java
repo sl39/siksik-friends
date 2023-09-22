@@ -37,10 +37,6 @@ public class SignInSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                     user.updateRefreshToken(refreshToken);
                     userRepository.saveAndFlush(user);
                 });
-
-        log.info("로그인에 성공하였습니다. 아이디 : {}", id);
-        log.info("로그인에 성공하였습니다. AccessToken : {}", accessToken);
-        log.info("발급된 AccessToken 만료 기간 : {}", accessTokenExpiration);
     }
 
     private String extractUsername(Authentication authentication) {

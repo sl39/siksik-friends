@@ -80,8 +80,6 @@ public class JwtService {
     }
 
     public Optional<String> extractAccessToken(HttpServletRequest request) {
-        System.out.println("HEADER: " + request.getHeader(accessHeader));
-
         return Optional.ofNullable(request.getHeader(accessHeader))
                 .filter(accessToken -> accessToken.startsWith(BEARER))
                 .map(accessToken -> accessToken.replace(BEARER, ""));
@@ -102,7 +100,6 @@ public class JwtService {
                     .asString());
 
         } catch (Exception e) {
-            log.error("액세스 토큰이 유효하지 않습니다.");
             return Optional.empty();
         }
     }
@@ -121,7 +118,6 @@ public class JwtService {
             return true;
 
         } catch (Exception e) {
-            log.error("유효하지 않은 토큰입니다. {}", e.getMessage());
             return false;
         }
     }
