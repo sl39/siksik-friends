@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { serverAxios } from "@/services/api";
 import styles from "./form.module.scss";
+import { userAtom } from "@/store/userAtom";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -20,12 +21,13 @@ export default function LoginForm() {
     };
     try {
       const response = await serverAxios.post("/auth/sign-in", formData);
-      console.log(response);
       // 토큰 저장
       sessionStorage.setItem("accessToken", response.headers.authorization);
       localStorage.setItem("refreshToken", response.headers["authorization-refresh"]);
 
-      router.push("/home");
+      // id 저장
+      console.log(response.headers.id);
+      // router.push("/home");
     } catch (error) {
       console.log("로그인 에러", error);
     }
