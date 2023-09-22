@@ -10,6 +10,6 @@ public abstract class OAuth2UserInfo {
         this.attributes = attributes;
     }
 
-    public abstract String getId();
+    public abstract String getSocialId();
     public abstract String getProfile();
 }

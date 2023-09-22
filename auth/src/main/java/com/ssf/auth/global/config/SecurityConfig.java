@@ -53,7 +53,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
                         .requestMatchers("", "/**", "index.html").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/api/auth/sign-in").permitAll()
-                        .anyRequest().authenticated())
+                        .anyRequest().authenticated());
 //                .oauth2Login(oAuth2LoginConfigurer -> oAuth2LoginConfigurer
 //                        .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
 //                                .userService(customOAuth2UserService))
@@ -62,7 +62,7 @@ public class SecurityConfig {
 //                        .redirectionEndpoint(redirectionEndpointConfig -> redirectionEndpointConfig
 //                                .baseUri("/api/auth/sign-in/oauth2/code/"))
 //                );
-                .oauth2Login(Customizer.withDefaults());
+//                .oauth2Login(Customizer.withDefaults());
 
         http.addFilterAfter(customJsonUsernamePasswordAuthenticationFilter(), LogoutFilter.class);
         http.addFilterBefore(jwtAuthenticationProcessingFilter(), CustomJsonUsernamePasswordAuthenticationFilter.class);
