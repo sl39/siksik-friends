@@ -39,7 +39,6 @@ public class CustomJsonUsernamePasswordAuthenticationFilter extends AbstractAuth
         }
 
         String messageBody = StreamUtils.copyToString(request.getInputStream(), StandardCharsets.UTF_8);
-
         Map<String, String> usernamePasswordMap = objectMapper.readValue(messageBody, Map.class);
 
         String username = usernamePasswordMap.get(USERNAME_KEY);
