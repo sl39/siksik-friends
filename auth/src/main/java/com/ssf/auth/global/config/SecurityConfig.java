@@ -2,7 +2,7 @@ package com.ssf.auth.global.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssf.auth.domain.user.repository.UserRepository;
-//import com.ssf.auth.global.jwt.filter.JwtAuthenticationProcessingFilter;
+import com.ssf.auth.global.jwt.filter.JwtAuthenticationProcessingFilter;
 import com.ssf.auth.global.jwt.service.JwtService;
 import com.ssf.auth.global.oauth2.handler.OAuth2SignInFailureHandler;
 import com.ssf.auth.global.oauth2.handler.OAuth2SignInSuccessHandler;
@@ -26,6 +26,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -63,6 +64,9 @@ public class SecurityConfig {
 //                );
                 .oauth2Login(Customizer.withDefaults());
 
+        http.addFilterAfter(customJsonUsernamePasswordAuthenticationFilter(), LogoutFilter.class);
+        http.addFilterBefore(jwtAuthenticationProcessingFilter(), CustomJsonUsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 
@@ -98,8 +102,8 @@ public class SecurityConfig {
         return customJsonUsernamePasswordSignInFilter;
     }
 
-//    @Bean
-//    public JwtAuthenticationProcessingFilter jwtAuthenticationProcessingFilter() {
-//        return new JwtAuthenticationProcessingFilter(jwtService, userRepository);
-//    }
+    @Bean
+    public JwtAuthenticationProcessingFilter jwtAuthenticationProcessingFilter() {
+        return new JwtAuthenticationProcessingFilter(jwtService, userRepository);
+    }
 }
