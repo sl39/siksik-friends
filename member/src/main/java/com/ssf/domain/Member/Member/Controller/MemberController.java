@@ -1,6 +1,5 @@
 package com.ssf.domain.Member.Member.Controller;
 
-import com.ssf.domain.Member.Member.entity.Member;
 import com.ssf.domain.Member.Member.entity.dto.MemberDetailDTO;
 import com.ssf.domain.Member.Member.entity.dto.MemberFriendDTO;
 import com.ssf.domain.Member.Member.repository.MemberRepository;
@@ -12,13 +11,13 @@ import com.ssf.domain.Member.Member.entity.dto.MemberUpdateDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/user")
 public class MemberController {
 
     private final MemberDetailService memberDetailService;
@@ -27,30 +26,36 @@ public class MemberController {
     private final MemberDeleteService memberDeleteService;
     private final MemberRanking memberRanking;
 
-    @GetMapping("/user/userinfo/{userId}")
-    public MemberDetailDTO findByEmail(@PathVariable Long userId) {
-        System.out.println("여기는 들어오나");
+    @GetMapping("/my-page/{userId}")
+    public Map<String, String> findByEmail(@PathVariable Long userId) {
         MemberDetailDTO memberDetailDTO = memberDetailService.findById(userId);
-        return memberDetailDTO;
-    }
-    @PutMapping("/user/userinfo/{userId}")
-    public String updateMember(@PathVariable Long userId, MemberUpdateDTO memberUpdateDTO) {
-        System.out.println("PUT 요청이 들어오나?");
-        Member member = memberUpdateService.update(userId,memberUpdateDTO);
-        memberRepository.save(member);
+        Map<String, String> userJson = new HashMap<>();
 
+        userJson.put("id", String.valueOf(memberDetailDTO.getId()));
+        userJson.put("email", memberDetailDTO.getEmail());
+        userJson.put("nickname", memberDetailDTO.getNickname());
+        userJson.put("profile", memberDetailDTO.getProfile());
+        userJson.put("score", String.valueOf(memberDetailDTO.getScore()));
+
+        return userJson;
+    }
+
+    @PutMapping("/my-page/{userId}")
+    public String updateMember(@PathVariable Long userId, @RequestBody MemberUpdateDTO memberUpdateDTO) {
+        System.out.println("PUT 요청이 들어오나?");
+        memberUpdateService.update(userId, memberUpdateDTO);
 
         return "update complete";
     }
 
-    @DeleteMapping("/user/userinfo/{userId}")
+    @DeleteMapping("/my-page/{userId}")
     public String deleteById(@PathVariable Long userId){
 
         memberDeleteService.deleteById(userId);
         return "삭제 완";
     }
 
-    @GetMapping("/user/ranking")
+    @GetMapping("/ranking")
     public Map getRanking(){
         Map<Long, MemberFriendDTO> ranking = memberRanking.getRanking();
         return ranking;
