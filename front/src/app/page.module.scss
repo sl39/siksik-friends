@@ -164,6 +164,7 @@ $orange-shadow: #ffdab9;
 .container {
   position: relative;
   height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -225,6 +226,9 @@ $orange-shadow: #ffdab9;
   position: relative;
   width: 40vw;
   height: 80vh;
+  min-height: 400px;
+  min-width: 600px;
+
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   perspective: 800px;
