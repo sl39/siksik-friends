@@ -2,6 +2,7 @@ package com.ssf.auth.global.jwt.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.ssf.auth.domain.user.User;
 import com.ssf.auth.domain.user.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -69,6 +70,13 @@ public class JwtService {
         response.setStatus(HttpServletResponse.SC_OK);
         response.setHeader(accessHeader, accessToken);
         response.setHeader(refreshHeader, refreshToken);
+    }
+
+    public void sendAccessAndRefreshTokenAndId(HttpServletResponse response, String accessToken, String refreshToken, User user) {
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setHeader(accessHeader, accessToken);
+        response.setHeader(refreshHeader, refreshToken);
+        response.setHeader("id", String.valueOf(user.getId()));
     }
 
     public Optional<String> extractAccessToken(HttpServletRequest request) {
