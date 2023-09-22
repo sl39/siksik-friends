@@ -28,7 +28,7 @@ public class MemberController {
     private final MemberDeleteService memberDeleteService;
     private final MemberRanking memberRanking;
 
-    @GetMapping("/user/userinfo/{userId}")
+    @GetMapping("/user/my-page/{userId}")
     public Map<String, String> findByEmail(@PathVariable Long userId) {
         MemberDetailDTO memberDetailDTO = memberDetailService.findById(userId);
         Map<String, String> userJson = new HashMap<>();
@@ -42,12 +42,10 @@ public class MemberController {
         return userJson;
     }
 
-    @PutMapping("/user/userinfo/{userId}")
-    public String updateMember(@PathVariable Long userId, MemberUpdateDTO memberUpdateDTO) {
+    @PutMapping("/user/my-page/{userId}")
+    public String updateMember(@PathVariable Long userId, @RequestBody MemberUpdateDTO memberUpdateDTO) {
         System.out.println("PUT 요청이 들어오나?");
-        Member member = memberUpdateService.update(userId,memberUpdateDTO);
-        memberRepository.save(member);
-
+        memberUpdateService.update(userId, memberUpdateDTO);
 
         return "update complete";
     }

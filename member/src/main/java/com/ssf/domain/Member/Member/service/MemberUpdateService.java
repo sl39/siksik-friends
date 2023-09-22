@@ -17,22 +17,18 @@ public class MemberUpdateService {
         return member;
     }
 
-    public Member update(Long id,MemberUpdateDTO memberUpdateDTO){
-        Member member = memberRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당이메일이 없습니다"));
-        Member updateMember = Member.builder()
-                .id(member.getId())
-                .email(member.getEmail())
-                .password(member.getPassword())
-                .nickname(memberUpdateDTO.getNickname())
-                .score(member.getScore())
-                .profile(memberUpdateDTO.getProfile())
-                .signUpAt(member.getSignUpAt())
-                .role(member.getRole())
-                .socialType(member.getSocialType())
-                .updateAt(member.getUpdateAt())
-                .build();
+    public void update(Long id,MemberUpdateDTO memberUpdateDTO){
+        Member member = memberRepository.findById(id).get();
+        member.update(memberUpdateDTO);
 
-        return updateMember;
+        System.out.println(member.getId());
+        System.out.println(member.getEmail());
+        System.out.println(member.getPassword());
+        System.out.println(member.getNickname());
+        System.out.println(member.getProfile());
+        System.out.println(member.getRole());
+        System.out.println(member.getScore());
 
+        memberRepository.save(member);
     }
 }
