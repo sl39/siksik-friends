@@ -1,8 +1,8 @@
-package com.ssf.auth.global.jwt.filter;
+package com.ssf.auth.domain.jwt.filter;
 
 import com.ssf.auth.domain.user.User;
 import com.ssf.auth.domain.user.repository.UserRepository;
-import com.ssf.auth.global.jwt.service.JwtService;
+import com.ssf.auth.domain.jwt.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
