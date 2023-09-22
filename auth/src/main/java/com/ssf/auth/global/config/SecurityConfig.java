@@ -2,8 +2,8 @@ package com.ssf.auth.global.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssf.auth.domain.user.repository.UserRepository;
-import com.ssf.auth.global.jwt.filter.JwtAuthenticationProcessingFilter;
-import com.ssf.auth.global.jwt.service.JwtService;
+import com.ssf.auth.domain.jwt.filter.JwtAuthenticationProcessingFilter;
+import com.ssf.auth.domain.jwt.service.JwtService;
 import com.ssf.auth.global.oauth2.handler.OAuth2SignInFailureHandler;
 import com.ssf.auth.global.oauth2.handler.OAuth2SignInSuccessHandler;
 import com.ssf.auth.global.oauth2.service.CustomOAuth2UserService;
@@ -18,7 +18,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;

@@ -1,4 +1,4 @@
-package com.ssf.auth.global.jwt.service;
+package com.ssf.auth.domain.jwt.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
