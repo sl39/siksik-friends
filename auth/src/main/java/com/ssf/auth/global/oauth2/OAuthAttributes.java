@@ -37,7 +37,7 @@ public class OAuthAttributes {
     public User toEntity(SocialType socialType, OAuth2UserInfo oauth2UserInfo) {
         return User.builder()
                 .socialType(socialType)
-                .socialId(oauth2UserInfo.getId())
+                .socialId(oauth2UserInfo.getSocialId())
                 .email(UUID.randomUUID() + "@socialUser.com")
                 .profile(oauth2UserInfo.getProfile())
                 .role(Role.GUEST)

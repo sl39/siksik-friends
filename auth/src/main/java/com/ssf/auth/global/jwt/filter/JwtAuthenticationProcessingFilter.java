@@ -49,16 +49,14 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
             return;
         }
 
-        if (refreshToken == null) {
-            checkAccessTokenAndAuthentication(request, response, filterChain);
-        }
+        checkAccessTokenAndAuthentication(request, response, filterChain);
     }
 
     public void checkRefreshTokenAndReIssueAccessToken(HttpServletResponse response, String refreshToken) {
         userRepository.findByRefreshToken(refreshToken)
                 .ifPresent(user -> {
                     String reIssueRefreshToken = reIssueRefreshToken(user);
-                    jwtService.sendAccessAndRefreshToken(response, jwtService.createAccessToken(user.getEmail()), reIssueRefreshToken);
+                    jwtService.sendAccessAndRefreshToken(response, jwtService.createAccessToken(user.getId()), reIssueRefreshToken);
                 });
     }
 
@@ -76,8 +74,8 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
         jwtService.extractAccessToken(request)
                 .filter(jwtService::isTokenValid)
-                .ifPresent(accessToken -> jwtService.extractEmail(accessToken)
-                        .ifPresent(email -> userRepository.findByEmail(email)
+                .ifPresent(accessToken -> jwtService.extractId(accessToken)
+                        .ifPresent(id -> userRepository.findByEmail(id)
                                 .ifPresent(this::saveAuthentication)));
 
         filterChain.doFilter(request, response);
