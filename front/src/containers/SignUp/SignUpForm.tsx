@@ -25,7 +25,6 @@ import styles from "./form.module.scss";
 //   } else if (!/^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ]{2,5}$/.test(values.nickname)) {
 //     errors.nickname = "닉네임에는 한글, 영어, 숫자만 사용할 수 있습니다.";
 //   }
-
 //   return errors;
 // };
 

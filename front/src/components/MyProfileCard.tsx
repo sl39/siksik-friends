@@ -9,7 +9,7 @@ export default function Profile() {
   const [user] = useAtom(userAtom);
 
   return (
-    <div className={[styles.item].join(" ")}>
+    <div className={styles.item}>
       <div className={styles.polaroid}>
         <Image className={styles.img} src={`${user?.profile}`} alt="캐릭터 프로필" width={300} height={320} />
         <div className={styles.caption}>
