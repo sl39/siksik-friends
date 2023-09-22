@@ -1,5 +1,6 @@
 package com.ssf.domain.Member.Member.entity;
 
+import com.ssf.domain.Member.Member.entity.dto.MemberUpdateDTO;
 import com.ssf.domain.Member.Member.enums.Role;
 import com.ssf.domain.Member.Member.enums.SocialType;
 import jakarta.persistence.*;
@@ -64,4 +65,11 @@ public class Member {
 
     private String refreshToken;
 
+    public void update(MemberUpdateDTO memberUpdateDTO) {
+        this.email = memberUpdateDTO.getEmail();
+        this.password = memberUpdateDTO.getPassword();
+        this.nickname = memberUpdateDTO.getNickname();
+        this.profile = memberUpdateDTO.getProfile();
+        this.role = Role.MANAGER;
+    }
 }
