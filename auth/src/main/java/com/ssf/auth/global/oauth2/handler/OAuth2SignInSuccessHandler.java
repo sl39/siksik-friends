@@ -31,7 +31,7 @@ public class OAuth2SignInSuccessHandler implements AuthenticationSuccessHandler 
             CustomOAuth2User customOAuth2User = (CustomOAuth2User) authentication.getPrincipal();
 
             if (customOAuth2User.getRole() == Role.GUEST) {
-                String accessToken = jwtService.createAccessToken(customOAuth2User.getEmail());
+                String accessToken = jwtService.createAccessToken(customOAuth2User.getId());
                 response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
                 response.sendRedirect("auth/oauth2/sign-up");
 
@@ -47,13 +47,13 @@ public class OAuth2SignInSuccessHandler implements AuthenticationSuccessHandler 
     }
 
     private void signInSuccess(HttpServletResponse response, CustomOAuth2User customOAuth2User) throws IOException {
-        String accessToken = jwtService.createAccessToken(customOAuth2User.getEmail());
+        String accessToken = jwtService.createAccessToken(customOAuth2User.getId());
         String refreshToken = jwtService.createRefreshToken();
 
         response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
         response.addHeader(jwtService.getRefreshHeader(), "Bearer " + refreshToken);
 
         jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
-        jwtService.updateRefreshToken(customOAuth2User.getEmail(), refreshToken);
+        jwtService.updateRefreshToken(customOAuth2User.getId(), refreshToken);
     }
 }

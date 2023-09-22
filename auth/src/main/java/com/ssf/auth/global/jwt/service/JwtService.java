@@ -37,18 +37,18 @@ public class JwtService {
 
     private static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
     private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
-    private static final String EMAIL_CLAIM = "email";
+    private static final String ID_CLAIM = "id";
     private static final String BEARER = "Bearer ";
 
     private final UserRepository userRepository;
 
-    public String createAccessToken(String email) {
+    public String createAccessToken(Long id) {
         Date now = new Date();
 
         return JWT.create()
                 .withSubject(ACCESS_TOKEN_SUBJECT)
                 .withExpiresAt(new Date(now.getTime() + accessTokenExpirationPeriod))
-                .withClaim(EMAIL_CLAIM, email)
+                .withClaim(ID_CLAIM, id)
                 .sign(Algorithm.HMAC512(secretKey));
     }
 
@@ -80,8 +80,6 @@ public class JwtService {
     }
 
     public Optional<String> extractAccessToken(HttpServletRequest request) {
-        System.out.println("HEADER: " + request.getHeader(accessHeader));
-
         return Optional.ofNullable(request.getHeader(accessHeader))
                 .filter(accessToken -> accessToken.startsWith(BEARER))
                 .map(accessToken -> accessToken.replace(BEARER, ""));
@@ -93,22 +91,21 @@ public class JwtService {
                 .map(refreshToken -> refreshToken.replace(BEARER, ""));
     }
 
-    public Optional<String> extractEmail(String accessToken) {
+    public Optional<String> extractId(String accessToken) {
         try {
             return Optional.ofNullable(JWT.require(Algorithm.HMAC512(secretKey))
                     .build()
                     .verify(accessToken)
-                    .getClaim(EMAIL_CLAIM)
+                    .getClaim(ID_CLAIM)
                     .asString());
 
         } catch (Exception e) {
-            log.error("액세스 토큰이 유효하지 않습니다.");
             return Optional.empty();
         }
     }
 
-    public void updateRefreshToken(String email, String refreshToken) {
-        userRepository.findByEmail(email)
+    public void updateRefreshToken(Long id, String refreshToken) {
+        userRepository.findById(id)
                 .ifPresentOrElse(
                         user -> user.updateRefreshToken(refreshToken),
                         () -> new Exception("일치하는 회원이 없습니다.")
@@ -121,7 +118,6 @@ public class JwtService {
             return true;
 
         } catch (Exception e) {
-            log.error("유효하지 않은 토큰입니다. {}", e.getMessage());
             return false;
         }
     }
