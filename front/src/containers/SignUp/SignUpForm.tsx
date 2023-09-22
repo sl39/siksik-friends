@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-// import { BsCheck } from "react-icons/bs";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useAtom } from "jotai";
 import { serverAxios } from "@/services/api";
+import { userAtom } from "@/store/userAtom";
 import styles from "./form.module.scss";
 
 export default function SignUpForm() {
@@ -25,6 +27,7 @@ export default function SignUpForm() {
   const [emailValidation, setEmailValidation] = useState(0);
   const [passwordValidation, setPasswordValidation] = useState(0);
   const [nicknameValidation, setNicknameValidation] = useState(0);
+  const [, setUser] = useAtom(userAtom);
 
   /** 회원가입 POST */
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -37,11 +40,11 @@ export default function SignUpForm() {
     };
 
     try {
-      const response = await serverAxios.post("/auth/sign-up", formData);
-      console.log(response);
+      await serverAxios.post("/auth/sign-up", formData);
 
       // 로그인 시키고 홈으로
-      await serverAxios.post("/auth/sign-in", formData);
+      const response = await serverAxios.post("/auth/sign-in", formData);
+      await setUser({ id: response.headers.id });
       router.push("/home");
     } catch (error) {
       console.log("회원가입 에러", error);
@@ -54,7 +57,7 @@ export default function SignUpForm() {
       email,
     };
     try {
-      const response = await serverAxios.get("/auth/email", { params });
+      await serverAxios.get("/auth/email", { params });
       setEmailValidation(2);
       setCheckEmail("사용 가능한 이메일입니다.");
     } catch (error) {
@@ -68,7 +71,7 @@ export default function SignUpForm() {
       nickname,
     };
     try {
-      const response = await serverAxios.get("/auth/nickname", { params });
+      await serverAxios.get("/auth/nickname", { params });
       setNicknameValidation(2);
       setCheckNickname("사용 가능한 닉네임입니다.");
     } catch (error) {
@@ -176,19 +179,15 @@ export default function SignUpForm() {
                 onBlur={(e) => OnBlurSignUp(e)}
                 placeholder="Email"
               />
-              {emailValidation === 2 ? (
-                // <BsCheck size={36} color="#ff7a49" />
-                <></>
-              ) : (
-                <button
-                  type="button"
-                  onClick={handleCheckEmail}
-                  disabled={emailValidation !== 1}
-                  className={`${styles.button} ${styles.check}`}
-                >
-                  중복확인
-                </button>
-              )}
+
+              <button
+                type="button"
+                onClick={handleCheckEmail}
+                disabled={emailValidation !== 1}
+                className={`${styles.button} ${styles.check}`}
+              >
+                중복확인
+              </button>
             </div>
             <div className={styles.checkText}>{checkEmail}</div>
           </div>
@@ -206,14 +205,14 @@ export default function SignUpForm() {
                 onChange={(e) => setPassword1(e.target.value)}
                 onBlur={(e) => onBlurPassWord1(e)}
               />
-              <button type="button" onClick={() => setShowPassword1(!showPassword1)}>
-                view
+              <button className={styles.eye} type="button" onClick={() => setShowPassword1(!showPassword1)}>
+                {showPassword1 ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
               </button>
             </div>
             <div className={styles.checkText}>{checkPassword1}</div>
           </div>
           <div className={styles.formCheck}>
-            <div>
+            <div className={styles.display}>
               <input
                 className={styles["form-style"]}
                 type={showPassword2 ? "text" : "password"}
@@ -223,8 +222,8 @@ export default function SignUpForm() {
                 onChange={(e) => setPassword2(e.target.value)}
                 onBlur={(e) => onBlurPassWord2(e)}
               />
-              <button type="button" onClick={() => setShowPassword2(!showPassword2)}>
-                view
+              <button className={styles.eye} type="button" onClick={() => setShowPassword2(!showPassword2)}>
+                {showPassword2 ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
               </button>
             </div>
             <div className={styles.checkText}>{checkPassword2}</div>
@@ -243,19 +242,15 @@ export default function SignUpForm() {
                 onChange={(e) => setNickname(e.target.value)}
                 onBlur={(e) => onBlurNickname(e)}
               />
-              {nicknameValidation === 2 ? (
-                <></>
-              ) : (
-                // <BsCheck size={36} color="#ff7a49" />
-                <button
-                  type="button"
-                  onClick={handleCheckNickname}
-                  disabled={nicknameValidation !== 1}
-                  className={[styles.button, styles.check].join(" ")}
-                >
-                  중복확인
-                </button>
-              )}
+
+              <button
+                type="button"
+                onClick={handleCheckNickname}
+                disabled={nicknameValidation !== 1}
+                className={[styles.button, styles.check].join(" ")}
+              >
+                중복확인
+              </button>
             </div>
             <div className={styles.checkText}>{checkNickname}</div>
           </div>
