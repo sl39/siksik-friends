@@ -1,3 +1,5 @@
+$orange: #ffdab9;
+
 .form {
   position: relative;
   width: 100%;
@@ -68,9 +70,37 @@
     height: 300px;
   }
 }
+.signUpForm {
+  .formDiv {
+    justify-content: flex-start;
+    position: relative;
+    width: 60%;
+    max-width: 50vw;
+    min-width: 95%;
+    height: 90%;
+    overflow: auto;
+  }
+
+  .formDiv::-webkit-scrollbar {
+    width: 10px;
+  }
+  .formDiv::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: $orange; /* 스크롤바의 색상 */
+    border-radius: 10px;
+  }
+  .formDiv::-webkit-scrollbar-track {
+    /*스크롤바 뒷 배경 색상*/
+    border-radius: 10px;
+    background: var(--color-gray);
+  }
+  input {
+    margin: 0;
+  }
+}
 
 // 버튼
-$orange: #ffdab9;
+
 .button {
   width: 300px;
   height: 40px;
@@ -152,18 +182,36 @@ $orange: #ffdab9;
 
 .formCheck {
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0;
+  margin-left: 5vw;
+  margin-bottom: 0;
+  height: 90px;
 }
-.mb {
-  margin-bottom: 25px;
+.display {
+  display: flex;
+  align-items: flex-end;
 }
+// 중복확인 버튼
 .check {
   width: 80px;
-  height: 50%;
+  height: 20px;
   border-radius: 50px;
+  font-size: 16px;
   background: $orange;
-  font-size: 20px;
 }
+// 유효성 메시지
 .checkText {
   font-size: 15px;
-  padding-top: 10px;
+  padding-top: 5px;
+  height: 35px;
+}
+
+.isChecked {
+  width: 80px;
+  height: 20px;
+
+  margin-left: 30px;
+  padding: 0;
 }

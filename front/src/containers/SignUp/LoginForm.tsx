@@ -26,7 +26,7 @@ export default function LoginForm() {
       localStorage.setItem("refreshToken", response.headers["authorization-refresh"]);
 
       // id 저장
-      // console.log(response.headers.id);
+      console.log(response.headers.id);
       router.push("/home");
     } catch (error) {
       console.log("로그인 에러", error);

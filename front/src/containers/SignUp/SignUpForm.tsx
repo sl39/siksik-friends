@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+// import { BsCheck } from "react-icons/bs";
 import { serverAxios } from "@/services/api";
 import styles from "./form.module.scss";
 
@@ -39,7 +40,7 @@ export default function SignUpForm() {
       const response = await serverAxios.post("/auth/sign-up", formData);
       console.log(response);
 
-      // 로그인 시키고 홈으로 에러
+      // 로그인 시키고 홈으로
       await serverAxios.post("/auth/sign-in", formData);
       router.push("/home");
     } catch (error) {
@@ -49,13 +50,11 @@ export default function SignUpForm() {
 
   /** 이메일 중복 검사 */
   const handleCheckEmail = async () => {
-    console.log("이메일 버튼");
     const params = {
       email,
     };
     try {
       const response = await serverAxios.get("/auth/email", { params });
-      console.log(response);
       setEmailValidation(2);
       setCheckEmail("사용 가능한 이메일입니다.");
     } catch (error) {
@@ -65,13 +64,11 @@ export default function SignUpForm() {
   };
   /** 닉네임 중복 검사 */
   const handleCheckNickname = async () => {
-    console.log("닉네임 버튼");
     const params = {
       nickname,
     };
     try {
       const response = await serverAxios.get("/auth/nickname", { params });
-      console.log(response);
       setNicknameValidation(2);
       setCheckNickname("사용 가능한 닉네임입니다.");
     } catch (error) {
@@ -79,6 +76,8 @@ export default function SignUpForm() {
       setCheckNickname("이미 존재하는 닉네임입니다.");
     }
   };
+
+  /** 이메일 유효성 검사 */
   const OnBlurSignUp = (e: React.ChangeEvent<HTMLInputElement>) => {
     const getEmail = e.target.value;
     // const exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
@@ -98,6 +97,8 @@ export default function SignUpForm() {
     setEmailValidation(1);
     return true;
   };
+
+  /** 비밀번호 유효성 */
   const onBlurPassWord1 = (e: React.ChangeEvent<HTMLInputElement>) => {
     const password = e.target.value;
     const num = password.search(/[0-9]/g);
@@ -127,6 +128,7 @@ export default function SignUpForm() {
     return true;
   };
 
+  /** 비밀번호 동일 검사 */
   const onBlurPassWord2 = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checkPassword = e.target.value;
     if (checkPassword === password1) {
@@ -141,6 +143,7 @@ export default function SignUpForm() {
     return false;
   };
 
+  /** 닉네임 유효성 */
   const onBlurNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
     const getNickname = e.target.value;
     const trimmedNickname = getNickname?.trim().toString();
@@ -158,96 +161,114 @@ export default function SignUpForm() {
   };
 
   return (
-    <form onSubmit={handleSignUp} className={styles.form}>
+    <form onSubmit={handleSignUp} className={`${styles.form} ${styles.signUpForm}`}>
       <h1 className={styles.formTitle}>회원가입</h1>
-      <div className={`${styles["form-group"]} ${styles.mb}`}>
-        <div className={styles.formCheck}>
-          <input
-            className={styles["form-style"]}
-            type="text"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
-            onBlur={(e) => OnBlurSignUp(e)}
-          />
-          <button
-            type="button"
-            onClick={handleCheckEmail}
-            disabled={emailValidation !== 1}
-            className={[styles.button, styles.check].join(" ")}
-          >
-            중복확인
-          </button>
+      <div className={styles.formDiv}>
+        <div className={`${styles["form-group"]}`}>
+          <div className={styles.formCheck}>
+            <div className={styles.display}>
+              <input
+                className={`${styles["form-style"]}`}
+                type="text"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onBlur={(e) => OnBlurSignUp(e)}
+                placeholder="Email"
+              />
+              {emailValidation === 2 ? (
+                // <BsCheck size={36} color="#ff7a49" />
+                <></>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleCheckEmail}
+                  disabled={emailValidation !== 1}
+                  className={`${styles.button} ${styles.check}`}
+                >
+                  중복확인
+                </button>
+              )}
+            </div>
+            <div className={styles.checkText}>{checkEmail}</div>
+          </div>
         </div>
-        <div className={styles.checkText}>{checkEmail}</div>
-      </div>
 
-      <div className={`${styles["form-group"]} ${styles.mb}`}>
-        <div>
-          <input
-            className={styles["form-style"]}
-            type={showPassword1 ? "text" : "password"}
-            id="password1"
-            value={password1}
-            placeholder="비밀번호"
-            onChange={(e) => setPassword1(e.target.value)}
-            onBlur={(e) => onBlurPassWord1(e)}
-          />
-          <button type="button" onClick={() => setShowPassword1(!showPassword1)}>
-            view
-          </button>
+        <div className={`${styles["form-group"]}`}>
+          <div className={styles.formCheck}>
+            <div className={styles.display}>
+              <input
+                className={styles["form-style"]}
+                type={showPassword1 ? "text" : "password"}
+                id="password1"
+                value={password1}
+                placeholder="비밀번호"
+                onChange={(e) => setPassword1(e.target.value)}
+                onBlur={(e) => onBlurPassWord1(e)}
+              />
+              <button type="button" onClick={() => setShowPassword1(!showPassword1)}>
+                view
+              </button>
+            </div>
+            <div className={styles.checkText}>{checkPassword1}</div>
+          </div>
+          <div className={styles.formCheck}>
+            <div>
+              <input
+                className={styles["form-style"]}
+                type={showPassword2 ? "text" : "password"}
+                id="password2"
+                placeholder="비밀번호 확인"
+                value={password2}
+                onChange={(e) => setPassword2(e.target.value)}
+                onBlur={(e) => onBlurPassWord2(e)}
+              />
+              <button type="button" onClick={() => setShowPassword2(!showPassword2)}>
+                view
+              </button>
+            </div>
+            <div className={styles.checkText}>{checkPassword2}</div>
+          </div>
         </div>
-        <div className={styles.checkText}>{checkPassword1}</div>
-      </div>
-      <div className={`${styles["form-group"]} ${styles.mb}`}>
-        <div>
-          <input
-            className={styles["form-style"]}
-            type={showPassword2 ? "text" : "password"}
-            id="password2"
-            placeholder="비밀번호 확인"
-            value={password2}
-            onChange={(e) => setPassword2(e.target.value)}
-            onBlur={(e) => onBlurPassWord2(e)}
-          />
-          <button type="button" onClick={() => setShowPassword2(!showPassword2)}>
-            view
-          </button>
-        </div>
-        <div className={styles.checkText}>{checkPassword2}</div>
-      </div>
 
-      <div className={`${styles["form-group"]} ${styles.mb}`}>
-        <div className={styles.formCheck}>
-          <input
-            placeholder="닉네임"
-            className={styles["form-style"]}
-            type="text"
-            id="nickname"
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-            onBlur={(e) => onBlurNickname(e)}
-          />
-          <button
-            type="button"
-            onClick={handleCheckNickname}
-            disabled={nicknameValidation !== 1}
-            className={[styles.button, styles.check].join(" ")}
-          >
-            중복확인
-          </button>
+        <div className={`${styles["form-group"]}`}>
+          <div className={styles.formCheck}>
+            <div className={styles.display}>
+              <input
+                placeholder="닉네임"
+                className={styles["form-style"]}
+                type="text"
+                id="nickname"
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value)}
+                onBlur={(e) => onBlurNickname(e)}
+              />
+              {nicknameValidation === 2 ? (
+                <></>
+              ) : (
+                // <BsCheck size={36} color="#ff7a49" />
+                <button
+                  type="button"
+                  onClick={handleCheckNickname}
+                  disabled={nicknameValidation !== 1}
+                  className={[styles.button, styles.check].join(" ")}
+                >
+                  중복확인
+                </button>
+              )}
+            </div>
+            <div className={styles.checkText}>{checkNickname}</div>
+          </div>
         </div>
-        <div className={styles.checkText}>{checkNickname}</div>
-      </div>
 
-      <button
-        type="submit"
-        disabled={!(emailValidation === 2 && passwordValidation === 2 && nicknameValidation === 2)}
-        className={[styles.button, styles.btnAct].join(" ")}
-      >
-        회원가입
-      </button>
+        <button
+          type="submit"
+          disabled={!(emailValidation === 2 && passwordValidation === 2 && nicknameValidation === 2)}
+          className={[styles.button, styles.btnAct].join(" ")}
+        >
+          회원가입
+        </button>
+      </div>
     </form>
   );
 }
