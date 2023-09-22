@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,11 +29,19 @@ public class MemberController {
     private final MemberRanking memberRanking;
 
     @GetMapping("/user/userinfo/{userId}")
-    public MemberDetailDTO findByEmail(@PathVariable Long userId) {
-        System.out.println("여기는 들어오나");
+    public Map<String, String> findByEmail(@PathVariable Long userId) {
         MemberDetailDTO memberDetailDTO = memberDetailService.findById(userId);
-        return memberDetailDTO;
+        Map<String, String> userJson = new HashMap<>();
+
+        userJson.put("id", String.valueOf(memberDetailDTO.getId()));
+        userJson.put("email", memberDetailDTO.getEmail());
+        userJson.put("nickname", memberDetailDTO.getNickname());
+        userJson.put("profile", memberDetailDTO.getProfile());
+        userJson.put("score", String.valueOf(memberDetailDTO.getScore()));
+
+        return userJson;
     }
+
     @PutMapping("/user/userinfo/{userId}")
     public String updateMember(@PathVariable Long userId, MemberUpdateDTO memberUpdateDTO) {
         System.out.println("PUT 요청이 들어오나?");
