@@ -2,7 +2,6 @@ import dynamic from "next/dynamic";
 import StartBtn from "@/containers/home/startBtn";
 import styles from "./home.module.scss";
 import Today from "./Today";
-// import WordCloud from "./WordCloud";
 import MyProfileCard from "@/components/MyProfileCard";
 
 export default function Home() {
