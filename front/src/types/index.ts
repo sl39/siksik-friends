@@ -6,6 +6,7 @@ export interface User {
   nickname?: string;
   profile?: string;
   level?: number;
+  score?: number;
 }
 
 export interface Room {
