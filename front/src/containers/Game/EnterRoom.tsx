@@ -12,6 +12,14 @@ interface EnterRoomsProps {
   rooms: Room[];
 }
 
+type EnterRoomsFormType = {
+  title: string;
+  count: number;
+  countProblem: number;
+  type: string[]; // type을 문자열 배열로 명시
+  password: string;
+};
+
 export default function EnterRoom({ rooms }: EnterRoomsProps) {
   console.log("엔터룸프롭스", rooms);
   const [openCreateRoom, setOpenCreateRoom] = useState(false);
@@ -39,37 +47,36 @@ export default function EnterRoom({ rooms }: EnterRoomsProps) {
       console.log("방 찾기 에러", err);
     }
   };
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<EnterRoomsFormType>({
     title: "",
     count: 1,
     countProblem: 1,
-    type: [],
+    type: [], // 초기에 빈 문자열 배열로 초기화
     password: "",
-    secret: true,
   });
   /** 게임 생성 */
   const handleCreateGame = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(titleValidation && passwordValidation && formData.type.length){
+    if (titleValidation && passwordValidation && formData.type.length) {
       console.log(formData);
 
-    /** 게임방 POST 요청 */
-    // try {
-    //   const response = await serverAxios.post("/", formData);
-    //   console.log(response);
-    //   const id = 1;
-    //   // 모달 종료 후 게임 방 입장
-    //   setOpenCreateRoom(false);
-    //   router.push(`/game/room/${id}`);
-    // } catch (err) {
-    //   console.log(err);
-    //   // Axios 연결 전 임시 데이터
-    //   const id = 1;
-    //   // 모달 종료 후 게임 방 입장
-    //   setOpenCreateRoom(false);
-    //   router.push(`/game/room/${id}`);
-    // }
-  }
+      /** 게임방 POST 요청 */
+      try {
+        const response = await serverAxios.post("/", formData);
+        console.log(response);
+        const id = 1;
+        // 모달 종료 후 게임 방 입장
+        setOpenCreateRoom(false);
+        router.push(`/game/room/${id}`);
+      } catch (err) {
+        console.log(err);
+        // Axios 연결 전 임시 데이터
+        const id = 1;
+        // 모달 종료 후 게임 방 입장
+        setOpenCreateRoom(false);
+        router.push(`/game/room/${id}`);
+      }
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -156,15 +163,12 @@ export default function EnterRoom({ rooms }: EnterRoomsProps) {
       setFormData({ ...formData, type: updatedList });
       if (updatedList.length > 0) {
         setTypeValidation(false);
- 
-      
       }
     } else {
       // val이 존재하지 않으면 추가
       setFormData({ ...formData, type: [...typeList, val] });
       setTypeValidation(true);
       console.log(typeValidation);
-
     }
   };
   const checkBtn = () => {
@@ -176,7 +180,6 @@ export default function EnterRoom({ rooms }: EnterRoomsProps) {
     } else {
       setPasswordValidation(false);
     }
-    setFormData({ ...formData, secret: passwordCheckBox });
   };
 
   return (
@@ -310,9 +313,7 @@ export default function EnterRoom({ rooms }: EnterRoomsProps) {
               <input type="checkbox" onClick={checkBtn} /> <br />
               {checkpassword && <p style={{ color: "red" }}>{checkpassword}</p>}
               {/* 확인버튼 */}
-              <button type="submit" >
-                확인
-              </button>
+              <button type="submit">확인</button>
             </form>
             <button onClick={() => setOpenCreateRoom(false)}>취소</button>
           </div>
