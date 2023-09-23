@@ -2,11 +2,9 @@ package com.ssf.member.domain.user.controller;
 
 import com.ssf.member.domain.user.dto.UserDto;
 import com.ssf.member.domain.user.service.UserFindService;
+import com.ssf.member.domain.user.service.UserModifyService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,10 +14,16 @@ import java.util.List;
 public class UserController {
 
     private final UserFindService userFindService;
+    private final UserModifyService userModifyService;
 
     @GetMapping("/{id}")
     public UserDto.Detail findUserDetail(@PathVariable Long id) {
         return userFindService.findUser(id);
+    }
+
+    @PutMapping("/{id}")
+    public void modifyUser(@PathVariable Long id, @RequestBody UserDto.Request request) {
+        userModifyService.modifyUser(id, request);
     }
 
     @GetMapping("/rank")

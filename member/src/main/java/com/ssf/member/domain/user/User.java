@@ -82,6 +82,18 @@ public class User {
 
     private String refreshToken;
 
+    public void changeNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void changePassword(String password) {
+        this.password = password;
+    }
+
+    public void changeProfile(String profile) {
+        this.profile = profile;
+    }
+
     public void authorizeUser(Role role) {
         this.role = role;
     }
