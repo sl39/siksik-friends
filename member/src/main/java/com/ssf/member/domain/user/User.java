@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 public class User {
 
     @Id
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -46,9 +47,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role = Role.GUEST;
 
+    @Column(name = "social_id")
     private String socialId;
 
-    @Column(nullable = false, length = 10)
+    @Column(name = "social_type", nullable = false, length = 10)
     @Builder.Default
     @Enumerated(EnumType.STRING)
     private SocialType socialType = SocialType.NONE;
@@ -61,7 +63,7 @@ public class User {
     @Builder.Default
     private Long win = 0L;
 
-    @Column(nullable = false)
+    @Column(name = "total_game", nullable = false)
     @Builder.Default
     private Long totalGame = 0L;
 
@@ -74,13 +76,14 @@ public class User {
     private Long exp = 0L;
 
     @CreationTimestamp
-    @Column(nullable = false, length = 20, updatable = false)
+    @Column(name = "sign_up_at", nullable = false, length = 20, updatable = false)
     private LocalDateTime signUpAt;
 
     @UpdateTimestamp
-    @Column(nullable = false, length = 20)
+    @Column(name = "update_at", nullable = false, length = 20)
     private LocalDateTime updateAt;
 
+    @Column(name = "refresh_token")
     private String refreshToken;
 
     public void changeNickname(String nickname) {
