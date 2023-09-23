@@ -10,19 +10,21 @@ export default function Home() {
   return (
     <>
       <div className={styles.left}>
-        <Today />
+        <div className={styles.leftDay}>
+          <Today />
+        </div>
         <div className={styles.wordCloud}>
           <DynamicComponentWithNoSSR />
         </div>
       </div>
-      <div className={styles.right}>
+      {/* <div className={styles.right}>
         <div className={styles.cardContainer}>
           <MyProfileCard />
         </div>
         <div className={styles.buttonContainer}>
           <StartBtn />
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

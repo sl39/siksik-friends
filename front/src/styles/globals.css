@@ -65,7 +65,7 @@ a {
 }
 .book-page::after {
   content: "";
-  background: url("../../public/images/background2.png");
+  background: url("/images/background2.png");
 
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -89,12 +89,12 @@ a {
   box-sizing: border-box;
   overflow: auto;
   width: 100%;
-  height: calc(100% - 20px);
+  height: calc(100% - 40px);
 }
-
 /* 스크롤 CSS */
 .main-container::-webkit-scrollbar {
   width: 10px;
+  border-radius: 10px;
 }
 .main-container::-webkit-scrollbar-thumb {
   height: 30%;
@@ -103,6 +103,7 @@ a {
 }
 .main-container::-webkit-scrollbar-track {
   background: var(--color-gray);
+  border-radius: 10px;
 }
 
 /* home Nav */
