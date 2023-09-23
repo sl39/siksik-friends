@@ -24,6 +24,7 @@ import java.io.IOException;
 @Slf4j
 public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
+    private static final String SIGN_UP_URL = "/api/auth/sign-up";
     private static final String SIGN_IN_URL = "/api/auth/sign-in";
     private static final String EMAIL_CHECK_URL = "/api/auth/email";
     private static final String NICKNAME_CHECK_URL = "/api/auth/nickname";
@@ -35,7 +36,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
-        if (request.getRequestURI().equals(SIGN_IN_URL) || request.getRequestURI().equals(EMAIL_CHECK_URL) || request.getRequestURI().equals(NICKNAME_CHECK_URL)) {
+        if (request.getRequestURI().equals(SIGN_UP_URL) || request.getRequestURI().equals(SIGN_IN_URL) || request.getRequestURI().equals(EMAIL_CHECK_URL) || request.getRequestURI().equals(NICKNAME_CHECK_URL)) {
             filterChain.doFilter(request, response);
             return;
         }
