@@ -82,7 +82,6 @@ export default function SignUpForm() {
       setCheckNickname("이미 존재하는 닉네임입니다.");
     }
   };
-
   /** 이메일 유효성 검사 */
   const OnBlurSignUp = (e: React.ChangeEvent<HTMLInputElement>) => {
     const getEmail = e.target.value;
