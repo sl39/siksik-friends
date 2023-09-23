@@ -22,4 +22,14 @@ public class UserDto {
         private int score;
         private Long odds;
     }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    public static class Request {
+
+        private String nickname;
+        private String password;
+        private String profile;
+    }
 }
