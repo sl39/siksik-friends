@@ -9,14 +9,15 @@ import "zingchart/modules-es6/zingchart-wordcloud.min.js";
 
 interface Config {
   type: string;
-  options: {
-    words: any;
-    minLength: number;
-    ignore: string[];
-    maxItems: number;
-    aspect: string;
-    colorType: string;
-    palette: string[];
+  options?: {
+    words?: any;
+    minLength?: number;
+    ignore?: string[];
+    maxItems?: number;
+    aspect?: string;
+    colorType?: string;
+    palette?: string[];
+    active?: boolean;
   };
   style?: {
     fontFamily?: string;
@@ -58,9 +59,10 @@ export default function WordCloud() {
         type: "wordcloud",
         options: {
           words,
-          minLength: 5,
+          minLength: 1,
           ignore: [""],
-          maxItems: 40,
+          // 최대 단어 수
+          maxItems: 50,
           aspect: "spiral",
           // rotate: true,
           colorType: "palette",
@@ -80,7 +82,8 @@ export default function WordCloud() {
           ],
         },
         style: {
-          fontFamily: "Crete Round",
+          // fontFamily: "Crete Round",
+
           hoverState: {
             backgroundColor: "#D32F2F",
             borderRadius: "2px",
@@ -113,11 +116,10 @@ export default function WordCloud() {
         type: "wordcloud",
         options: {
           words,
-          minLength: 5,
+          minLength: 1,
           ignore: [""],
-          maxItems: 40,
+          maxItems: 50,
           aspect: "spiral",
-          // rotate: true,
           colorType: "palette",
           palette: [
             "#D32F2F",
@@ -135,7 +137,7 @@ export default function WordCloud() {
           ],
         },
         style: {
-          fontFamily: "Crete Round",
+          fontFamily: "Arial",
           hoverState: {
             backgroundColor: "#D32F2F",
             borderRadius: "2px",
@@ -154,6 +156,7 @@ export default function WordCloud() {
     }
   };
 
+  /** 버튼을 누르고, window가 뜨면, wordCloud 변경  */
   useEffect(() => {
     if (typeof window !== "undefined") {
       fetchWord(path);
@@ -162,6 +165,7 @@ export default function WordCloud() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path]);
 
+  /** window가 뜨면 render */
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (config !== undefined) {
@@ -176,7 +180,7 @@ export default function WordCloud() {
   }, [config]);
 
   return (
-    <div className={styles.wordCloud}>
+    <>
       <div className={styles.groupContainer}>
         <div className={styles.wordButton}>
           <button
@@ -212,6 +216,6 @@ export default function WordCloud() {
         </div>
       </div>
       <div id="myChart" />
-    </div>
+    </>
   );
 }
