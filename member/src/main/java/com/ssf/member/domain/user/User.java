@@ -1,26 +1,23 @@
-package com.ssf.domain.Member.Member.entity;
+package com.ssf.member.domain.user;
 
-import com.ssf.domain.Member.Member.enums.Role;
-import com.ssf.domain.Member.Member.enums.SocialType;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
-
+import org.springframework.data.annotation.Id;
 
 @Entity
-@Table
+@Table(name = "users")
 @NoArgsConstructor
 @Getter
 @Builder
 @AllArgsConstructor
-public class Member {
+public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -64,4 +61,25 @@ public class Member {
 
     private String refreshToken;
 
+    public void update(MemberUpdateDTO memberUpdateDTO) {
+        if (!memberUpdateDTO.getEmail().isEmpty()) {
+            this.email = memberUpdateDTO.getEmail();
+        }
+
+        if (!memberUpdateDTO.getNickname().isEmpty()) {
+            this.nickname = memberUpdateDTO.getNickname();
+        }
+
+        if (!memberUpdateDTO.getPassword().isEmpty()) {
+            this.password = memberUpdateDTO.getPassword();
+        }
+
+        if (!memberUpdateDTO.getNickname().isEmpty()) {
+            this.profile = memberUpdateDTO.getProfile();
+        }
+    }
+
+    public void encodePassword(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(this.password);
+    }
 }

@@ -1,4 +1,4 @@
-package com.ssf.domain.Member;
+package com.ssf.member;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

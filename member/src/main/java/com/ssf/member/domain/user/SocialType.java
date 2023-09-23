@@ -1,4 +1,4 @@
-package com.ssf.domain.Member.Member.enums;
+package com.ssf.member.domain.user;
 
 public enum SocialType {
     NONE, KAKAO
