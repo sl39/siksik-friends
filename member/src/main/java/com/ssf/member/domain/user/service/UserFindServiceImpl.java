@@ -39,7 +39,6 @@ public class UserFindServiceImpl implements UserFindService {
 
         for (User user : users) {
             result.add(UserDto.Detail.builder()
-                    .email(user.getEmail())
                     .nickname(user.getNickname())
                     .profile(user.getProfile())
                     .level(user.getLevel())
