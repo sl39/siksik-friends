@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -26,5 +27,22 @@ public class UserFindServiceImpl implements UserFindService {
                 .score(user.getScore())
                 .profile(user.getProfile())
                 .build();
+    }
+
+    @Override
+    public List<UserDto.Detail> findUsers() {
+        List<User> users = userRepository.findTop10ByOrderByScoreDesc().orElseThrow(null);
+        List<UserDto.Detail> result = new ArrayList<>();
+
+        for (User user : users) {
+            result.add(UserDto.Detail.builder()
+                    .email(user.getEmail())
+                    .nickname(user.getNickname())
+                    .score(user.getScore())
+                    .profile(user.getProfile())
+                    .build());
+        }
+
+        return result;
     }
 }
