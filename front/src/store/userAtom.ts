@@ -9,7 +9,7 @@ import type { User } from "@/types";
 //   score: 10,
 // });
 
-// // eslint-disable-next-line no-null/no-null
+// eslint-disable-next-line no-null/no-null
 // export const userAtom = atom((get) => get(initUserAtom));
 
 export const userAtom = atom<User | null>({

@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import zingchart from "zingchart/es6";
+// eslint-disable-next-line import/extensions
 import "zingchart/modules-es6/zingchart-wordcloud.min.js";
 import { WordCloudAxios } from "@/services/api";
 import styles from "./home.module.scss";
-// eslint-disable-next-line import/extensions
 
 interface Config {
   type: string;
