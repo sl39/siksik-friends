@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 import java.util.Date;
 import java.util.Optional;
 
@@ -96,9 +97,7 @@ public class JwtService {
             return Optional.ofNullable(JWT.require(Algorithm.HMAC512(secretKey))
                     .build()
                     .verify(accessToken)
-                    .getClaim(ID_CLAIM)
-                    .asString());
-
+                    .getClaim(ID_CLAIM).toString());
         } catch (Exception e) {
             return Optional.empty();
         }
