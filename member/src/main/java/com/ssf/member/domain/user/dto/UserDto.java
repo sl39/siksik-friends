@@ -16,7 +16,10 @@ public class UserDto {
 
         private String email;
         private String nickname;
-        private int score;
         private String profile;
+        private int level;
+        private Long rank;
+        private int score;
+        private Long odds;
     }
 }
