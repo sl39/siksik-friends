@@ -54,7 +54,8 @@ public class User {
     private SocialType socialType = SocialType.NONE;
 
     @Column(nullable = false)
-    private Long rank;
+    @Builder.Default
+    private Long rank = 0L;
 
     @Column(nullable = false)
     @Builder.Default
