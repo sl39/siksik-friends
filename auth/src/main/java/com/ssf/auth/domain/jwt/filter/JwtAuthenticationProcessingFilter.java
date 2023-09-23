@@ -25,6 +25,8 @@ import java.io.IOException;
 public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
     private static final String SIGN_IN_URL = "/api/auth/sign-in";
+    private static final String EMAIL_CHECK_URL = "/api/auth/email";
+    private static final String NICKNAME_CHECK_URL = "/api/auth/nickname";
 
     private final JwtService jwtService;
     private final UserRepository userRepository;
@@ -33,7 +35,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
-        if (request.getRequestURI().equals(SIGN_IN_URL)) {
+        if (request.getRequestURI().equals(SIGN_IN_URL) || request.getRequestURI().equals(EMAIL_CHECK_URL) || request.getRequestURI().equals(NICKNAME_CHECK_URL)) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -67,10 +69,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
     public void checkAccessTokenAndAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         jwtService.extractAccessToken(request)
-                .filter(jwtService::isTokenValid)
-                .ifPresent(accessToken -> jwtService.extractId(accessToken)
-                        .ifPresent(id -> userRepository.findByEmail(id)
-                                .ifPresent(this::saveAuthentication)));
+                .filter(jwtService::isTokenValid).flatMap(jwtService::extractId).flatMap(id -> userRepository.findById(Long.valueOf(id))).ifPresent(this::saveAuthentication);
 
         filterChain.doFilter(request, response);
     }
