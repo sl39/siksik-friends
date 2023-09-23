@@ -30,4 +30,10 @@ public class UserController {
     public List<UserDto.Detail> findRank() {
         return userFindService.findUsers();
     }
+
+//    @GetMapping("/test")
+//    public String test() {
+//        userFindService.test();
+//        return "더미 생성 완료";
+//    }
 }

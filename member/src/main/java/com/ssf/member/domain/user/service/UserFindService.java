@@ -8,4 +8,5 @@ public interface UserFindService {
 
     public UserDto.Detail findUser(Long id);
     public List<UserDto.Detail> findUsers();
+//    public void test();
 }
