@@ -25,11 +25,13 @@ serverAxios.interceptors.request.use(
       return updateConfig;
     } catch (err) {
       console.error(`[_axios.interceptors.request] config : ${err}`);
+      console.log(err);
     }
     return config;
   },
   (error) => {
     // 요청 에러 직전 호출됩니다.
+    console.log("요청 에러 직전?");
     return Promise.reject(error);
   }
 );
