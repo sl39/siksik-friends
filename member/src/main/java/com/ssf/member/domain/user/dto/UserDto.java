@@ -20,7 +20,7 @@ public class UserDto {
         private int level;
         private Long rank;
         private int score;
-        private Long odds;
+        private String odds;
     }
 
     @Getter

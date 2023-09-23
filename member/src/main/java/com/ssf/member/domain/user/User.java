@@ -54,7 +54,8 @@ public class User {
     private SocialType socialType = SocialType.NONE;
 
     @Column(nullable = false)
-    private Long rank;
+    @Builder.Default
+    private Long rank = 0L;
 
     @Column(nullable = false)
     @Builder.Default
@@ -62,7 +63,7 @@ public class User {
 
     @Column(nullable = false)
     @Builder.Default
-    private Long lose = 0L;
+    private Long totalGame = 0L;
 
     @Column(nullable = false)
     @Builder.Default

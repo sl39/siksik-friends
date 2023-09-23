@@ -16,6 +16,7 @@ import java.util.List;
 public class UserFindServiceImpl implements UserFindService {
 
     private final UserRepository userRepository;
+//    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDto.Detail findUser(Long id) {
@@ -28,7 +29,7 @@ public class UserFindServiceImpl implements UserFindService {
                 .level(user.getLevel())
                 .rank(user.getRank())
                 .score(user.getScore())
-                .odds(user.getLose() == 0L ? (user.getWin() == 0L ? 0L : 100L) : user.getWin() / user.getLose())
+                .odds(user.getTotalGame() == 0L ? (user.getWin() == 0L ? "0.0%" : "100.0%") : String.format("%.1f%%", user.getWin() / (double) user.getTotalGame() * 100))
                 .build();
     }
 
@@ -39,13 +40,46 @@ public class UserFindServiceImpl implements UserFindService {
 
         for (User user : users) {
             result.add(UserDto.Detail.builder()
-                    .email(user.getEmail())
                     .nickname(user.getNickname())
-                    .score(user.getScore())
                     .profile(user.getProfile())
+                    .level(user.getLevel())
+                    .rank(user.getRank())
+                    .score(user.getScore())
+                    .odds(user.getTotalGame() == 0L ? (user.getWin() == 0L ? "0.0%" : "100.0%") : String.format("%.1f%%", user.getWin() / (double) user.getTotalGame() * 100))
                     .build());
         }
 
         return result;
     }
+
+//    @Override
+//    public void test() {
+//        int leftLimit = 48; // numeral '0'
+//        int rightLimit = 122; // letter 'z'
+//        int targetStringLength = 10;
+//        Random random = new Random();
+//
+//        for (int i = 0; i < 100; i++) {
+//            User user = User.builder()
+//                    .email(random.ints(leftLimit, rightLimit + 1)
+//                            .filter(j -> (j <= 57 || j >= 65) && (j <= 90 || j >= 97))
+//                            .limit(targetStringLength)
+//                            .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+//                            .toString() + "@dummy.com")
+//                    .password("test")
+//                    .nickname(random.ints(leftLimit, rightLimit + 1)
+//                            .filter(j -> (j <= 57 || j >= 65) && (j <= 90 || j >= 97))
+//                            .limit(targetStringLength)
+//                            .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+//                            .toString())
+//                    .score((int)(Math.random()*2000))
+//                    .totalGame(Long.valueOf(String.valueOf(Math.round(Math.random()*100 + 100))))
+//                    .win(Long.valueOf(String.valueOf(Math.round(Math.random()*100))))
+//                    .level((int)(Math.random()*100))
+//                    .build();
+//
+//            user.encodePassword(passwordEncoder);
+//            userRepository.save(user);
+//        }
+//    }
 }
