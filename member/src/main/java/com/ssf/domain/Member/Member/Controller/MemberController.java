@@ -52,10 +52,10 @@ public class MemberController {
 
     @GetMapping("/user/ranking")
     public Map getRanking(){
-        Map<Long, MemberFriendDTO> ranking = memberRanking.getRanking();
+        Map<Long, MemberFriendDTO>  ranking = memberRanking.getRanking();
         return ranking;
     }
-
+//
 //    @GetMapping("/ranking/{userId}")
 //    public Long getUserRanking(@PathVariable Long userId){
 //        List<MemberFriendDTO> ranking = memberRanking.getRanking();
