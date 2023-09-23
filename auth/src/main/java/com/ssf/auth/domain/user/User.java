@@ -31,12 +31,12 @@ public class User {
     private String nickname;
 
     @Column(nullable = false)
-    @ColumnDefault("1000")
-    private int score;
+    @Builder.Default
+    private int score = 1000;
 
     @Column(nullable = false, length = 255)
-    @Builder.Default
-    private String profile = "/profile.png";
+    @ColumnDefault("/profile.png")
+    private String profile;
 
     @CreationTimestamp
     @Column(nullable = false, length = 20, updatable = false)
