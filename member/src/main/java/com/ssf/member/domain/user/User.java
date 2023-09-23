@@ -31,12 +31,46 @@ public class User {
     private String nickname;
 
     @Column(nullable = false)
-    @ColumnDefault("1000")
-    private int score;
+    @Builder.Default
+    private int score = 1000;
+
+    @Column(nullable = false)
+    private boolean activated;
 
     @Column(nullable = false, length = 255)
     @Builder.Default
     private String profile = "/profile.png";
+
+    @Column(nullable = false, length = 20)
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.GUEST;
+
+    private String socialId;
+
+    @Column(nullable = false, length = 10)
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    private SocialType socialType = SocialType.NONE;
+
+    @Column(nullable = false)
+    private Long rank;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Long win = 0L;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Long lose = 0L;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private int level = 1;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Long exp = 0L;
 
     @CreationTimestamp
     @Column(nullable = false, length = 20, updatable = false)
@@ -45,18 +79,6 @@ public class User {
     @UpdateTimestamp
     @Column(nullable = false, length = 20)
     private LocalDateTime updateAt;
-
-    @Column(nullable = false, length = 20)
-    @Builder.Default
-    @Enumerated(EnumType.STRING)
-    private Role role = Role.GUEST;
-
-    @Column(nullable = false, length = 10)
-    @Builder.Default
-    @Enumerated(EnumType.STRING)
-    private SocialType socialType = SocialType.NONE;
-
-    private String socialId;
 
     private String refreshToken;
 
