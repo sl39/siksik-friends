@@ -11,7 +11,9 @@ export default function Profile() {
   return (
     <div className={styles.item}>
       <div className={styles.polaroid}>
-        <Image className={styles.img} src={`${user?.profile}`} alt="캐릭터 프로필" width={300} height={320} />
+        <div className={styles.img}>
+          <Image className={styles.profileImg} src={`${user?.profile}`} alt="캐릭터 프로필" layout="fill" priority />
+        </div>
         <div className={styles.caption}>
           {user?.level} {user?.nickname}
         </div>

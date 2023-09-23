@@ -85,11 +85,11 @@ a {
 .main-container {
   position: relative;
   top: 20px;
-  margin-top: 20px;
+  padding-top: 20px;
   box-sizing: border-box;
   overflow: auto;
   width: 100%;
-  height: calc(100% - 40px);
+  height: calc(100% - 20px);
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;

@@ -18,7 +18,9 @@ export default function Home() {
         </div>
       </div>
       <div className={styles.right}>
-        <div className={styles.cardContainer}>{/* <MyProfileCard /> */}</div>
+        <div className={styles.cardContainer}>
+          <MyProfileCard />
+        </div>
         <div className={styles.buttonContainer}>
           <StartBtn />
         </div>

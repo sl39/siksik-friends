@@ -119,8 +119,11 @@
   // top: 10%;
   // left: -30px;
   // transform: scale(1.2);
-  // border: solid black;
-  // box-sizing: border-box;
+  border: solid black;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 // 게임 시작 버튼
