@@ -29,7 +29,7 @@ public class UserFindServiceImpl implements UserFindService {
                 .level(user.getLevel())
                 .rank(user.getRank())
                 .score(user.getScore())
-                .odds(user.getTotalGame() == 0L ? (user.getWin() == 0L ? "0.0%" : "100.0%") : String.format("%.1f%%", user.getWin() / (double) user.getTotalGame()))
+                .odds(user.getTotalGame() == 0L ? (user.getWin() == 0L ? "0.0%" : "100.0%") : String.format("%.1f%%", user.getWin() / (double) user.getTotalGame() * 100))
                 .build();
     }
 
@@ -45,7 +45,7 @@ public class UserFindServiceImpl implements UserFindService {
                     .level(user.getLevel())
                     .rank(user.getRank())
                     .score(user.getScore())
-                    .odds(user.getTotalGame() == 0L ? (user.getWin() == 0L ? "0.0%" : "100.0%") : String.format("%.1f%%", user.getWin() / (double) user.getTotalGame()))
+                    .odds(user.getTotalGame() == 0L ? (user.getWin() == 0L ? "0.0%" : "100.0%") : String.format("%.1f%%", user.getWin() / (double) user.getTotalGame() * 100))
                     .build());
         }
 
