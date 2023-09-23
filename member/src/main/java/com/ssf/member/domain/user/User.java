@@ -1,21 +1,20 @@
 package com.ssf.member.domain.user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
-@NoArgsConstructor
 @Getter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
 
     @Id
@@ -28,12 +27,12 @@ public class User {
     @Column(nullable = false, length = 255)
     private String password;
 
-    @Column(nullable = false, length = 16,unique = true)
+    @Column(nullable = false, length = 16, unique = true)
     private String nickname;
 
     @Column(nullable = false)
     @ColumnDefault("1000")
-    private Long score;
+    private int score;
 
     @Column(nullable = false, length = 255)
     @Builder.Default
@@ -61,22 +60,8 @@ public class User {
 
     private String refreshToken;
 
-    public void update(MemberUpdateDTO memberUpdateDTO) {
-        if (!memberUpdateDTO.getEmail().isEmpty()) {
-            this.email = memberUpdateDTO.getEmail();
-        }
-
-        if (!memberUpdateDTO.getNickname().isEmpty()) {
-            this.nickname = memberUpdateDTO.getNickname();
-        }
-
-        if (!memberUpdateDTO.getPassword().isEmpty()) {
-            this.password = memberUpdateDTO.getPassword();
-        }
-
-        if (!memberUpdateDTO.getNickname().isEmpty()) {
-            this.profile = memberUpdateDTO.getProfile();
-        }
+    public void authorizeUser(Role role) {
+        this.role = role;
     }
 
     public void encodePassword(PasswordEncoder passwordEncoder) {
