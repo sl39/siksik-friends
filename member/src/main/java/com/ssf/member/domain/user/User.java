@@ -62,7 +62,7 @@ public class User {
 
     @Column(nullable = false)
     @Builder.Default
-    private Long lose = 0L;
+    private Long totalGame = 0L;
 
     @Column(nullable = false)
     @Builder.Default
