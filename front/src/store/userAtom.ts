@@ -16,6 +16,6 @@ export const userAtom = atom<User | null>({
   id: 0,
   email: "test",
   nickname: "test",
-  profile: "/public/images/character/rabbit.png",
+  profile: "/images/character/rabbit.png",
   score: 10,
 });

@@ -17,14 +17,12 @@ export default function Home() {
           <DynamicComponentWithNoSSR />
         </div>
       </div>
-      {/* <div className={styles.right}>
-        <div className={styles.cardContainer}>
-          <MyProfileCard />
-        </div>
+      <div className={styles.right}>
+        <div className={styles.cardContainer}>{/* <MyProfileCard /> */}</div>
         <div className={styles.buttonContainer}>
           <StartBtn />
         </div>
-      </div> */}
+      </div>
     </>
   );
 }

@@ -90,6 +90,9 @@ a {
   overflow: auto;
   width: 100%;
   height: calc(100% - 40px);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
 /* 스크롤 CSS */
 .main-container::-webkit-scrollbar {

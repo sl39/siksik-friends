@@ -9,6 +9,7 @@
   width: 30%;
   height: 100%;
   margin: 0;
+  padding: 0;
 }
 
 // 오늘 날짜
@@ -38,7 +39,7 @@
 // 진짜 클라우드
 .wordChart {
   position: relative;
-  height: 88%;
+  height: 85%;
   margin-top: 5%;
 }
 /* 워드클라우드 버튼 */
@@ -110,28 +111,30 @@
 // 프로필 카드
 .cardContainer {
   width: 100%;
-  height: 70vh;
+  height: 75%;
+  margin: 0;
+  padding: 0;
   position: relative;
-  top: 10%;
-  left: -30px;
-  height: 70%;
-  margin-top: 50px;
-  transform: scale(1.2);
+  top: 0;
+  // top: 10%;
+  // left: -30px;
+  // transform: scale(1.2);
+  // border: solid black;
+  // box-sizing: border-box;
 }
 
 // 게임 시작 버튼
 .buttonContainer {
-  position: absolute;
-  right: 0;
-  bottom: 0;
+  position: relative;
+  width: 100%;
+  height: 20%;
 }
 .button-wrapper {
   display: inline-block;
-  position: absolute;
-  bottom: 2vh;
-  right: 3vw;
-  width: 23vw;
-  height: 23vh;
+  position: relative;
+  width: 90%;
+  height: 100%;
+  left: -10px;
 }
 .span {
   position: relative;
@@ -139,12 +142,11 @@
   padding-top: 25.92%;
   display: block;
   background-size: 100% 100%;
-  font-size: 28px;
+  font-size: calc(16px + 3vh);
   text-decoration: none;
   color: #333;
   margin: 0;
 }
-
 .background-button {
   background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/323909/yellow-shadow.png);
   background-repeat: no-repeat;
