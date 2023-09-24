@@ -4,7 +4,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.ssf.member.domain.friend.Friend;
 import com.ssf.member.domain.friend.repository.FriendRepository;
-import com.ssf.member.domain.user.User;
 import com.ssf.member.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,20 +13,21 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class FriendCreateServiceImpl implements FriendCreateService {
-
-    @Value("${jwt.secretKey}")
-    private String secretKey;
-
-    private static final String ID_CLAIM = "id";
-    private static final String BEARER = "Bearer ";
+public class FriendModifyServiceImpl implements FriendModifyService {
 
     private final FriendRepository friendRepository;
     private final UserRepository userRepository;
 
+    private static final String BEARER = "Bearer ";
+    private static final String ID_CLAIM = "id";
+
+    @Value("${jwt.secretKey}")
+    private String secretKey;
+
     @Override
-    public void addFriend(String accessHeader, Long toUserId) {
-        User user = userRepository.findById(Long
+    public void acceptFriend(String accessHeader, Long toUserId) {
+        Friend friend = friendRepository.findByToUserIdAndUser_Id(userRepository
+                .findById(Long
                         .parseLong(JWT
                                 .require(Algorithm.HMAC512(secretKey))
                                 .build()
@@ -35,17 +35,10 @@ public class FriendCreateServiceImpl implements FriendCreateService {
                                         .replace(BEARER, ""))
                                 .getClaim(ID_CLAIM)
                                 .toString()))
+                .orElseThrow()
+                .getId(), toUserId)
                 .orElseThrow();
 
-        friendRepository.save(Friend.builder()
-                .user(userRepository.findById(user.getId()).orElseThrow())
-                .toUserId(toUserId)
-                .activated(true)
-                .build());
-
-        friendRepository.save(Friend.builder()
-                .user(userRepository.findById(toUserId).orElseThrow())
-                .toUserId(user.getId())
-                .build());
+        friend.changeActivated();
     }
 }
