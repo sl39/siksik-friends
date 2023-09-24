@@ -33,13 +33,7 @@ public class UserController {
     }
 
     @GetMapping("/rank")
-    public List<UserDto.Response> findRank() {
-        return userFindService.findUsers();
+    public List<UserDto.Response> rankList() {
+        return userFindService.findRank();
     }
-
-//    @GetMapping("/test")
-//    public String test() {
-//        userFindService.test();
-//        return "더미 생성 완료";
-//    }
 }
