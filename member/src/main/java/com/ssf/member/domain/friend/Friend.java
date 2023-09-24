@@ -27,4 +27,8 @@ public class Friend {
     @Column(nullable = false)
     @Builder.Default
     private Boolean activated = false;
+
+    public void changeActivated() {
+        this.activated = true;
+    }
 }
