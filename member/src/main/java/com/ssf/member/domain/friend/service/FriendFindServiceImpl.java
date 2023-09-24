@@ -32,6 +32,7 @@ public class FriendFindServiceImpl implements FriendFindService {
 
             requestList.add(UserDto.Response
                     .builder()
+                    .user_id(user.getId())
                     .nickname(user.getNickname())
                     .profile(user.getProfile())
                     .build());
