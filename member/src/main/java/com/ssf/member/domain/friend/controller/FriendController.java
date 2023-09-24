@@ -16,9 +16,9 @@ public class FriendController {
     private final FriendCreateService friendCreateService;
     private final FriendFindService friendFindService;
 
-    @PostMapping("/{toUserId}/{fromUserId}")
-    public String addFriend(@PathVariable Long toUserId, @PathVariable Long fromUserId) {
-        friendCreateService.addFriend(toUserId, fromUserId);
+    @PostMapping("/{fromUserId}/{toUserId}")
+    public String addFriend(@PathVariable Long fromUserId, @PathVariable Long toUserId) {
+        friendCreateService.addFriend(fromUserId, toUserId);
         return "친구 신청 완료";
     }
 

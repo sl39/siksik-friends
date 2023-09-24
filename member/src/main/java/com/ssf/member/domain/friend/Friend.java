@@ -18,11 +18,11 @@ public class Friend {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "to_user_id")
+    @JoinColumn(name = "from_user_id")
     private User user;
 
-    @Column(name = "from_user_id", nullable = false)
-    private Long fromUserId;
+    @Column(name = "to_user_id", nullable = false)
+    private Long toUserId;
 
     @Column(nullable = false)
     @Builder.Default

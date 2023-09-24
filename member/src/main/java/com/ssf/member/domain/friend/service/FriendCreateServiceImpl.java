@@ -16,16 +16,16 @@ public class FriendCreateServiceImpl implements FriendCreateService {
     private final UserRepository userRepository;
 
     @Override
-    public void addFriend(Long toUserId, Long fromUserId) {
+    public void addFriend(Long fromUserId, Long toUserId) {
         friendRepository.save(Friend.builder()
-                .user(userRepository.findById(toUserId).orElseThrow())
-                .fromUserId(fromUserId)
+                .user(userRepository.findById(fromUserId).orElseThrow())
+                .toUserId(toUserId)
                 .activated(true)
                 .build());
 
         friendRepository.save(Friend.builder()
-                .user(userRepository.findById(fromUserId).orElseThrow())
-                .fromUserId(toUserId)
+                .user(userRepository.findById(toUserId).orElseThrow())
+                .toUserId(fromUserId)
                 .build());
     }
 }

@@ -28,7 +28,7 @@ public class FriendFindServiceImpl implements FriendFindService {
         List<UserDto.Response> requestList = new ArrayList<>();
 
         for (Friend friend : friends) {
-            User user = userRepository.findById(friend.getFromUserId()).orElseThrow();
+            User user = userRepository.findById(friend.getToUserId()).orElseThrow();
 
             requestList.add(UserDto.Response
                     .builder()
