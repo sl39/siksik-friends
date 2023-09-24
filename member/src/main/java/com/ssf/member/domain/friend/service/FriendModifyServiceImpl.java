@@ -4,7 +4,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.ssf.member.domain.friend.Friend;
 import com.ssf.member.domain.friend.repository.FriendRepository;
-import com.ssf.member.domain.user.User;
 import com.ssf.member.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
