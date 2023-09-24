@@ -15,12 +15,12 @@ export default function WaitingUser() {
     setOpenTab(0);
 
     await setWaitUser([
-      { id: 1, nickname: "wait" },
-      { id: 2, nickname: "2" },
-      { id: 3, nickname: "3" },
-      { id: 4, nickname: "4" },
-      { id: 5, nickname: "5" },
-      { id: 6, nickname: "6" },
+      { user_id: 1, nickname: "wait" },
+      { user_id: 2, nickname: "2" },
+      { user_id: 3, nickname: "3" },
+      { user_id: 4, nickname: "4" },
+      { user_id: 5, nickname: "5" },
+      { user_id: 6, nickname: "6" },
     ]);
     //   try {
     //     const response = await serverAxios("");
@@ -36,12 +36,12 @@ export default function WaitingUser() {
     setOpenTab(1);
 
     await setWaitUser([
-      { id: 1, nickname: "friend" },
-      { id: 2, nickname: "2" },
-      { id: 3, nickname: "3" },
-      { id: 4, nickname: "4" },
-      { id: 5, nickname: "5" },
-      { id: 6, nickname: "6" },
+      { user_id: 1, nickname: "friend" },
+      { user_id: 2, nickname: "2" },
+      { user_id: 3, nickname: "3" },
+      { user_id: 4, nickname: "4" },
+      { user_id: 5, nickname: "5" },
+      { user_id: 6, nickname: "6" },
     ]);
 
     //   try {
@@ -62,7 +62,7 @@ export default function WaitingUser() {
       <div className={styles.userBigBox}>
         <div className={styles.userBox}>
           {waitUser.map((item) => (
-            <UserItem key={item.id} data={item} />
+            <UserItem key={item.user_id} data={item} />
           ))}
         </div>
       </div>

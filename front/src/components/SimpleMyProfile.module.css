@@ -1,6 +1,15 @@
-.profileBtn {
-  height: auto;
-  position: relative;
+.myProfile {
+  height: 70%;
+  margin: 0;
+  padding: 0;
+}
+.myBtn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around
+}
+.button {
+  font-size: 2.5vh;
   border: 1px solid black;
-  bottom: 1vh;
 }
