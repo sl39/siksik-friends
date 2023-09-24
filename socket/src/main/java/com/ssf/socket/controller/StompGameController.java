@@ -1,7 +1,6 @@
 package com.ssf.socket.controller;
 
-import com.ssf.socket.dto.ChatMessageDTO;
-import com.ssf.socket.dto.ProblemDTO;
+import com.ssf.socket.dto.ProblemsDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -10,95 +9,42 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 @Log4j2
 @RestController
 @RequiredArgsConstructor
 public class StompGameController {
-    private final SimpMessagingTemplate messageTemplate; //특정 Broker로 메세지를 전달
+    private final SimpMessagingTemplate messageTemplate;
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);;
 
-//    @MessageMapping("/room/{roomId}/1")
-//    public void entrance(
-//            @DestinationVariable int roomId,
-//            @Payload ProblemDTO problemContent) {
-//
-//
-//        log.info(roomId + "xx님이 입장");
-//        log.info(problemContent.toString());
-//
-//        messageTemplate.convertAndSend("/sub/room/" + roomId, problemContent);
-//    }
-//
-//    @MessageMapping("/room/{roomId}/2")
-//    public void exit(
-//            @DestinationVariable int roomId,
-//            @Payload ProblemDTO problemHint) {
-//
-//
-//        log.info(roomId + "방의 힌트");
-//        log.info(problemHint.toString());
-//
-//        messageTemplate.convertAndSend("/sub/room/" + roomId, problemHint);
-//    }
-//
-//    @MessageMapping("/room/{roomId}/3")
-//    public void ready(
-//            @DestinationVariable int roomId,
-//            @Payload ResultDTO problemHint) {
-//
-//
-//        log.info(roomId + "방의 n번 문제 결과");
-//        log.info(problemHint.toString());
-//
-//        messageTemplate.convertAndSend("/sub/room/" + roomId, problemHint);
-//    }
-//
-//    @MessageMapping("/room/{roomId}/4")
-//    public void unready(
-//            @DestinationVariable int roomId,
-//            @Payload ResultDTO problemHint) {
-//
-//
-//        log.info(roomId + "방의 최종 결과");
-//        log.info(problemHint.toString());
-//
-//        messageTemplate.convertAndSend("/sub/room/" + roomId, problemHint);
-//    }
-//
-//    @MessageMapping("/room/{roomId}/5")
-//    public void gameStart(
-//            @DestinationVariable int roomId,
-//            @Payload ResultDTO problemHint) {
-//
-//
-//        log.info(roomId + "방의 최종 결과");
-//        log.info(problemHint.toString());
-//
-//        messageTemplate.convertAndSend("/sub/room/" + roomId, problemHint);
-//    }
-//
-//    @MessageMapping("/room/{roomId}/6")
-//    public void returning(
-//            @DestinationVariable int roomId,
-//            @Payload ResultDTO problemHint) {
-//
-//
-//        log.info(roomId + "방의 최종 결과");
-//        log.info(problemHint.toString());
-//
-//        messageTemplate.convertAndSend("/sub/room/" + roomId, problemHint);
-//    }
-//
-//    @MessageMapping("/room/{roomId}/7")
-//    public void breaking(
-//            @DestinationVariable int roomId,
-//            @Payload ResultDTO problemHint) {
-//
-//
-//        log.info(roomId + "방의 최종 결과");
-//        log.info(problemHint.toString());
-//
-//        messageTemplate.convertAndSend("/sub/room/" + roomId, problemHint);
-//    }
+    @MessageMapping("/game/{roomId}")
+    public void gameStart(@DestinationVariable int roomId, @Payload ProblemsDTO body) {
 
+        List<String> problems = new ArrayList<>();
+        problems.add("문제");
+        int time = 0;
+        for (int i = 0; i < problems.size(); i++) {
+            scheduler.schedule(() -> 문제_뿌리기(), time, TimeUnit.MILLISECONDS); // 0, 23, 46, 69, ...
+            time += 20000;
+            scheduler.schedule(() -> 결과_뿌리기(), time, TimeUnit.MILLISECONDS); // 20, 43, 66, 89, ...
+            time += 20000;
+        }
+        scheduler.schedule(() -> 게임_종료(), time, TimeUnit.MILLISECONDS); // 230 초 뒤에 게임 종료
+    }
 
+    // 서비스의 메서드
+    public void 문제_뿌리기() {
+
+    }
+    public void 결과_뿌리기() {
+
+    }
+    public void 게임_종료() {
+
+    }
 }

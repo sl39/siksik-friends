@@ -10,13 +10,14 @@ import java.util.Map;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ResultDTO {
+public class ProblemsDTO {
     @Getter
     @Setter
     @AllArgsConstructor
-    public static class UserDTO {
-        int ranking;
-        int score;
+    public static class ProblemDTO {
+        int problemNumber;
+        String problemContent;
+        String problemHint;
     }
-    private final Map<String, UserDTO> users = new HashMap<>();
+    private final Map<String, ProblemDTO> users = new HashMap<>();
 }
