@@ -79,11 +79,10 @@ public class UserFindServiceImpl implements UserFindService {
         ZSetOperations<String, String> stringStringZSetOperations = redisTemplate.opsForZSet();
         Set<ZSetOperations.TypedTuple<String>> typedTuples = stringStringZSetOperations.reverseRangeWithScores(key, 0, 9);
         List<UserDto.Response> rankList = new ArrayList<>();
-        AtomicReference<Long> i = new AtomicReference<>(0L);
+        AtomicReference<Long> i = new AtomicReference<>(1L);
 
         typedTuples.forEach(typedTuple -> {
             User user = userRepository.findById(Long.valueOf(typedTuple.getValue())).orElseThrow();
-            System.out.println(i.getAndSet(i.get() + 1));
             rankList.add(UserDto.Response
                     .builder()
                     .user_id(user.getId())
