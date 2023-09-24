@@ -7,7 +7,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ChatMessageDTO {
-    String sender;
-    String msg;
+public class ProblemDTO {
+    ProtocolDTO protocolType;
+
+    int problemNumber;
+    String problemContent;
+    String problemHint;
+
 }
