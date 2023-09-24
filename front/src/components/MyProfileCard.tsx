@@ -14,9 +14,13 @@ export default function Profile({ data }: { data: User }) {
   useEffect(() => {
     if (Object.keys(user).length === 0) {
       setUser(data);
-      console.log(user, data);
     }
   }, [data]);
+
+  /** user 상태의 변경을 감지하여 로그에 출력합니다. */
+  useEffect(() => {
+    console.log("userAtom 변경", user);
+  }, [user]);
 
   return (
     <div className={styles.item}>
