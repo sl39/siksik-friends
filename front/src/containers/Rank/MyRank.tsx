@@ -9,7 +9,7 @@ export default function MyRank({ rank }: Props) {
   return (
     <>
       <div className={styles.rankContainer} />
-      <Image className={styles.myRank} src="/images/rank.png" alt="나의 도장" fill sizes="120%" priority />
+      <Image className={styles.myRank} src="/images/rankstamp.png" alt="나의 도장" fill sizes="120%" priority />
       <div className={styles.rankNum}>{rank} 등</div>
     </>
   );

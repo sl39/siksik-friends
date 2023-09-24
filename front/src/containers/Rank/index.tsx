@@ -15,36 +15,9 @@ export default function index({ data = { rank: 11 } }) {
           <MyRank rank={data.rank} />
         </div>
       </div>
-      {/* <div className={styles.right}>
+      <div className={styles.right}>
         <AllRank />
-      </div> */}
+      </div>
     </>
   );
-}
-
-/** 내 정보 가져오기 */
-export async function getServerSideProps() {
-  try {
-    const response = await serverAxios("/");
-    const ranks = await serverAxios("/auth/user/rank");
-    console.log(response);
-    return {
-      props: {
-        data: response.data,
-      },
-    };
-  } catch (err) {
-    console.log("내 정보 가져오기 에러", err);
-    // 더미 데이터
-    return {
-      props: {
-        data: {
-          id: 1,
-          name: "me",
-          level: 1,
-          rank: 999,
-        },
-      },
-    };
-  }
 }
