@@ -8,11 +8,14 @@ import com.ssf.member.domain.user.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -28,6 +31,7 @@ public class UserFindServiceImpl implements UserFindService {
     private static final String ID_CLAIM = "id";
     private static final String BEARER = "Bearer ";
 
+    private final RedisTemplate redisTemplate;
     private final UserRepository userRepository;
 //    private final PasswordEncoder passwordEncoder;
 
@@ -90,6 +94,21 @@ public class UserFindServiceImpl implements UserFindService {
         }
 
         return result;
+    }
+
+    @Override
+    public List<UserDto.Response> findRank() {
+        String key = "rank";
+        ZSetOperations<String, String> stringStringZSetOperations = redisTemplate.opsForZSet();
+        Set<ZSetOperations.TypedTuple<String>> typedTuples = stringStringZSetOperations.reverseRangeWithScores(key, 0, 9);
+        System.out.println("cnpz");
+
+        typedTuples.forEach(typedTuple -> {
+            System.out.println(typedTuple.getValue());
+            System.out.println(typedTuple.getScore());
+        });
+
+        return null;
     }
 
 //    @Override

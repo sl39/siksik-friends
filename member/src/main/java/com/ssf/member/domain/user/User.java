@@ -99,6 +99,10 @@ public class User {
         this.profile = profile;
     }
 
+    public void changeScore(Integer score) {
+        this.score += score;
+    }
+
     public void authorizeUser(Role role) {
         this.role = role;
     }

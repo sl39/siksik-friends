@@ -32,9 +32,14 @@ public class UserController {
         userModifyService.modifyUser(id, request);
     }
 
+//    @GetMapping("/rank")
+//    public List<UserDto.Response> findRank() {
+//        return userFindService.findUsers();
+//    }
+
     @GetMapping("/rank")
-    public List<UserDto.Response> findRank() {
-        return userFindService.findUsers();
+    public List<UserDto.Response> rankList() {
+        return userFindService.findRank();
     }
 
 //    @GetMapping("/test")
