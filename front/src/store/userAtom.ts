@@ -9,7 +9,7 @@ export const userAtom = atom<User>({
   profile: "/images/character/rabbit.png",
   odds: "승률",
   rank: 999,
-  exp: "0.0%",
+  exp: 0,
   score: 10,
   level: 1,
 });

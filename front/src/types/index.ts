@@ -1,15 +1,15 @@
 // 타입
 
 export interface User {
-  email?: string;
   user_id?: number;
-  nickname: string;
-  profile?: string;
-  odds?: string;
   rank?: number;
   exp?: number;
   score?: number;
   level?: number;
+  email?: string;
+  nickname: string;
+  profile?: string;
+  odds?: string;
 }
 
 export interface Rank {
