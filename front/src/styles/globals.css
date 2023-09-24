@@ -120,13 +120,13 @@ a {
   flex-direction: row;
   justify-content: space-around;
 }
-/* 뒤로가기 버튼 */
+/* 뒤로가기 버튼 위치 */
 .back-nav {
   position: absolute;
   top: -50px;
   left: 10vw;
   width: 60vw;
-  height: 100px;
+  height: 80px;
   display: flex;
 }
 .nav-item {
@@ -136,9 +136,14 @@ a {
   min-width: 150px;
   height: 80px;
 }
-
 .active {
   height: 115px;
+  background-color: var(--color-nav-active);
+  border: solid var(--color-nav-stroke);
+  box-sizing: border-box;
+}
+.back {
+  height: 100px;
   background-color: var(--color-nav-active);
   border: solid var(--color-nav-stroke);
   box-sizing: border-box;
