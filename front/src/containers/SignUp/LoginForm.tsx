@@ -2,16 +2,16 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAtom } from "jotai";
+// import { useAtom } from "jotai";
 import { serverAxios } from "@/services/api";
-import { userAtom } from "@/store/userAtom";
+// import { userAtom } from "@/store/userAtom";
 import styles from "./form.module.scss";
 
 export default function LoginForm() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [, setUser] = useAtom(userAtom);
+  // const [, setUser] = useAtom(userAtom);
 
   /** 로그인 POST 요청 */
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -27,7 +27,8 @@ export default function LoginForm() {
       await sessionStorage.setItem("accessToken", response.headers.authorization);
       await localStorage.setItem("refreshToken", response.headers["authorization-refresh"]);
 
-      await setUser({ id: response.headers.id });
+      const res = await serverAxios.get("user/my-info");
+      console.log(res);
       router.push("/home");
     } catch (error) {
       console.log("로그인 에러", error);

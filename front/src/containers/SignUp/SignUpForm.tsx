@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { useAtom } from "jotai";
+// import { useAtom } from "jotai";
 import { serverAxios } from "@/services/api";
-import { userAtom } from "@/store/userAtom";
+// import { userAtom } from "@/store/userAtom";
 import styles from "./form.module.scss";
 
 export default function SignUpForm() {
@@ -27,7 +27,7 @@ export default function SignUpForm() {
   const [emailValidation, setEmailValidation] = useState(0);
   const [passwordValidation, setPasswordValidation] = useState(0);
   const [nicknameValidation, setNicknameValidation] = useState(0);
-  const [, setUser] = useAtom(userAtom);
+  // const [, setUser] = useAtom(userAtom);
 
   /** 회원가입 POST */
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -44,8 +44,10 @@ export default function SignUpForm() {
       await serverAxios.post("/auth/sign-up", formData);
 
       // 로그인 시키고 홈으로
-      const response = await serverAxios.post("/auth/sign-in", formData);
-      await setUser({ id: response.headers.id });
+      await serverAxios.post("/auth/sign-in", formData);
+      // await setUser({ id: response.headers.id });
+      const res = await serverAxios.get("user/my-info");
+      console.log(res);
       router.push("/home");
     } catch (error) {
       console.log("회원가입 에러", error);
