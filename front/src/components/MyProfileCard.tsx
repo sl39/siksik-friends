@@ -13,7 +13,7 @@ export default function Profile() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await serverAxios("/user");
+        const response = await serverAxios("/user/my-info");
         console.log(response);
         setUser(response.data);
       } catch (err) {
