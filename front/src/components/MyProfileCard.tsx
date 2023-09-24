@@ -2,32 +2,31 @@
 
 import Image from "next/image";
 import { useAtom } from "jotai";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { userAtom } from "@/store/userAtom";
 import { serverAxios } from "@/services/api";
-import type { User } from "@/types";
 import styles from "./MyProfileCard.module.css";
 
 export default function Profile() {
-  const [userState] = useAtom(userAtom);
-
-  // eslint-disable-next-line no-null/no-null
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useAtom(userAtom);
 
   useEffect(() => {
-    /** 유저 정보 가져오기 */
-    const fetchUserData = async () => {
+    const fetchData = async () => {
       try {
         const response = await serverAxios("/user");
-        console.log("유저 정보", response);
+        console.log(response);
         setUser(response.data);
       } catch (err) {
         console.log("유저 정보 에러", err);
-        setUser(userState);
       }
     };
-    fetchUserData();
-  }, [userState]);
+
+    /** userAtom이 비었으면, data로 업데이트 */
+    if (Object.keys(user).length === 0) {
+      fetchData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={styles.item}>
