@@ -1,4 +1,4 @@
-import SimpleMyProfile from "@/components/SimpleMyProfile";
+import SimpleMyProfile from "./SimpleMyProfile";
 import Chatting from "./Chatting";
 import GameRoom from "./GameRoom";
 import WaitingUser from "./WaitingUser";
