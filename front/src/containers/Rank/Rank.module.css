@@ -65,46 +65,53 @@
 .RankArray {
   width: 95%;
   height: 98%;
-  background-color: rgba(255, 255, 255, 0.6);
+  min-height: 570px;
   border-radius: 30px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+
+  /* 글래스모피즘 */
+  background: rgba( 255, 255, 255, 0.5 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 4px );
+  -webkit-backdrop-filter: blur( 4px );
 }
 .RankItem {
-  border-bottom: 1px solid black;
   box-sizing: border-box;
   height: 8%;
+  min-height: 50px;
   width: 95%;
 
   display: flex;
   align-items: center;
   justify-content: space-around;
-}
-.RankButton {
-  height: 40px;
-  width: 90px;
-  text-align: center;
-  border-radius: 3px;
-  background-color: grey;
+
+  background: rgba( 255, 255, 255, 0.2 );
+  box-shadow: 0 2px 20px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 4px );
+  -webkit-backdrop-filter: blur( 4px );
+  border-radius: 30px;
 }
 .itemNum {
   width: 60px;
-  height: 30px;
-
   font-size: 1.2rem;
   font-weight: bold;
   text-align: end;
 }
 .rankLevel {
-  width: 40px;
-  height: 40px;
-
-  border: 1px solid black;
+  width: 80px;
 }
 .rankName {
-  width: 400px;
+  width: 350px;
   text-align: center;
 }
-
+.highlight:hover {
+  padding: 3px 10px;
+  width: 100%;
+  background: linear-gradient(to right, rgba(254, 172, 94, 0.3) 0%, rgba(254, 172, 94, 0.4) 60%, rgba(254, 172, 94, 0.4) 60%, rgba(254, 172, 94, 0.6) 85%, rgba(254, 172, 94, 0.8) 100%);
+}
+.score {
+  font-size: 3vh;
+}

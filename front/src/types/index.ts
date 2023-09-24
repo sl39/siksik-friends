@@ -19,10 +19,13 @@ export interface Room {
 }
 
 export interface Rank {
-  id: number;
-  name?: string;
-  level?: number;
+  user_id: number;
+  nickname?: string;
+  profile?: string;
+  odds?: string;
   rank?: number;
+  score?: number;
+  level?: number;
 }
 // {
 //   “user_id” : Long 아이디,
