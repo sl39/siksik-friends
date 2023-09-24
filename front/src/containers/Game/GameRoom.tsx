@@ -56,7 +56,7 @@ export default function GameRoom() {
   }, []);
 
   return (
-    <div className={styles.GameRoom}>
+    <>
       <div className={styles.roomBtn}>
         <EnterRoom rooms={rooms} />
       </div>
@@ -77,6 +77,6 @@ export default function GameRoom() {
         </button>
       </div>
       <div className={styles.rooms}>{filteredRooms?.map((room) => <GameRoomItem key={room.id} room={room} />)}</div>
-    </div>
+    </>
   );
 }

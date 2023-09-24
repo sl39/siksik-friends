@@ -6,9 +6,11 @@ import styles from "./game.module.scss";
 
 export default function Index() {
   return (
-    <div className={styles.container}>
+    <>
       <div className={styles.left}>
-        <GameRoom />
+        <div className={styles.GameRoom}>
+          <GameRoom />
+        </div>
         <div className={styles.chatBox}>
           <Chatting />
         </div>
@@ -21,6 +23,6 @@ export default function Index() {
           <SimpleMyProfile />
         </div>
       </div>
-    </div>
+    </>
   );
 }
