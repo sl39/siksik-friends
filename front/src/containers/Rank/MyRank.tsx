@@ -1,13 +1,16 @@
+import Image from "next/image";
 import styles from "./Rank.module.css";
 
-interface Rank {
+interface Props {
   rank?: number | string;
 }
 
-export default function MyRank({ rank = "999+" }: Rank) {
+export default function MyRank({ rank }: Props) {
   return (
-    <div className={styles.myRank}>
+    <>
+      <div className={styles.rankContainer} />
+      <Image className={styles.myRank} src="/images/rank.png" alt="나의 도장" fill sizes="120%" priority />
       <div className={styles.rankNum}>{rank} 등</div>
-    </div>
+    </>
   );
 }
