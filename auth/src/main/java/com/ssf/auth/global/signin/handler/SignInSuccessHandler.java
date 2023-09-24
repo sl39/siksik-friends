@@ -30,7 +30,8 @@ public class SignInSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         User target = userRepository.findById(id).get();
 
 //        jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
-        jwtService.sendAccessAndRefreshTokenAndId(response, accessToken, refreshToken, target);
+//        jwtService.sendAccessAndRefreshTokenAndId(response, accessToken, refreshToken, target);
+        jwtService.sendAccessToken(response, accessToken);
 
         userRepository.findById(id)
                 .ifPresent(user -> {
