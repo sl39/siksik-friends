@@ -1,12 +1,15 @@
 // 타입
 
 export interface User {
-  id?: number;
   email?: string;
+  id?: number;
   nickname?: string;
   profile?: string;
-  level?: number;
+  odds?: string;
+  rank?: number;
+  exp?: number;
   score?: number;
+  level?: number;
 }
 
 export interface Room {
@@ -17,7 +20,16 @@ export interface Room {
 
 export interface Rank {
   id: number;
-  name: string;
-  level: number;
-  rank: number;
+  name?: string;
+  level?: number;
+  rank?: number;
 }
+// {
+//   “user_id” : Long 아이디,
+//   "nickname": String 닉네임,
+//   "profile": String 프로필 사진 경로,
+//   "level": Integer 레벨,
+//   "rank": Long 순위,
+//   "score": Integer 점수,
+//   "odds": String 승률
+// },

@@ -24,7 +24,7 @@ export default function AllRank() {
 
   const rankData = async () => {
     try {
-      const response = await serverAxios("/user/ranking");
+      const response = await serverAxios("/user/rank");
       console.log(response);
       setRanks(response.data);
     } catch (err) {
