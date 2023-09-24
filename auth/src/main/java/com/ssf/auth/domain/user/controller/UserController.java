@@ -1,6 +1,6 @@
 package com.ssf.auth.domain.user.controller;
 
-import com.ssf.auth.domain.user.dto.UserSignUpDto;
+import com.ssf.auth.domain.user.dto.UserDto;
 import com.ssf.auth.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +14,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/sign-up")
-    public String signUp(@RequestBody UserSignUpDto userSignUpDto) throws Exception {
-        userService.signUp(userSignUpDto);
+    public String signUp(@RequestBody UserDto.Request userRequest) throws Exception {
+        userService.signUp(userRequest);
         return "회원가입 성공";
     }
 
