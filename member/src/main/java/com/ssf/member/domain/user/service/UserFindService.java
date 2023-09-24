@@ -7,8 +7,7 @@ import java.util.List;
 
 public interface UserFindService {
 
-        public UserDto.Response findMyInfo(HttpServletRequest request);
+    public UserDto.Response findMyInfo(HttpServletRequest request);
     public UserDto.Response findUser(Long id);
-    public List<UserDto.Response> findUsers();
-//    public void test();
+    public List<UserDto.Response> findRank();
 }

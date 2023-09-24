@@ -19,8 +19,6 @@ public class UserDto {
         private String nickname;
         private String profile;
         private int level;
-        private Long rank;
-        private int score;
         private String odds;
     }
 
