@@ -45,6 +45,7 @@ public class UserFindServiceImpl implements UserFindService {
                 .orElseThrow();
 
         return UserDto.Response.builder()
+                .user_id(user.getId())
                 .email(user.getEmail())
                 .nickname(user.getNickname())
                 .profile(user.getProfile())
@@ -61,6 +62,7 @@ public class UserFindServiceImpl implements UserFindService {
         User user = userRepository.findById(id).orElseThrow(null);
 
         return UserDto.Response.builder()
+                .user_id(user.getId())
                 .nickname(user.getNickname())
                 .profile(user.getProfile())
                 .level(user.getLevel())
@@ -71,12 +73,13 @@ public class UserFindServiceImpl implements UserFindService {
     }
 
     @Override
-    public List<UserDto.Detail> findUsers() {
+    public List<UserDto.Response> findUsers() {
         List<User> users = userRepository.findTop10ByOrderByScoreDesc().orElseThrow(null);
-        List<UserDto.Detail> result = new ArrayList<>();
+        List<UserDto.Response> result = new ArrayList<>();
 
         for (User user : users) {
-            result.add(UserDto.Detail.builder()
+            result.add(UserDto.Response.builder()
+                    .user_id(user.getId())
                     .nickname(user.getNickname())
                     .profile(user.getProfile())
                     .level(user.getLevel())
