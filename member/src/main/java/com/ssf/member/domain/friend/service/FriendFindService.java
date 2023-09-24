@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface FriendFindService {
 
-    public List<UserDto.Response> findFriendReqeust(Long toUserId);
+    public List<UserDto.Response> findFriend(String accessHeader);
+    public List<UserDto.Response> findFriendResponse(String accessHeader);
+    public List<UserDto.Response> findFriendRequest(String accessHeader);
 }

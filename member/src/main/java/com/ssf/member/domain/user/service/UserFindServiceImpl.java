@@ -5,7 +5,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.ssf.member.domain.user.User;
 import com.ssf.member.domain.user.dto.UserDto;
 import com.ssf.member.domain.user.repository.UserRepository;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -26,24 +25,21 @@ public class UserFindServiceImpl implements UserFindService {
     @Value("${jwt.secretKey}")
     private String secretKey;
 
-    @Value("${jwt.access.header}")
-    private String accessHeader;
-
     private static final String ID_CLAIM = "id";
     private static final String BEARER = "Bearer ";
+    private static final String KEY = "rank";
 
     private final RedisTemplate redisTemplate;
     private final UserRepository userRepository;
 //    private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UserDto.Response findMyInfo(HttpServletRequest request) {
+    public UserDto.Response findMyInfo(String accessHeader) {
         User user = userRepository.findById(Long
                 .parseLong(JWT
                         .require(Algorithm.HMAC512(secretKey))
                         .build()
-                        .verify(request
-                                .getHeader(accessHeader)
+                        .verify(accessHeader
                                 .replace(BEARER, ""))
                         .getClaim(ID_CLAIM)
                         .toString()))
@@ -54,6 +50,7 @@ public class UserFindServiceImpl implements UserFindService {
                 .email(user.getEmail())
                 .nickname(user.getNickname())
                 .profile(user.getProfile())
+                .rank(findRank(user.getId()))
                 .level(user.getLevel())
                 .exp(user.getExp())
                 .odds(user.getTotalGame() == 0L ? (user.getWin() == 0L ? "0.0%" : "100.0%") : String.format("%.1f%%", user.getWin() / (double) user.getTotalGame() * 100))
@@ -68,16 +65,29 @@ public class UserFindServiceImpl implements UserFindService {
                 .user_id(user.getId())
                 .nickname(user.getNickname())
                 .profile(user.getProfile())
+                .rank(findRank(id))
                 .level(user.getLevel())
                 .odds(user.getTotalGame() == 0L ? (user.getWin() == 0L ? "0.0%" : "100.0%") : String.format("%.1f%%", user.getWin() / (double) user.getTotalGame() * 100))
                 .build();
     }
 
     @Override
-    public List<UserDto.Response> findRank() {
-        String key = "rank";
+    public Long findRank(Long id) {
+        Double ranking1 = redisTemplate.opsForZSet().score(KEY, id);
+        Set<String> ranking2 = redisTemplate.opsForZSet().reverseRangeByScore(KEY, ranking1, ranking1, 0, 1);
+        Long ranking = 0L;
+
+        for (String s : ranking2) {
+            ranking = redisTemplate.opsForZSet().reverseRank(KEY, s);
+        }
+
+        return id;
+    }
+
+    @Override
+    public List<UserDto.Response> findRankList() {
         ZSetOperations<String, String> stringStringZSetOperations = redisTemplate.opsForZSet();
-        Set<ZSetOperations.TypedTuple<String>> typedTuples = stringStringZSetOperations.reverseRangeWithScores(key, 0, 9);
+        Set<ZSetOperations.TypedTuple<String>> typedTuples = stringStringZSetOperations.reverseRangeWithScores(KEY, 0, 9);
         List<UserDto.Response> rankList = new ArrayList<>();
         AtomicReference<Long> i = new AtomicReference<>(1L);
 

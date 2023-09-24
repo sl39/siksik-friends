@@ -1,8 +1,6 @@
 package com.ssf.member.domain.friend.service;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 public interface FriendCreateService {
 
-    public void addFriend(HttpServletRequest request, Long toUserId);
+    public void addFriend(String accessHeader, Long toUserId);
 }
