@@ -5,8 +5,11 @@ export interface User {
   email?: string;
   nickname?: string;
   profile?: string;
-  level?: number;
+  odds?: string;
+  rank?: number;
+  exp?: number;
   score?: number;
+  level?: number;
 }
 
 export interface Room {

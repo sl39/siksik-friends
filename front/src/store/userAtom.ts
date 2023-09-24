@@ -12,10 +12,4 @@ import type { User } from "@/types";
 // eslint-disable-next-line no-null/no-null
 // export const userAtom = atom((get) => get(initUserAtom));
 
-export const userAtom = atom<User | null>({
-  id: 0,
-  email: "test",
-  nickname: "test",
-  profile: "/images/character/rabbit.png",
-  score: 10,
-});
+export const userAtom = atom<User>({});
