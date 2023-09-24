@@ -39,10 +39,6 @@ public class User {
     @Builder.Default
     private Boolean activated = false;
 
-    @Column(nullable = false)
-    @Builder.Default
-    private Long rank = 0L;
-
     @Column(name = "total_game", nullable = false)
     @Builder.Default
     private Long totalGame = 0L;
@@ -54,10 +50,6 @@ public class User {
     @Column(nullable = false)
     @Builder.Default
     private Integer level = 1;
-
-    @Column(nullable = false)
-    @Builder.Default
-    private Integer score = 1000;
 
     @Column(nullable = false)
     @Builder.Default
@@ -97,10 +89,6 @@ public class User {
 
     public void changeProfile(String profile) {
         this.profile = profile;
-    }
-
-    public void changeScore(Integer score) {
-        this.score += score;
     }
 
     public void authorizeUser(Role role) {
