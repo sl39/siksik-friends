@@ -3,6 +3,7 @@ package com.ssf.member.domain.friend.controller;
 import com.ssf.member.domain.friend.service.FriendCreateService;
 import com.ssf.member.domain.friend.service.FriendFindService;
 import com.ssf.member.domain.user.dto.UserDto;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +17,9 @@ public class FriendController {
     private final FriendCreateService friendCreateService;
     private final FriendFindService friendFindService;
 
-    @PostMapping("/{fromUserId}/{toUserId}")
-    public String addFriend(@PathVariable Long fromUserId, @PathVariable Long toUserId) {
-        friendCreateService.addFriend(fromUserId, toUserId);
+    @PostMapping("/{toUserId}")
+    public String addFriend(@PathVariable Long toUserId, HttpServletRequest request) {
+        friendCreateService.addFriend(request, toUserId);
         return "친구 신청 완료";
     }
 

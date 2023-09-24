@@ -57,11 +57,10 @@ public class UserFindServiceImpl implements UserFindService {
     }
 
     @Override
-    public UserDto.Detail findUser(Long id) {
+    public UserDto.Response findUser(Long id) {
         User user = userRepository.findById(id).orElseThrow(null);
 
-        return UserDto.Detail.builder()
-                .email(user.getEmail())
+        return UserDto.Response.builder()
                 .nickname(user.getNickname())
                 .profile(user.getProfile())
                 .level(user.getLevel())
