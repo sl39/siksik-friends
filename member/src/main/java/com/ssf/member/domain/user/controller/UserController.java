@@ -17,7 +17,7 @@ public class UserController {
     private final UserFindService userFindService;
     private final UserModifyService userModifyService;
 
-    @GetMapping("")
+    @GetMapping("/my-info")
     public UserDto.Response findMyInfo(HttpServletRequest request) {
         return userFindService.findMyInfo(request);
     }
