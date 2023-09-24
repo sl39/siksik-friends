@@ -1,8 +1,8 @@
-package com.ssf.auth.domain.jwt.filter;
+package com.ssf.auth.global.jwt.filter;
 
 import com.ssf.auth.domain.user.User;
 import com.ssf.auth.domain.user.repository.UserRepository;
-import com.ssf.auth.domain.jwt.service.JwtService;
+import com.ssf.auth.global.jwt.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -56,8 +56,9 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
     public void checkRefreshTokenAndReIssueAccessToken(HttpServletResponse response, String refreshToken) {
         userRepository.findByRefreshToken(refreshToken)
                 .ifPresent(user -> {
-                    String reIssueRefreshToken = reIssueRefreshToken(user);
-                    jwtService.sendAccessAndRefreshToken(response, jwtService.createAccessToken(user.getId()), reIssueRefreshToken);
+//                    String reIssueRefreshToken = reIssueRefreshToken(user);
+//                    jwtService.sendAccessAndRefreshToken(response, jwtService.createAccessToken(user.getId()), reIssueRefreshToken);
+                    jwtService.sendAccessToken(response, jwtService.createAccessToken(user.getId()));
                 });
     }
 
