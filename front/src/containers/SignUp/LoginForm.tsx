@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAtom } from "jotai";
 import { serverAxios } from "@/services/api";
-// import { userAtom } from "@/store/userAtom";
 import { userAtom } from "@/store/userAtom";
 import styles from "./form.module.scss";
 
@@ -12,7 +11,6 @@ export default function LoginForm() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [, setUser] = useAtom(userAtom);
 
   /** 로그인 POST 요청 */
@@ -29,8 +27,6 @@ export default function LoginForm() {
       await sessionStorage.setItem("accessToken", response.headers.authorization);
       await localStorage.setItem("refreshToken", response.headers["authorization-refresh"]);
 
-      // id 저장
-      console.log(response.headers.id);
       await setUser({ id: response.headers.id });
       router.push("/home");
     } catch (error) {
