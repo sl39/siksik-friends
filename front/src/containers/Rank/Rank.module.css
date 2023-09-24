@@ -66,6 +66,7 @@
   width: 95%;
   height: 98%;
   min-height: 570px;
+  background-color: rgba(255, 255, 255, 0.6);
   border-radius: 30px;
   display: flex;
   flex-direction: column;

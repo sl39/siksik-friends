@@ -27,12 +27,3 @@ export interface Rank {
   score?: number;
   level?: number;
 }
-// {
-//   “user_id” : Long 아이디,
-//   "nickname": String 닉네임,
-//   "profile": String 프로필 사진 경로,
-//   "level": Integer 레벨,
-//   "rank": Long 순위,
-//   "score": Integer 점수,
-//   "odds": String 승률
-// },
