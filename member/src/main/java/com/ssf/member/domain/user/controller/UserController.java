@@ -3,6 +3,7 @@ package com.ssf.member.domain.user.controller;
 import com.ssf.member.domain.user.dto.UserDto;
 import com.ssf.member.domain.user.service.UserFindService;
 import com.ssf.member.domain.user.service.UserModifyService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,11 @@ public class UserController {
 
     private final UserFindService userFindService;
     private final UserModifyService userModifyService;
+
+    @GetMapping("")
+    public UserDto.Response findMyInfo(HttpServletRequest request) {
+        return userFindService.findMyInfo(request);
+    }
 
     @GetMapping("/{id}")
     public UserDto.Detail findUserDetail(@PathVariable Long id) {

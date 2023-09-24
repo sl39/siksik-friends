@@ -29,6 +29,7 @@ public class UserDto {
     @AllArgsConstructor
     public static class Request {
 
+        private Long user_id;
         private String nickname;
         private String password;
         private String profile;
@@ -49,6 +50,7 @@ public class UserDto {
 
         private Boolean activated;
         private Long rank;
+        private Long exp;
         private Integer score;
         private Integer level;
     }
