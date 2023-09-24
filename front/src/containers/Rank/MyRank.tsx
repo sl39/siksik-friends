@@ -1,16 +1,18 @@
+"use client";
+
 import Image from "next/image";
+import { useAtom } from "jotai";
+import { userAtom } from "@/store/userAtom";
 import styles from "./Rank.module.css";
 
-interface Props {
-  rank?: number | string;
-}
+export default function MyRank() {
+  const user = useAtom(userAtom)[0];
 
-export default function MyRank({ rank }: Props) {
   return (
     <>
       <div className={styles.rankContainer} />
       <Image className={styles.myRank} src="/images/rankstamp.png" alt="나의 도장" fill sizes="120%" priority />
-      <div className={styles.rankNum}>{rank} 등</div>
+      <div className={styles.rankNum}>{user?.rank ? `${user.rank} 등` : "등수 정보 없음"}</div>
     </>
   );
 }

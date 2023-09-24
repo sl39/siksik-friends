@@ -1,10 +1,9 @@
-import { serverAxios } from "@/services/api";
 import AllRank from "./AllRank";
 import MyRank from "./MyRank";
 import styles from "./Rank.module.css";
 import MyProfileCard from "@/components/MyProfileCard";
 
-export default function index({ data = { rank: 11 } }) {
+export default function index() {
   return (
     <>
       <div className={styles.left}>
@@ -12,7 +11,7 @@ export default function index({ data = { rank: 11 } }) {
           <MyProfileCard />
         </div>
         <div className={styles.RankDiv}>
-          <MyRank rank={data.rank} />
+          <MyRank />
         </div>
       </div>
       <div className={styles.right}>

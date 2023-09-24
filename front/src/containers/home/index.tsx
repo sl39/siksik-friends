@@ -1,11 +1,10 @@
 import dynamic from "next/dynamic";
 import StartBtn from "@/containers/home/startBtn";
-import type { User } from "@/types";
 import styles from "./home.module.scss";
 import Today from "./Today";
 import MyProfileCard from "@/components/MyProfileCard";
 
-export default function Home({ myData }: { myData: User }) {
+export default function Home() {
   const DynamicComponentWithNoSSR = dynamic(() => import("./WordCloud"), { ssr: false });
   return (
     <>
@@ -19,7 +18,7 @@ export default function Home({ myData }: { myData: User }) {
       </div>
       <div className={styles.right}>
         <div className={styles.cardContainer}>
-          <MyProfileCard data={myData} />
+          <MyProfileCard />
         </div>
         <div className={styles.buttonContainer}>
           <StartBtn />
