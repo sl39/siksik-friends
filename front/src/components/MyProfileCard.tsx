@@ -27,7 +27,7 @@ export default function Profile() {
       }
     };
     fetchUserData();
-  }, []);
+  }, [userState]);
 
   return (
     <div className={styles.item}>
