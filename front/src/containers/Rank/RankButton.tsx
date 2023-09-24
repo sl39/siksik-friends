@@ -3,11 +3,7 @@
 import { useRouter } from "next/navigation";
 import styles from "./Rank.module.css";
 
-interface Props {
-  readonly id: number;
-}
-
-export default function RankButton({ id }: Props) {
+export default function RankButton({ id }: { id: number }) {
   const router = useRouter();
 
   const onClick = (userId: number) => {
