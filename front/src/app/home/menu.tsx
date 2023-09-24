@@ -23,7 +23,7 @@ export default function Menu() {
     {
       name: "프로필",
       linkName: "profile",
-      link: user ? `/home/profile/${user.nickname}/${user.id}` : `/sign-up`,
+      link: user ? `/home/profile/${user.nickname}/${user.user_id}` : `/sign-up`,
     },
   ];
 

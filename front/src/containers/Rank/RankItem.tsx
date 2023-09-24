@@ -11,15 +11,15 @@ interface Props {
 export default function RankItem({ item }: Props) {
   const router = useRouter();
 
-  const onClick = (userId: number) => {
-    router.push(`profile/${userId}`);
+  const onClick = (user_id: number) => {
+    router.push(`profile/${user_id}`);
   };
   return (
     <div className={styles.RankItem}>
       <span className={styles.itemNum}>{item.rank}위</span>
       <span className={styles.rankLevel}>Lv. {item.level}</span>
       <span className={`${styles.rankName}`}>
-        <button onClick={() => onClick(item.user_id)} className={styles.highlight}>
+        <button onClick={() => onClick(item?.user_id)} className={styles.highlight}>
           {item.nickname}
         </button>
       </span>
