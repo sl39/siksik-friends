@@ -25,5 +25,6 @@ public class Friend {
     private Long fromUserId;
 
     @Column(nullable = false)
-    private boolean activated;
+    @Builder.Default
+    private Boolean activated = false;
 }

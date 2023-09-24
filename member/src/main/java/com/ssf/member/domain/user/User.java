@@ -31,21 +31,37 @@ public class User {
     @Column(nullable = false, length = 16, unique = true)
     private String nickname;
 
-    @Column(nullable = false)
-    @Builder.Default
-    private int score = 1000;
-
-    @Column(nullable = false)
-    private boolean activated;
-
     @Column(nullable = false, length = 255)
     @Builder.Default
-    private String profile = "/profile.png";
+    private String profile = "/default.png";
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false)
     @Builder.Default
-    @Enumerated(EnumType.STRING)
-    private Role role = Role.GUEST;
+    private Boolean activated = false;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Long rank = 0L;
+
+    @Column(name = "total_game", nullable = false)
+    @Builder.Default
+    private Long totalGame = 0L;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Long exp = 0L;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Integer level = 1;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Integer score = 1000;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Integer win = 0;
 
     @Column(name = "social_id")
     private String socialId;
@@ -55,25 +71,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private SocialType socialType = SocialType.NONE;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     @Builder.Default
-    private Long rank = 0L;
-
-    @Column(nullable = false)
-    @Builder.Default
-    private Long win = 0L;
-
-    @Column(name = "total_game", nullable = false)
-    @Builder.Default
-    private Long totalGame = 0L;
-
-    @Column(nullable = false)
-    @Builder.Default
-    private int level = 1;
-
-    @Column(nullable = false)
-    @Builder.Default
-    private Long exp = 0L;
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.GUEST;
 
     @CreationTimestamp
     @Column(name = "sign_up_at", nullable = false, length = 20, updatable = false)

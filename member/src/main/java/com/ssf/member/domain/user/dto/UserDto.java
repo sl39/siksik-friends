@@ -40,14 +40,16 @@ public class UserDto {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Response {
 
+        private Long user_id;
+
         private String email;
         private String nickname;
         private String profile;
         private String odds;
-        private Long user_id;
+
+        private Boolean activated;
         private Long rank;
-        private boolean activated;
-        private int score;
-        private int level;
+        private Integer score;
+        private Integer level;
     }
 }
