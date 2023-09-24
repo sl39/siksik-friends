@@ -1,73 +1,73 @@
-.container {
-  display: flex;
-  width: 98%;
-}
-
 .left {
   width: 70%;
-  height: 72vh;
-  margin: 15px;
+  height: 100%;
+  margin: 0 15px 0;
 }
 .right {
-  width: 25%;
-  height: 72vh;
-  margin: 15px 0;
+  width: 30%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-.dateContainer {
-  width: 100%;
+// 오늘 날짜
+.leftDay {
+  width: 98%;
   height: 50px;
   border-bottom: 1px solid var(--color-gray);
   margin-bottom: 15px;
+  .date {
+    background-color: var(--color-point);
+    clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+    height: 50px;
+    width: 220px;
+    font-size: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
-.date {
-  background-color: var(--color-temp);
-  clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
-  height: 50px;
-  width: 220px;
-  font-size: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-/* 워드클라우드 */
+// 워드클라우드
 .wordCloud {
-  border: solid 1px black;
   width: 95%;
-  height: calc(100% - 80px);
+  height: calc(100% - 100px);
+  margin-left: 10px;
 }
-
+// 진짜 클라우드
+.wordChart {
+  position: relative;
+  height: 85%;
+  margin-top: 5%;
+}
 /* 워드클라우드 버튼 */
 .groupContainer {
-  height: 80px;
-  display: grid;
+  height: 10%;
+  width: 90%;
+  display: flex;
   place-items: center;
+  align-items: flex-start;
   justify-items: center;
-}
-.wordButton {
-  width: 100%;
-  margin-bottom: 10px;
-  font-size: 0;
-  outline: 0;
+  .wordButton {
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 0;
+    outline: 0;
+  }
 }
 .button {
   border: 3px solid var(--color-word-border);
   color: var(--color-word-text);
-  background-color: var(--color-word-back);
   text-align: center;
-
+  background-color: rgba($color: white, $alpha: 0.6);
   height: 100%;
   font-weight: 800;
   font-size: 22px;
-  background: transparent;
   min-width: 100px;
-  text-transform: uppercase;
   border-radius: 8px;
   display: inline-block;
   padding: 10px 16px;
   margin: 0 3px 0 0;
-  cursor: pointer;
   transition-duration: 0.1s;
   transition-timing-function: ease-in-out;
 }
@@ -96,11 +96,11 @@
 .active:focus:last-of-type {
   border-radius: 12px 30px 30px 12px;
 }
-@media only screen and (max-width: 767px) {
-  .button {
-    min-width: 80px;
-  }
-}
+// @media only screen and (max-width: 767px) {
+//   .button {
+//     min-width: 50px;
+//   }
+// }
 .wordButton::-moz-focus-inner {
   border: 0;
 }
@@ -108,28 +108,28 @@
 // 프로필 카드
 .cardContainer {
   width: 100%;
-  height: 70vh;
+  height: 75%;
+  margin: 0;
+  padding: 0;
   position: relative;
-  top: 10%;
-  left: -30px;
-  height: 70%;
-  margin-top: 50px;
-  transform: scale(1.2);
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 // 게임 시작 버튼
 .buttonContainer {
-  position: absolute;
-  right: 0;
-  bottom: 0;
+  position: relative;
+  width: 100%;
+  height: 20%;
 }
 .button-wrapper {
   display: inline-block;
-  position: absolute;
-  bottom: 2vh;
-  right: 3vw;
-  width: 23vw;
-  height: 23vh;
+  position: relative;
+  width: 90%;
+  height: 100%;
+  left: -10px;
 }
 .span {
   position: relative;
@@ -137,12 +137,11 @@
   padding-top: 25.92%;
   display: block;
   background-size: 100% 100%;
-  font-size: 28px;
+  font-size: calc(16px + 3vh);
   text-decoration: none;
   color: #333;
   margin: 0;
 }
-
 .background-button {
   background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/323909/yellow-shadow.png);
   background-repeat: no-repeat;
