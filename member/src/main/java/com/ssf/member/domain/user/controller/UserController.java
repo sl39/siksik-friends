@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping("/rank")
-    public List<UserDto.Detail> findRank() {
+    public List<UserDto.Response> findRank() {
         return userFindService.findUsers();
     }
 
