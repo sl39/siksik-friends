@@ -22,6 +22,11 @@ public class FriendController {
 
     private static final String ACCESS_HEADER = "Authorization";
 
+    @GetMapping("/list")
+    public List<UserDto.Response> findFriend(@RequestHeader(ACCESS_HEADER) String accessHeader) {
+        return friendFindService.findFriend(accessHeader);
+    }
+
     @GetMapping("/response")
     public List<UserDto.Response> findFriendResponse(@RequestHeader(ACCESS_HEADER) String accessHeader) {
         return friendFindService.findFriendResponse(accessHeader);

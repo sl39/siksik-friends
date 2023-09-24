@@ -30,6 +30,35 @@ public class FriendFindServiceImpl implements FriendFindService {
     private String secretKey;
 
     @Override
+    public List<UserDto.Response> findFriend(String accessHeader) {
+        List<Friend> friends = friendRepository
+                        .findAllByToUserIdAndActivated(userRepository.findById(Long
+                                .parseLong(JWT
+                                        .require(Algorithm.HMAC512(secretKey))
+                                        .build()
+                                        .verify(accessHeader
+                                                .replace(BEARER, ""))
+                                        .getClaim(ID_CLAIM)
+                                        .toString()))
+                        .orElseThrow().getId(), true);
+
+        List<UserDto.Response> requestList = new ArrayList<>();
+
+        for (Friend friend : friends) {
+            User user = userRepository.findById(friend.getToUserId()).orElseThrow();
+
+            requestList.add(UserDto.Response
+                    .builder()
+                    .user_id(user.getId())
+                    .nickname(user.getNickname())
+                    .profile(user.getProfile())
+                    .build());
+        }
+
+        return requestList;
+    }
+
+    @Override
     public List<UserDto.Response> findFriendResponse(String accessHeader) {
         List<Friend> friends = friendRepository
                 .findAllByToUserIdAndActivated(userRepository.findById(Long
