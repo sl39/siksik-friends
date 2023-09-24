@@ -2,8 +2,8 @@ package com.ssf.auth.global.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssf.auth.domain.user.repository.UserRepository;
-import com.ssf.auth.domain.jwt.filter.JwtAuthenticationProcessingFilter;
-import com.ssf.auth.domain.jwt.service.JwtService;
+import com.ssf.auth.global.jwt.filter.JwtAuthenticationProcessingFilter;
+import com.ssf.auth.global.jwt.service.JwtService;
 import com.ssf.auth.global.oauth2.handler.OAuth2SignInFailureHandler;
 import com.ssf.auth.global.oauth2.handler.OAuth2SignInSuccessHandler;
 import com.ssf.auth.global.oauth2.service.CustomOAuth2UserService;

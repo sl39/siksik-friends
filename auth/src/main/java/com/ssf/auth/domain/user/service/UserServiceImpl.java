@@ -1,12 +1,15 @@
 package com.ssf.auth.domain.user.service;
 
-import com.ssf.auth.domain.user.dto.UserSignUpDto;
+import com.ssf.auth.domain.user.Role;
+import com.ssf.auth.domain.user.dto.UserDto;
 import com.ssf.auth.domain.user.User;
 import com.ssf.auth.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 @Service
 @Transactional
@@ -14,27 +17,32 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final RedisTemplate redisTemplate;
     private final PasswordEncoder passwordEncoder;
 
-    public void signUp(UserSignUpDto userSignUpDto) throws Exception {
+    private static final String KEY = "rank";
 
-        if (userRepository.existsByEmail(userSignUpDto.getEmail())) {
+    public void signUp(UserDto.Request userRequest) throws Exception {
+
+        if (userRepository.existsByEmail(userRequest.getEmail())) {
             throw new Exception("이미 존재하는 이메일입니다.");
         }
 
-        if (userRepository.existsByNickname(userSignUpDto.getNickname())) {
+        if (userRepository.existsByNickname(userRequest.getNickname())) {
             throw new Exception("이미 존재하는 닉네임입니다.");
         }
 
         User user = User.builder()
-                .email(userSignUpDto.getEmail())
-                .password(userSignUpDto.getPassword())
-                .nickname(userSignUpDto.getNickname())
-                .profile(userSignUpDto.getProfile())
+                .email(userRequest.getEmail())
+                .password(userRequest.getPassword())
+                .nickname(userRequest.getNickname())
+                .profile(StringUtils.hasText(userRequest.getProfile()) ? userRequest.getProfile() : "/default.png")
+                .role(Role.USER)
                 .build();
 
         user.encodePassword(passwordEncoder);
         userRepository.save(user);
+        redisTemplate.opsForZSet().add(KEY, String.valueOf(user.getId()), 1000);
     }
 
     @Override

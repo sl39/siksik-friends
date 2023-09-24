@@ -2,7 +2,7 @@ package com.ssf.auth.global.signin.handler;
 
 import com.ssf.auth.domain.user.User;
 import com.ssf.auth.domain.user.repository.UserRepository;
-import com.ssf.auth.domain.jwt.service.JwtService;
+import com.ssf.auth.global.jwt.service.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,8 @@ public class SignInSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         User target = userRepository.findById(id).get();
 
 //        jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
-        jwtService.sendAccessAndRefreshTokenAndId(response, accessToken, refreshToken, target);
+//        jwtService.sendAccessAndRefreshTokenAndId(response, accessToken, refreshToken, target);
+        jwtService.sendAccessToken(response, accessToken);
 
         userRepository.findById(id)
                 .ifPresent(user -> {
