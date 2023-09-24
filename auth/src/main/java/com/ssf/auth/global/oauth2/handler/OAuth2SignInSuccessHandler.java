@@ -2,7 +2,7 @@ package com.ssf.auth.global.oauth2.handler;
 
 import com.ssf.auth.domain.user.Role;
 import com.ssf.auth.domain.user.repository.UserRepository;
-import com.ssf.auth.domain.jwt.service.JwtService;
+import com.ssf.auth.global.jwt.service.JwtService;
 import com.ssf.auth.global.oauth2.CustomOAuth2User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,7 +35,8 @@ public class OAuth2SignInSuccessHandler implements AuthenticationSuccessHandler 
                 response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
                 response.sendRedirect("auth/oauth2/sign-up");
 
-                jwtService.sendAccessAndRefreshToken(response, accessToken, null);
+//                jwtService.sendAccessAndRefreshToken(response, accessToken, null);
+                jwtService.sendAccessToken(response, accessToken);
 
             } else {
                 signInSuccess(response, customOAuth2User);
@@ -53,7 +54,8 @@ public class OAuth2SignInSuccessHandler implements AuthenticationSuccessHandler 
         response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
         response.addHeader(jwtService.getRefreshHeader(), "Bearer " + refreshToken);
 
-        jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
+//        jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
+        jwtService.sendAccessToken(response, accessToken);
         jwtService.updateRefreshToken(customOAuth2User.getId(), refreshToken);
     }
 }
