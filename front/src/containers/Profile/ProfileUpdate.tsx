@@ -1,40 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAtom } from "jotai";
 import { serverAxios } from "@/services/api";
+import { userAtom } from "@/store/userAtom";
 import styles from "./Profile.module.scss";
 
 export default function ProfileUpdate() {
   const router = useRouter();
 
-  const [profile, setProfile] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [preNickname, setPreNickname] = useState("");
-  // const [preProfile, setPreProfile] = useState("");
+  const [data, setData] = useAtom(userAtom);
+
+  const [profile, setProfile] = useState(data.profile);
+  const [nickname, setNickname] = useState(data.nickname);
+  const [preNickname] = useState(data.nickname);
+
   const [checkNickname, setCheckNickname] = useState("");
   const [updateValidation, setUpdateValidation] = useState(true);
-  const FetchData = async () => {
-    try {
-      const response = await serverAxios(`/user/userinfo/1`);
-      // const response = await serverAxios(`/user/userinfo/${userid}`);
-      console.log(response);
-      setPreNickname(response.data.nickname);
-      // setPreProfile(response.profile);
-      setProfile(response.data.profile);
-      setNickname(response.data.nickname);
-    } catch (err) {
-      console.log("유저 정보 에러", err);
-      setPreNickname("test");
-      // setPreProfile("profile.png");
-      setProfile("profile.png");
-      setNickname("test");
-    }
-  };
-
-  useEffect(() => {
-    FetchData();
-  }, []);
 
   /** 닉네임 유효성 */
   const onBlurNickname = (e: string) => {
@@ -51,25 +34,29 @@ export default function ProfileUpdate() {
     return false;
   };
 
+  /** 정보 수정 요청 */
   const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const formData = {
       nickname,
       profile,
     };
 
     try {
-      // await serverAxios.put(`/user/userinfo/${userid}`, formData);
-      await serverAxios.put(`/user/userinfo/1`, formData);
-
-      console.log(formData);
-      router.push(`/user/userinfo/1`);
+      await serverAxios.put(`/user/${data.user_id}`, formData);
+      setData((prevUser) => ({
+        ...prevUser,
+        ...formData,
+      }));
+      router.push(`/home/profile/${formData.nickname}/${data.user_id}`);
     } catch (error) {
       console.log("프로필 업데이트 에러", error);
     }
   };
+
+  /** 닉네임 중복확인 */
   const handleCheckNickname = async () => {
-    console.log("닉네임 버튼");
     const params = {
       nickname,
     };
@@ -79,46 +66,51 @@ export default function ProfileUpdate() {
           await serverAxios.get("/auth/nickname", { params });
           setCheckNickname("사용 가능한 닉네임입니다.");
           setUpdateValidation(false);
-          console.log("통과!!!");
         } catch (error) {
           setCheckNickname("이미 존재하는 닉네임입니다.");
           setUpdateValidation(true);
-          console.log("실패!!!");
         }
       } else {
         setUpdateValidation(true);
-        console.log("실패!!!");
       }
     } else {
       setCheckNickname("기존 닉네임과 동일합니다");
       setUpdateValidation(false);
-      console.log("통과!!!");
     }
   };
 
   return (
     <div className={styles.profileData}>
-      <form onSubmit={handleUpdateProfile}>
-        {/* 프로필 업데이트 입력 필드 */}
-        <div>
-          <label htmlFor="profile">프로필 </label>
-          <input type="text" id="profile" value={profile} onChange={(e) => setProfile(e.target.value)} />
-        </div>
+      <div className={`${styles.profileContainer} ${styles.updateContainer}`}>
+        <div className={styles.title}>회원 정보 수정</div>
+        <form onSubmit={handleUpdateProfile}>
+          <div>{data.email}</div>
 
-        {/* 닉네임 업데이트 입력 필드 */}
-        <div>
-          <label htmlFor="nickname">닉네임:</label>
-          <input type="text" id="nickname" value={nickname} onChange={(e) => setNickname(e.target.value)} />
-        </div>
-        <button type="button" onClick={handleCheckNickname} className={[styles.button, styles.check].join(" ")}>
-          중복확인
-        </button>
-        <div className={styles.checkText}>{checkNickname}</div>
+          {/* 프로필 업데이트 입력 필드 */}
+          <div>
+            <label htmlFor="profile">프로필 </label>
+            <input type="text" id="profile" value={profile} onChange={(e) => setProfile(e.target.value)} />
+          </div>
 
-        <button type="submit" disabled={updateValidation}>
-          프로필 업데이트
+          {/* 닉네임 업데이트 입력 필드 */}
+          <div>
+            <label htmlFor="nickname">닉네임 </label>
+            <input type="text" id="nickname" value={nickname} onChange={(e) => setNickname(e.target.value)} />
+            <button type="button" onClick={handleCheckNickname} className={[styles.button, styles.check].join(" ")}>
+              중복확인
+            </button>
+            <div className={styles.checkText}>{checkNickname}</div>
+          </div>
+
+          <button type="submit" className={styles.button} disabled={updateValidation}>
+            확인
+          </button>
+        </form>
+
+        <button className={styles.button} onClick={() => router.back()}>
+          취소
         </button>
-      </form>
+      </div>
     </div>
   );
 }
