@@ -1,124 +1,68 @@
-.container {
-  display: flex;
-  width: 100%;
-}
+$roundBtn: #85c9ed;
+
 .left {
   width: 70%;
-  height: 80vh;
-  margin: 0 10px;
+  height: 100%;
+  padding: 0 15px;
+  box-sizing: border-box;
 }
 .right {
-  width: 25%;
-  height: 80vh;
+  position: relative;
+  width: 30%;
+  height: 100%;
   margin: 0;
 }
-
-// 게임 목록
-// 게임 버튼임
-@mixin createButton($width, $height, $radius, $gradientFirst, $gradientThird, $shadowColor) {
-  width: $width;
-  height: $height;
-  border-radius: $radius;
-  background-image: linear-gradient(135deg, $gradientFirst 0%, $gradientThird 100%);
-  box-shadow:
-    0 10px 1px 0px $shadowColor,
-    inset 0px -8px 16px 0px $shadowColor;
-
-  outline: none;
-  border: none;
-  cursor: pointer;
-  color: white;
-  text-align: center;
-  font-weight: 600;
+.GameRoom{
+  border-radius: 10px;
+  height: 65%;
+  padding: 15px;
+  box-sizing: border-box;
+  background: rgba( 255, 255, 255, 0.5 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 4px );
+  -webkit-backdrop-filter: blur( 4px );
 }
-
-.roomBtn {
+.chatBox {
+  margin-top: 1%;
+  height: 32%;
+  background: rgba( 255, 255, 255, 0.5 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 4px );
+  -webkit-backdrop-filter: blur( 4px );
+  border-radius: 15px;
   display: flex;
-  height: 10vh;
-  margin-bottom: 10px;
+  flex-direction: column;
   justify-content: space-between;
-}
-.boxButton {
-  margin: 0 5px 5px;
-  font-size: 2rem;
-
-  transition: all 0.3s ease-in-out;
-  &:nth-child(1) {
-    @include createButton(200px, 8vh, 10px, #feb692, #ea5455, rgba(238, 103, 97, 0.5));
-  }
-  &:nth-child(2) {
-    @include createButton(200px, 8vh, 10px, #abdcff, #0396ff, rgba(30, 161, 255, 0.5));
-  }
-  &:nth-child(3) {
-    @include createButton(200px, 8vh, 10px, #81fbb8, #28c76f, rgba(60, 211, 128, 0.5));
-  }
-  &:hover {
-    transform: translatey(5px);
-    box-shadow: none;
-  }
-  &:active {
-    opacity: 0.5;
-  }
-}
-$roundBtn: #85c9ed;
-.roomActionBtn {
-  height: 10%;
-  margin-bottom: 10px;
-  display: flex;
   align-items: center;
-  justify-content: space-between;
+  padding: 10px 5px;
+  box-sizing: border-box;
 }
-.roundButton {
-  border-radius: 50px;
-  height: 4vh;
-  width: 150px;
-  text-align: center;
-  margin: 0 5px 10px;
-  padding: 5px;
-  font-size: 1.6rem;
-  transition: all 0.3s ease-in-out;
-  border: 2px solid $roundBtn;
-  background-color: #fff;
-  border-radius: 150px;
-  &:hover {
-    top: -1px;
-  }
-  &:active,
-  &:focus {
-    top: 1px;
-    background-color: $roundBtn;
-  }
+.waitingBox {
+  position: fixed;
+  height: 55%;
+  width: 30%;
+  padding-right: 5px; 
+  display: flex;
+  box-sizing: border-box;
 }
-.activeRoom {
-  background-color: $roundBtn;
+.profileItem {
+  width: 100%;
+  height: 25%;
+  position: absolute;
+  bottom: 2%;
+  right: 10px;
+
+  border: 1.5px solid #37353f;
+  border-radius: 0 0 125px 3px / 3px 85px 5px 55px;
+  box-shadow: 4px 4px 0 0 rgba(255, 165, 0, 0.8);
+  box-sizing: border-box;
+  background: rgba( 255, 255, 255, 0.8 );
+  backdrop-filter: blur( 4px );
+  -webkit-backdrop-filter: blur( 4px );
 }
-.reload {
-  width: 110px;
-  border-radius: 50px;
-  height: 4vh;
-  text-align: center;
-  margin: 0 5px 10px;
-  padding: 5px;
-  font-size: 1.6rem;
-  transition: all 0.3s ease-in-out;
-  border: 2px solid $roundBtn;
-  background-color: #fff;
-  border-radius: 110px;
-  &:hover {
-    top: -1px;
-  }
-  &:active {
-    top: 1px;
-    background-color: $roundBtn;
-  }
-}
+
 
 .GameRoom {
-  border: 1px solid black;
-  background: rgba(255, 255, 255, 0.85);
-  border-radius: 10px;
-  height: 55vh;
-  padding: 10px;
 
   .rooms {
     height: 35vh;
@@ -192,6 +136,106 @@ $roundBtn: #85c9ed;
   }
 }
 
+// 게임 목록
+// 게임 버튼임
+@mixin createButton($width, $height, $radius, $gradientFirst, $gradientThird, $shadowColor) {
+  width: $width;
+  height: $height;
+  border-radius: $radius;
+  background-image: linear-gradient(135deg, $gradientFirst 0%, $gradientThird 100%);
+  box-shadow:
+    0 10px 1px 0px $shadowColor,
+    inset 0px -8px 16px 0px $shadowColor;
+
+  outline: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+  text-align: center;
+  font-weight: 600;
+}
+
+.roomBtn {
+  display: flex;
+  height: 10vh;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+.boxButton {
+  margin: 0 5px 5px;
+  font-size: 2rem;
+
+  transition: all 0.3s ease-in-out;
+  &:nth-child(1) {
+    @include createButton(200px, 8vh, 10px, #feb692, #ea5455, rgba(238, 103, 97, 0.5));
+  }
+  &:nth-child(2) {
+    @include createButton(200px, 8vh, 10px, #abdcff, #0396ff, rgba(30, 161, 255, 0.5));
+  }
+  &:nth-child(3) {
+    @include createButton(200px, 8vh, 10px, #81fbb8, #28c76f, rgba(60, 211, 128, 0.5));
+  }
+  &:hover {
+    transform: translatey(5px);
+    box-shadow: none;
+  }
+  &:active {
+    opacity: 0.5;
+  }
+}
+.roomActionBtn {
+  height: 10%;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.roundButton {
+  border-radius: 50px;
+  height: 4vh;
+  width: 150px;
+  text-align: center;
+  margin: 0 5px 10px;
+  padding: 5px;
+  font-size: 1.6rem;
+  transition: all 0.3s ease-in-out;
+  border: 2px solid $roundBtn;
+  background-color: #fff;
+  border-radius: 150px;
+  &:hover {
+    top: -1px;
+  }
+  &:active,
+  &:focus {
+    top: 1px;
+    background-color: $roundBtn;
+  }
+}
+.activeRoom {
+  background-color: $roundBtn;
+}
+.reload {
+  width: 110px;
+  border-radius: 50px;
+  height: 4vh;
+  text-align: center;
+  margin: 0 5px 10px;
+  padding: 5px;
+  font-size: 1.6rem;
+  transition: all 0.3s ease-in-out;
+  border: 2px solid $roundBtn;
+  background-color: #fff;
+  border-radius: 110px;
+  &:hover {
+    top: -1px;
+  }
+  &:active {
+    top: 1px;
+    background-color: $roundBtn;
+  }
+}
+
+
 // 방 생성 모달
 .modalContainer {
   width: 1000px;
@@ -200,17 +244,7 @@ $roundBtn: #85c9ed;
 
 // 채팅
 .chatBox {
-  margin-top: 1%;
-  height: 20vh;
-  background: var(--colors-chat);
-  border: 1px solid black;
-  border-radius: 15px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 0 10px 0;
-  box-sizing: border-box;
+
   .chatLog {
     height: 72%;
     width: 98%;
@@ -243,44 +277,37 @@ $roundBtn: #85c9ed;
 }
 
 // 대기실 유저
-.waitingBox {
-  height: 58vh;
-  width: 30%;
-  position: absolute;
+.userBigBox {
+  width: 86%;
+  padding: 5px;
+  border-radius: 15px 0 15px 15px;
+  background-color: var(--color-wait);
   display: flex;
-
-  .userBigBox {
-    width: 86%;
-    padding: 5px;
-    border-radius: 15px 0 15px 15px;
-    background-color: var(--color-wait);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  justify-content: center;
+}
+.userBox {
+  background-color: #f9f9f9;
+  background-image: linear-gradient(#e4e4e4 1px, transparent 1px);
+  position: relative;
+  width: 95%;
+  height: 96%;
+  overflow: auto;
+  border-radius: 15px 0 0 15px;
+  padding: 5px;
+  /* 스크롤 CSS */
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: inherit;
   }
-  .userBox {
-    background-color: #f9f9f9;
-    background-image: linear-gradient(#e4e4e4 1px, transparent 1px);
-    position: relative;
-    width: 95%;
-    height: 96%;
-    overflow: auto;
-    border-radius: 15px 0 0 15px;
-    padding: 5px;
-    /* 스크롤 CSS */
-    &::-webkit-scrollbar {
-      width: 10px;
-      height: inherit;
-    }
-    &::-webkit-scrollbar-thumb {
-      height: 30%; /* 스크롤바의 길이 */
-      background: #e7d19f; /* 스크롤바의 색상 */
-      border-radius: 10px;
-    }
-    &::-webkit-scrollbar-track {
-      /*스크롤바 뒷 배경 색상*/
-      background: var(--color-wait);
-    }
+  &::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: #e7d19f; /* 스크롤바의 색상 */
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    /*스크롤바 뒷 배경 색상*/
+    background: var(--color-wait);
   }
 }
 .userNav {
@@ -333,35 +360,45 @@ $roundBtn: #85c9ed;
   }
 }
 
-// 대기실 유저 프로필
+// 유저 프로필
 .userItem {
   display: flex;
   justify-content: space-between;
-  border: 1px solid black;
-  padding: 4px 8px;
-  margin: 3px;
+  align-items: center;
+
+  // border-bottom: 1px solid rgba(orange, 0.7);
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 2px 4px;
+  margin: 4px 2px;
+
+  background: rgba( 255, 255, 255, 0.5 );
+  box-shadow: 0 2px 5px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 8px );
+  -webkit-backdrop-filter: blur( 8px );
   .profile {
-    width: 20%;
-    border: 1px solid black;
-    margin: 5px 0;
+    position: relative !important;
+    width: 18% !important;
+    height: 100% !important;
+    margin: 0;
+    padding-left: 5px;
   }
   .userItemBox {
     width: 78%;
     padding: 0;
   }
   .subBox {
-    border: 1px solid black;
+    // border: 1px solid black;
     width: 100%;
     height: 30px;
     margin: 5px 0;
   }
 }
 
-// 내 프로필
-.profileItem {
-  width: 28%;
-  height: 10vh;
-  bottom: 10vh;
-  position: absolute;
-  border: 1px solid black;
+
+
+.selected {
+  background-color: #007bff; /* 선택된 경우의 배경색 (파란색) */
+  color: #fff; /* 선택된 경우의 글자색 (흰색) */
+  /* 기타 스타일 설정 */
 }

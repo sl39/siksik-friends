@@ -1,6 +1,7 @@
 :root {
   /* color */
   --color-temp: orange;
+  --color-point: orange;
   --color-bg: #f4f2e6;
   --color-book: #dba741;
   --color-page1: #e7d19f;
@@ -10,7 +11,8 @@
   --color-gray: #666;
 
   --color-nav: #c8c8c8;
-  --color-nav-active: red;
+  --color-nav-active: #ff7a49;
+  --color-nav-stroke: #f76127;
   --color-nav-font: white;
 
   /* 버튼 컬러 */
@@ -21,10 +23,7 @@
   --color-close-btn: white;
   --color-btn: grey;
 
-  --color-postIt: #ffff88;
-  --color-postIt-dark: #f8f861;
-
-  /* 워드클라우드 컬러 */
+  /* 워드클라우드 버튼 컬러 */
   --color-word-border: #ffa500;
   --color-word-text: #ffa500;
   --color-word-back: #ff4500;

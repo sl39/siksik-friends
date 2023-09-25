@@ -5,7 +5,7 @@ import MyProfileCard from "@/components/MyProfileCard";
 
 export default function index() {
   return (
-    <div className={styles.container}>
+    <>
       <div className={styles.left}>
         <div className={styles.profile}>
           <MyProfileCard />
@@ -17,6 +17,6 @@ export default function index() {
       <div className={styles.right}>
         <AllRank />
       </div>
-    </div>
+    </>
   );
 }
