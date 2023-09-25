@@ -58,7 +58,7 @@
   font-size: calc(2.5vh);
   font-weight: bold;
   transform: rotate(-7.634deg);
-  text-align:center;
+  text-align: center;
 }
 
 /* 상위 랭크 */
@@ -74,10 +74,10 @@
   align-items: center;
 
   /* 글래스모피즘 */
-  background: rgba( 255, 255, 255, 0.5 );
-  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-  backdrop-filter: blur( 4px );
-  -webkit-backdrop-filter: blur( 4px );
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 .RankItem {
   box-sizing: border-box;
@@ -89,10 +89,10 @@
   align-items: center;
   justify-content: space-around;
 
-  background: rgba( 255, 255, 255, 0.2 );
-  box-shadow: 0 2px 20px 0 rgba( 31, 38, 135, 0.37 );
-  backdrop-filter: blur( 4px );
-  -webkit-backdrop-filter: blur( 4px );
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 20px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   border-radius: 30px;
 }
 .itemNum {
@@ -111,7 +111,14 @@
 .highlight:hover {
   padding: 3px 10px;
   width: 100%;
-  background: linear-gradient(to right, rgba(254, 172, 94, 0.3) 0%, rgba(254, 172, 94, 0.4) 60%, rgba(254, 172, 94, 0.4) 60%, rgba(254, 172, 94, 0.6) 85%, rgba(254, 172, 94, 0.8) 100%);
+  background: linear-gradient(
+    to right,
+    rgba(254, 172, 94, 0.3) 0%,
+    rgba(254, 172, 94, 0.4) 60%,
+    rgba(254, 172, 94, 0.4) 60%,
+    rgba(254, 172, 94, 0.6) 85%,
+    rgba(254, 172, 94, 0.8) 100%
+  );
 }
 .score {
   font-size: 3vh;
