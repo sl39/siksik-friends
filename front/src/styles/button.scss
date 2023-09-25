@@ -109,7 +109,9 @@ $orange-shadow: #ffa07a;
   height: 50px;
 
   display: inline-block;
-  cursor: pointer;
+  // cursor: pointer;
+  cursor: url('../../public/images/mouse_cursor2.png') , default;
+
   outline: none;
   border: 0;
   vertical-align: middle;
