@@ -18,7 +18,6 @@ export default function UpdateButton() {
   let userId = 0;
   if (typeof params.id === "string") {
     userId = parseInt(params.id, 10);
-    console.log(typeof userId);
   }
   const myData = useAtom(userAtom)[0];
   const myId = myData.user_id;
@@ -36,6 +35,7 @@ export default function UpdateButton() {
   const [userType, setUserType] = useState(0);
 
   const TypeText: TypeTextType = {
+    0: [],
     1: ["친구 요청 취소"],
     2: ["친구 요청 수락", "친구 요청 거절"],
     3: ["친구 요청"],
