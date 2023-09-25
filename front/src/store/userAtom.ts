@@ -3,7 +3,7 @@ import type { User } from "@/types";
 
 // export const userAtom = atom<User>({} as User);
 export const userAtom = atom<User>({
-  user_id: 0,
+  user_id: 1,
   email: "tempEmail",
   nickname: "temp",
   profile: "/images/character/rabbit.png",

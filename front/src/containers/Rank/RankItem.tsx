@@ -11,8 +11,8 @@ interface Props {
 export default function RankItem({ item }: Props) {
   const router = useRouter();
 
-  const onClick = (user_nickname: string, user_id: number) => {
-    router.push(`profile/${user_nickname}/${user_id}`);
+  const onClick = (nickname: string, user_id: number) => {
+    router.push(`/home/profile/${nickname}/${user_id}`);
   };
   return (
     <div className={styles.RankItem}>
