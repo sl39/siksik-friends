@@ -6,9 +6,10 @@ export default async function Home() {
   // const res = await axios.get("https://jsonplaceholder.typicode.com/users/1", {
   //   headers: { "Cache-Control": "no-store" },
   // });
+  let data: any;
   try {
     const res = await serverAxios.get("/user/my-info");
-    const { data } = res;
+    data = res.data;
     console.log("------------------------------------------------");
     console.log(data);
   } catch (err) {
@@ -16,5 +17,10 @@ export default async function Home() {
     console.error("내 정보 에러");
   }
 
-  return <HomeIndex />;
+  return (
+    <>
+      <HomeIndex />
+      <div>{data}</div>
+    </>
+  );
 }
