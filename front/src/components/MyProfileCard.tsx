@@ -16,7 +16,6 @@ export default function Profile() {
     const fetchData = async () => {
       try {
         const response = await serverAxios("/user/my-info");
-        console.log(response);
         setPrevUser(response.data);
         setUser(response.data);
       } catch (err) {

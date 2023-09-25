@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { serverAxios } from "@/services/api";
-import styles from "./Profile.module.css";
+import styles from "./Profile.module.scss";
 
 export default function ProfileUpdate() {
   const router = useRouter();
