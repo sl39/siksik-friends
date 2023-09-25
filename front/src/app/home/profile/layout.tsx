@@ -1,4 +1,4 @@
-import styles from "@/containers/Profile/Profile.module.css";
+import styles from "@/containers/Profile/Profile.module.scss";
 import ProfileIndex from "@/containers/Profile";
 
 export default function ProfileLayout({ children }: { children: React.ReactNode }) {

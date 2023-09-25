@@ -1,6 +1,6 @@
 import MyProfileCard from "@/components/MyProfileCard";
 import UpdateButton from "./UpdateButton";
-import styles from "./Profile.module.css";
+import styles from "./Profile.module.scss";
 
 export default function index() {
   return (
