@@ -32,7 +32,7 @@ export default function UpdateButton() {
    * 4. 친구다
    * (친구 삭제 버튼(4) -> 친구 요청(3))
    */
-  const [userType, setUserType] = useState(2);
+  const [userType, setUserType] = useState(0);
 
   const TypeText: TypeTextType = {
     0: [],
