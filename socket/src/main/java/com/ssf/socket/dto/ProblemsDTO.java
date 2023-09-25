@@ -15,9 +15,9 @@ public class ProblemsDTO {
     @Setter
     @AllArgsConstructor
     public static class ProblemDTO {
-        int problemNumber;
+//        int problemNumber;
         String problemContent;
         String problemHint;
     }
-    private final Map<String, ProblemDTO> users = new HashMap<>();
+    private final Map<String, ProblemDTO> problems = new HashMap<>();
 }
