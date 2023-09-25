@@ -97,6 +97,8 @@ public class FriendFindServiceImpl implements FriendFindService {
                     .build());
         }
 
+        Collections.sort(requestList);
+
         return FriendResponseDto.builder()
                 .size((long) requestList.size())
                 .friendList(requestList)
@@ -130,6 +132,8 @@ public class FriendFindServiceImpl implements FriendFindService {
                     .activated(user.getActivated())
                     .build());
         }
+
+        Collections.sort(requestList);
 
         return FriendResponseDto.builder()
                 .size((long) requestList.size())
