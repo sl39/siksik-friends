@@ -3,6 +3,7 @@ package com.ssf.member.domain.user.controller;
 import com.ssf.member.domain.user.dto.UserDto;
 import com.ssf.member.domain.user.service.UserFindService;
 import com.ssf.member.domain.user.service.UserModifyService;
+import com.ssf.member.domain.user.service.UserRemoveService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,7 @@ public class UserController {
 
     private final UserFindService userFindService;
     private final UserModifyService userModifyService;
+    private final UserRemoveService userRemoveService;
 
     private static final String ACCESS_HEADER = "Authorization";
 
@@ -39,5 +41,11 @@ public class UserController {
     @GetMapping("/rank")
     public List<UserDto.Response> rankList() {
         return userFindService.findRankList();
+    }
+
+    @DeleteMapping("/")
+    public String removeUser(@RequestHeader String accessHeader) {
+        userRemoveService.removeUser(accessHeader);
+        return "회원 탈퇴 완료";
     }
 }
