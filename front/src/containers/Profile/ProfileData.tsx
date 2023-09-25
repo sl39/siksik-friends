@@ -2,16 +2,21 @@
 
 import { useEffect } from "react";
 import { useParams } from "next/navigation";
+import { useAtom } from "jotai";
 import { serverAxios } from "@/services/api";
+import { userAtom } from "@/store/userAtom";
 import styles from "./Profile.module.css";
 
 export default function ProfileData() {
   const params = useParams();
-  console.log(params);
+  const userNickname = params[0];
+
+  const [userData, setUserData] = useAtom(userAtom);
+
   // 내 프로필 데이터를 가져오는 함수
   const FetchData = async () => {
     try {
-      const response = await serverAxios(`/`);
+      const response = await serverAxios(`/user/my-info`);
       console.log(response);
     } catch (err) {
       console.log("유저 정보 에러", err);
@@ -24,7 +29,10 @@ export default function ProfileData() {
 
   return (
     <div className={styles.profileData}>
-      <div>프로필 정보 보여주기</div>
+      <div>
+        프로필 정보 보여주기
+        {userNickname}
+      </div>
     </div>
   );
 }

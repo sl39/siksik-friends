@@ -10,6 +10,9 @@ body {
   justify-content: center;
   cursor: url("../../public/images/mouse_cursor2.png"), default;
 }
+body * {
+  cursor: url("../../public/images/mouse_cursor2.png"), default;
+}
 
 button,
 a {
