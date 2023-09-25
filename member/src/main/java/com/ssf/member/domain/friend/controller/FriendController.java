@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/user/friend")
 @RequiredArgsConstructor
-@CrossOrigin("*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class FriendController {
 
     private final FriendCreateService friendCreateService;
