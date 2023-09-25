@@ -6,7 +6,7 @@ const SERVER_ADDRESS = process.env.NEXT_PUBLIC_AXIOS_URL;
 
 export const serverAxios = axios.create({
   baseURL: `${SERVER_ADDRESS}/api`,
-  // headers: { 'Content-Type': 'application/json' }
+  headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
 });
 
 /** 요청 인터셉터 */
@@ -31,7 +31,7 @@ serverAxios.interceptors.request.use(
   },
   (error) => {
     // 요청 에러 직전 호출됩니다.
-    console.log("요청 에러 직전?");
+    console.log("요청 에러 직전");
     return Promise.reject(error);
   }
 );

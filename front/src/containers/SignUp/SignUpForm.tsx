@@ -31,7 +31,6 @@ export default function SignUpForm() {
 
   /** 회원가입 POST */
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log("회원가입 버튼");
     e.preventDefault();
     const formData = {
       email,
@@ -42,12 +41,10 @@ export default function SignUpForm() {
 
     try {
       await serverAxios.post("/auth/sign-up", formData);
-
       // 로그인 시키고 홈으로
-      await serverAxios.post("/auth/sign-in", formData);
-      // await setUser({ id: response.headers.id });
-      const res = await serverAxios.get("user/my-info");
-      console.log(res);
+      const response = await serverAxios.post("/auth/sign-in", formData);
+      // 토큰 저장
+      await sessionStorage.setItem("accessToken", response.headers.authorization);
       router.push("/home");
     } catch (error) {
       console.log("회원가입 에러", error);
@@ -56,7 +53,6 @@ export default function SignUpForm() {
 
   /** 이메일 중복 검사 */
   const handleCheckEmail = async () => {
-    console.log("이메일 버튼");
     const params = {
       email,
     };
@@ -120,18 +116,15 @@ export default function SignUpForm() {
     if (password.search(/\s/) !== -1) {
       setCheckPassword1("비밀번호는 공백 없이 입력해주세요.");
       setPasswordValidation(0);
-
       return false;
     }
     if (num < 0 || eng < 0 || spe < 0) {
       setCheckPassword1("영문,숫자, 특수문자를 혼합하여 입력해주세요.");
       setPasswordValidation(0);
-
       return false;
     }
     setCheckPassword1("");
     setPasswordValidation(1);
-
     return true;
   };
 
@@ -141,7 +134,6 @@ export default function SignUpForm() {
     if (checkPassword === password1) {
       setCheckPassword2("");
       setPasswordValidation(2);
-
       return true;
     }
 
@@ -183,7 +175,6 @@ export default function SignUpForm() {
                 onBlur={(e) => OnBlurSignUp(e)}
                 placeholder="Email"
               />
-
               <button
                 type="button"
                 onClick={handleCheckEmail}
@@ -215,6 +206,8 @@ export default function SignUpForm() {
             </div>
             <div className={styles.checkText}>{checkPassword1}</div>
           </div>
+        </div>
+        <div className={`${styles["form-group"]}`}>
           <div className={styles.formCheck}>
             <div className={styles.display}>
               <input

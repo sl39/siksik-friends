@@ -8,16 +8,19 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: url('../../public/images/mouse_cursor2.png') , default;
-
+  cursor: url("../../public/images/mouse_cursor2.png"), default;
 }
 
 button,
 a {
   all: unset;
   /* cursor: pointer; */
-  cursor: url('../../public/images/mouse_cursor2.png') , default;
-
+  cursor: url("../../public/images/mouse_cursor2.png"), default;
+}
+input {
+  font-family: var(--font-poor), sans-serif;
+  font-size: 1.2rem;
+  padding: 0 5px;
 }
 /* home layout */
 .body-container {
@@ -32,7 +35,6 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 .book-cover {
   background-color: var(--color-book);
