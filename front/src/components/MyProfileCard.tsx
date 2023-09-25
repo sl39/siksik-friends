@@ -1,30 +1,29 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
-import { useEffect } from "react";
-import { userAtom } from "@/store/userAtom";
 import { serverAxios } from "@/services/api";
+import type { User } from "@/types";
+import { userAtom } from "@/store/userAtom";
 import styles from "./MyProfileCard.module.css";
 
 export default function Profile() {
-  const [user, setUser] = useAtom(userAtom);
+  const [prevUser, setPrevUser] = useAtom(userAtom);
+  const [user, setUser] = useState<User>(prevUser);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await serverAxios("/user/my-info");
         console.log(response);
+        setPrevUser(response.data);
         setUser(response.data);
       } catch (err) {
         console.log("유저 정보 에러", err);
       }
     };
-
-    /** userAtom이 비었으면, data로 업데이트 */
-    if (Object.keys(user).length === 0) {
-      fetchData();
-    }
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

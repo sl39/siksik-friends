@@ -6,8 +6,8 @@ export interface User {
   exp?: number;
   score?: number;
   level?: number;
-  email?: string;
   nickname: string;
+  email?: string;
   profile?: string;
   odds?: string;
 }
