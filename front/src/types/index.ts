@@ -14,7 +14,7 @@ export interface User {
 
 export interface Rank {
   user_id: number;
-  nickname?: string;
+  nickname: string;
   profile?: string;
   odds?: string;
   rank?: number;
