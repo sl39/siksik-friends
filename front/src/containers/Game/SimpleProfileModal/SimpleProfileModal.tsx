@@ -34,5 +34,7 @@ export default function SimpleProfileModal() {
     ));
   };
 
-  return <div className={styles.modalContainer}>{userdetail(user)}</div>;
+    return(<div className={styles.modalContainer}>
+        {userdetail(user)}
+      </div>)
 }
