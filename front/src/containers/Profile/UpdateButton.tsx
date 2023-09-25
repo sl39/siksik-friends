@@ -5,7 +5,7 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { serverAxios } from "@/services/api";
 import { userAtom } from "@/store/userAtom";
-import styles from "./Profile.module.css";
+import styles from "./Profile.module.scss";
 
 interface TypeTextType {
   [key: number]: string[];
@@ -32,7 +32,7 @@ export default function UpdateButton() {
    * 4. 친구다
    * (친구 삭제 버튼(4) -> 친구 요청(3))
    */
-  const [userType, setUserType] = useState(0);
+  const [userType, setUserType] = useState(2);
 
   const TypeText: TypeTextType = {
     0: [],
@@ -47,10 +47,7 @@ export default function UpdateButton() {
     const isFriend = async () => {
       try {
         const response = await serverAxios(`/user/friend/${userId}`);
-        console.log(response);
-        console.log(typeof response.data?.status);
         setUserType(response.data.status);
-        console.log(myData);
       } catch (err) {
         console.log("친구 요청 에러", err);
       }
@@ -59,13 +56,41 @@ export default function UpdateButton() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleFriend = async () => {
-    // 친구 아님 -> 친구 요청
+  /** 친구 요청 | 삭제 */
+  const handleFriend = async (text: string) => {
     if (userType === 3) {
+      // 친구 요청
       try {
         await serverAxios.post(`/user/friend/${userId}`);
+        setUserType(1);
       } catch (err) {
         console.log("친구 요청 에러", err);
+      }
+    } else if (userType === 4 || userType === 1) {
+      // 친구 삭제, 친구 요청 취소
+      try {
+        await serverAxios.delete(`user/friend/${userId}`);
+        setUserType(3);
+      } catch (err) {
+        console.log("친구 삭제 | 취소 에러", err);
+      }
+    } else if (userType === 2) {
+      if (text === "친구 요청 수락") {
+        // 친구 수락
+        try {
+          await serverAxios.put(`user/friend/${userId}`);
+          setUserType(4);
+        } catch (err) {
+          console.log("친구 수락 에러", err);
+        }
+      } else if (text === "친구 요청 거절") {
+        // 친구 삭제
+        try {
+          await serverAxios.delete(`user/friend/${userId}`);
+          setUserType(3);
+        } catch (err) {
+          console.log("친구 거절 에러", err);
+        }
       }
     }
   };
@@ -102,7 +127,7 @@ export default function UpdateButton() {
   return (
     <>
       {TypeText[userType].map((text) => (
-        <button key={text} className={styles.button} onClick={handleFriend}>
+        <button key={text} className={styles.button} onClick={() => handleFriend(text)}>
           <span className={styles.buttonText}>{text}</span>
         </button>
       ))}

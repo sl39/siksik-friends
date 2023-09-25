@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import { serverAxios } from "@/services/api";
-import styles from "./Profile.module.css";
+import styles from "./Profile.module.scss";
 
 export default function ProfileData() {
   const params = useParams();
