@@ -17,7 +17,7 @@ export const userAtom = atom<User>({
 export const profileAtom = atom<User>({
   user_id: 0,
   email: "profileEmail",
-  nickname: "profile",
+  nickname: "profileTemp",
   profile: "/images/character/rabbit.png",
   odds: "승률",
   rank: 999,
