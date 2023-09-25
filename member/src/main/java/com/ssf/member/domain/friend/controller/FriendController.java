@@ -9,7 +9,9 @@ import com.ssf.member.domain.user.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user/friend")
@@ -55,5 +57,12 @@ public class FriendController {
     public String deleteFriend(@RequestHeader(ACCESS_HEADER) String accessHeader, @PathVariable Long fromUserId) {
         friendRemoveService.removeFriend(accessHeader, fromUserId);
         return "친구 삭제/거절/요청 취소 완료";
+    }
+
+    @GetMapping("/{targetUserId}")
+    public Map<String, Integer> statusFriend(@RequestHeader(ACCESS_HEADER) String accessHeader, @PathVariable Long targetUserId) {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("status", friendFindService.isFriends(accessHeader, targetUserId));
+        return map;
     }
 }
