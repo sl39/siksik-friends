@@ -24,10 +24,6 @@ export default function LoginForm() {
       const response = await serverAxios.post("/auth/sign-in", formData);
       // 토큰 저장
       await sessionStorage.setItem("accessToken", response.headers.authorization);
-      // await localStorage.setItem("refreshToken", response.headers["authorization-refresh"]);
-
-      const res = await serverAxios.get("/user/my-info");
-      console.log(res);
       router.push("/home");
     } catch (error) {
       console.log("로그인 에러", error);
