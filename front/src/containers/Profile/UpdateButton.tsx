@@ -15,11 +15,12 @@ export default function UpdateButton() {
   const router = useRouter();
 
   const params = useParams();
-  console.log(typeof parseInt(params.params[1], 10));
-  const userId = parseInt(params.params[1], 10);
-
+  let userId = 0;
+  if (typeof params.id === "string") {
+    userId = parseInt(params.id, 10);
+    console.log(typeof userId);
+  }
   const myData = useAtom(userAtom)[0];
-  console.log(myData);
   const myId = myData.user_id;
 
   /** * 친구인지, 아닌지 상태 확인하기
@@ -49,8 +50,9 @@ export default function UpdateButton() {
         console.log(response);
         console.log(typeof response.data?.status);
         setUserType(response.data.status);
+        console.log(myData);
       } catch (err) {
-        console.log("친구 확인 에러", err);
+        console.log("친구 요청 에러", err);
       }
     };
     isFriend();
@@ -70,7 +72,7 @@ export default function UpdateButton() {
 
   /** 정보 수정 페이지로 이동 */
   const handleUpdate = () => {
-    router.push(`/home/profile/update`);
+    router.push(`/home/profile/${params.nickname}/${params.id}/update`);
   };
   /** 로그아웃 */
   const handleLogout = async () => {
