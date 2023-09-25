@@ -139,3 +139,21 @@
 //   width: 60vw;
 //   height: 70vh;
 // }
+
+// 정보수정 폼
+.updateContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 3vh;
+  .title {
+    font-size: 4vh;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
