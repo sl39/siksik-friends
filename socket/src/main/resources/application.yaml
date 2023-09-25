@@ -1,6 +1,6 @@
-spring:
-  data:
-    mongodb:
-      host: localhost
-      port: 27017
-      database: problem
+#spring:
+#  data:
+#    mongodb:
+#      host: j9e101.p.ssafy.io
+#      port: 27017
+#      database: problem

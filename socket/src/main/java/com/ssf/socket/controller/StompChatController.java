@@ -17,8 +17,19 @@ public class StompChatController {
 
     private final SimpMessagingTemplate messageTemplate; //특정 Broker로 메세지를 전달
 
+    @MessageMapping("/room/chat")
+    public void sendMsgToChannel(
+            @DestinationVariable int roomId,
+            @Payload ChatMessageDTO body) {
+
+
+        log.info("채널 메시지");
+        log.info(body.toString());
+
+        messageTemplate.convertAndSend("/sub/room/chat", body);
+    }
     @MessageMapping("/room/chat/{roomId}")
-    public void sendMsg(
+    public void sendMsgToRoom(
             @DestinationVariable int roomId,
             @Payload ChatMessageDTO body) {
 
