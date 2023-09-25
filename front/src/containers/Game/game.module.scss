@@ -12,23 +12,23 @@ $roundBtn: #85c9ed;
   height: 100%;
   margin: 0;
 }
-.GameRoom{
+.GameRoom {
   border-radius: 10px;
   height: 65%;
   padding: 15px;
   box-sizing: border-box;
-  background: rgba( 255, 255, 255, 0.5 );
-  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-  backdrop-filter: blur( 4px );
-  -webkit-backdrop-filter: blur( 4px );
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 .chatBox {
   margin-top: 1%;
   height: 32%;
-  background: rgba( 255, 255, 255, 0.5 );
-  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-  backdrop-filter: blur( 4px );
-  -webkit-backdrop-filter: blur( 4px );
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   border-radius: 15px;
   display: flex;
   flex-direction: column;
@@ -41,7 +41,7 @@ $roundBtn: #85c9ed;
   position: fixed;
   height: 55%;
   width: 30%;
-  padding-right: 5px; 
+  padding-right: 5px;
   display: flex;
   box-sizing: border-box;
 }
@@ -56,14 +56,12 @@ $roundBtn: #85c9ed;
   border-radius: 0 0 125px 3px / 3px 85px 5px 55px;
   box-shadow: 4px 4px 0 0 rgba(255, 165, 0, 0.8);
   box-sizing: border-box;
-  background: rgba( 255, 255, 255, 0.8 );
-  backdrop-filter: blur( 4px );
-  -webkit-backdrop-filter: blur( 4px );
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
-
 .GameRoom {
-
   .rooms {
     height: 35vh;
     display: flex;
@@ -149,7 +147,7 @@ $roundBtn: #85c9ed;
 
   outline: none;
   border: none;
-  cursor: pointer;
+  // cursor: pointer;
   color: white;
   text-align: center;
   font-weight: 600;
@@ -235,7 +233,6 @@ $roundBtn: #85c9ed;
   }
 }
 
-
 // 방 생성 모달
 .modalContainer {
   width: 1000px;
@@ -244,7 +241,6 @@ $roundBtn: #85c9ed;
 
 // 채팅
 .chatBox {
-
   .chatLog {
     height: 72%;
     width: 98%;
@@ -372,10 +368,10 @@ $roundBtn: #85c9ed;
   padding: 2px 4px;
   margin: 4px 2px;
 
-  background: rgba( 255, 255, 255, 0.5 );
-  box-shadow: 0 2px 5px 0 rgba( 31, 38, 135, 0.37 );
-  backdrop-filter: blur( 8px );
-  -webkit-backdrop-filter: blur( 8px );
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 2px 5px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   .profile {
     position: relative !important;
     width: 18% !important;
@@ -394,8 +390,6 @@ $roundBtn: #85c9ed;
     margin: 5px 0;
   }
 }
-
-
 
 .selected {
   background-color: #007bff; /* 선택된 경우의 배경색 (파란색) */

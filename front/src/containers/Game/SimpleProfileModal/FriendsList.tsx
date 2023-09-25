@@ -1,7 +1,9 @@
 "use client";
 
 export default function FriendsList() {
-    return(<div>
-        친구 리스트 목록
-    </div>)
+  return (
+    <div>
+      <div>친구찬구</div>
+    </div>
+  );
 }
