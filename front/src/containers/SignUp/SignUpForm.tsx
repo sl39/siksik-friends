@@ -46,7 +46,7 @@ export default function SignUpForm() {
       const response = await serverAxios.post("/auth/sign-in", formData);
       // 토큰 저장
       await sessionStorage.setItem("accessToken", response.headers.authorization);
-      await localStorage.setItem("refreshToken", response.headers["authorization-refresh"]);
+      // await localStorage.setItem("refreshToken", response.headers["authorization-refresh"]);
 
       // const res = await serverAxios.get("user/my-info");
       // console.log(res);
