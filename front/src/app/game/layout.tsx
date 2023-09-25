@@ -1,3 +1,6 @@
+"use client";
+
+import { Provider } from "jotai";
 import Exit from "./quit";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -7,7 +10,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="book-page1 " />
       <div className="book-page2 " />
       <div className="book-page ">
-        <div className="main-container z-5">{children}</div>
+        <Provider>
+          <div className="main-container z-5">{children}</div>
+        </Provider>
       </div>
     </div>
   );
