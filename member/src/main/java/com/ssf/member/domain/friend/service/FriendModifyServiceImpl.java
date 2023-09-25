@@ -26,7 +26,7 @@ public class FriendModifyServiceImpl implements FriendModifyService {
 
     @Override
     public void acceptFriend(String accessHeader, Long toUserId) {
-        Friend friend = friendRepository.findByToUserIdAndUser_Id(userRepository
+        Friend friend = friendRepository.findByToUserIdAndUser_Id(toUserId, userRepository
                 .findById(Long
                         .parseLong(JWT
                                 .require(Algorithm.HMAC512(secretKey))
@@ -36,8 +36,10 @@ public class FriendModifyServiceImpl implements FriendModifyService {
                                 .getClaim(ID_CLAIM)
                                 .toString()))
                 .orElseThrow()
-                .getId(), toUserId)
+                .getId())
                 .orElseThrow();
+
+        System.out.println(friend.getToUserId());
 
         friend.changeActivated();
     }
