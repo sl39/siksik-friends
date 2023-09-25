@@ -1,14 +1,14 @@
-package com.ssf.socket.service;
-
-import com.ssf.socket.repository.ProblemRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.parsing.Problem;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
-@Service
-public class ProblemSaveService {
+//package com.ssf.socket.service;
+//
+//import com.ssf.socket.repository.ProblemRepository;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.parsing.Problem;
+//import org.springframework.stereotype.Service;
+//
+//import java.util.List;
+//
+//@Service
+//public class ProblemSaveService {
 //    private final ProblemRepository problemRepository;
 //
 //    @Autowired
@@ -23,4 +23,4 @@ public class ProblemSaveService {
 //    public List<Problem> getAllProblem() {
 //        return ProblemRepository.;
 //    }
-}
+//}

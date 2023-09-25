@@ -1,4 +1,4 @@
-package com.ssf.socket.repository;
-
-public class RoomRepository {
-}
+//package com.ssf.socket.repository;
+//
+//public class RoomRepository {
+//}
