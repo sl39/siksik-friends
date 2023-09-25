@@ -21,7 +21,7 @@ export default function AllRank() {
       setRanks([
         {
           user_id: 40,
-          nickname: "9yksFcrYrv",
+          nickname: "더미",
           profile: "/default.png",
           odds: "21.4%",
           rank: 0,
