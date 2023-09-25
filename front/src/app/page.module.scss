@@ -5,7 +5,7 @@
   left: 0;
   position: absolute;
   box-sizing: border-box;
-  background-image: url("../../public/images/background2.png");
+  background-image: url("/images/background2.png");
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -88,10 +88,8 @@ $orange-shadow: #ffdab9;
 .start {
   position: absolute;
   top: 80vh;
-
   width: 300px;
   height: 4vh;
-
   display: inline-block;
   cursor: pointer;
   outline: none;
@@ -163,24 +161,23 @@ $orange-shadow: #ffdab9;
 // Sign-up 페이지
 .container {
   position: relative;
-  height: 100vh;
-  min-height: 100vh;
+  width: 100%;
+  height: 98%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
 }
-
 // 상단 체크박스
 .label {
-  padding-top: 10vh;
+  padding-top: 4%;
   width: 100%;
+  font-size: 4vh;
+  font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  font-size: 2rem;
-  font-weight: bold;
 }
 .checkbox:checked,
 .checkbox:not(:checked) {
@@ -198,7 +195,8 @@ $orange-shadow: #ffdab9;
   padding: 0;
   margin: 10px 15px;
   cursor: pointer;
-  background-color: #ffeba7;
+  background-color: #ffe0d0;
+  border: 1px solid #ffdab9;
 }
 .checkbox:checked + label:before,
 .checkbox:not(:checked) + label:before {
@@ -207,7 +205,7 @@ $orange-shadow: #ffdab9;
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  color: #ffeba7;
+  color: #ffe0d0;
   background-color: $dark-orange;
   content: "";
   z-index: 20;
@@ -222,26 +220,22 @@ $orange-shadow: #ffdab9;
   transform: translateX(44px) rotate(-270deg);
 }
 
+// 카드 뒤집기
 .cardWrap {
   position: relative;
-  width: 40vw;
-  height: 80vh;
-  min-height: 400px;
-  min-width: 600px;
+  width: 100%;
+  height: 80%;
 
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
-  perspective: 800px;
-  margin: 0;
-  margin-top: 30px;
+  perspective: 100vh;
+  margin: 10px 0 0 0;
 }
 .cardWrapper {
-  margin: 0;
-  width: 100%;
+  margin: 0 auto;
+  width: 40%;
   height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
+  min-width: 500px;
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   transition: all 600ms ease-out;
@@ -251,6 +245,7 @@ $orange-shadow: #ffdab9;
   width: 100%;
   height: 100%;
   background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.2) -2px -2px 10px;
   background-position: bottom center;
   background-repeat: no-repeat;
   background-size: 300%;
@@ -283,7 +278,6 @@ $orange-shadow: #ffdab9;
 }
 
 // 하단 뒤로가기 버튼
-$orange: #ffdab9;
 .button {
   width: 300px;
   height: 50px;
@@ -300,7 +294,8 @@ $orange: #ffdab9;
 .btnAct,
 .btnAct:link,
 .btnAct:visited {
-  background-color: $orange;
+  background-color: rgba(255, 240, 224, 0.8);
+  border: solid #ffdab9;
   &:hover,
   &:focus {
     transition-timing-function: cubic-bezier(0.6, 4, 0.3, 0.8);
