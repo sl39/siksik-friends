@@ -3,6 +3,7 @@ package com.ssf.member.domain.friend.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.ssf.member.domain.friend.Friend;
+import com.ssf.member.domain.friend.dto.FriendResponseDto;
 import com.ssf.member.domain.friend.repository.FriendRepository;
 import com.ssf.member.domain.user.User;
 import com.ssf.member.domain.user.dto.UserDto;
@@ -30,7 +31,7 @@ public class FriendFindServiceImpl implements FriendFindService {
     private String secretKey;
 
     @Override
-    public List<UserDto.Response> findFriend(String accessHeader) {
+    public FriendResponseDto findFriend(String accessHeader) {
         List<Friend> friends = friendRepository
                         .findAllByToUserIdAndActivated(userRepository.findById(Long
                                 .parseLong(JWT
@@ -51,15 +52,56 @@ public class FriendFindServiceImpl implements FriendFindService {
                     .builder()
                     .user_id(user.getId())
                     .nickname(user.getNickname())
+                    .level(user.getLevel())
                     .profile(user.getProfile())
+                    .activated(user.getActivated())
                     .build());
         }
 
-        return requestList;
+        return FriendResponseDto.builder()
+                .size((long) requestList.size())
+                .friendList(requestList)
+                .build();
     }
 
     @Override
-    public List<UserDto.Response> findFriendResponse(String accessHeader) {
+    public FriendResponseDto findFriendResponse(String accessHeader) {
+        List<Friend> friends = friendRepository
+                .findAllByUser_IdAndActivated(userRepository.findById(Long
+                                .parseLong(JWT
+                                        .require(Algorithm.HMAC512(secretKey))
+                                        .build()
+                                        .verify(accessHeader
+                                                .replace(BEARER, ""))
+                                        .getClaim(ID_CLAIM)
+                                        .toString()))
+                        .orElseThrow().getId(), false);
+
+        System.out.println(friends.size());
+
+        List<UserDto.Response> requestList = new ArrayList<>();
+
+        for (Friend friend : friends) {
+            User user = userRepository.findById(friend.getToUserId()).orElseThrow();
+
+            requestList.add(UserDto.Response
+                    .builder()
+                    .user_id(user.getId())
+                    .nickname(user.getNickname())
+                    .level(user.getLevel())
+                    .profile(user.getProfile())
+                    .activated(user.getActivated())
+                    .build());
+        }
+
+        return FriendResponseDto.builder()
+                .size((long) requestList.size())
+                .friendList(requestList)
+                .build();
+    }
+
+    @Override
+    public FriendResponseDto findFriendRequest(String accessHeader) {
         List<Friend> friends = friendRepository
                 .findAllByToUserIdAndActivated(userRepository.findById(Long
                                 .parseLong(JWT
@@ -74,45 +116,21 @@ public class FriendFindServiceImpl implements FriendFindService {
         List<UserDto.Response> requestList = new ArrayList<>();
 
         for (Friend friend : friends) {
-            User user = userRepository.findById(friend.getToUserId()).orElseThrow();
+            User user = userRepository.findById(friend.getUser().getId()).orElseThrow();
 
             requestList.add(UserDto.Response
                     .builder()
                     .user_id(user.getId())
                     .nickname(user.getNickname())
+                    .level(user.getLevel())
                     .profile(user.getProfile())
+                    .activated(user.getActivated())
                     .build());
         }
 
-        return requestList;
-    }
-
-    @Override
-    public List<UserDto.Response> findFriendRequest(String accessHeader) {
-        List<Friend> friends = friendRepository
-                .findAllByUser_IdAndActivated(userRepository.findById(Long
-                                .parseLong(JWT
-                                        .require(Algorithm.HMAC512(secretKey))
-                                        .build()
-                                        .verify(accessHeader
-                                                .replace(BEARER, ""))
-                                        .getClaim(ID_CLAIM)
-                                        .toString()))
-                        .orElseThrow().getId(), false);
-
-        List<UserDto.Response> requestList = new ArrayList<>();
-
-        for (Friend friend : friends) {
-            User user = userRepository.findById(friend.getToUserId()).orElseThrow();
-
-            requestList.add(UserDto.Response
-                    .builder()
-                    .user_id(user.getId())
-                    .nickname(user.getNickname())
-                    .profile(user.getProfile())
-                    .build());
-        }
-
-        return requestList;
+        return FriendResponseDto.builder()
+                .size((long) requestList.size())
+                .friendList(requestList)
+                .build();
     }
 }
