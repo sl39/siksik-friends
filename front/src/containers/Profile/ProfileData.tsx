@@ -2,18 +2,14 @@
 
 import { useEffect } from "react";
 import { useParams } from "next/navigation";
-// import { useAtom } from "jotai";
 import { serverAxios } from "@/services/api";
-// import { userAtom } from "@/store/userAtom";
 import styles from "./Profile.module.css";
 
 export default function ProfileData() {
   const params = useParams();
   const userNickname = params[0];
 
-  // const [userData, setUserData] = useAtom(userAtom);
-
-  // 내 프로필 데이터를 가져오는 함수
+  // 프로필 데이터를 가져오는 함수
   const FetchData = async () => {
     try {
       const response = await serverAxios(`/user/my-info`);

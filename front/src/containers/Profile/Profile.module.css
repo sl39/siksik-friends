@@ -1,30 +1,41 @@
 .container {
   display: flex;
   width: 100%;
+
+  border: solid black;
+  box-sizing: border-box;
 }
 .left {
-  width: 25vw;
-  height: 72vh;
-  margin: 10px;
+  width: 30%;
+  height: 100%;
+  margin: 0;
+  border: solid black;
+  box-sizing: border-box;
 }
-.leftProfile {
-  margin-top: 5vh;
-  width: 25vw;
-}
-
 .right {
   width: 70%;
-  height: 72vh;
-  margin: 15px 0;
+  height: 100%;
+  margin: 0;
+  border: solid black;
+  box-sizing: border-box;
+}
+.leftProfile {
+  position: relative;
+  margin-left: 10%;
+  width: 90%;
+  height: 70%;
 }
 .buttonContainer {
-  width: 25vw;
-  height: 10vh;
-  margin-top: 10vh;
+  width: 100%;
+  height: 20%;
+  margin-top: 5%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+  border: solid black;
+  box-sizing: border-box;
 }
 .button {
   border: 1px solid black;
