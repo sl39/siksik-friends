@@ -13,3 +13,15 @@ export const userAtom = atom<User>({
   score: 10,
   level: 1,
 });
+
+export const profileAtom = atom<User>({
+  user_id: 0,
+  email: "profileEmail",
+  nickname: "profile",
+  profile: "/images/character/rabbit.png",
+  odds: "승률",
+  rank: 999,
+  exp: 0,
+  score: 10,
+  level: 1,
+});

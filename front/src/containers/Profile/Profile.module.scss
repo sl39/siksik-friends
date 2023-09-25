@@ -1,23 +1,17 @@
 .container {
   display: flex;
   width: 100%;
-
-  border: solid black;
-  box-sizing: border-box;
+  height: 100%;
 }
 .left {
   width: 30%;
   height: 100%;
   margin: 0;
-  border: solid black;
-  box-sizing: border-box;
 }
 .right {
   width: 70%;
   height: 100%;
   margin: 0;
-  border: solid black;
-  box-sizing: border-box;
 }
 .leftProfile {
   position: relative;
@@ -54,6 +48,10 @@
 .button:visited {
   background-color: #ffdab9;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+}
+.buttonText {
+  font-size: 3vh;
+  font-weight: bold;
 }
 @mixin transform($properties) {
   -webkit-transform: $properties;
@@ -105,32 +103,39 @@
     @include transform(scale(0.95, 1.05));
   }
 }
-
-.buttonText {
-  font-size: 3vh;
-  font-weight: bold;
-}
-
 .profileData {
-  border: 1px solid black;
   border-radius: 10px;
-  width: 60vw;
-  height: 70vh;
-  margin-left: 2vw;
-}
+  width: 90%;
+  height: 90%;
+  margin: 0 auto;
+  margin-top: 3%;
 
-.profileNav {
-  display: flex;
-  flex-direction: row;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 22px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  position: relative;
 }
-.profileNav div {
-  background-color: #fff;
+.profileContainer {
+  position: relative;
+  width: 90%;
+  height: 90%;
+  margin: 0 auto;
+  top: 5%;
   border: 1px solid black;
 }
+// .profileNav {
+//   display: flex;
+//   flex-direction: row;
+// }
+// .profileNav div {
+//   background-color: #fff;
+//   border: 1px solid black;
+// }
 
-.updateProfile {
-  border: 1px solid black;
-  margin-left: 5vw;
-  width: 60vw;
-  height: 70vh;
-}
+// .updateProfile {
+//   border: 1px solid black;
+//   margin-left: 5vw;
+//   width: 60vw;
+//   height: 70vh;
+// }
