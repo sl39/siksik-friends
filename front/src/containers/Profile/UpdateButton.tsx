@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { serverAxios } from "@/services/api";
@@ -14,11 +14,12 @@ interface TypeTextType {
 export default function UpdateButton() {
   const router = useRouter();
 
-  const pathname = usePathname();
-  // const userName = pathname.split("/")[3];
-  const userId = parseInt(pathname.split("/")[4], 10);
+  const params = useParams();
+  console.log(typeof parseInt(params.params[1], 10));
+  const userId = parseInt(params.params[1], 10);
 
   const myData = useAtom(userAtom)[0];
+  console.log(myData);
   const myId = myData.user_id;
 
   /** * 친구인지, 아닌지 상태 확인하기
@@ -31,7 +32,7 @@ export default function UpdateButton() {
    * 4. 친구다
    * (친구 삭제 버튼(4) -> 친구 요청(3))
    */
-  const [userType, setUserType] = useState(2);
+  const [userType, setUserType] = useState(0);
 
   const TypeText: TypeTextType = {
     1: ["친구 요청 취소"],
@@ -57,10 +58,13 @@ export default function UpdateButton() {
   }, []);
 
   const handleFriend = async () => {
-    try {
-      await serverAxios(`/user/friend/${userId}`);
-    } catch (err) {
-      console.log("친구 요청 에러", err);
+    // 친구 아님 -> 친구 요청
+    if (userType === 3) {
+      try {
+        await serverAxios.post(`/user/friend/${userId}`);
+      } catch (err) {
+        console.log("친구 요청 에러", err);
+      }
     }
   };
 
