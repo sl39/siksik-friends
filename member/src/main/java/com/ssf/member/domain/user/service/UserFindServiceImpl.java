@@ -73,13 +73,18 @@ public class UserFindServiceImpl implements UserFindService {
 
     @Override
     public Long findRank(Long id) {
-        Double ranking1 = redisTemplate.opsForZSet().score(KEY, id);
+        Double ranking1 = redisTemplate.opsForZSet().score(KEY, String.valueOf(id));
+
+        System.out.println("ranking1 : " + ranking1);
+
         Set<String> ranking2 = redisTemplate.opsForZSet().reverseRangeByScore(KEY, ranking1, ranking1, 0, 1);
         Long ranking = 0L;
 
         for (String s : ranking2) {
             ranking = redisTemplate.opsForZSet().reverseRank(KEY, s);
         }
+
+        System.out.println(ranking);
 
         return id;
     }
