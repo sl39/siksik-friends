@@ -1,5 +1,6 @@
 package com.ssf.member.domain.friend.controller;
 
+import com.ssf.member.domain.friend.dto.FriendResponseDto;
 import com.ssf.member.domain.friend.service.FriendCreateService;
 import com.ssf.member.domain.friend.service.FriendFindService;
 import com.ssf.member.domain.friend.service.FriendModifyService;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/user/friend")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class FriendController {
 
     private final FriendCreateService friendCreateService;
@@ -23,17 +25,17 @@ public class FriendController {
     private static final String ACCESS_HEADER = "Authorization";
 
     @GetMapping("/list")
-    public List<UserDto.Response> findFriend(@RequestHeader(ACCESS_HEADER) String accessHeader) {
+    public FriendResponseDto findFriend(@RequestHeader(ACCESS_HEADER) String accessHeader) {
         return friendFindService.findFriend(accessHeader);
     }
 
     @GetMapping("/response")
-    public List<UserDto.Response> findFriendResponse(@RequestHeader(ACCESS_HEADER) String accessHeader) {
+    public FriendResponseDto findFriendResponse(@RequestHeader(ACCESS_HEADER) String accessHeader) {
         return friendFindService.findFriendResponse(accessHeader);
     }
 
     @GetMapping("/request")
-    public List<UserDto.Response> findFriendRequest(@RequestHeader(ACCESS_HEADER) String accessHeader) {
+    public FriendResponseDto findFriendRequest(@RequestHeader(ACCESS_HEADER) String accessHeader) {
         return friendFindService.findFriendRequest(accessHeader);
     }
 

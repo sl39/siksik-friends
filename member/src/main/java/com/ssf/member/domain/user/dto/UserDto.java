@@ -40,6 +40,7 @@ public class UserDto {
     public static class Response {
 
         private Long user_id;
+        private Long size;
 
         private String email;
         private String nickname;
