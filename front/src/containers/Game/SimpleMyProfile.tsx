@@ -1,6 +1,7 @@
 "use client";
 
 import { useAtom } from "jotai";
+import { useState } from "react";
 import UserItem from "@/containers/Game/UserItem";
 import { userAtom } from "@/store/userAtom";
 import styles from "./SimpleMyProfile.module.css";
