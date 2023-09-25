@@ -1,10 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "next/navigation";
+import { useAtom } from "jotai";
 import { serverAxios } from "@/services/api";
-import type { User } from "@/types";
+import { profileAtom } from "@/store/userAtom";
 import styles from "./MyProfileCard.module.css";
 
 export default function Profile() {
@@ -13,8 +14,7 @@ export default function Profile() {
   if (typeof params.id === "string") {
     userId = parseInt(params.id, 10);
   }
-  const [user, setUser] = useState<User>({ nickname: "Nickname" });
-
+  const [user, setUser] = useAtom(profileAtom);
   useEffect(() => {
     const fetchData = async () => {
       try {
