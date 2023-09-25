@@ -3,9 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-// import { useAtom } from "jotai";
 import { serverAxios } from "@/services/api";
-// import { userAtom } from "@/store/userAtom";
 import styles from "./form.module.scss";
 
 export default function SignUpForm() {
