@@ -37,7 +37,7 @@ public class UserDto {
     @Builder
     @AllArgsConstructor
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public static class Response {
+    public static class Response implements Comparable<Response> {
 
         private Long user_id;
         private Long size;
@@ -52,5 +52,18 @@ public class UserDto {
         private Long exp;
         private Integer score;
         private Integer level;
+
+        @Override
+        public int compareTo(Response response) {
+            if (this.activated == response.activated) {
+                return this.nickname.toLowerCase().compareTo(response.nickname.toLowerCase());
+            }
+
+            if (this.activated) {
+                return 1;
+            }
+
+            return 0;
+        }
     }
 }
