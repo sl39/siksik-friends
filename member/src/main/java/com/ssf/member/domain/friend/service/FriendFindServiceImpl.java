@@ -140,4 +140,34 @@ public class FriendFindServiceImpl implements FriendFindService {
                 .friendList(requestList)
                 .build();
     }
+
+    @Override
+    public int isFriends(String accessHeader, Long targetUserId) {
+        Long userId = userRepository.findById(Long
+                        .parseLong(JWT
+                                .require(Algorithm.HMAC512(secretKey))
+                                .build()
+                                .verify(accessHeader
+                                        .replace(BEARER, ""))
+                                .getClaim(ID_CLAIM)
+                                .toString()))
+                .orElseThrow().getId();
+
+        if (friendRepository.existsByUser_IdAndToUserIdAndActivated(userId, targetUserId, true)
+            && friendRepository.existsByUser_IdAndToUserIdAndActivated(targetUserId, userId, false)) {
+            return 1;
+        }
+
+        if (friendRepository.existsByUser_IdAndToUserIdAndActivated(userId, targetUserId, false)
+                && friendRepository.existsByUser_IdAndToUserIdAndActivated(targetUserId, userId, true)) {
+            return 2;
+        }
+
+        if (friendRepository.existsByUser_IdAndToUserIdAndActivated(userId, targetUserId, true)
+                && friendRepository.existsByUser_IdAndToUserIdAndActivated(targetUserId, userId, true)) {
+            return 4;
+        }
+
+        return 3;
+    }
 }
