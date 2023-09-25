@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -46,7 +47,7 @@ public class FriendFindServiceImpl implements FriendFindService {
         List<UserDto.Response> requestList = new ArrayList<>();
 
         for (Friend friend : friends) {
-            User user = userRepository.findById(friend.getToUserId()).orElseThrow();
+            User user = userRepository.findById(friend.getUser().getId()).orElseThrow();
 
             requestList.add(UserDto.Response
                     .builder()
@@ -57,6 +58,8 @@ public class FriendFindServiceImpl implements FriendFindService {
                     .activated(user.getActivated())
                     .build());
         }
+
+        Collections.sort(requestList);
 
         return FriendResponseDto.builder()
                 .size((long) requestList.size())

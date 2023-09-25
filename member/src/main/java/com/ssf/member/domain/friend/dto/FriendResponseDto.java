@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -16,4 +17,8 @@ public class FriendResponseDto {
 
     private Long size;
     private List<UserDto.Response> friendList;
+
+    public void sortList() {
+        Collections.sort(this.friendList);
+    }
 }
