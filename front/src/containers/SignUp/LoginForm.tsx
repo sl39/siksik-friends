@@ -26,7 +26,7 @@ export default function LoginForm() {
       await sessionStorage.setItem("accessToken", response.headers.authorization);
       // await localStorage.setItem("refreshToken", response.headers["authorization-refresh"]);
 
-      const res = await serverAxios.get("user/my-info");
+      const res = await serverAxios.get("/user/my-info");
       console.log(res);
       router.push("/home");
     } catch (error) {
