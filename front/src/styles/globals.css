@@ -20,6 +20,7 @@ a {
 input {
   font-family: var(--font-poor), sans-serif;
   font-size: 1.2rem;
+  padding: 0 5px;
 }
 /* home layout */
 .body-container {

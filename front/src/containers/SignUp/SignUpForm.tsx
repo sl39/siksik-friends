@@ -41,15 +41,10 @@ export default function SignUpForm() {
 
     try {
       await serverAxios.post("/auth/sign-up", formData);
-
       // 로그인 시키고 홈으로
       const response = await serverAxios.post("/auth/sign-in", formData);
       // 토큰 저장
       await sessionStorage.setItem("accessToken", response.headers.authorization);
-      // await localStorage.setItem("refreshToken", response.headers["authorization-refresh"]);
-
-      // const res = await serverAxios.get("/user/my-info");
-      // console.log(res);
       router.push("/home");
     } catch (error) {
       console.log("회원가입 에러", error);
