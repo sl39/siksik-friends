@@ -49,7 +49,7 @@ public class UserController {
     }
 
     @DeleteMapping("/")
-    public String removeUser(@RequestHeader String accessHeader) {
+    public String removeUser(@RequestHeader(ACCESS_HEADER) String accessHeader) {
         userRemoveService.removeUser(accessHeader);
         return "회원 탈퇴 완료";
     }
