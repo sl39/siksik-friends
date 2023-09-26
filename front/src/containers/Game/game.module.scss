@@ -1,4 +1,6 @@
-$roundBtn: #85c9ed;
+$blue: #87ceeb;
+$softBlue: #cce5ff;
+$hardBlue: #6495ed;
 
 .left {
   width: 70%;
@@ -19,13 +21,13 @@ $roundBtn: #85c9ed;
   box-sizing: border-box;
   background: rgba(255, 255, 255, 0.5);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
 }
 .chatBox {
   margin-top: 1%;
   height: 32%;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba($color: $softBlue, $alpha: 0.6);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
@@ -38,10 +40,13 @@ $roundBtn: #85c9ed;
   box-sizing: border-box;
 }
 .waitingBox {
+  border: solid black;
+
   position: fixed;
-  height: 55%;
+  height: 54%;
   width: 30%;
   padding-right: 5px;
+  padding-bottom: 1%;
   display: flex;
   box-sizing: border-box;
 }
@@ -49,7 +54,7 @@ $roundBtn: #85c9ed;
   width: 100%;
   height: 25%;
   position: absolute;
-  bottom: 2%;
+  bottom: 2vh;
   right: 10px;
 
   border: 1.5px solid #37353f;
@@ -61,51 +66,72 @@ $roundBtn: #85c9ed;
   -webkit-backdrop-filter: blur(4px);
 }
 
-.GameRoom {
-  .rooms {
-    height: 35vh;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    justify-content: space-around;
-    overflow: auto;
-  }
+// 방 목록
+.rooms {
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.1);
+
+  border-radius: 10px;
+  padding: 3px 0;
+  height: 62%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: space-around;
+  overflow: auto;
+
   /* 스크롤 CSS */
-  .rooms::-webkit-scrollbar {
+  &::-webkit-scrollbar {
     width: 10px;
     height: inherit;
   }
-  .rooms::-webkit-scrollbar-thumb {
+  &::-webkit-scrollbar-thumb {
     height: 30%; /* 스크롤바의 길이 */
-    background: $roundBtn; /* 스크롤바의 색상 */
+    background: $blue; /* 스크롤바의 색상 */
     border-radius: 10px;
   }
-  .rooms::-webkit-scrollbar-track {
+  &::-webkit-scrollbar-track {
     /*스크롤바 뒷 배경 색상*/
     background: grey;
     border-radius: 10px;
   }
+}
 
-  .roomItem {
-    border: 1px solid black;
-    border-radius: 10px;
-    width: 48%;
-    height: 100px;
-    padding: 5px;
-    margin: 2px 2px 10px;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
+// 방 하나
+.roomItem {
+  box-sizing: border-box;
+
+  border-radius: 10px;
+  width: 48%;
+  height: 100px;
+  padding: 5px;
+  margin: 2px 2px 10px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+
+  backdrop-filter: blur(8px);
+  background-color: rgba($color: #fff, $alpha: 1);
+  border-radius: 20px;
+  box-shadow:
+    0px 10px 18px -5px rgba(204, 229, 255, 0.8),
+    inset -10px -10px 7px 0px rgba(204, 229, 255, 0.4),
+    inset 15px 15px 7px 0px rgb(255, 255, 255);
+  transition: all 0.3s ease;
+  &:hover {
+    box-shadow:
+      0px 15px 30px -2px rgba(204, 229, 255, 0.8),
+      inset 10px 10px 7px 0px rgba(204, 229, 255, 0.4),
+      inset -15px -15px 7px 0px rgb(255, 255, 255);
   }
   .roomId {
     font-size: 1.6rem;
     width: 50px;
-    height: 50%;
     text-align: center;
   }
   .roomData {
-    border-left: 1px solid black;
+    border-left: 1px solid #647896;
     height: 90%;
     width: 50%;
     display: flex;
@@ -123,7 +149,7 @@ $roundBtn: #85c9ed;
     padding: 3px;
   }
   .waiting {
-    color: green;
+    color: $hardBlue;
   }
   .playing {
     color: grey;
@@ -134,8 +160,7 @@ $roundBtn: #85c9ed;
   }
 }
 
-// 게임 목록
-// 게임 버튼임
+// 게임 접속 버튼
 @mixin createButton($width, $height, $radius, $gradientFirst, $gradientThird, $shadowColor) {
   width: $width;
   height: $height;
@@ -144,34 +169,33 @@ $roundBtn: #85c9ed;
   box-shadow:
     0 10px 1px 0px $shadowColor,
     inset 0px -8px 16px 0px $shadowColor;
-
   outline: none;
   border: none;
-  // cursor: pointer;
   color: white;
   text-align: center;
   font-weight: 600;
+  min-width: 160px;
 }
-
 .roomBtn {
   display: flex;
-  height: 10vh;
+  height: 25%;
+  min-height: 40px;
+
   margin-bottom: 10px;
   justify-content: space-between;
 }
 .boxButton {
   margin: 0 5px 5px;
   font-size: 2rem;
-
   transition: all 0.3s ease-in-out;
   &:nth-child(1) {
-    @include createButton(200px, 8vh, 10px, #feb692, #ea5455, rgba(238, 103, 97, 0.5));
+    @include createButton(180px, 80%, 10px, #ff9a88, #ff7b6b, rgba(255, 123, 107, 0.5));
   }
   &:nth-child(2) {
-    @include createButton(200px, 8vh, 10px, #abdcff, #0396ff, rgba(30, 161, 255, 0.5));
+    @include createButton(180px, 80%, 10px, #90caff, #6ba8ff, rgba(107, 168, 255, 0.5));
   }
   &:nth-child(3) {
-    @include createButton(200px, 8vh, 10px, #81fbb8, #28c76f, rgba(60, 211, 128, 0.5));
+    @include createButton(180px, 80%, 10px, #81fbb8, #28c76f, rgba(60, 211, 128, 0.5));
   }
   &:hover {
     transform: translatey(5px);
@@ -181,62 +205,56 @@ $roundBtn: #85c9ed;
     opacity: 0.5;
   }
 }
+
+// 게임 방 버튼
 .roomActionBtn {
   height: 10%;
   margin-bottom: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-.roundButton {
-  border-radius: 50px;
-  height: 4vh;
-  width: 150px;
-  text-align: center;
-  margin: 0 5px 10px;
-  padding: 5px;
-  font-size: 1.6rem;
-  transition: all 0.3s ease-in-out;
-  border: 2px solid $roundBtn;
-  background-color: #fff;
-  border-radius: 150px;
-  &:hover {
-    top: -1px;
-  }
-  &:active,
-  &:focus {
-    top: 1px;
-    background-color: $roundBtn;
-  }
-}
-.activeRoom {
-  background-color: $roundBtn;
-}
-.reload {
-  width: 110px;
-  border-radius: 50px;
-  height: 4vh;
-  text-align: center;
-  margin: 0 5px 10px;
-  padding: 5px;
-  font-size: 1.6rem;
-  transition: all 0.3s ease-in-out;
-  border: 2px solid $roundBtn;
-  background-color: #fff;
-  border-radius: 110px;
-  &:hover {
-    top: -1px;
-  }
-  &:active {
-    top: 1px;
-    background-color: $roundBtn;
-  }
-}
+  .roundButton {
+    border-radius: 50px;
+    height: 5%;
+    width: 150px;
+    text-align: center;
+    margin: 0 5px 10px;
+    padding: 5px;
+    font-size: 1.6rem;
+    transition: all 0.3s ease-in-out;
+    border: 2px solid $softBlue;
+    background-color: #fff;
+    border-radius: 150px;
 
-// 방 생성 모달
-.modalContainer {
-  width: 1000px;
-  height: 500px;
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: $softBlue;
+    }
+  }
+  .activeRoom {
+    background-color: $softBlue;
+  }
+  .reload {
+    width: 110px;
+    border-radius: 50px;
+    height: 4vh;
+    text-align: center;
+    margin: 0 5px 10px;
+    padding: 5px;
+    font-size: 1.6rem;
+    transition: all 0.3s ease-in-out;
+    border: 2px solid $softBlue;
+    background-color: #fff;
+    border-radius: 110px;
+    &:hover {
+      top: -1px;
+    }
+    &:active {
+      top: 1px;
+      background-color: $softBlue;
+    }
+  }
 }
 
 // 채팅
