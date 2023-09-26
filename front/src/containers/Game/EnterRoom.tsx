@@ -186,7 +186,7 @@ export default function EnterRoom({ rooms }: EnterRoomsProps) {
     <>
       <div>
         <button className={styles.boxButton} onClick={() => randomOnClick()}>
-          빠른시작
+          빠른 시작
         </button>
         <button className={styles.boxButton} onClick={() => setOpenSearchRoom(true)}>
           방 찾기
