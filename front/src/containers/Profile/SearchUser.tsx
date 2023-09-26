@@ -2,21 +2,21 @@
 
 import { BiSearchAlt } from "react-icons/bi";
 import { useState } from "react";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { serverAxios } from "@/services/api";
 import styles from "./Profile.module.scss";
 
 export default function SearchUser() {
   const [searchUser, setSearchUser] = useState("");
-  // const router = useRouter();
+  const router = useRouter();
   /** 닉네임으로 유저 검색 */
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
       const response = await serverAxios(`/user/?nickname=${searchUser}`);
-      console.log(response);
-      // router.push(`/home/profile/${searchUser}/`);
+      console.log(response.data);
+      router.push(`/home/profile/${searchUser}/${response.data.user_id}`);
     } catch (err) {
       console.log("닉네임 검색", err);
     }
