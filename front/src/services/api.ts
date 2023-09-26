@@ -58,5 +58,5 @@ serverAxios.interceptors.response.use(
 
 /** 워드클라우드 Axios */
 export const WordCloudAxios = axios.create({
-  baseURL: `${SERVER_ADDRESS}/api/user`,
+  baseURL: `${SERVER_ADDRESS}/api/user/word-cloud`,
 });
