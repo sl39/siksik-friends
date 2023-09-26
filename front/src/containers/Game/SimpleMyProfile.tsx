@@ -5,39 +5,17 @@ import { useState } from "react";
 import UserItem from "@/containers/Game/UserItem";
 import { userAtom } from "@/store/userAtom";
 import styles from "./SimpleMyProfile.module.css";
+// import styles from "./game.module.scss";
 import Modal from "@/components/gameModal";
-import SimpleProfileModal from "./SimpleProfileModal/SimpleProfileModal";
-import FriendsList from "./SimpleProfileModal/FriendsList";
-import FriendsRequest from "./SimpleProfileModal/FriendsRequest";
+import SimpleProfileModal from "./SimpleProfileModal";
+import FriendsListModal from "./FriendsListModal";
+import FriendsRequestModal from "./FriendsRequestModal";
 
 export default function SimpleProfile() {
   const [myData] = useAtom(userAtom);
   const [openProfile, setOpenProfile] = useState(false);
   const [openFriendsList, setOpenFriendsList] = useState(false);
   const [openFriendsRequest, setOpenFriendsRequest] = useState(false);
-
-  const onClickProfile = () => {
-    setOpenProfile(!openProfile);
-    setOpenFriendsList(false);
-    setOpenFriendsRequest(false);
-  };
-  const onClicFriendsList = () => {
-    setOpenProfile(false);
-    setOpenFriendsList(!openFriendsList);
-    setOpenFriendsRequest(false);
-  };
-
-  const onClickFriendsRequest = () => {
-    setOpenProfile(false);
-    setOpenFriendsList(false);
-    setOpenFriendsRequest(!openFriendsRequest);
-  };
-
-  // const modalClose = () =>{
-  //   setOpenProfile(false)
-  //   setOpenFriendsList(false)
-  //   setOpenFriendsRequest(false)
-  // }
 
   // const handleModalClick = (e: React.MouseEvent<HTMLDivElement>) =>{
   //   const target = e.target as HTMLDivElement
@@ -54,30 +32,25 @@ export default function SimpleProfile() {
         <UserItem data={myData} />
       </div>
       <div className={styles.myBtn}>
-        <button className={styles.button} onClick={() => onClickProfile()}>
+        <button className={styles.button} onClick={() => setOpenProfile(!openProfile)}>
           프로필
         </button>
-        <button className={styles.button} onClick={() => onClicFriendsList()}>
+        <button className={styles.button} onClick={() => setOpenFriendsList(!openFriendsList)}>
           친구목록
         </button>
-        <button className={styles.button} onClick={() => onClickFriendsRequest()}>
+        <button className={styles.button} onClick={() => setOpenFriendsRequest(!openFriendsRequest)}>
           친구요청
         </button>
 
-        {/* <div className="modal" onClick={handleModalClick}> */}
-
         <Modal isOpen={openProfile}>
-          <div>
-            <SimpleProfileModal />
-          </div>
+          <SimpleProfileModal onClose={() => setOpenProfile(false)} />
         </Modal>
         <Modal isOpen={openFriendsList}>
-          <FriendsList />
+          <FriendsListModal onClose={() => setOpenFriendsList(false)} />
         </Modal>
         <Modal isOpen={openFriendsRequest}>
-          <FriendsRequest />
+          <FriendsRequestModal onClose={() => setOpenFriendsRequest(false)} />
         </Modal>
-        {/* </div> */}
       </div>
     </>
   );
