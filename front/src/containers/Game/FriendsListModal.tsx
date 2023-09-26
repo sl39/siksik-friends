@@ -15,17 +15,18 @@ export default function FriendsList({ onClose }: Props) {
       const response = await serverAxios("/user/friend/list");
       console.log(response);
       setMyFriends(response.data);
+      console.log(myFriends);
     } catch (err) {
       console.log("친구 목록 조회 에러", err);
     }
   };
   useEffect(() => {
     fetchFriends();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className={styles.modalContainer}>
-      <div>{myFriends}</div>
       <button onClick={onClose}>닫기</button>
     </div>
   );
