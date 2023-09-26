@@ -33,9 +33,9 @@ public class UserController {
         return userFindService.findUser(id);
     }
 
-    @PutMapping("/{id}")
-    public void modifyUser(@PathVariable Long id, @RequestBody UserDto.Request request) {
-        userModifyService.modifyUser(id, request);
+    @PutMapping("/")
+    public void modifyUser(@RequestHeader(ACCESS_HEADER) String accessHeader, @RequestBody UserDto.Request request) throws Exception {
+        userModifyService.modifyUser(accessHeader, request);
     }
 
     @GetMapping("/rank")
