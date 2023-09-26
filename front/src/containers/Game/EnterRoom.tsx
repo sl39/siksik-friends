@@ -26,7 +26,7 @@ export default function EnterRoom({ rooms }: EnterRoomsProps) {
   // 방 생성 모달
   const [openCreateRoom, setOpenCreateRoom] = useState(false);
   // 방 찾기 모달
-  const [openSearchRoom, setOpenSearchRoom] = useState(true);
+  const [openSearchRoom, setOpenSearchRoom] = useState(false);
 
   const [checkTitle, setCheckTitle] = useState("");
   const [checkpassword, setCheckPassword] = useState("");
