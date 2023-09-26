@@ -9,6 +9,11 @@ body {
   align-items: center;
   justify-content: center;
   cursor: url("../../public/images/mouse_cursor2.png"), default;
+  /* 드래그 안돼게 */
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none
 }
 body * {
   cursor: url("../../public/images/mouse_cursor2.png"), default;
