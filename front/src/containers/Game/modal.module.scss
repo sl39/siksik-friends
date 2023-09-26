@@ -2,43 +2,62 @@ $blue: #87ceeb;
 $softBlue: #cce5ff;
 $hardBlue: #6495ed;
 
-$border: 1.5px solid #37353f;
 $border-radius: 0 0 125px 3px/3px 85px 5px 55px;
 $border-radius-rounded: 4px;
 $box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 
-@mixin border($width) {
-  border: $width solid $black;
-}
+$border: #37353f;
 
-$black: #37353f;
 $green: rgb(205, 220, 57);
 $purple: #965784;
 $pink: #fc8b93;
 $orange: #feac5e;
 $yellow: #fdc830;
-$blue: #396afc;
-
+$font-title: "Chelsea Market", sans-serif;
 @mixin border($width) {
-  border: $width solid #000;
+  border: $width solid $border;
 }
 
+// 모달 전체
 .modalContainer {
   width: 1000px;
   height: 500px;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+  // align-items: center;
+
+  position: relative;
+  margin: 20px;
   margin-top: 50px;
+  padding: 3rem 2rem 1.2rem;
+
+  background-color: #fff;
+  border: 1px solid #37353f;
+
+  &:before,
+  &:after {
+    top: 0;
+    left: 0.25%;
+    height: 100%;
+    border: inherit;
+    border-radius: 4px;
+    transform: rotate(-0.1deg) scaleX(-1);
+    z-index: -1;
+    width: 99.5%;
+  }
+  &:after {
+    transform: rotate(-0.25deg);
+    left: 0.15%;
+  }
 }
 
 // 방 생성 모달
 .searchModal {
   max-width: 600px;
-  width: 40vw;
-  height: 150px;
+  width: 30vw;
+  height: 200px;
 
   .modalImg {
     position: absolute;
@@ -51,22 +70,40 @@ $blue: #396afc;
     left: calc(50% - (80px / 2));
   }
   .searchText {
+    text-align: center;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
   }
 }
 
-.button {
+.form {
+  position: relative;
+  width: 90%;
+  height: 100%;
+  margin: 0 auto;
 }
+.label {
+  margin: 0.5rem 0;
+}
+.inputDiv {
+  position: relative;
+  width: 100%;
+  height: 40%;
 
-.errMsg {
-  font-size: 1.2rem;
-  color: red;
+  .errMsg {
+    font-size: 1.2rem;
+    color: red;
+  }
+}
+.input {
+  position: relative;
+  width: 100%;
 }
 
 .button,
 .input,
 .select {
   outline: none;
-  background: transparent;
   &:focus,
   &:active {
     box-shadow: 0 0 0 2px rgba($blue, 0.5);
@@ -76,41 +113,38 @@ $blue: #396afc;
 .inputText,
 .select {
   padding: 8px;
-  @include border(1.5px);
-  border-radius: $border-radius;
+  border: 1.5px solid $border;
+  border-radius: 4px;
   width: 100%;
-  &.alternative {
-    border-width: 0 0 1.5px 0;
-  }
 }
-.inputRadio {
-  display: none;
-  + label {
-    margin: 5px 15px 5px 0;
-    display: inline-block;
-    position: relative;
-    padding-left: 1.5rem;
-    cursor: pointer;
-    width: auto;
-    &:after {
-      border: 1px dashed;
-      border-radius: 50%;
-      width: 15px;
-      height: 15px;
-      background: transparent;
-      transition: 0.3s ease-in-out;
-      top: 50%;
-      left: 0;
-      margin-top: -10px;
-    }
-    &:hover:after {
-      background: rgba($pink, 0.3);
-    }
-  }
-  &:checked + label:after {
-    background: $pink;
-  }
-}
+// .inputRadio {
+//   display: none;
+//   + label {
+//     margin: 5px 15px 5px 0;
+//     display: inline-block;
+//     position: relative;
+//     padding-left: 1.5rem;
+//     cursor: pointer;
+//     width: auto;
+//     &:after {
+//       border: 1px dashed;
+//       border-radius: 50%;
+//       width: 15px;
+//       height: 15px;
+//       background: transparent;
+//       transition: 0.3s ease-in-out;
+//       top: 50%;
+//       left: 0;
+//       margin-top: -10px;
+//     }
+//     &:hover:after {
+//       background: rgba($pink, 0.3);
+//     }
+//   }
+//   &:checked + label:after {
+//     background: $pink;
+//   }
+// }
 
 .inputCheckbox {
   display: none;
@@ -149,5 +183,58 @@ $blue: #396afc;
   }
   &:checked + label:after {
     transform: scale(1);
+  }
+}
+
+.btn {
+  border: 0.5px solid $border;
+  box-sizing: border-box;
+
+  display: inline-block;
+
+  padding: 8px 12px;
+  position: relative;
+  transition: 0.2s ease-in-out;
+
+  height: 50px;
+  width: 40%;
+  text-align: center;
+
+  background-color: $softBlue;
+
+  &:before,
+  &:after {
+    top: 0;
+    left: 0;
+    transition: 0.2s ease;
+  }
+  &:before {
+    height: 102%;
+    width: 102%;
+
+    background-color: $softBlue;
+    transform: translate(6px, 6px);
+
+    border: solid black;
+    box-sizing: border-box;
+  }
+  &:after {
+    height: 99%;
+    width: 99%;
+    @include border(1.5px);
+    border-radius: 0 0 125px 3px/3px 85px 5px 55px;
+  }
+  &:hover {
+    &:before {
+      transform: translate(0);
+    }
+  }
+  &:focus,
+  &:active,
+  &:hover {
+    &:before {
+      transform: translate(0);
+      background: #afb42b;
+    }
   }
 }
