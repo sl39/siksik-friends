@@ -31,7 +31,6 @@ public class UserFindServiceImpl implements UserFindService {
 
     private final RedisTemplate redisTemplate;
     private final UserRepository userRepository;
-//    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDto.Response findMyInfo(String accessHeader) {
@@ -88,8 +87,6 @@ public class UserFindServiceImpl implements UserFindService {
     @Override
     public Long findRank(Long id) {
         Double ranking1 = redisTemplate.opsForZSet().score(KEY, String.valueOf(id));
-
-        System.out.println("ranking1 : " + ranking1);
 
         Set<String> ranking2 = redisTemplate.opsForZSet().reverseRangeByScore(KEY, ranking1, ranking1, 0, 1);
         Long ranking = 0L;
