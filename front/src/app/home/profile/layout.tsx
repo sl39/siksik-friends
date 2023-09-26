@@ -1,5 +1,6 @@
 import styles from "@/containers/Profile/Profile.module.scss";
 import ProfileIndex from "@/containers/Profile";
+import SearchUser from "@/containers/Profile/SearchUser";
 
 export default function ProfileLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -7,7 +8,12 @@ export default function ProfileLayout({ children }: { children: React.ReactNode 
       <div className={styles.left}>
         <ProfileIndex />
       </div>
-      <div className={styles.right}>{children}</div>
+      <div className={styles.right}>
+        <div className={styles.search}>
+          <SearchUser />
+        </div>
+        <div className={styles.rightBottom}>{children}</div>
+      </div>
     </div>
   );
 }

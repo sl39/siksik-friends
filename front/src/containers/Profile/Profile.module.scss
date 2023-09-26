@@ -13,6 +13,57 @@
   height: 100%;
   margin: 0;
 }
+.search {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  left: calc(95% - 300px);
+  top: 20px;
+  height: 50px;
+  width: 300px;
+  padding: 6px 0;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 22px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.rightBottom {
+  width: 100%;
+  height: calc(100% - 120px);
+}
+
+// 회원 검색창
+.searchForm {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 90%;
+
+  .searchText {
+    height: 80%;
+    margin: 0 10px;
+  }
+  .searchBtn {
+    height: 60%;
+    font-size: 2.5vh;
+    padding: 0 5px;
+  }
+  .icon {
+    height: 100%;
+    size: 100%;
+  }
+}
+
 .leftProfile {
   position: relative;
   left: 7%;
