@@ -1,0 +1,153 @@
+$blue: #87ceeb;
+$softBlue: #cce5ff;
+$hardBlue: #6495ed;
+
+$border: 1.5px solid #37353f;
+$border-radius: 0 0 125px 3px/3px 85px 5px 55px;
+$border-radius-rounded: 4px;
+$box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+
+@mixin border($width) {
+  border: $width solid $black;
+}
+
+$black: #37353f;
+$green: rgb(205, 220, 57);
+$purple: #965784;
+$pink: #fc8b93;
+$orange: #feac5e;
+$yellow: #fdc830;
+$blue: #396afc;
+
+@mixin border($width) {
+  border: $width solid #000;
+}
+
+.modalContainer {
+  width: 1000px;
+  height: 500px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+// 방 생성 모달
+.searchModal {
+  max-width: 600px;
+  width: 40vw;
+  height: 150px;
+
+  .modalImg {
+    position: absolute;
+    width: 80px;
+    height: auto;
+    // 원본 이미지 크기 입력
+    aspect-ratio: 546 / 863;
+
+    top: -80px;
+    left: calc(50% - (80px / 2));
+  }
+  .searchText {
+  }
+}
+
+.button {
+}
+
+.errMsg {
+  font-size: 1.2rem;
+  color: red;
+}
+
+.button,
+.input,
+.select {
+  outline: none;
+  background: transparent;
+  &:focus,
+  &:active {
+    box-shadow: 0 0 0 2px rgba($blue, 0.5);
+  }
+}
+
+.inputText,
+.select {
+  padding: 8px;
+  @include border(1.5px);
+  border-radius: $border-radius;
+  width: 100%;
+  &.alternative {
+    border-width: 0 0 1.5px 0;
+  }
+}
+.inputRadio {
+  display: none;
+  + label {
+    margin: 5px 15px 5px 0;
+    display: inline-block;
+    position: relative;
+    padding-left: 1.5rem;
+    cursor: pointer;
+    width: auto;
+    &:after {
+      border: 1px dashed;
+      border-radius: 50%;
+      width: 15px;
+      height: 15px;
+      background: transparent;
+      transition: 0.3s ease-in-out;
+      top: 50%;
+      left: 0;
+      margin-top: -10px;
+    }
+    &:hover:after {
+      background: rgba($pink, 0.3);
+    }
+  }
+  &:checked + label:after {
+    background: $pink;
+  }
+}
+
+.inputCheckbox {
+  display: none;
+  + label {
+    margin: 5px 15px 5px 0;
+    display: inline-block;
+    position: relative;
+    padding-left: 1.5rem;
+    cursor: pointer;
+    width: auto;
+    &:before {
+      @include border(1.5px);
+      border-radius: $border-radius;
+      width: 15px;
+      height: 15px;
+      background: transparent;
+      transition: 0.3s ease-in-out;
+      top: 50%;
+      left: 0;
+      margin-top: -10px;
+    }
+    &:after {
+      content: "✓";
+      font-size: 1.6rem;
+      left: 2px;
+      bottom: 0;
+      transform: scale(0);
+      transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    &:hover:before {
+      background: rgba($green, 0.4);
+    }
+  }
+  &:checked + label:before {
+    background: rgba($green, 0.8);
+  }
+  &:checked + label:after {
+    transform: scale(1);
+  }
+}

@@ -10,7 +10,7 @@ export default function GameRoomItem({ room }: GameRoomItemProps) {
   const router = useRouter();
 
   const enterRoom = (id: number) => {
-    router.push(`/game/room/${id}`);
+    router.push(`/room/${id}`);
   };
   return (
     <button onClick={() => enterRoom(room.id)} className={styles.roomItem}>
@@ -24,7 +24,7 @@ export default function GameRoomItem({ room }: GameRoomItemProps) {
       <div className={styles.roomQuiz}>
         <div>2023.09.12 - 2023.09.13</div>
         <div>카테고리</div>
-        <div>문제수</div>
+        <div>00문제</div>
       </div>
     </button>
   );
