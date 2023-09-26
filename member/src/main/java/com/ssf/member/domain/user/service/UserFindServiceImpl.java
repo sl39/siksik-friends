@@ -98,7 +98,7 @@ public class UserFindServiceImpl implements UserFindService {
             ranking = redisTemplate.opsForZSet().reverseRank(KEY, s);
         }
 
-        return ranking;
+        return ranking + 1;
     }
 
     @Override
