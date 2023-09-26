@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import type { Room } from "@/types";
-// import { serverAxios } from "@/services/api";
 import GameRoomItem from "./GameRoomItem";
 import styles from "./game.module.scss";
 import EnterRoom from "./EnterRoom";
@@ -13,7 +12,7 @@ export default function GameRoom() {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [filteredRooms, setFilteredRooms] = useState<Room[]>([]);
 
-  // 방 전체 목록 받아오는 함수 작성하기
+  // 방 전체 목록 받아오는 로직 다시
 
   /** 대기 중인 방만 보여주는 함수 */
   const showWaitingRooms = async () => {
@@ -31,27 +30,26 @@ export default function GameRoom() {
     try {
       const response = await axios.get("/1");
       // const response = await serverAxios("");
-      console.log(response);
       setRooms(response.data);
     } catch (err) {
       console.log("방 목록 에러", err);
-      // 서버 요청 전 임시 Room
-      setRooms([
-        { id: 1, name: "ㄱㄱ", waiting: true },
-        { id: 2, name: "ㄱㄱ", waiting: true },
-        { id: 21, name: "ㄱㄱ", waiting: false },
-        { id: 22, name: "ㄱㄱ", waiting: false },
-        { id: 23, name: "ㄱㄱ", waiting: true },
-        { id: 235, name: "ㄱㄱ", waiting: true },
-        { id: 2351, name: "ㄱㄱ", waiting: false },
-        { id: 2352, name: "ㄱㄱ", waiting: false },
-      ]);
     }
     showAllRooms();
   };
   useEffect(() => {
     fetchRoom();
-    // 경고를 무시하거나 eslint 규칙을 임시적으로 끄는 주석
+
+    // 서버 요청 전 더미 Room
+    setRooms([
+      { id: 1, name: "더미1", waiting: true },
+      { id: 2, name: "더미2", waiting: true },
+      { id: 3, name: "더미3", waiting: false },
+      { id: 4, name: "더미4", waiting: false },
+      { id: 5, name: "더미5", waiting: true },
+      { id: 6, name: "더미6", waiting: true },
+      { id: 7, name: "더미7", waiting: false },
+      { id: 8, name: "더미8", waiting: false },
+    ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -72,9 +70,9 @@ export default function GameRoom() {
             대기 방 보기
           </button>
         </div>
-        <button className={[styles.reload].join(" ")} onClick={fetchRoom}>
+        {/* <button className={[styles.reload].join(" ")} onClick={fetchRoom}>
           새로고침
-        </button>
+        </button> */}
       </div>
       <div className={styles.rooms}>{filteredRooms?.map((room) => <GameRoomItem key={room.id} room={room} />)}</div>
     </>

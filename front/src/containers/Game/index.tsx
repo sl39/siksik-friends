@@ -7,6 +7,7 @@ import styles from "./game.module.scss";
 export default function Index() {
   return (
     <>
+      <div id="game-modal" className="z-99" />
       <div className={styles.left}>
         <div className={styles.GameRoom}>
           <GameRoom />
