@@ -33,6 +33,11 @@ public class UserController {
         return userFindService.findUser(id);
     }
 
+    @GetMapping("/")
+    public UserDto.Response findUserToNickname(String nickname) {
+        return userFindService.findNickname(nickname);
+    }
+
     @PutMapping("/")
     public void modifyUser(@RequestHeader(ACCESS_HEADER) String accessHeader, @RequestBody UserDto.Request request) throws Exception {
         userModifyService.modifyUser(accessHeader, request);

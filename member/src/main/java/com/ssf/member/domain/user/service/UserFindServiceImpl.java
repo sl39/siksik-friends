@@ -72,6 +72,20 @@ public class UserFindServiceImpl implements UserFindService {
     }
 
     @Override
+    public UserDto.Response findNickname(String nickname) {
+        User user = userRepository.findByNickname(nickname).orElseThrow();
+
+        return UserDto.Response.builder()
+                .user_id(user.getId())
+                .nickname(user.getNickname())
+                .profile(user.getProfile())
+                .rank(findRank(user.getId()))
+                .level(user.getLevel())
+                .odds(user.getTotalGame() == 0L ? (user.getWin() == 0L ? "0.0%" : "100.0%") : String.format("%.1f%%", user.getWin() / (double) user.getTotalGame() * 100))
+                .build();
+    }
+
+    @Override
     public Long findRank(Long id) {
         Double ranking1 = redisTemplate.opsForZSet().score(KEY, String.valueOf(id));
 
