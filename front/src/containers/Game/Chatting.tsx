@@ -152,7 +152,7 @@ export default function Chatting() {
     // 컴포넌트가 마운트될 때 연결을 설정합니다.
     connect();
 
-    // 컴포넌트가 언마운트될 때 연결을 끊습니다.
+    // 컴포넌트가 언마운트될 때 연결을 끊습니다 .
     return () => {
       if (stompClient) {
         stompClient.disconnect();
