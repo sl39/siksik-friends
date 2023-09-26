@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-// import { Varela } from "next/font/google";
 import { serverAxios } from "@/services/api";
 import type { Room } from "@/types";
 import styles from "./game.module.scss";
 import Modal from "@/components/gameModal";
+import SearchRoomModal from "./SearchRoomModal";
 
 interface EnterRoomsProps {
   rooms: Room[];
@@ -21,11 +21,13 @@ type EnterRoomsFormType = {
 };
 
 export default function EnterRoom({ rooms }: EnterRoomsProps) {
-  console.log("엔터룸프롭스", rooms);
-  const [openCreateRoom, setOpenCreateRoom] = useState(false);
-  const [openSearchRoom, setOpenSearchRoom] = useState(false);
-  const [searchRoom, setSearchRoom] = useState("");
   const router = useRouter();
+
+  // 방 생성 모달
+  const [openCreateRoom, setOpenCreateRoom] = useState(false);
+  // 방 찾기 모달
+  const [openSearchRoom, setOpenSearchRoom] = useState(true);
+
   const [checkTitle, setCheckTitle] = useState("");
   const [checkpassword, setCheckPassword] = useState("");
 
@@ -35,18 +37,6 @@ export default function EnterRoom({ rooms }: EnterRoomsProps) {
 
   const [passwordCheckBox, setPaswordCheckBox] = useState(true);
 
-  /** 게임 방 ID로 방 정보를 조회하는 함수 */
-  const handleSearchRoom = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(searchRoom);
-
-    try {
-      const response = await serverAxios.get("/");
-      console.log(response);
-    } catch (err) {
-      console.log("방 찾기 에러", err);
-    }
-  };
   const [formData, setFormData] = useState<EnterRoomsFormType>({
     title: "",
     count: 1,
@@ -133,6 +123,11 @@ export default function EnterRoom({ rooms }: EnterRoomsProps) {
     }
   };
 
+  /** 빠른 시작 버튼
+   *
+   * 랜덤으로 Waiting인 방을 찾아서 이동
+   * Waiting인 방이 없다면,
+   */
   const randomOnClick = () => {
     const arr: number[] = [];
     rooms.forEach((element: Room) => {
@@ -146,11 +141,11 @@ export default function EnterRoom({ rooms }: EnterRoomsProps) {
     }
     const randomIndex = Math.floor(Math.random() * arr.length);
     const randomRoomNum = arr[randomIndex];
-    router.push(`/game/room/${randomRoomNum}`);
+    router.push(`/room/${randomRoomNum}`);
     return 0;
   };
 
-  // 종류 체크
+  /**  종류 체크 */
   const typeClick = (val: string) => {
     // val이 typeList에 이미 포함되어 있는지 확인
     const typeList = formData.type;
@@ -185,7 +180,7 @@ export default function EnterRoom({ rooms }: EnterRoomsProps) {
   return (
     <>
       <div>
-        <button className={styles.boxButton} onClick={() => randomOnClick()}>
+        <button className={styles.boxButton} onClick={randomOnClick}>
           빠른 시작
         </button>
         <button className={styles.boxButton} onClick={() => setOpenSearchRoom(true)}>
@@ -193,25 +188,11 @@ export default function EnterRoom({ rooms }: EnterRoomsProps) {
         </button>
         {openSearchRoom && (
           <Modal isOpen={openSearchRoom}>
-            <div className={styles.modalContainer}>
-              <h1>방찾기</h1>
-              <form onSubmit={handleSearchRoom}>
-                <label htmlFor="room">방코드</label>
-                <input
-                  type="text"
-                  name="room"
-                  id="room"
-                  value={searchRoom}
-                  onChange={(e) => setSearchRoom(e.target.value)}
-                />
-                <button type="submit">찾기</button>
-              </form>
-              <button onClick={() => setOpenSearchRoom(false)}>취소</button>
-            </div>
+            <SearchRoomModal onClose={() => setOpenSearchRoom(false)} />
           </Modal>
         )}
       </div>
-      <div id="game-modal" className="z-99" />
+      <div />
       <button onClick={() => setOpenCreateRoom(true)} className={styles.boxButton}>
         방 만들기
       </button>
