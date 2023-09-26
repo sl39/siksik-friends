@@ -33,7 +33,7 @@ public class User {
 
     @Column(nullable = false, length = 255)
     @Builder.Default
-    private String profile = "/default.png";
+    private String profile = "/images/character/rabbit.png";
 
     @Column(nullable = false)
     @Builder.Default
