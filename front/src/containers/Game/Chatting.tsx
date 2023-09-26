@@ -69,16 +69,16 @@ export default function Chatting() {
       let hour = String(curr.getHours());
       let minutes = String(curr.getMinutes());
       let sec = String(curr.getSeconds());
-      if (hour.length == 1) {
-        hour = "0" + hour;
+      if (hour.length === 1) {
+        hour = `0${hour}`;
       }
-      if (minutes.length == 1) {
-        minutes = "0" + minutes;
+      if (minutes.length === 1) {
+        minutes = `0${minutes}`;
       }
-      if (sec.length == 1) {
-        sec = "0" + sec;
+      if (sec.length === 1) {
+        sec = `0${sec}`;
       }
-      const time = String(hour) + ":" + String(minutes) + ":" + String(sec);
+      const time = `${hour}:${minutes}:${sec}`;
 
       message.sendTime = String(time);
 
