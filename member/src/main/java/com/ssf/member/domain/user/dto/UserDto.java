@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
 @NoArgsConstructor
@@ -25,12 +26,18 @@ public class UserDto {
     @Getter
     @Builder
     @AllArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Request {
 
         private Long user_id;
         private String nickname;
         private String password;
+        private String changePassword;
         private String profile;
+
+        public void encodePassword(PasswordEncoder passwordEncoder) {
+            this.changePassword = passwordEncoder.encode(this.changePassword);
+        }
     }
 
     @Getter
