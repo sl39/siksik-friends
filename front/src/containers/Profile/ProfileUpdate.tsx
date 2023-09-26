@@ -44,7 +44,7 @@ export default function ProfileUpdate() {
     };
 
     try {
-      await serverAxios.put(`/user/${data.user_id}`, formData);
+      await serverAxios.put(`/user/`, formData);
       setData((prevUser) => ({
         ...prevUser,
         ...formData,
