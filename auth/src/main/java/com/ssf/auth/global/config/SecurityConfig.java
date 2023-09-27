@@ -14,6 +14,7 @@ import com.ssf.auth.global.signin.service.SignInService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
@@ -33,6 +34,7 @@ import org.springframework.security.web.authentication.logout.LogoutFilter;
 public class SecurityConfig {
 
     private final SignInService signInService;
+    private final RedisTemplate redisTemplate;
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private final ObjectMapper objectMapper;
@@ -51,6 +53,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
                         .requestMatchers("", "/", "index.html", "/api/auth/sign-up", "/api/auth/email", "/api/auth/nickname").permitAll()
+//                        .requestMatchers("", "/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/api/auth/sign-in").permitAll()
                         .anyRequest().authenticated());
 //                .oauth2Login(oAuth2LoginConfigurer -> oAuth2LoginConfigurer
@@ -84,7 +87,7 @@ public class SecurityConfig {
 
     @Bean
     public SignInSuccessHandler signInSuccessHandler() {
-        return new SignInSuccessHandler(jwtService, userRepository);
+        return new SignInSuccessHandler(redisTemplate, jwtService, userRepository);
     }
 
     @Bean
