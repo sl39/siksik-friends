@@ -4,10 +4,10 @@ import type { User } from "@/types";
 // export const userAtom = atom<User>({} as User);
 export const userAtom = atom<User>({
   user_id: 0,
-  email: "tempEmail",
-  nickname: "temp",
+  email: "",
+  nickname: "",
   profile: "/images/character/rabbit.png",
-  odds: "승률",
+  odds: "",
   rank: 999,
   exp: 0,
   score: 10,
@@ -16,10 +16,10 @@ export const userAtom = atom<User>({
 
 export const profileAtom = atom<User>({
   user_id: 0,
-  email: "profileEmail",
-  nickname: "profileTemp",
+  email: "",
+  nickname: "",
   profile: "/images/character/rabbit.png",
-  odds: "승률",
+  odds: "",
   rank: 999,
   exp: 0,
   score: 10,
