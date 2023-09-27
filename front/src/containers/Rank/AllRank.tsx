@@ -8,12 +8,20 @@ import RankItem from "./RankItem";
 
 export default function AllRank() {
   const [ranks, setRanks] = useState<Array<Rank>>([]);
+  const [dummyRanks, setDummyRanks] = useState<string[]>([]);
 
   const rankData = async () => {
     try {
       const response = await serverAxios("/user/rank");
-      console.log(response);
       setRanks(response.data);
+
+      // data가 10개보다 모자라면, 빈 거 넣기
+      if (ranks.length < 10) {
+        const dummyCount = 10 - ranks.length;
+        const dummyValues = Array.from({ length: dummyCount }, (_, index) => `${index + 1}`);
+        setDummyRanks(dummyValues);
+        console.log(dummyValues);
+      }
     } catch (err) {
       console.log("랭킹 조회 에러", err);
 
@@ -91,25 +99,15 @@ export default function AllRank() {
           score: 1868,
           level: 90,
         },
-        {
-          user_id: 19,
-          nickname: "xcr6ZO3iHd",
-          profile: "/default.png",
-          odds: "9.6%",
-          rank: 0,
-          score: 1866,
-          level: 84,
-        },
-        {
-          user_id: 13,
-          nickname: "ZlriVJP7jx",
-          profile: "/default.png",
-          odds: "17.8%",
-          rank: 0,
-          score: 1833,
-          level: 9,
-        },
       ]);
+
+      // data가 10개보다 모자라면, 빈 거 넣기
+      if (ranks.length < 10) {
+        const dummyCount = 10 - ranks.length;
+        const dummyValues = Array.from({ length: dummyCount }, (_, index) => `${index + 1}`);
+        setDummyRanks(dummyValues);
+        console.log(dummyValues);
+      }
     }
   };
 
@@ -119,9 +117,14 @@ export default function AllRank() {
 
   return (
     <div className={styles.RankArray}>
-      {ranks.map((rank) => (
-        <RankItem key={rank.user_id} item={rank} />
-      ))}
+      <div className={styles.RankFlex}>
+        {ranks.map((rank) => (
+          <RankItem key={rank.user_id} item={rank} />
+        ))}
+        {dummyRanks.map((item) => (
+          <div key={item} className={`${styles.RankItem} ${styles.dummy}`} />
+        ))}
+      </div>
     </div>
   );
 }
