@@ -13,14 +13,6 @@ export default function AllRank() {
     try {
       const response = await serverAxios("/user/rank");
       setRanks(response.data);
-
-      // data가 10개보다 모자라면, 빈 거 넣기
-      if (ranks.length < 10) {
-        const dummyCount = 10 - ranks.length;
-        const dummyValues = Array.from({ length: dummyCount }, (_, index) => `${index + 1}`);
-        setDummyRanks(dummyValues);
-        console.log(dummyValues);
-      }
     } catch (err) {
       console.log("랭킹 조회 에러", err);
       // 더미 데이터
@@ -116,14 +108,6 @@ export default function AllRank() {
           level: 90,
         },
       ]);
-
-      // data가 10개보다 모자라면, 빈 거 넣기
-      if (ranks.length < 10) {
-        const dummyCount = 10 - ranks.length;
-        const dummyValues = Array.from({ length: dummyCount }, (_, index) => `${index + 1}`);
-        setDummyRanks(dummyValues);
-        console.log(dummyValues);
-      }
     }
   };
 
