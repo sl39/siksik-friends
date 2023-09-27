@@ -15,12 +15,12 @@ export default function WaitingUser() {
     setOpenTab(0);
 
     await setWaitUser([
-      { user_id: 1, nickname: "wait" },
-      { user_id: 2, nickname: "2" },
-      { user_id: 3, nickname: "3" },
-      { user_id: 4, nickname: "4" },
-      { user_id: 5, nickname: "5" },
-      { user_id: 6, nickname: "6" },
+      { user_id: 1, nickname: "wait", profile: "/images/character/rabbit.png" },
+      { user_id: 2, nickname: "2", profile: "/images/character/rabbit.png" },
+      { user_id: 3, nickname: "3", profile: "/images/character/rabbit.png" },
+      { user_id: 4, nickname: "4", profile: "/images/character/rabbit.png" },
+      { user_id: 5, nickname: "5", profile: "/images/character/rabbit.png" },
+      { user_id: 6, nickname: "6", profile: "/images/character/rabbit.png" },
     ]);
     //   try {
     //     const response = await serverAxios("");
@@ -36,12 +36,12 @@ export default function WaitingUser() {
     setOpenTab(1);
 
     await setWaitUser([
-      { user_id: 1, nickname: "friend" },
-      { user_id: 2, nickname: "2" },
-      { user_id: 3, nickname: "3" },
-      { user_id: 4, nickname: "4" },
-      { user_id: 5, nickname: "5" },
-      { user_id: 6, nickname: "6" },
+      { user_id: 1, nickname: "friend", profile: "/images/character/rabbit.png" },
+      { user_id: 2, nickname: "2", profile: "/images/character/rabbit.png" },
+      { user_id: 3, nickname: "3", profile: "/images/character/rabbit.png" },
+      { user_id: 4, nickname: "4", profile: "/images/character/rabbit.png" },
+      { user_id: 5, nickname: "5", profile: "/images/character/rabbit.png" },
+      { user_id: 6, nickname: "6", profile: "/images/character/rabbit.png" },
     ]);
 
     //   try {
