@@ -39,9 +39,7 @@ export default function Profile() {
             priority
           />
         </div>
-        <div className={styles.caption}>
-          {user?.level} {user?.nickname}
-        </div>
+        <div className={styles.caption}>{user?.nickname}</div>
       </div>
     </div>
   );
