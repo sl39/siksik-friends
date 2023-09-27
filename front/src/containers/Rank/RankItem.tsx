@@ -12,7 +12,7 @@ export default function RankItem({ item }: Props) {
   const router = useRouter();
 
   const onClick = (nickname: string, user_id: number) => {
-    router.push(`/home/profile/${nickname}/${user_id}`);
+    router.replace(`/home/profile/${nickname}/${user_id}`);
   };
   return (
     <div className={styles.RankItem}>
