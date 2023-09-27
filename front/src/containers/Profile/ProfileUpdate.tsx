@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAtom } from "jotai";
+import Image from "next/image";
 import { serverAxios } from "@/services/api";
 import { ProfileImgAtom, userAtom } from "@/store/userAtom";
 import styles from "./ProfileUpdate.module.scss";
-import Image from "next/image";
 
 export default function ProfileUpdate() {
   const router = useRouter();
