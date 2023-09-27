@@ -29,6 +29,8 @@ public class UserAchievementFindServiceImpl implements UserAchievementFindServic
 
     @Override
     public List<UserAchievement> findAchievement(String accessHeader) {
+        System.out.println(accessHeader);
+
         Long id = Long
                 .parseLong(JWT
                         .require(Algorithm.HMAC512(secretKey))
