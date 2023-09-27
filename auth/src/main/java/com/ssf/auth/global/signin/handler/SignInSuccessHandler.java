@@ -8,14 +8,18 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+
+import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
 @Slf4j
 public class SignInSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
+    private final RedisTemplate redisTemplate;
     private final JwtService jwtService;
     private final UserRepository userRepository;
 
@@ -32,12 +36,10 @@ public class SignInSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 //        jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
 //        jwtService.sendAccessAndRefreshTokenAndId(response, accessToken, refreshToken, target);
         jwtService.sendAccessToken(response, accessToken);
+        jwtService.updateRefreshToken(id, refreshToken);
 
         userRepository.findById(id)
-                .ifPresent(user -> {
-                    user.updateRefreshToken(refreshToken);
-                    userRepository.saveAndFlush(user);
-                });
+                .ifPresent(userRepository::saveAndFlush);
     }
 
     private String extractUsername(Authentication authentication) {

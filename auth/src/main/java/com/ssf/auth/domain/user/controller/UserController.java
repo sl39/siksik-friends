@@ -13,10 +13,18 @@ public class UserController {
 
     private final UserService userService;
 
+    private static final String ACCESS_HEADER = "Authorization";
+
     @PostMapping("/sign-up")
     public String signUp(@RequestBody UserDto.Request userRequest) throws Exception {
         userService.signUp(userRequest);
         return "회원가입 성공";
+    }
+
+    @GetMapping("/sign-out")
+    public String signOut(@RequestHeader(ACCESS_HEADER) String accessHeader) {
+        userService.signOut(accessHeader);
+        return "로그아웃 완료";
     }
 
     @GetMapping("/email")
