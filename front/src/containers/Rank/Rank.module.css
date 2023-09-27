@@ -70,7 +70,7 @@
   border-radius: 30px;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
 
   /* 글래스모피즘 */
@@ -78,12 +78,21 @@
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
+  position: relative;
+}
+.RankFlex {
+  height: 95%;
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 .RankItem {
-  box-sizing: border-box;
+  position: relative;
+  width: 100%;
   height: 8%;
-  min-height: 50px;
-  width: 95%;
+  box-sizing: border-box;
 
   display: flex;
   align-items: center;
@@ -94,6 +103,12 @@
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   border-radius: 30px;
+}
+.dummy {
+  border: none;
+  background: none;
+  box-shadow: none;
+  /* backdrop-filter: none; */
 }
 .itemNum {
   width: 60px;
