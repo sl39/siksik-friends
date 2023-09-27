@@ -10,10 +10,12 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -41,6 +43,7 @@ public class JwtService {
     private static final String ID_CLAIM = "id";
     private static final String BEARER = "Bearer ";
 
+    private final RedisTemplate redisTemplate;
     private final UserRepository userRepository;
 
     public String createAccessToken(Long id) {
@@ -86,10 +89,14 @@ public class JwtService {
                 .map(accessToken -> accessToken.replace(BEARER, ""));
     }
 
-    public Optional<String> extractRefreshToken(HttpServletRequest request) {
-        return Optional.ofNullable(request.getHeader(refreshHeader))
-                .filter(refreshToken -> refreshToken.startsWith(BEARER))
-                .map(refreshToken -> refreshToken.replace(BEARER, ""));
+//    public Optional<String> extractRefreshToken(HttpServletRequest request) {
+//        return Optional.ofNullable(request.getHeader(refreshHeader))
+//                .filter(refreshToken -> refreshToken.startsWith(BEARER))
+//                .map(refreshToken -> refreshToken.replace(BEARER, ""));
+//    }
+
+    public String extractRefreshToken(String id) {
+        return (String) redisTemplate.opsForValue().get(id);
     }
 
     public Optional<String> extractId(String accessToken) {
@@ -106,7 +113,9 @@ public class JwtService {
     public void updateRefreshToken(Long id, String refreshToken) {
         userRepository.findById(id)
                 .ifPresentOrElse(
-                        user -> user.updateRefreshToken(refreshToken),
+                        user -> {
+                            redisTemplate.opsForValue().set(String.valueOf(id), refreshToken, 300L, TimeUnit.SECONDS);
+                        },
                         () -> new Exception("일치하는 회원이 없습니다.")
                 );
     }
