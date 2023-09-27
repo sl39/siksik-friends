@@ -28,6 +28,12 @@ public class StompGameController {
     @MessageMapping("/game/{roomId}")
     public void gameStart(@DestinationVariable int roomId, @Payload ProblemsDTO body) {
 
+        problems.add("문제1");
+        problems.add("문제2");
+        problems.add("문제3");
+        problems.add("문제4");
+        problems.add("문제5");
+
         int time = 0;
         for (int i = 0; i < problems.size(); i++) {
             scheduler.schedule(() -> sendQuiz(roomId), time, TimeUnit.SECONDS); // 0, 23, 46, 69, ...
@@ -43,7 +49,7 @@ public class StompGameController {
 
         // ProblemRepository 가져온 데이터 할당
 
-        log.info(roomId + "번 문제 결과");
+        log.info(roomId + "번 문제 Quiz");
 //        log.info(ProblemRepository에서 가져올 데이터.toString());
 
         ProblemsDTO dto = new ProblemsDTO();
