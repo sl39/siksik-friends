@@ -10,7 +10,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class WordCloudController {
 
     private final WordCloudService wordCloudService;
