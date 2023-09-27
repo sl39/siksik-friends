@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface UserAchievementFindService {
 
-    List<UserAchievement> findAchievement(Long id);
+    List<UserAchievement> findAchievement(String accessHeader);
 }
