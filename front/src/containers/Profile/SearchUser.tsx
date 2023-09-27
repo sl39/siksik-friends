@@ -2,7 +2,7 @@
 
 import { BiSearchAlt } from "react-icons/bi";
 import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useAtom } from "jotai";
 import { serverAxios } from "@/services/api";
 import { profileAtom } from "@/store/userAtom";
