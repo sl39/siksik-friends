@@ -2,7 +2,7 @@
 
 import { BiSearchAlt } from "react-icons/bi";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAtom } from "jotai";
 import { serverAxios } from "@/services/api";
 import { profileAtom } from "@/store/userAtom";
@@ -11,10 +11,10 @@ import styles from "./Profile.module.scss";
 export default function SearchUser() {
   const [searchUser, setSearchUser] = useState("");
   const [, setNewProfile] = useAtom(profileAtom);
-
   // const [errMsg, setErrMsg] = useState("");
 
   const router = useRouter();
+
   /** 닉네임으로 유저 검색 */
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

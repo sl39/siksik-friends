@@ -34,7 +34,7 @@ export default function SignUpForm() {
       email,
       password: password1,
       nickname,
-      profile: "",
+      profile: "/images/character/rabbit.png",
     };
 
     try {

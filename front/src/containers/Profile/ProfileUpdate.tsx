@@ -4,15 +4,15 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAtom } from "jotai";
 import { serverAxios } from "@/services/api";
-import { userAtom } from "@/store/userAtom";
-import styles from "./Profile.module.scss";
+import { ProfileImgAtom, userAtom } from "@/store/userAtom";
+import styles from "./ProfileUpdate.module.scss";
+import Image from "next/image";
 
 export default function ProfileUpdate() {
   const router = useRouter();
 
   const [data, setData] = useAtom(userAtom);
 
-  const [profile, setProfile] = useState(data.profile);
   const [nickname, setNickname] = useState(data.nickname);
   const [preNickname] = useState(data.nickname);
 
@@ -26,33 +26,11 @@ export default function ProfileUpdate() {
     const exp = getNickname.search("^[가-힣a-zA-Z0-9._ -]{2,}$");
 
     if (trimmedNickname.length <= 11 && trimmedNickname.length >= 1 && exp === 0) {
-      console.log("비밀번호");
       setCheckNickname("");
       return true;
     }
     setCheckNickname("닉네임의 길이는 2자 이상 10자 이하입니다");
     return false;
-  };
-
-  /** 정보 수정 요청 */
-  const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const formData = {
-      nickname,
-      profile,
-    };
-
-    try {
-      await serverAxios.put(`/user/`, formData);
-      setData((prevUser) => ({
-        ...prevUser,
-        ...formData,
-      }));
-      router.push(`/home/profile/${formData.nickname}/${data.user_id}`);
-    } catch (error) {
-      console.log("프로필 업데이트 에러", error);
-    }
   };
 
   /** 닉네임 중복확인 */
@@ -79,37 +57,92 @@ export default function ProfileUpdate() {
     }
   };
 
+  const [profileImages] = useAtom(ProfileImgAtom);
+  const [profileIndex, setProfileIndex] = useState(profileImages.indexOf(data.profile));
+
+  /** 프로필 사진 변경 */
+  const changeProfile = (direction: string) => {
+    if (direction === "left") {
+      setProfileIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : profileImages.length - 1));
+    } else if (direction === "right") {
+      setProfileIndex((prevIndex) => (prevIndex < profileImages.length - 1 ? prevIndex + 1 : 0));
+    }
+  };
+
+  /** 정보 수정 요청 */
+  const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = {
+      nickname,
+      profile: profileImages[profileIndex],
+    };
+
+    try {
+      await serverAxios.put(`/user/`, formData);
+      setData((prevUser) => ({
+        ...prevUser,
+        ...formData,
+      }));
+      router.push(`/home/profile/${formData.nickname}/${data.user_id}`);
+    } catch (error) {
+      console.log("프로필 업데이트 에러", error);
+    }
+  };
+
   return (
     <div className={styles.profileData}>
-      <div className={`${styles.profileContainer} ${styles.updateContainer}`}>
+      <div className={`${styles.updateContainer}`}>
         <div className={styles.title}>회원 정보 수정</div>
-        <form onSubmit={handleUpdateProfile}>
-          <div>{data.email}</div>
-
-          {/* 프로필 업데이트 입력 필드 */}
-          <div>
-            <label htmlFor="profile">프로필 </label>
-            <input type="text" id="profile" value={profile} onChange={(e) => setProfile(e.target.value)} />
+        <form className={styles.form} onSubmit={handleUpdateProfile}>
+          {/* 프로필 사진 */}
+          <div className={styles.flex}>
+            <div className={styles.imageInput}>
+              <input
+                className={styles.inputImg}
+                type="text"
+                id="profile"
+                value={profileImages[profileIndex]}
+                readOnly
+              />
+              <button onClick={() => changeProfile("left")}>왼</button>
+              <Image
+                className={styles.imageSelect}
+                src={profileImages[profileIndex]}
+                alt="프로필 선택"
+                quality={100}
+                width={200}
+                height={250}
+              />
+              <button onClick={() => changeProfile("right")}>오</button>
+            </div>
+            <div className={styles.col}>
+              <div>
+                <label htmlFor="email">이메일</label>
+                <br />
+                <input type="text" id="email" value={data.email} disabled />
+              </div>
+              <div>
+                <label htmlFor="nickname">닉네임 </label>
+                <br />
+                <input type="text" id="nickname" value={nickname} onChange={(e) => setNickname(e.target.value)} />
+                <button type="button" onClick={handleCheckNickname} className={[styles.button, styles.check].join(" ")}>
+                  중복확인
+                </button>
+              </div>
+              <div className={styles.checkText}>{checkNickname}</div>
+            </div>
           </div>
 
-          {/* 닉네임 업데이트 입력 필드 */}
-          <div>
-            <label htmlFor="nickname">닉네임 </label>
-            <input type="text" id="nickname" value={nickname} onChange={(e) => setNickname(e.target.value)} />
-            <button type="button" onClick={handleCheckNickname} className={[styles.button, styles.check].join(" ")}>
-              중복확인
+          <div className={styles.buttons}>
+            <button type="submit" className={styles.button} disabled={updateValidation}>
+              수정
             </button>
-            <div className={styles.checkText}>{checkNickname}</div>
+            <button className={styles.button} onClick={() => router.back()}>
+              취소
+            </button>
           </div>
-
-          <button type="submit" className={styles.button} disabled={updateValidation}>
-            확인
-          </button>
         </form>
-
-        <button className={styles.button} onClick={() => router.back()}>
-          취소
-        </button>
       </div>
     </div>
   );

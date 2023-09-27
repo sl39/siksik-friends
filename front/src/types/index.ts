@@ -8,7 +8,7 @@ export interface User {
   level?: number;
   nickname: string;
   email?: string;
-  profile?: string;
+  profile: string;
   odds?: string;
 }
 
