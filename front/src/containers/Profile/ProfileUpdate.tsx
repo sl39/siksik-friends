@@ -105,7 +105,9 @@ export default function ProfileUpdate() {
                 value={profileImages[profileIndex]}
                 readOnly
               />
-              <button onClick={() => changeProfile("left")}>왼</button>
+              <button type="button" onClick={() => changeProfile("left")}>
+                왼
+              </button>
               <Image
                 className={styles.imageSelect}
                 src={profileImages[profileIndex]}
@@ -114,7 +116,9 @@ export default function ProfileUpdate() {
                 width={200}
                 height={250}
               />
-              <button onClick={() => changeProfile("right")}>오</button>
+              <button type="button" onClick={() => changeProfile("right")}>
+                오
+              </button>
             </div>
             <div className={styles.col}>
               <div>
@@ -138,7 +142,7 @@ export default function ProfileUpdate() {
             <button type="submit" className={styles.button} disabled={updateValidation}>
               수정
             </button>
-            <button className={styles.button} onClick={() => router.back()}>
+            <button type="button" className={styles.button} onClick={() => router.back()}>
               취소
             </button>
           </div>
