@@ -1,5 +1,7 @@
 package com.ssf.auth.global.jwt.filter;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.ssf.auth.domain.user.User;
 import com.ssf.auth.domain.user.repository.UserRepository;
 import com.ssf.auth.global.jwt.service.JwtService;
@@ -10,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
@@ -32,6 +35,12 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserRepository userRepository;
 
+    @Value("${jwt.access.header}")
+    private String accessHeader;
+
+    @Value("${jwt.secretKey}")
+    private String secretKey;
+
     private final GrantedAuthoritiesMapper authoritiesMapper = new NullAuthoritiesMapper();
 
     @Override
@@ -41,11 +50,26 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
             return;
         }
 
-        String refreshToken = jwtService.extractRefreshToken(request)
-                .filter(jwtService::isTokenValid)
-                .orElse(null);
+        System.out.println(JWT.require(Algorithm.HMAC512(secretKey))
+                .build()
+                .verify(request.getHeader(accessHeader).replace("Bearer ", ""))
+                .getClaim("id").toString());
+
+        String accessToken =  jwtService.extractAccessToken(request).orElseThrow();
+        String id = jwtService.extractId(accessToken).orElseThrow();
+
+//        String refreshToken = jwtService.extractRefreshToken(request)
+//                .filter(jwtService::isTokenValid)
+//                .orElse(null);
+
+        String refreshToken = jwtService.extractRefreshToken(accessToken);
+
+        if (!jwtService.isTokenValid(refreshToken)) {
+            refreshToken = null;
+        }
 
         if (refreshToken != null) {
+            System.out.println("리프레시 토큰 있다!");
             checkRefreshTokenAndReIssueAccessToken(response, refreshToken);
             return;
         }

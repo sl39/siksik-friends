@@ -52,7 +52,7 @@ public class OAuth2SignInSuccessHandler implements AuthenticationSuccessHandler 
         String refreshToken = jwtService.createRefreshToken();
 
         response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
-        response.addHeader(jwtService.getRefreshHeader(), "Bearer " + refreshToken);
+//        response.addHeader(jwtService.getRefreshHeader(), "Bearer " + refreshToken);
 
 //        jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
         jwtService.sendAccessToken(response, accessToken);
