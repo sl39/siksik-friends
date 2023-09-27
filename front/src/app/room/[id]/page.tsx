@@ -1,4 +1,4 @@
-import GameIndex from "@/containers/Game/Room";
+import GameIndex from "@/containers/Room";
 
 export default function GameRoom() {
   return <GameIndex />;
