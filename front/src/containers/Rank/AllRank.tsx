@@ -8,7 +8,6 @@ import RankItem from "./RankItem";
 
 export default function AllRank() {
   const [ranks, setRanks] = useState<Array<Rank>>([]);
-  const [dummyRanks, setDummyRanks] = useState<string[]>([]);
 
   const rankData = async () => {
     try {
@@ -90,6 +89,24 @@ export default function AllRank() {
           score: 1868,
           level: 90,
         },
+        {
+          user_id: 961,
+          nickname: "HA6S2pn516",
+          profile: "/default.png",
+          odds: "31.7%",
+          rank: 0,
+          score: 1868,
+          level: 90,
+        },
+        {
+          user_id: 962,
+          nickname: "HA6S2pn516",
+          profile: "/default.png",
+          odds: "31.7%",
+          rank: 0,
+          score: 1868,
+          level: 90,
+        },
       ]);
     }
   };
@@ -98,23 +115,11 @@ export default function AllRank() {
     rankData();
   }, []);
 
-  useEffect(() => {
-    // data가 10개보다 모자라면, 빈 거 넣기
-    if (ranks.length < 10) {
-      const dummyCount = 10 - ranks.length;
-      const dummyValues = Array.from({ length: dummyCount }, (_, index) => `${index + 1}`);
-      setDummyRanks(dummyValues);
-    }
-  }, [ranks]);
-
   return (
     <div className={styles.RankArray}>
       <div className={styles.RankFlex}>
         {ranks.map((rank) => (
           <RankItem key={rank.user_id} item={rank} />
-        ))}
-        {dummyRanks.map((item) => (
-          <div key={item} className={`${styles.RankItem} ${styles.dummy}`} />
         ))}
       </div>
     </div>
