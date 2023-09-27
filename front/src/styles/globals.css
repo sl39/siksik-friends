@@ -8,22 +8,20 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: url("../../public/images/mouse_cursor2.png"), default;
+  cursor: url("/images/cursor/mouse_cursor2.png"), default;
   /* 드래그 안돼게 */
-  -webkit-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select:none;
-  user-select:none
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 body * {
-  cursor: url("../../public/images/mouse_cursor2.png"), default;
+  cursor: url("/images/cursor/mouse_cursor2.png"), default !important;
 }
 
 button,
 a {
   all: unset;
-  /* cursor: pointer; */
-  cursor: url("../../public/images/mouse_cursor2.png"), default;
 }
 input {
   font-family: var(--font-poor), sans-serif;
@@ -79,15 +77,13 @@ input {
 }
 .book-page::after {
   content: "";
-  background: url("/images/background2.png");
+  background: url("/images/background/background2.png");
 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-
   box-shadow: inset 0 0 0 1000px rgba(255, 255, 255, 0.6);
-
   position: absolute;
   top: 20px;
   left: 0;
