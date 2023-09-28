@@ -28,10 +28,10 @@ export interface Room {
   waiting: boolean;
 }
 
-export interface RoomCreate {
+export interface RoomInfo {
   title: string;
   count: number;
   countProblem: number;
-  type: string[]; // type을 문자열 배열로 명시
+  type: string[];
   password: string;
 }
