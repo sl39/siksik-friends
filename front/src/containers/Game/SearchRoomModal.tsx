@@ -17,14 +17,15 @@ export default function SearchRoomModal({ onClose }: Props) {
 
   /** 방 정보를 조회하는 함수
    *
-   * 방장 ID? 방 ID?
+   * 방장 ID 또는 방 ID로 방 정보를 찾음
+   * 방이 있으면, 해당 방으로 이동
+   * 방이 없다면, 에러 메세지
    */
   const handleSearchRoom = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const roomId = searchRoom;
-
     try {
-      const response = await axios("방찾기요청");
+      const response = await axios("방 찾기 요청");
       console.log(response);
       // 해당 방으로 이동한다.
       router.push(`/room/${roomId}`);
@@ -35,34 +36,47 @@ export default function SearchRoomModal({ onClose }: Props) {
   };
 
   return (
-    <div className={`${styles.modalContainer} ${styles.searchModal}`}>
+    <div className={styles.searchModal}>
       <div className={styles.modalImg}>
-        <Image src="/images/characterInFigma/image_178.png" alt="방 찾기 캐릭터" fill priority quality={100} />
+        <Image
+          src="/images/actor/cat1.png"
+          alt="방 찾기 캐릭터"
+          fill
+          style={{
+            objectFit: "contain",
+          }}
+          priority
+          quality={100}
+        />
       </div>
-      <div className={styles.searchText}>방 코드를 입력하세요</div>
-      <form onSubmit={(e) => handleSearchRoom(e)} className={`${styles.form}`}>
-        <label className={styles.label} htmlFor="room">
-          코드
-        </label>
-        <div className={styles.inputDiv}>
-          <input
-            className={`${styles.input} ${styles.inputText}`}
-            type="text"
-            name="room"
-            id="room"
-            value={searchRoom}
-            onChange={(e) => setSearchRoom(e.target.value)}
-            placeholder="0000"
-          />
-          <div className={styles.errMsg}>{errRoom}</div>
-        </div>
-        <button className={`${styles.btn}`} type="submit">
-          찾기
-        </button>
-      </form>
-      <button className={`${styles.button} ${styles.btn}`} onClick={onClose}>
-        취소
-      </button>
+      <div className={`${styles.modalContainer}`}>
+        <form onSubmit={handleSearchRoom} className={`${styles.form}`}>
+          <div className={styles.subText}>방 찾기</div>
+          <label className={styles.label} htmlFor="room">
+            코드
+          </label>
+          <div className={styles.inputDiv}>
+            <input
+              className={`${styles.input} ${styles.inputText}`}
+              type="text"
+              name="room"
+              id="room"
+              value={searchRoom}
+              onChange={(e) => setSearchRoom(e.target.value)}
+              placeholder="0000"
+            />
+            <div className={styles.errMsg}>{errRoom}</div>
+          </div>
+          <div className={styles.btns}>
+            <button className={`${styles.btn}`} type="submit">
+              찾기
+            </button>
+            <button type="button" className={`${styles.btn}`} onClick={onClose}>
+              취소
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
