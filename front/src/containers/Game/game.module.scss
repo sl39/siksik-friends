@@ -368,7 +368,7 @@ $hardBlue: #6495ed;
     }
 
     &.tabActive {
-      z-index: 99;
+      z-index: 15;
       position: relative;
       span {
         background: white;
@@ -390,7 +390,7 @@ $hardBlue: #6495ed;
 .content {
   // min-height: 350px;
   box-sizing: border-box;
-  z-index: 99;
+  z-index: 15;
   border-radius: 10px;
   position: relative;
   width: calc(100% - 38px);
