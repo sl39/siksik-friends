@@ -16,6 +16,7 @@ export default function Home() {
     //   setIsMusicPlaying(true);
     // }
   };
+
   return (
     <div className={styles.main}>
       <h1 className={styles.logo}>
