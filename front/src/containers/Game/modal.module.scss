@@ -23,218 +23,112 @@ $font-title: "Chelsea Market", sans-serif;
   width: 1000px;
   height: 200px;
 
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: center;
-  // align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   position: relative;
   margin: 20px;
   margin-top: 50px;
-  padding: 3rem 2rem 1.2rem;
+  padding: 2rem 2rem 0;
 
   background-color: #fff;
   border: 1px solid #37353f;
-
-  &:before,
-  &:after {
-    top: 0;
-    left: 0.25%;
-    height: 100%;
-    border: inherit;
-    border-radius: 4px;
-    transform: rotate(-0.1deg) scaleX(-1);
-    z-index: -1;
-    width: 99.5%;
-  }
-  &:after {
-    transform: rotate(-0.25deg);
-    left: 0.15%;
-  }
 }
 
-// 방 생성 모달
-.searchModal {
-  max-width: 600px;
-  width: 30vw;
-  height: 200px;
-
-  .modalImg {
-    position: absolute;
-    width: 80px;
-    height: auto;
-    // 원본 이미지 크기 입력
-    aspect-ratio: 546 / 863;
-
-    top: -80px;
-    left: calc(50% - (80px / 2));
-  }
-  .searchText {
-    text-align: center;
-    font-size: 1.6rem;
-    margin-bottom: 10px;
-  }
+.modalImg {
+  position: absolute;
+  z-index: 99;
 }
-
+.subText {
+  text-align: center;
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
 .form {
   position: relative;
   width: 90%;
   height: 100%;
-  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
 }
 .label {
   margin: 0.5rem 0;
 }
 .inputDiv {
   position: relative;
-  width: 100%;
-  height: 40%;
-
-  .errMsg {
-    font-size: 1.2rem;
-    color: red;
-  }
+  height: 30%;
 }
 .input {
-  position: relative;
-  width: 100%;
-}
-
-.button,
-.input,
-.select {
+  width: 95%;
+  margin: 0;
+  padding: 8px;
+  border: 1.5px solid $border;
+  border-radius: 4px;
   outline: none;
   &:focus,
   &:active {
     box-shadow: 0 0 0 2px rgba($blue, 0.5);
   }
 }
+.errMsg {
+  font-size: 1.2rem;
+  color: red;
+}
 
-.inputText,
-.select {
-  padding: 8px;
-  border: 1.5px solid $border;
-  border-radius: 4px;
+.btns {
   width: 100%;
-}
-// .inputRadio {
-//   display: none;
-//   + label {
-//     margin: 5px 15px 5px 0;
-//     display: inline-block;
-//     position: relative;
-//     padding-left: 1.5rem;
-//     cursor: pointer;
-//     width: auto;
-//     &:after {
-//       border: 1px dashed;
-//       border-radius: 50%;
-//       width: 15px;
-//       height: 15px;
-//       background: transparent;
-//       transition: 0.3s ease-in-out;
-//       top: 50%;
-//       left: 0;
-//       margin-top: -10px;
-//     }
-//     &:hover:after {
-//       background: rgba($pink, 0.3);
-//     }
-//   }
-//   &:checked + label:after {
-//     background: $pink;
-//   }
-// }
-
-.inputCheckbox {
-  display: none;
-  + label {
-    margin: 5px 15px 5px 0;
-    display: inline-block;
-    position: relative;
-    padding-left: 1.5rem;
-    cursor: pointer;
-    width: auto;
-    &:before {
-      @include border(1.5px);
-      border-radius: $border-radius;
-      width: 15px;
-      height: 15px;
-      background: transparent;
-      transition: 0.3s ease-in-out;
-      top: 50%;
-      left: 0;
-      margin-top: -10px;
-    }
-    &:after {
-      content: "✓";
-      font-size: 1.6rem;
-      left: 2px;
-      bottom: 0;
-      transform: scale(0);
-      transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    &:hover:before {
-      background: rgba($green, 0.4);
-    }
-  }
-  &:checked + label:before {
-    background: rgba($green, 0.8);
-  }
-  &:checked + label:after {
-    transform: scale(1);
-  }
-}
-
-.btn {
-  border: 0.5px solid $border;
-  box-sizing: border-box;
-
-  display: inline-block;
-
-  padding: 8px 12px;
-  position: relative;
-  transition: 0.2s ease-in-out;
-
-  height: 50px;
-  width: 40%;
-  text-align: center;
-
-  background-color: $softBlue;
-
-  &:before,
-  &:after {
-    top: 0;
-    left: 0;
-    transition: 0.2s ease;
-  }
-  &:before {
-    height: 102%;
-    width: 102%;
-
-    background-color: $softBlue;
-    transform: translate(6px, 6px);
-
+  display: flex;
+  justify-content: space-around;
+  .btn {
+    width: 80px;
+    height: 50px;
+    text-align: center;
     border: solid black;
-    box-sizing: border-box;
+    outline: none;
   }
-  &:after {
-    height: 99%;
-    width: 99%;
-    @include border(1.5px);
-    border-radius: 0 0 125px 3px/3px 85px 5px 55px;
+}
+
+// 방 찾기 모달
+.searchModal {
+  .modalImg {
+    width: 80px;
+    height: auto;
+    aspect-ratio: 2254 / 2373; // 원본 이미지 크기
+    top: -10px;
+    left: calc(50% - (80px / 2));
   }
-  &:hover {
-    &:before {
-      transform: translate(0);
-    }
+
+  .modalContainer {
+    max-width: 600px;
+    width: 30vw;
+    height: 250px;
   }
-  &:focus,
-  &:active,
-  &:hover {
-    &:before {
-      transform: translate(0);
-      background: #afb42b;
-    }
+}
+
+// 방 생성 모달
+.createModal {
+  .modalImg {
+    width: 80px;
+    height: auto;
+    aspect-ratio: 1014 / 749; // 원본 이미지 크기
+    top: 15px;
+    left: calc(50% - (80px / 2));
+  }
+
+  .modalContainer {
+    max-width: 600px;
+    width: 30vw;
+    height: 380px;
+  }
+  .form {
+    justify-content: flex-start;
+  }
+  .inputDiv {
+    height: 20%;
   }
 }
