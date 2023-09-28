@@ -1,79 +1,82 @@
 "use client";
 
 import { useEffect, useState } from "react";
-// import { serverAxios } from "@/services/api";
 import type { User } from "@/types";
 import UserItem from "./UserItem";
 import styles from "./game.module.scss";
 
 export default function WaitingUser() {
-  const [waitUser, setWaitUser] = useState<Array<User>>([]);
-  const [openTab, setOpenTab] = useState(0);
+  const [openTab, setOpenTab] = useState(1);
+  const [items, setItems] = useState<Array<User>>([]);
 
-  /** 대기실에 있는 유저 정보를 받아오는 함수. */
-  const handleWaitUser = async () => {
-    setOpenTab(0);
-
-    await setWaitUser([
-      { user_id: 1, nickname: "wait", profile: "/images/character/rabbit.png" },
-      { user_id: 2, nickname: "2", profile: "/images/character/rabbit.png" },
-      { user_id: 3, nickname: "3", profile: "/images/character/rabbit.png" },
-      { user_id: 4, nickname: "4", profile: "/images/character/rabbit.png" },
-      { user_id: 5, nickname: "5", profile: "/images/character/rabbit.png" },
-      { user_id: 6, nickname: "6", profile: "/images/character/rabbit.png" },
-    ]);
-    //   try {
-    //     const response = await serverAxios("");
-    //     console.log(response);
-    //     setWaitUser(response.data);
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-  };
-
-  /** 나의 모든 친구 정보를 받아오는 함수 */
-  const handleFriends = async () => {
-    setOpenTab(1);
-
-    await setWaitUser([
-      { user_id: 1, nickname: "friend", profile: "/images/character/rabbit.png" },
-      { user_id: 2, nickname: "2", profile: "/images/character/rabbit.png" },
-      { user_id: 3, nickname: "3", profile: "/images/character/rabbit.png" },
-      { user_id: 4, nickname: "4", profile: "/images/character/rabbit.png" },
-      { user_id: 5, nickname: "5", profile: "/images/character/rabbit.png" },
-      { user_id: 6, nickname: "6", profile: "/images/character/rabbit.png" },
-    ]);
-
-    //   try {
-    //     const response = await serverAxios("");
-    //     console.log(response);
-    //     setWaitUser(response.data);
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
+  const handleUser = (tab: number) => {
+    if (tab === 1) {
+      // 대기실 유저 보여주기
+      setItems([
+        { user_id: 1, nickname: "wait", profile: "/images/character/rabbit.png" },
+        { user_id: 2, nickname: "2", profile: "/images/character/rabbit.png" },
+        { user_id: 3, nickname: "3", profile: "/images/character/rabbit.png" },
+        { user_id: 4, nickname: "4", profile: "/images/character/rabbit.png" },
+        { user_id: 5, nickname: "5", profile: "/images/character/rabbit.png" },
+        { user_id: 6, nickname: "6", profile: "/images/character/rabbit.png" },
+      ]);
+      setOpenTab(tab);
+    } else if (tab === 2) {
+      // 친구인 유저 보여주기
+      setItems([
+        { user_id: 1, nickname: "friend", profile: "/images/character/rabbit.png" },
+        { user_id: 2, nickname: "2", profile: "/images/character/rabbit.png" },
+        { user_id: 3, nickname: "3", profile: "/images/character/rabbit.png" },
+        { user_id: 4, nickname: "4", profile: "/images/character/rabbit.png" },
+        { user_id: 5, nickname: "5", profile: "/images/character/rabbit.png" },
+        { user_id: 6, nickname: "6", profile: "/images/character/rabbit.png" },
+      ]);
+      setOpenTab(tab);
+    } else if (tab === 3) {
+      // 친구 요청 보여주기
+      setItems([
+        { user_id: 1, nickname: "request", profile: "/images/character/rabbit.png" },
+        { user_id: 2, nickname: "2", profile: "/images/character/rabbit.png" },
+        { user_id: 3, nickname: "3", profile: "/images/character/rabbit.png" },
+        { user_id: 4, nickname: "4", profile: "/images/character/rabbit.png" },
+        { user_id: 5, nickname: "5", profile: "/images/character/rabbit.png" },
+        { user_id: 6, nickname: "6", profile: "/images/character/rabbit.png" },
+      ]);
+      setOpenTab(tab);
+    }
   };
 
   useEffect(() => {
-    handleWaitUser();
+    handleUser(1);
   }, []);
 
   return (
-    <>
-      <div className={styles.userBigBox}>
-        <div className={styles.userBox}>
-          {waitUser.map((item) => (
+    <div className={styles.folder}>
+      <div className={styles.tabs}>
+        <button className={`${styles.tab} ${openTab === 1 ? styles.tabActive : ""}`} onClick={() => handleUser(1)}>
+          <div>
+            <span>대기실</span>
+          </div>
+        </button>
+        <button className={`${styles.tab} ${openTab === 2 ? styles.tabActive : ""}`} onClick={() => handleUser(2)}>
+          <div>
+            <span>친구목록</span>
+          </div>
+        </button>
+        <button className={`${styles.tab} ${openTab === 3 ? styles.tabActive : ""}`} onClick={() => handleUser(3)}>
+          <div>
+            <span>친구요청</span>
+          </div>
+        </button>
+      </div>
+
+      <div className={`${styles.content} ${styles[`tab_${openTab}`]}`}>
+        <div className={`${styles.page} ${styles.userBox}`}>
+          {items.map((item) => (
             <UserItem key={item.user_id} data={item} />
           ))}
         </div>
       </div>
-      <div className={`${styles.userNav} ${styles.tabs}`}>
-        <button className={`${styles.tab} ${openTab === 0 ? styles.tabOpen : ""}`} onClick={handleWaitUser}>
-          <div>대기실</div>
-        </button>
-        <button className={`${styles.tab} ${openTab === 1 ? styles.tabOpen : ""}`} onClick={handleFriends}>
-          <div>친구</div>
-        </button>
-      </div>
-    </>
+    </div>
   );
 }
