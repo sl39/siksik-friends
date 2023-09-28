@@ -16,7 +16,7 @@ export default function EnterRoom({ rooms }: Props) {
   const router = useRouter();
 
   // 방 생성 모달
-  const [openCreateRoom, setOpenCreateRoom] = useState(true);
+  const [openCreateRoom, setOpenCreateRoom] = useState(false);
   // 방 찾기 모달
   const [openSearchRoom, setOpenSearchRoom] = useState(false);
 
