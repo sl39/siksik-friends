@@ -12,8 +12,6 @@ export default function GameRoom() {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [filteredRooms, setFilteredRooms] = useState<Room[]>([]);
 
-  // 방 전체 목록 받아오는 로직 다시
-
   /** 대기 중인 방만 보여주는 함수 */
   const showWaitingRooms = async () => {
     setRoomBtn(1);
@@ -25,21 +23,22 @@ export default function GameRoom() {
     await setFilteredRooms(rooms);
   };
 
-  /** 방 목록 받아오기 */
+  /** 방 전체 목록 받아오기 */
   const fetchRoom = async () => {
     try {
+      // 소켓에서 받아오기
       const response = await axios.get("/1");
-      // const response = await serverAxios("");
       setRooms(response.data);
     } catch (err) {
       console.log("방 목록 에러", err);
     }
     showAllRooms();
   };
+
   useEffect(() => {
     fetchRoom();
 
-    // 서버 요청 전 더미 Room
+    // 서버 요청 전 더미 데이터
     setRooms([
       { id: 1, name: "더미1", waiting: true },
       { id: 2, name: "더미2", waiting: true },
@@ -48,7 +47,7 @@ export default function GameRoom() {
       { id: 5, name: "더미5", waiting: true },
       { id: 6, name: "더미6", waiting: true },
       { id: 7, name: "더미7", waiting: false },
-      { id: 8, name: "더미8", waiting: false },
+      { id: 82, name: "더미8", waiting: false },
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
