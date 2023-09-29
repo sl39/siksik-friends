@@ -23,7 +23,7 @@ public enum ProtocolDTO {
     // 게임 관련 Protocol
     SHOW_PROBLEM("send_problem", 8),
     SHOW_PROBLEM_RESULT("send_problem_result", 9),
-    SHOW_FINAL_RESULT("send_problem_result", 10),
+    SHOW_FINAL_RESULT("send_final_result", 10),
 ;
 
     private final String protocol;
