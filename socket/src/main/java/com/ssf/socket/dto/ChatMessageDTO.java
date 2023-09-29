@@ -8,6 +8,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class ChatMessageDTO {
+
+    String sendTime;
     String sender;
     String msg;
 }
