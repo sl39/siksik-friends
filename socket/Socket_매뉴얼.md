@@ -14,11 +14,11 @@
 
 - 로비 채팅
   
-  - /pub/room/chat
+  - /pub/lobby/chat
     
     - 채팅전송
   
-  - /sub/room/chat
+  - /sub/lobby/chat
     
     - 채팅수신
 
