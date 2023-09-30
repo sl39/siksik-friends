@@ -24,7 +24,7 @@ public class StompChatController {
 
         log.info("로비 채팅");
 
-        messageTemplate.convertAndSend("/sub/room/chat", body);
+        messageTemplate.convertAndSend("/sub/lobby/chat", body);
     }
     @MessageMapping("/room/chat/{roomId}")
     public void sendMsgToRoom(
