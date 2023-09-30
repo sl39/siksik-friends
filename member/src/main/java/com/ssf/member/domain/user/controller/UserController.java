@@ -6,12 +6,11 @@ import com.ssf.member.domain.user.service.UserAddService;
 import com.ssf.member.domain.user.service.UserFindService;
 import com.ssf.member.domain.user.service.UserModifyService;
 import com.ssf.member.domain.user.service.UserRemoveService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +38,12 @@ public class UserController {
         }
 
         userAddService.addUser(signInDto);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/email")
+    public ResponseEntity<Void> checkEmail(@Validated UserRequest.Email emailDto) {
+
         return ResponseEntity.ok().build();
     }
 
