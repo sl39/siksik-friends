@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
 import type { Room } from "@/types";
 import GameRoomItem from "./GameRoomItem";
 import styles from "./game.module.scss";
@@ -27,8 +26,20 @@ export default function GameRoom() {
   const fetchRoom = async () => {
     try {
       // 소켓에서 받아오기
-      const response = await axios.get("/1");
-      setRooms(response.data);
+      // const response = await axios.get("/1");
+      // setRooms(response.data);
+
+      // 서버 요청 전 더미 데이터
+      setRooms([
+        { id: 1, name: "더미1", waiting: true },
+        { id: 2, name: "더미2", waiting: true },
+        { id: 3, name: "더미3", waiting: false },
+        { id: 4, name: "더미4", waiting: false },
+        { id: 5, name: "더미5", waiting: true },
+        { id: 6, name: "더미6", waiting: true },
+        { id: 7, name: "더미7", waiting: false },
+        { id: 82, name: "더미8", waiting: false },
+      ]);
     } catch (err) {
       console.log("방 목록 에러", err);
     }
@@ -38,17 +49,6 @@ export default function GameRoom() {
   useEffect(() => {
     fetchRoom();
 
-    // 서버 요청 전 더미 데이터
-    setRooms([
-      { id: 1, name: "더미1", waiting: true },
-      { id: 2, name: "더미2", waiting: true },
-      { id: 3, name: "더미3", waiting: false },
-      { id: 4, name: "더미4", waiting: false },
-      { id: 5, name: "더미5", waiting: true },
-      { id: 6, name: "더미6", waiting: true },
-      { id: 7, name: "더미7", waiting: false },
-      { id: 82, name: "더미8", waiting: false },
-    ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
