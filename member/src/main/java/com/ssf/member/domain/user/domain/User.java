@@ -1,4 +1,4 @@
-package com.ssf.member.domain.user;
+package com.ssf.member.domain.user.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -36,7 +36,7 @@ public class User {
 
     @Column(nullable = false)
     @Builder.Default
-    private Boolean activated = false;
+    private boolean activated = false;
 
     @Column(name = "total_game", nullable = false)
     @Builder.Default
@@ -88,6 +88,10 @@ public class User {
 
     public void changeProfile(String profile) {
         this.profile = profile;
+    }
+
+    public void changeActivated() {
+        activated = !activated;
     }
 
     public void authorizeUser(Role role) {
