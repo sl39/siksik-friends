@@ -1,21 +1,12 @@
 package com.ssf.member.domain.user.dto;
 
 import lombok.Builder;
-import lombok.Getter;
 
-public class UserResponse {
+public record UserResponse() {
 
-    @Getter
     @Builder
-    public static class EmailRedundancy {
+    public record EmailRedundancy(boolean emailRedundancyStatus) {}
 
-        private boolean emailRedundancyStatus;
-    }
-
-    @Getter
     @Builder
-    public static class NicknameRedundancy {
-
-        private boolean nicknameRedundancyStatus;
-    }
+    public record NicknameRedundancy(boolean nicknameRedundancyStatus) {}
 }
