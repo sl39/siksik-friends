@@ -1,64 +1,90 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import styled from "styled-components";
+import Image from "next/image";
+import { useAtom } from "jotai";
+import { resetTimerAtom, timerEndedAtom } from "@/store/gameAtom";
+import styles from "./play.module.scss";
 
-interface ITest {
-  width: number;
+interface Props {
+  time: number;
+  resetTime: number;
+  count: number;
 }
 
-const ProgressBar = styled.div`
-  width: 100%;
-  height: 30px;
-  background-color: #dedede;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 0.8rem;
-  overflow: hidden;
-`;
+export default function Timer({ time, resetTime, count }: Props) {
+  const [sec, setSec] = useState(time * 10);
+  // 문제 시간 종료 여부
+  const [timerEnded, setTimerEnded] = useAtom(timerEndedAtom);
+  // 답 보는 시간
+  const [resetTimer, setResetTimer] = useAtom(resetTimerAtom);
 
-const Progress = styled.div.attrs<ITest>((props) => ({
-  style: {
-    width: `${props.width}%`,
-  },
-}))<ITest>`
-  height: 30px;
-  padding: 0;
-  text-align: center;
-  background-color: skyblue;
-  color: #111;
-  border-radius: 12px;
-  float: right;
-`;
+  const [quizNum, setQuizNum] = useState(0);
 
-const CenteredText = styled.p`
-  text-align: center;
-`;
-
-export default function Timer() {
-  const maxItem = 5;
-  const [sec, setSec] = useState(maxItem);
+  const [movingImg] = useState([
+    "/images/actor/rabbit3.png",
+    "/images/actor/bulea2.png",
+    "/images/actor/rabbit3.png",
+    "/images/actor/dodo1.png",
+  ]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (sec > 0) {
-        setSec(sec - 1);
-      } else {
-        clearInterval(interval);
-      }
-    }, 1000);
+    setQuizNum((prevQuizNum) => prevQuizNum + 1);
+
+    if (!resetTimer) {
+      setSec(time * 10);
+    } else {
+      setSec(resetTime * 10);
+    }
+  }, [time, resetTime, resetTimer]);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+
+    if (quizNum < count * 2) {
+      interval = setInterval(() => {
+        setTimerEnded(false);
+        if (sec > 0) {
+          setSec((prevSec) => prevSec - 1);
+        }
+        // 시간 종료
+        else {
+          clearInterval(interval);
+          // 스위칭
+          setTimeout(() => {
+            setTimerEnded(!timerEnded);
+            setResetTimer(!resetTimer);
+          }, 900);
+        }
+      }, 100);
+    }
 
     return () => clearInterval(interval);
-  }, [sec]);
+  }, [time, sec]);
 
+  const maxItem = (!resetTimer ? time : resetTime) * 10;
   const widthProgress = (sec * 100) / maxItem;
+
+  // transition 효과 제거하는 함수들
+  const getProgressBarClass = () => `${styles.progress} ${timerEnded ? styles.noTransition : ""} `;
+  const getImageClass = () => `${styles.image} ${timerEnded ? styles.noTransition : ""}  `;
+
   return (
-    <div>
-      <div>
-        <CenteredText>{sec} 초</CenteredText>
-        <ProgressBar>
-          <Progress width={widthProgress} />
-        </ProgressBar>
+    <div className={styles.timerContainer}>
+      {quizNum}
+      <div className={styles.timerTime}>남은 시간: {(sec / 10).toFixed(1)} 초</div>
+      <div className={getImageClass()} style={{ right: `calc(${widthProgress}% - 20px)` }}>
+        <Image
+          src={movingImg[quizNum % movingImg.length]}
+          alt="moving image"
+          fill
+          sizes="10vw"
+          className={`${styles.movingImage} z-10`}
+          style={{ objectFit: "contain" }}
+        />
+      </div>
+      <div className={styles.progressBar}>
+        <div className={getProgressBarClass()} style={{ width: `calc(${widthProgress}% )`, float: "right" }} />
       </div>
     </div>
   );
