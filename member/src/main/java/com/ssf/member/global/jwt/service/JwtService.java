@@ -52,7 +52,7 @@ public class JwtService {
         return JWT.create()
                 .withSubject(ACCESS_TOKEN_SUBJECT.getValue())
                 .withExpiresAt(new Date(now.getTime() + accessTokenExpirationPeriod))
-                .withClaim(ID_CLAIM.getValue(), id)
+                .withClaim(ID_CLAIM.getValue(), Long.parseLong(id))
                 .sign(Algorithm.HMAC512(secretKey));
     }
 
