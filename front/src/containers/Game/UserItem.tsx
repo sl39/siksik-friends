@@ -34,8 +34,8 @@ export default function UserItem({ data }: Props) {
   /** data.user_id 로 친구 여부에 따른 버튼 */
   const TypeText: TypeTextType = {
     0: [],
-    1: ["친구 요청 취소"],
-    2: ["친구 요청 수락", "친구 요청 거절"],
+    1: ["요청 취소"],
+    2: ["요청 수락", "거절"],
     3: ["친구 요청"],
     4: ["친구 삭제"],
   };
@@ -120,13 +120,15 @@ export default function UserItem({ data }: Props) {
       </div>
       <div className={styles.profileInfo}>
         <div className={styles.userInfo}>
-          <div className={styles.subBox}>Lv.{data.level}</div>
+          <div className={`${styles.subBox} ${styles.level}`}>Lv.{data.level}</div>
           <div className={styles.subBox}>{data.nickname}</div>
         </div>
         <div className={`${styles.hiddenBtn} ${isActive ? styles.visible : ""}`}>
-          <button onClick={openProfile}>프로필</button>
+          <button className={styles.subBtn} onClick={openProfile}>
+            프로필
+          </button>
           {TypeText[userType].map((text) => (
-            <button key={text} className={styles.button} onClick={() => handleFriend(text)}>
+            <button key={text} className={styles.subBtn} onClick={() => handleFriend(text)}>
               <span className={styles.buttonText}>{text}</span>
             </button>
           ))}
