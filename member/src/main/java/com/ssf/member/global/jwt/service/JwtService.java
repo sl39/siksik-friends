@@ -2,8 +2,10 @@ package com.ssf.member.global.jwt.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.ssf.member.domain.user.dto.UserRequest;
 import com.ssf.member.domain.user.repository.UserRepository;
-import jakarta.servlet.http.HttpServletRequest;
+import com.ssf.member.global.jwt.dto.JwtDto;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +19,7 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-import static com.ssf.member.global.common.Constants.*;
+import static com.ssf.member.global.jwt.domain.JwtConstants.*;
 
 @Service
 @Slf4j
@@ -68,14 +70,36 @@ public class JwtService {
         response.setHeader(accessHeader, accessToken);
     }
 
-    public Optional<String> extractAccessToken(HttpServletRequest request) {
-        return Optional.ofNullable(request.getHeader(accessHeader))
+    public JwtDto extractHeader(UserRequest.AccessHeader accessHeader) {
+        String accessToken = extractAccessToken(accessHeader).orElseThrow();
+        DecodedJWT decodedJWT = extractJwt(accessToken).orElseThrow();
+
+        return JwtDto.builder()
+                .accessToken(accessToken)
+                .id(String.valueOf(decodedJWT.getClaim(ID_CLAIM.getValue())))
+                .exp(extractExpiration(decodedJWT))
+                .build();
+    }
+
+    public Optional<String> extractAccessToken(UserRequest.AccessHeader accessHeader) {
+        return Optional.ofNullable(accessHeader.accessHeader())
                 .filter(accessToken -> accessToken.startsWith(AUTH_TYPE.getValue()))
                 .map(accessToken -> accessToken.replace(AUTH_TYPE.getValue(), ""));
     }
 
     public String extractRefreshToken(String id) {
         return redisTemplate.opsForValue().get(id);
+    }
+
+    private Optional<DecodedJWT> extractJwt(String accessToken) {
+        try {
+            return Optional.ofNullable(JWT.require(Algorithm.HMAC512(secretKey))
+                    .build()
+                    .verify(accessToken));
+
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
 
     public Optional<String> extractId(String accessToken) {
@@ -88,6 +112,11 @@ public class JwtService {
         } catch (Exception e) {
             return Optional.empty();
         }
+    }
+
+    public Long extractExpiration(DecodedJWT decodedJWT) {
+        return decodedJWT.getClaim(EXP_CLAIM.getValue()).asLong() * 1000
+                - System.currentTimeMillis();
     }
 
     public void updateRefreshToken(String id, String refreshToken) {

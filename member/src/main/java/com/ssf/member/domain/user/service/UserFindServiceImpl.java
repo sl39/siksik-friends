@@ -37,14 +37,14 @@ public class UserFindServiceImpl implements UserFindService {
     @Override
     public UserResponse.EmailRedundancy checkEmailDuplication(UserRequest.Email email) {
         return UserResponse.EmailRedundancy.builder()
-                .emailRedundancyStatus(userRepository.existsByEmail(email.getEmail()))
+                .emailRedundancyStatus(userRepository.existsByEmail(email.email()))
                 .build();
     }
 
     @Override
     public UserResponse.NicknameRedundancy checkNicknameDuplication(UserRequest.Nickname nickname) {
         return UserResponse.NicknameRedundancy.builder()
-                .nicknameRedundancyStatus(userRepository.existsByNickname(nickname.getNickname()))
+                .nicknameRedundancyStatus(userRepository.existsByNickname(nickname.nickname()))
                 .build();
     }
 
