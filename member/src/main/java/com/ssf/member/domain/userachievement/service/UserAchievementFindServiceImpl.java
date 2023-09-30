@@ -2,7 +2,6 @@ package com.ssf.member.domain.userachievement.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.ssf.member.domain.user.User;
 import com.ssf.member.domain.user.repository.UserRepository;
 import com.ssf.member.domain.userachievement.UserAchievement;
 import com.ssf.member.domain.userachievement.repository.UserAchievementRepository;

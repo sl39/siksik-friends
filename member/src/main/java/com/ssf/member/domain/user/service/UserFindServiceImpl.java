@@ -2,8 +2,10 @@ package com.ssf.member.domain.user.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.ssf.member.domain.user.User;
+import com.ssf.member.domain.user.domain.User;
 import com.ssf.member.domain.user.dto.UserDto;
+import com.ssf.member.domain.user.dto.UserRequest;
+import com.ssf.member.domain.user.dto.UserResponse;
 import com.ssf.member.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,8 +31,22 @@ public class UserFindServiceImpl implements UserFindService {
     private static final String BEARER = "Bearer ";
     private static final String KEY = "rank";
 
-    private final RedisTemplate redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
     private final UserRepository userRepository;
+
+    @Override
+    public UserResponse.EmailRedundancy checkEmailDuplication(UserRequest.Email email) {
+        return UserResponse.EmailRedundancy.builder()
+                .emailRedundancyStatus(userRepository.existsByEmail(email.email()))
+                .build();
+    }
+
+    @Override
+    public UserResponse.NicknameRedundancy checkNicknameDuplication(UserRequest.Nickname nickname) {
+        return UserResponse.NicknameRedundancy.builder()
+                .nicknameRedundancyStatus(userRepository.existsByNickname(nickname.nickname()))
+                .build();
+    }
 
     @Override
     public UserDto.Response findMyInfo(String accessHeader) {
