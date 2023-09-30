@@ -87,10 +87,6 @@ public class JwtService {
                 .map(accessToken -> accessToken.replace(AUTH_TYPE.getValue(), ""));
     }
 
-    public String extractRefreshToken(String id) {
-        return redisTemplate.opsForValue().get(id);
-    }
-
     private Optional<DecodedJWT> extractJwt(String accessToken) {
         try {
             return Optional.ofNullable(JWT.require(Algorithm.HMAC512(secretKey))
