@@ -8,6 +8,8 @@ import styles from "./game.module.scss";
 
 export default function WaitingUser() {
   const [openTab, setOpenTab] = useState(1);
+  // 친구 요청 수
+  // const [count, setCount] = useState(1);
   const [items, setItems] = useState<Array<User>>([]);
 
   /** 내 친구 조회  */
@@ -20,13 +22,15 @@ export default function WaitingUser() {
     }
   };
 
-  /** 친구 요청 조회 */
+  /** 받은 친구 요청 조회 */
   const myRequest = async () => {
     try {
-      const response = await serverAxios("/user/friend/request");
+      // response / request
+      const response = await serverAxios("/user/friend/response");
+      // setCount(response.data.size);
       setItems(response.data.friendList);
     } catch (err) {
-      console.log("요청 목록 에러", err);
+      console.log("받은 요청 목록 에러", err);
     }
   };
 
@@ -34,6 +38,7 @@ export default function WaitingUser() {
   const handleUser = (tab: number) => {
     if (tab === 1) {
       // 대기실 유저 보여주기
+      // setItems([]);
       setItems([
         { user_id: 1, nickname: "wait", profile: "/images/character/rabbit.png" },
         { user_id: 2, nickname: "2", profile: "/images/character/rabbit.png" },
@@ -56,6 +61,7 @@ export default function WaitingUser() {
 
   useEffect(() => {
     handleUser(1);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
