@@ -1,4 +1,4 @@
-package com.ssf.gateway.filter;
+package com.ssf.gateway.global.filter;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -11,11 +11,9 @@ import reactor.core.publisher.Mono;
 
 @Component
 @Slf4j
-public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Config> {
+public class GlobalGatewayFilterFactory extends AbstractGatewayFilterFactory<GlobalGatewayFilterFactory.Config> {
 
-    private static final String SIGN_IN_URL = "/api/auth/sign-in";
-
-    public GlobalFilter() {
+    public GlobalGatewayFilterFactory() {
         super(Config.class);
     }
 
