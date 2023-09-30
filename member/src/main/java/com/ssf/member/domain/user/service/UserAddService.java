@@ -4,5 +4,5 @@ import com.ssf.member.domain.user.dto.UserRequest;
 
 public interface UserAddService {
 
-    void addUser(UserRequest.SignIn signInDto);
+    void addUser(UserRequest.SignUp signUpDto);
 }

@@ -6,15 +6,16 @@ import com.ssf.member.domain.user.service.UserAddService;
 import com.ssf.member.domain.user.service.UserFindService;
 import com.ssf.member.domain.user.service.UserModifyService;
 import com.ssf.member.domain.user.service.UserRemoveService;
+import com.ssf.member.domain.user.domain.Message;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @Slf4j
@@ -30,20 +31,30 @@ public class UserController {
     private static final String ACCESS_HEADER = "Authorization";
     private static final String DEFAULT_PROFILE_URL = "/images/character/rabbit.png";
 
-    @PostMapping("/sign-up")
-    public ResponseEntity<Void> signIn(@RequestBody final UserRequest.SignIn signInDto) {
+    @GetMapping("/email")
+    public ResponseEntity<Message> checkEmail(@Validated UserRequest.Email emailDto) {
 
-        if (!StringUtils.hasText(signInDto.getProfile())) {
-            signInDto.changeProfile(DEFAULT_PROFILE_URL);
-        }
-
-        userAddService.addUser(signInDto);
-        return ResponseEntity.ok().build();
+        return userFindService.checkEmailDuplication(emailDto).getEmailRedundancyStatus() ?
+                ResponseEntity.status(HttpStatus.CONFLICT).body(Message.IMPOSSIBLE_EMAIL):
+                ResponseEntity.ok(Message.IMPOSSIBLE_EMAIL);
     }
 
-    @GetMapping("/email")
-    public ResponseEntity<Void> checkEmail(@Validated UserRequest.Email emailDto) {
+    @GetMapping("/nickname")
+    public ResponseEntity<Message> checkNickname(@Validated UserRequest.Nickname nicknameDto) {
 
+        return userFindService.checkNicknameDuplication(nicknameDto).getNicknameRedundancyStatus() ?
+                ResponseEntity.status(HttpStatus.CONFLICT).body(Message.IMPOSSIBLE_NICKNAME) :
+                ResponseEntity.ok(Message.POSSIBLE_NICKNAME);
+    }
+
+    @PostMapping("/sign-up")
+    public ResponseEntity<Void> signIn(@RequestBody final UserRequest.SignUp signUpDto) {
+
+        if (!StringUtils.hasText(signUpDto.getProfile())) {
+            signUpDto.changeProfile(DEFAULT_PROFILE_URL);
+        }
+
+        userAddService.addUser(signUpDto);
         return ResponseEntity.ok().build();
     }
 

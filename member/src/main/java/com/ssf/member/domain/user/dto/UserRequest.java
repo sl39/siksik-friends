@@ -18,7 +18,15 @@ public class UserRequest {
 
     @Getter
     @Builder
-    public static class SignIn {
+    public static class Nickname {
+
+        @NotBlank(message = "닉네임은 필수 입력 값입니다.")
+        private String nickname;
+    }
+
+    @Getter
+    @Builder
+    public static class SignUp {
 
         private String email;
         private String password;

@@ -1,6 +1,13 @@
 package com.ssf.member.global.common;
 
-public interface Constants {
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-    String RANK_KEY = "rank";
+@Getter
+@RequiredArgsConstructor
+public enum Constants {
+
+    RANK_KEY("rank");
+
+    private final String value;
 }
