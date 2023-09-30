@@ -18,7 +18,7 @@ public class StompChatController {
 
     private final SimpMessagingTemplate messageTemplate; //특정 Broker로 메세지를 전달
 
-    @MessageMapping("/room/chat")
+    @MessageMapping("/lobby/chat")
     public void sendMsgToLobby(
             @Payload ChatMessageDTO body) {
 

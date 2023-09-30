@@ -8,6 +8,8 @@
 
 ![](Socket_매뉴얼_assets/2023-09-30-20-59-47-image.png)
 
+<br>
+
 > ### 게임시작 눌렀을 때
 
 - 로비 채팅
@@ -34,15 +36,37 @@
 
 - 로비 유저 목록
   
-  - /pub/room/entrance
+  - /pub/lobby/entrance
     
     - 유저 정보
   
-  - /sub/room/entrance
+  - /sub/lobby/list
     
     - 유저 목록
 
+<br>
 
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
 
 --- 
 
@@ -52,11 +76,19 @@
 
 ![](Socket_매뉴얼_assets/2023-09-30-21-04-11-image.png)
 
+<br>
+
+<br>
+
+<br>
+
+<br>
+
 > ### 방 만들기(확인 눌렀을 때)
 
 - 방 만들기
   
-  - /pub/lobby
+  - /lobby(POST로 REST 요청을 해야 함)
     
     - 유저가 선택한 방 정보 전송
   
@@ -98,6 +130,10 @@
     
     - 방 정보 수신
 
+<br>
+
+<br>
+
 - Ready
   
   - /pub/room/ready/{roomId}
@@ -109,5 +145,3 @@
   - /pub/room/unready/{roomId}
     
     - 유저 정보 전송
-
-
