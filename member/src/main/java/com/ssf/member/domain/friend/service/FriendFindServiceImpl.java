@@ -55,7 +55,7 @@ public class FriendFindServiceImpl implements FriendFindService {
                     .nickname(user.getNickname())
                     .level(user.getLevel())
                     .profile(user.getProfile())
-                    .activated(user.getActivated())
+                    .activated(user.isActivated())
                     .build());
         }
 
@@ -93,7 +93,7 @@ public class FriendFindServiceImpl implements FriendFindService {
                     .nickname(user.getNickname())
                     .level(user.getLevel())
                     .profile(user.getProfile())
-                    .activated(user.getActivated())
+                    .activated(user.isActivated())
                     .build());
         }
 
@@ -129,7 +129,7 @@ public class FriendFindServiceImpl implements FriendFindService {
                     .nickname(user.getNickname())
                     .level(user.getLevel())
                     .profile(user.getProfile())
-                    .activated(user.getActivated())
+                    .activated(user.isActivated())
                     .build());
         }
 

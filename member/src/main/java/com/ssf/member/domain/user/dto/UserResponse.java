@@ -9,13 +9,13 @@ public class UserResponse {
     @Builder
     public static class EmailRedundancy {
 
-        private Boolean emailRedundancyStatus;
+        private boolean emailRedundancyStatus;
     }
 
     @Getter
     @Builder
     public static class NicknameRedundancy {
 
-        private Boolean nicknameRedundancyStatus;
+        private boolean nicknameRedundancyStatus;
     }
 }

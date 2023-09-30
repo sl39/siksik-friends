@@ -34,7 +34,7 @@ public class UserController {
     @GetMapping("/email")
     public ResponseEntity<Message> checkEmail(@Validated UserRequest.Email emailDto) {
 
-        return userFindService.checkEmailDuplication(emailDto).getEmailRedundancyStatus() ?
+        return userFindService.checkEmailDuplication(emailDto).isEmailRedundancyStatus()?
                 ResponseEntity.status(HttpStatus.CONFLICT).body(Message.IMPOSSIBLE_EMAIL):
                 ResponseEntity.ok(Message.IMPOSSIBLE_EMAIL);
     }
@@ -42,7 +42,7 @@ public class UserController {
     @GetMapping("/nickname")
     public ResponseEntity<Message> checkNickname(@Validated UserRequest.Nickname nicknameDto) {
 
-        return userFindService.checkNicknameDuplication(nicknameDto).getNicknameRedundancyStatus() ?
+        return userFindService.checkNicknameDuplication(nicknameDto).isNicknameRedundancyStatus() ?
                 ResponseEntity.status(HttpStatus.CONFLICT).body(Message.IMPOSSIBLE_NICKNAME) :
                 ResponseEntity.ok(Message.POSSIBLE_NICKNAME);
     }
