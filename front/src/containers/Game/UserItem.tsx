@@ -15,11 +15,11 @@ interface TypeTextType {
 }
 
 export default function UserItem({ data }: Props) {
-  const [isActive, setIsActive] = useState(true);
+  const [isActive, setIsActive] = useState(false);
   // eslint-disable-next-line no-null/no-null
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const buttonRef = useRef<HTMLDivElement>(null);
 
-  const handleBlur = (e: React.FocusEvent<HTMLButtonElement>) => {
+  const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
     // e.relatedTarget이 buttonRef.current 또는 그 자식 요소인지 확인
     if (buttonRef.current && !buttonRef.current.contains(e.relatedTarget as Node)) {
       setIsActive(false);
@@ -95,7 +95,10 @@ export default function UserItem({ data }: Props) {
   };
 
   return (
-    <button
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+    <div
+      role="button"
       className={`${styles.userItem} ${isActive ? styles.active : ""}`}
       onClick={() => setIsActive(true)}
       onBlur={handleBlur}
@@ -129,6 +132,6 @@ export default function UserItem({ data }: Props) {
           ))}
         </div>
       </div>
-    </button>
+    </div>
   );
 }
