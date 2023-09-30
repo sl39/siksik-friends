@@ -1,7 +1,7 @@
 package com.ssf.member.domain.userachievement;
 
 import com.ssf.member.domain.achievement.Achievement;
-import com.ssf.member.domain.user.User;
+import com.ssf.member.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
 

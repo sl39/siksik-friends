@@ -1,6 +1,5 @@
 package com.ssf.member.global.config;
 
-import com.ssf.member.domain.user.dto.UserDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

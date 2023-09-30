@@ -1,4 +1,4 @@
-package com.ssf.member.domain.user;
+package com.ssf.member.domain.user.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -7,7 +7,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum Role {
 
-    GUEST("ROLE_GUEST"), USER("ROLE_USER"), VIP("ROLE_VIP"), MANAGER("ROLE_MANAGER");
+    GUEST("ROLE_GUEST"),
+    USER("ROLE_USER"),
+    VIP("ROLE_VIP"),
+    MANAGER("ROLE_MANAGER");
 
     private final String key;
 }
