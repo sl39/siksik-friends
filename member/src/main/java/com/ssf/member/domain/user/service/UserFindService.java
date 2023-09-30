@@ -1,15 +1,18 @@
 package com.ssf.member.domain.user.service;
 
 import com.ssf.member.domain.user.dto.UserDto;
-import jakarta.servlet.http.HttpServletRequest;
+import com.ssf.member.domain.user.dto.UserRequest;
+import com.ssf.member.domain.user.dto.UserResponse;
 
 import java.util.List;
 
 public interface UserFindService {
 
-    public UserDto.Response findMyInfo(String accessHeader);
-    public UserDto.Response findUser(Long id);
-    public UserDto.Response findNickname(String nickname);
-    public Long findRank(Long id);
-    public List<UserDto.Response> findRankList();
+    UserResponse.EmailRedundancy checkEmailDuplication(UserRequest.Email email);
+    UserResponse.NicknameRedundancy checkNicknameDuplication(UserRequest.Nickname nickname);
+    UserDto.Response findMyInfo(String accessHeader);
+    UserDto.Response findUser(Long id);
+    UserDto.Response findNickname(String nickname);
+    Long findRank(Long id);
+    List<UserDto.Response> findRankList();
 }

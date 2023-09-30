@@ -5,7 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.ssf.member.domain.friend.Friend;
 import com.ssf.member.domain.friend.dto.FriendResponseDto;
 import com.ssf.member.domain.friend.repository.FriendRepository;
-import com.ssf.member.domain.user.User;
+import com.ssf.member.domain.user.domain.User;
 import com.ssf.member.domain.user.dto.UserDto;
 import com.ssf.member.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -55,7 +55,7 @@ public class FriendFindServiceImpl implements FriendFindService {
                     .nickname(user.getNickname())
                     .level(user.getLevel())
                     .profile(user.getProfile())
-                    .activated(user.getActivated())
+                    .activated(user.isActivated())
                     .build());
         }
 
@@ -93,7 +93,7 @@ public class FriendFindServiceImpl implements FriendFindService {
                     .nickname(user.getNickname())
                     .level(user.getLevel())
                     .profile(user.getProfile())
-                    .activated(user.getActivated())
+                    .activated(user.isActivated())
                     .build());
         }
 
@@ -129,7 +129,7 @@ public class FriendFindServiceImpl implements FriendFindService {
                     .nickname(user.getNickname())
                     .level(user.getLevel())
                     .profile(user.getProfile())
-                    .activated(user.getActivated())
+                    .activated(user.isActivated())
                     .build());
         }
 
