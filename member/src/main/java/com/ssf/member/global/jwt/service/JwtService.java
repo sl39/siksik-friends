@@ -76,7 +76,7 @@ public class JwtService {
 
         return JwtDto.builder()
                 .accessToken(accessToken)
-                .id(String.valueOf(decodedJWT.getClaim(ID_CLAIM.getValue())))
+                .id(extractId(decodedJWT))
                 .exp(extractExpiration(decodedJWT))
                 .build();
     }
@@ -102,16 +102,8 @@ public class JwtService {
         }
     }
 
-    public Optional<String> extractId(String accessToken) {
-        try {
-            return Optional.ofNullable(JWT.require(Algorithm.HMAC512(secretKey))
-                    .build()
-                    .verify(accessToken)
-                    .getClaim(ID_CLAIM.getValue()).toString());
-
-        } catch (Exception e) {
-            return Optional.empty();
-        }
+    public String extractId(DecodedJWT decodedJWT) {
+        return String.valueOf(decodedJWT.getClaim(EXP_CLAIM.getValue()));
     }
 
     public Long extractExpiration(DecodedJWT decodedJWT) {
@@ -121,15 +113,5 @@ public class JwtService {
 
     public void updateRefreshToken(String id, String refreshToken) {
         redisTemplate.opsForValue().set(id, refreshToken, 300L, TimeUnit.SECONDS);
-    }
-
-    public boolean isTokenValid(String token) {
-        try {
-            JWT.require(Algorithm.HMAC512(secretKey)).build().verify(token);
-            return true;
-
-        } catch (Exception e) {
-            return false;
-        }
     }
 }
