@@ -42,7 +42,7 @@ public class StompRoomController {
     }
 
     @MessageMapping("/room/entrance/{roomId}")
-    public void entrance(
+    public void entranceRoom(
             @DestinationVariable Long roomId,
             @Payload Member body) {
 
@@ -56,7 +56,7 @@ public class StompRoomController {
     }
 
     @MessageMapping("/room/exit/{roomId}")
-    public void exit(
+    public void exitRoom(
             @DestinationVariable Long roomId,
             @Payload Member body) {
 
