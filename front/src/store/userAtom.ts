@@ -11,7 +11,7 @@ export const userAtom = atom<User>({
   rank: 999,
   exp: 0,
   score: 10,
-  level: 1,
+  level: 99,
 });
 
 export const profileAtom = atom<User>({
