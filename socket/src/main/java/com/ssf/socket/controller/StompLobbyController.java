@@ -25,7 +25,7 @@ public class StompLobbyController {
         lobbyRepository.join(body);
         List<Member> lobbyMembers = lobbyRepository.allLobbyMember();
 
-        scheduler.schedule(() -> messageTemplate.convertAndSend("/sub/robby/list", lobbyMembers), 100, TimeUnit.MILLISECONDS);
+        scheduler.schedule(() -> messageTemplate.convertAndSend("/sub/lobby/list", lobbyMembers), 100, TimeUnit.MILLISECONDS);
     }
 
     @MessageMapping("/lobby/exit")
@@ -35,6 +35,6 @@ public class StompLobbyController {
         lobbyRepository.out(body);
         List<Member> lobbyMembers = lobbyRepository.allLobbyMember();
 
-        scheduler.schedule(() -> messageTemplate.convertAndSend("/sub/robby/list", lobbyMembers), 100, TimeUnit.MILLISECONDS);
+        scheduler.schedule(() -> messageTemplate.convertAndSend("/sub/lobby/list", lobbyMembers), 100, TimeUnit.MILLISECONDS);
     }
 }
