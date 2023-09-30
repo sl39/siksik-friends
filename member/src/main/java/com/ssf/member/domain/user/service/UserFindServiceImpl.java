@@ -2,7 +2,7 @@ package com.ssf.member.domain.user.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.ssf.member.domain.user.User;
+import com.ssf.member.domain.user.domain.User;
 import com.ssf.member.domain.user.dto.UserDto;
 import com.ssf.member.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

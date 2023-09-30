@@ -1,4 +1,4 @@
-package com.ssf.member.domain.user;
+package com.ssf.member.domain.user.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
