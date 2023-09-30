@@ -99,7 +99,7 @@ public class JwtService {
     }
 
     public String extractId(DecodedJWT decodedJWT) {
-        return String.valueOf(decodedJWT.getClaim(EXP_CLAIM.getValue()));
+        return String.valueOf(decodedJWT.getClaim(ID_CLAIM.getValue()));
     }
 
     public Long extractExpiration(DecodedJWT decodedJWT) {
