@@ -100,4 +100,13 @@ public class StompRoomController {
 
         messageTemplate.convertAndSend("/sub/room/member/" + roomId, members);
     }
+
+    @MessageMapping("/room/roomList")
+    public void roomList(
+            @Payload Room body) {
+
+        List<Room> rooms = roomRepository.findAll();
+
+        messageTemplate.convertAndSend("/sub/room/roomList", rooms);
+    }
 }
