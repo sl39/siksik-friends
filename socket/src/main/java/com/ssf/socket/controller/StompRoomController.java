@@ -7,6 +7,7 @@ import com.ssf.socket.repository.MemoryRoomRepository;
 import com.ssf.socket.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -21,7 +22,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-@Log4j2
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class StompRoomController {
@@ -50,9 +51,10 @@ public class StompRoomController {
 
         targetRoom.memberEntrance(body);
 
-        List<Member> members = targetRoom.getMembers();
+//        List<Member> members = targetRoom.getMembers();
 
-        messageTemplate.convertAndSend("/sub/room/member/" + roomId, members);
+//        messageTemplate.convertAndSend("/sub/room/member/" + roomId, members);
+        messageTemplate.convertAndSend("/sub/room/info/" + roomId, targetRoom);
     }
 
     @MessageMapping("/room/exit/{roomId}")
