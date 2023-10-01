@@ -19,10 +19,10 @@ export default function GamePlay() {
   };
 
   // 스코어 상태 받아오기
-  const roomScore = [
-    { id: 1, name: "일등", score: 999 },
-    { id: 2, name: "이등", score: 998 },
-  ];
+  // const roomScore = [
+  //   { id: 1, name: "일등", score: 999 },
+  //   { id: 2, name: "이등", score: 998 },
+  // ];
 
   return (
     <div className={styles.flex}>
@@ -31,7 +31,7 @@ export default function GamePlay() {
       </div>
       <div className={styles.flex2}>
         <div className={styles.left}>
-          <Score data={roomScore} />
+          <Score />
         </div>
         <div className={styles.center}>
           <Question data={quiz} />
