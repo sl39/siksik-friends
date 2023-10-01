@@ -14,6 +14,9 @@ import java.util.List;
 public class Room {
     long roomId;
     String roomName;
+    int roomSize;
+    int roomCurrent;
+    int roomReady;
     String category;
     int quizCount;
     String password;
@@ -22,9 +25,8 @@ public class Room {
     int roomStatus;
     List<Member> members = new ArrayList<>();
 
-    public boolean memberExit(Member outMember) {
+    public void memberExit(Member outMember) {
         members.removeIf(e -> e.getUserName().equals(outMember.getUserName()));
-        return members.isEmpty();
     }
 
     public void memberEntrance(Member inMember) {

@@ -10,6 +10,10 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.util.Date;
+
 
 @Slf4j
 @RestController
@@ -24,6 +28,13 @@ public class StompChatController {
 
         log.info("로비 채팅");
 
+        Date currentTime = new Date();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+        String formattedTime = sdf.format(currentTime);
+
+        body.setSendTime(formattedTime);
+
         messageTemplate.convertAndSend("/sub/lobby/chat", body);
     }
     @MessageMapping("/room/chat/{roomId}")
@@ -34,6 +45,13 @@ public class StompChatController {
 
         log.info(roomId + "번 방 메시지");
         log.info(body.toString());
+
+        Date currentTime = new Date();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+        String formattedTime = sdf.format(currentTime);
+
+        body.setSendTime(formattedTime);
 
         messageTemplate.convertAndSend("/sub/room/chat/" + roomId, body);
     }
