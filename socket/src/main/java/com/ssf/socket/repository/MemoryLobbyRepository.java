@@ -11,7 +11,7 @@ import java.util.Map;
 public class MemoryLobbyRepository implements LobbyRepository{
     public static Map<Long, Member> store = new HashMap<>();
 
-    private static long lobbyCount;
+//    private static long lobbyCount;
     @Override
     public void join(Member member) {
         store.put(member.getUserId(), member);
