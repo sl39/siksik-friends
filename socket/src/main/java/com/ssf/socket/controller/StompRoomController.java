@@ -128,9 +128,7 @@ public class StompRoomController {
     @MessageMapping("/room/terminate")
     public void terminate() {
 
-        List<Room> rooms = roomRepository.findAll();
-
-        rooms.clear();
+        List<Room> rooms = roomRepository.terminate();
 
         messageTemplate.convertAndSend("/sub/room/roomList", rooms);
     }

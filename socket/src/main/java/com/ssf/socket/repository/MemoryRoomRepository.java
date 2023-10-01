@@ -31,4 +31,12 @@ public class MemoryRoomRepository implements RoomRepository{
 
         return new ArrayList<>(store.values());
     }
+
+    @Override
+    public List<Room> terminate() {
+
+        store.clear();
+
+        return new ArrayList<>(store.values());
+    }
 }
