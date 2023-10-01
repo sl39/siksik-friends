@@ -10,4 +10,5 @@ public interface RoomRepository {
     void delete(Room room);
     Optional<Room> findByRoomId(Long roomId);
     List<Room> findAll();
+    List<Room> terminate();
 }
