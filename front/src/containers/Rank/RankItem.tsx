@@ -15,9 +15,16 @@ export default function RankItem({ item }: Props) {
   const onClick = (nickname: string, user_id: number) => {
     router.replace(`/home/profile/${nickname}/${user_id}`);
   };
+
   return (
     <div className={styles.RankItem}>
-      <span className={styles.itemNum}>{item.rank}위</span>
+      <span
+        className={`${item.rank === 1 ? styles.first : ""} ${item.rank === 2 ? styles.second : ""} ${
+          item.rank === 3 ? styles.third : ""
+        } ${styles.itemNum}`}
+      >
+        {item.rank}위
+      </span>
       {/* <div style={{ position: "relative", height: "40px", width: "auto", aspectRatio: "3 / 4" }}>
         <Image
           src="/images/thrumpCards/red_joker.png"
