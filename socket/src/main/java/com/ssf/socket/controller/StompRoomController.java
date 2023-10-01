@@ -34,6 +34,7 @@ public class StompRoomController {
     public Room createRoom(
             @RequestBody Room body) {
 
+        body.setRoomCurrent(1);
         Room createdRoom = roomRepository.save(body);
         List<Room> listRoom = roomRepository.findAll();
 
@@ -51,6 +52,8 @@ public class StompRoomController {
 
         targetRoom.memberEntrance(body);
 
+        targetRoom.setRoomCurrent(targetRoom.getRoomCurrent() + 1);
+
 //        List<Member> members = targetRoom.getMembers();
 
 //        messageTemplate.convertAndSend("/sub/room/member/" + roomId, members);
@@ -64,15 +67,17 @@ public class StompRoomController {
 
         Room targetRoom = roomRepository.findByRoomId(roomId).orElseThrow();
 
-        boolean isEmpty = targetRoom.memberExit(body);
+//        boolean isEmpty = targetRoom.memberExit(body);
 
-        if (isEmpty) {
+        targetRoom.setRoomCurrent(targetRoom.getRoomCurrent() - 1);
+
+        if (targetRoom.getRoomCurrent() == 0) {
             roomRepository.delete(targetRoom);
         }
 
-        List<Member> members = targetRoom.getMembers();
+//        List<Member> members = targetRoom.getMembers();
 
-        messageTemplate.convertAndSend("/sub/room/member/" + roomId, members);
+        messageTemplate.convertAndSend("/sub/room/info/" + roomId, targetRoom);
     }
 
     @MessageMapping("/room/ready/{roomId}")

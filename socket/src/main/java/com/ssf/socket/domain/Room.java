@@ -14,6 +14,8 @@ import java.util.List;
 public class Room {
     long roomId;
     String roomName;
+    int roomSize;
+    int roomCurrent;
     String category;
     int quizCount;
     String password;
