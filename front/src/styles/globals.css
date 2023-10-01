@@ -1,14 +1,42 @@
+@font-face {
+  font-family: "Katuri";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_13@1.0/Katuri.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "SUITE-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Bazzi";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/Bazzi.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Chosunilbo_myungjo";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 body {
   background-color: var(--color-bg);
-  font-family: var(--font-poor), sans-serif;
+  font-family: "Bazzi", var(--font-poor), sans-serif;
   margin: 0;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   width: 100vw;
   height: 100vh;
+
+  min-height: 648px;
+  min-width: 1152px;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: url("/images/cursor/mouse_cursor2.png"), default;
+  cursor: url("../../public/images/cursor/mouse_cursor2.png"), default;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -16,7 +44,7 @@ body {
   user-select: none;
 }
 body * {
-  cursor: url("/images/cursor/mouse_cursor2.png"), default !important;
+  cursor: url("../../public/images/cursor/mouse_cursor2.png"), default !important;
 }
 img {
   -webkit-user-drag: none;
@@ -30,7 +58,7 @@ a {
   all: unset;
 }
 input {
-  font-family: var(--font-poor), sans-serif;
+  font-family: "Bazzi", var(--font-poor), sans-serif;
   font-size: 1.2rem;
   padding: 0 5px;
 }
@@ -43,6 +71,9 @@ input {
   padding: 0;
   max-height: 100vh;
   max-width: 177.78vh;
+
+  min-height: 648px;
+  min-width: 1152px;
 
   display: flex;
   justify-content: center;
