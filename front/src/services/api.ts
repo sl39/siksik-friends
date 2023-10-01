@@ -52,6 +52,11 @@ serverAxios.interceptors.response.use(
         응답 에러 직전 호출됩니다.
         .catch() 으로 이어집니다.
     */
+
+    // 401(즉, 권한 없음)인 경우에만 토큰을 재발급
+    if (error.response.status === 401) {
+      // refresh 토큰 재발급 및 accessToken 갱신
+    }
     return Promise.reject(error);
   }
 );
