@@ -60,6 +60,7 @@ export default function Timer({ time, resetTime, count }: Props) {
     }
 
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [time, sec]);
 
   const maxItem = (!resetTimer ? time : resetTime) * 10;

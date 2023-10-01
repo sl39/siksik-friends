@@ -1,4 +1,4 @@
-export default function Score(params) {
+export default function Score() {
   return (
     <div>
       <div>내 정보가 맨 위에</div>
