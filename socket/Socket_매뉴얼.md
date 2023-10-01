@@ -36,23 +36,21 @@
 
 - 로비 유저 목록
   
-  - /pub/lobby/entrance
+  - /pub/lobby/entrance(로비 입장)
     
     - 유저 정보
   
-  - /sub/lobby/list
+  - /pub/lobby/exit(로비 퇴장 -> 방 들어감 or 게임 나가기)
+    
+    - 유저 정보
+  
+  - /sub/lobby/list(로비에 있는 유저 목록 받아오기)
     
     - 유저 목록
 
 <br>
 
-<br>
 
-<br>
-
-<br>
-
-<br>
 
 <br>
 
