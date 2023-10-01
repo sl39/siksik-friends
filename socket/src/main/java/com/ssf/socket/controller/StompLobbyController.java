@@ -4,15 +4,19 @@ import com.ssf.socket.domain.Member;
 import com.ssf.socket.repository.LobbyRepository;
 import com.ssf.socket.repository.MemoryLobbyRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
+@RestController
 @RequiredArgsConstructor
 public class StompLobbyController {
     private final LobbyRepository lobbyRepository = new MemoryLobbyRepository();
@@ -21,6 +25,9 @@ public class StompLobbyController {
     @MessageMapping("/lobby/entrance")
     public void entranceLobby(
             @Payload Member body) {
+
+        log.info("전송 중");
+//        log.info(body.getUserId().toString());
 
         lobbyRepository.join(body);
         List<Member> lobbyMembers = lobbyRepository.allLobbyMember();
