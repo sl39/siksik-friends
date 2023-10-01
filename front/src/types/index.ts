@@ -32,6 +32,14 @@ export interface RoomInfo {
   title: string;
   count: number;
   countProblem: number;
+  countTimer: number;
   type: string[];
-  password: string;
+  password?: string;
+}
+
+export interface Quiz {
+  type: string;
+  title: string;
+  description: string;
+  answer: string;
 }

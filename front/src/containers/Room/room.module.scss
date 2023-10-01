@@ -1,44 +1,65 @@
-.container {
-  display: flex;
-  width: 100%;
-}
 .left {
-  width: 70%;
-  height: 75vh;
-  margin: 15px;
-  border: 1px solid black;
+  width: 68%;
+  margin-top: 5px;
+  margin-left: 15px;
+  margin-right: 15px;
+  height: 96%;
 }
 .right {
-  width: 25%;
-  height: 75vh;
-  margin: 15px 0;
+  border: 1px solid red;
+  box-sizing: border-box;
+  width: 29%;
+  height: 100%;
 }
 
 .roomInfo {
-  border: 1px solid black;
   height: 30%;
+  margin-bottom: 10px;
+  border-radius: 30px;
+  padding: 15px;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
 }
 .chatting {
-  border: 1px solid black;
-  height: 70%;
+  height: 68%;
+
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 5px;
+  box-sizing: border-box;
 }
 
 .roomUser {
   border: 1px solid black;
-  height: 60vh;
-  width: 20vw;
-  position: absolute;
+  box-sizing: border-box;
+
+  width: 100%;
+  height: 80%;
+  position: relative;
   margin: 5px 0;
   display: flex;
 }
 
 // 겜시작 버튼
 .startBtn {
-  position: absolute;
+  border: 1px solid red;
+  box-sizing: border-box;
+
+  position: relative;
   bottom: 0;
   right: 0;
-  width: 25vw;
-  height: 10vh;
+  width: 100%;
+  height: 15%;
 }
 .span {
   position: relative;
