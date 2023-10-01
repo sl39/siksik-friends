@@ -38,7 +38,7 @@ public class StompRoomController {
         Room createdRoom = roomRepository.save(body);
         List<Room> listRoom = roomRepository.findAll();
 
-        scheduler.schedule(() -> messageTemplate.convertAndSend("/sub/room/create", listRoom), 100, TimeUnit.MILLISECONDS);
+        scheduler.schedule(() -> messageTemplate.convertAndSend("/sub/room/roomList", listRoom), 100, TimeUnit.MILLISECONDS);
 
         return createdRoom;
     }
@@ -54,10 +54,11 @@ public class StompRoomController {
 
         targetRoom.setRoomCurrent(targetRoom.getRoomCurrent() + 1);
 
-//        List<Member> members = targetRoom.getMembers();
+        List<Room> listRoom = roomRepository.findAll();
 
-//        messageTemplate.convertAndSend("/sub/room/member/" + roomId, members);
         messageTemplate.convertAndSend("/sub/room/info/" + roomId, targetRoom);
+        scheduler.schedule(() -> messageTemplate.convertAndSend("/sub/room/roomList", listRoom), 100, TimeUnit.MILLISECONDS);
+
     }
 
     @MessageMapping("/room/exit/{roomId}")
@@ -67,17 +68,23 @@ public class StompRoomController {
 
         Room targetRoom = roomRepository.findByRoomId(roomId).orElseThrow();
 
-//        boolean isEmpty = targetRoom.memberExit(body);
+        targetRoom.memberExit(body);
 
         targetRoom.setRoomCurrent(targetRoom.getRoomCurrent() - 1);
 
         if (targetRoom.getRoomCurrent() == 0) {
             roomRepository.delete(targetRoom);
+        } else {
+            if (body.isLeader()) {
+                targetRoom.getMembers().get(0).setLeader(true);
+                messageTemplate.convertAndSend("/sub/room/info/" + roomId, targetRoom);
+            }
         }
 
-//        List<Member> members = targetRoom.getMembers();
+        List<Room> listRoom = roomRepository.findAll();
 
-        messageTemplate.convertAndSend("/sub/room/info/" + roomId, targetRoom);
+        scheduler.schedule(() -> messageTemplate.convertAndSend("/sub/room/roomList", listRoom), 100, TimeUnit.MILLISECONDS);
+
     }
 
     @MessageMapping("/room/ready/{roomId}")
@@ -89,9 +96,9 @@ public class StompRoomController {
 
         targetRoom.readyMember(body);
 
-        List<Member> members = targetRoom.getMembers();
+        targetRoom.setRoomReady(targetRoom.getRoomReady() + 1);
 
-        messageTemplate.convertAndSend("/sub/room/member/" + roomId, members);
+        messageTemplate.convertAndSend("/sub/room/info/" + roomId, targetRoom);
     }
 
     @MessageMapping("/room/unready/{roomId}")
@@ -103,14 +110,13 @@ public class StompRoomController {
 
         targetRoom.unreadyMember(body);
 
-        List<Member> members = targetRoom.getMembers();
+        targetRoom.setRoomReady(targetRoom.getRoomReady() - 1);
 
-        messageTemplate.convertAndSend("/sub/room/member/" + roomId, members);
+        messageTemplate.convertAndSend("/sub/room/info/" + roomId, targetRoom);
     }
 
     @MessageMapping("/room/roomList")
-    public void roomList(
-            @Payload Room body) {
+    public void roomList() {
 
         List<Room> rooms = roomRepository.findAll();
 
