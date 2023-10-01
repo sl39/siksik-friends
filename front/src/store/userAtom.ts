@@ -44,3 +44,11 @@ export const ProfileImgAtom = atom<Array<string>>([
   "/images/character/rabbit14.png",
   "/images/character/rabbit15.png",
 ]);
+
+export const levelAtom = atom<Array<string>>([
+  "images/thrumpCards/red_joker.png",
+  "/images/thrumpCards/01_spade.png",
+  "/images/thrumpCards/02_dia.png",
+  "/images/thrumpCards/03_clover.png",
+  "/images/thrumpCards/04_heart.png",
+]);

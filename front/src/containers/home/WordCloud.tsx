@@ -10,7 +10,6 @@ import styles from "./home.module.scss";
 interface Config {
   type: string;
   backgroundColor?: string;
-  borderRadius?: number;
   options?: {
     words?: any;
     minLength?: number;
@@ -95,7 +94,6 @@ export default function WordCloud() {
       setConfig({
         type: "wordcloud",
         backgroundColor: "rgba(255, 255, 255, 0.6)",
-        borderRadius: 50,
         options: {
           words,
           minLength: 1,
@@ -136,8 +134,7 @@ export default function WordCloud() {
 
       setConfig({
         type: "wordcloud",
-        backgroundColor: "rgba(255, 255, 255, 0.6)",
-        borderRadius: 50,
+        backgroundColor: "rgba(255, 255, 255, 0)",
         options: {
           words,
           minLength: 1,

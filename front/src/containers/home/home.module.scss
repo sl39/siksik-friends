@@ -37,8 +37,15 @@
 // 진짜 클라우드
 .wordChart {
   position: relative;
-  height: 85%;
+  height: 75%;
   margin-top: 5%;
+  padding-top: 5%;
+
+  background-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border-radius: 50px;
 }
 /* 워드클라우드 버튼 */
 .groupContainer {
@@ -61,8 +68,8 @@
   text-align: center;
   background-color: rgba($color: white, $alpha: 0.6);
   height: 100%;
-  font-weight: 800;
-  font-size: 22px;
+  font-size: 24px;
+  letter-spacing: 2px;
   min-width: 100px;
   border-radius: 8px;
   display: inline-block;
@@ -96,11 +103,6 @@
 .active:focus:last-of-type {
   border-radius: 12px 30px 30px 12px;
 }
-// @media only screen and (max-width: 767px) {
-//   .button {
-//     min-width: 50px;
-//   }
-// }
 .wordButton::-moz-focus-inner {
   border: 0;
 }

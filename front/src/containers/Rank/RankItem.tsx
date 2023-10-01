@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+// import Image from "next/image";
 import type { Rank } from "@/types";
 import styles from "./Rank.module.css";
 
@@ -17,6 +18,15 @@ export default function RankItem({ item }: Props) {
   return (
     <div className={styles.RankItem}>
       <span className={styles.itemNum}>{item.rank}위</span>
+      {/* <div style={{ position: "relative", height: "40px", width: "auto", aspectRatio: "3 / 4" }}>
+        <Image
+          src="/images/thrumpCards/red_joker.png"
+          alt="levelCard"
+          sizes="10vw"
+          fill
+          style={{ objectFit: "contain" }}
+        />
+      </div> */}
       <span className={styles.rankLevel}>Lv. {item.level}</span>
       <span className={`${styles.rankName}`}>
         <button onClick={() => onClick(item?.nickname, item?.user_id)} className={styles.highlight}>
