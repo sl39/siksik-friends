@@ -9,20 +9,21 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
+// 로고
 .logo {
   -webkit-font-smoothing: antialiased;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 30vh;
+  margin-top: 17%;
 }
 .logo span {
   position: relative;
   top: 10px;
   display: inline-block;
   animation: bounce 0.7s ease infinite alternate;
-  font-family: var(--font-logo), "Open Sans";
-  font-size: 15vw;
+  font-family: "Katuri", var(--font-logo), "Open Sans";
+  font-size: 25vh;
 
   color: #fff;
   text-shadow:
@@ -68,6 +69,30 @@
       0 50px 25px rgba(0, 0, 0, 0.2);
   }
 }
+.image {
+  position: absolute;
+  width: 10vw;
+  height: auto;
+}
+.alice {
+  top: 20%;
+  left: 15%;
+  aspect-ratio: 545 / 798;
+}
+.cat {
+  top: 75%;
+  left: 20%;
+  aspect-ratio: 846 / 874;
+  opacity: 0.9;
+  filter: blur(0.5px);
+}
+.dodo {
+  aspect-ratio: 740 / 885;
+  width: 8vw;
+  top: 50%;
+  right: 5%;
+  opacity: 0.9;
+}
 
 $bg: #fff;
 $text: #382b22;
@@ -75,7 +100,7 @@ $light-orange: #ffe0d0;
 $orange: #ffdab9;
 $dark-orange: #ff7a49;
 $orange-border: #f76127;
-$orange-shadow: #ffdab9;
+$orange-shadow: rgba(255, 218, 185, 0.5);
 
 // Click to Start 버튼
 .buttonContainer {
@@ -96,11 +121,9 @@ $orange-shadow: #ffdab9;
   font-family: inherit;
   text-align: center;
   span {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
   &.login {
-    font-weight: 600;
-
     color: $text;
     text-transform: uppercase;
     padding: 1.25em 2em;

@@ -26,6 +26,7 @@ export default function CreateRoomModal({ onClose }: Props) {
     title: "",
     count: 1,
     countProblem: 1,
+    countTimer: 1,
     type: [],
     password: "",
   });
