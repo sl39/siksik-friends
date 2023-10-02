@@ -56,7 +56,7 @@ public class StompRoomController {
 
         for (Member member : members) {
             if (body.getUserId().equals(member.getUserId())) {
-                break;
+                return;
             }
         }
 
