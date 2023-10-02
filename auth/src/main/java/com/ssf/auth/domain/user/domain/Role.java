@@ -12,5 +12,5 @@ public enum Role {
     VIP("ROLE_VIP"),
     MANAGER("ROLE_MANAGER");
 
-    private final String key;
+    private final String value;
 }
