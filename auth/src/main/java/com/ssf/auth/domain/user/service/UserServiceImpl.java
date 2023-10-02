@@ -6,6 +6,8 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.ssf.auth.domain.user.domain.Role;
 import com.ssf.auth.domain.user.dto.UserDto;
 import com.ssf.auth.domain.user.domain.User;
+import com.ssf.auth.domain.user.dto.UserRequest;
+import com.ssf.auth.domain.user.dto.UserResponse;
 import com.ssf.auth.domain.user.repository.UserRepository;
 import com.ssf.auth.global.jwt.service.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final RedisTemplate redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -38,6 +40,13 @@ public class UserServiceImpl implements UserService {
 
     @Value("${jwt.access.expiration}")
     private Long accessTokenExpirationPeriod;
+
+    @Override
+    public UserResponse.EmailRedundancy checkEmailDuplication(UserRequest.Email email) {
+        return UserResponse.EmailRedundancy.builder()
+                .emailRedundancyStatus(userRepository.existsByEmail(email.email()))
+                .build();
+    }
 
     public void signUp(UserDto.Request userRequest) throws Exception {
 
@@ -82,19 +91,5 @@ public class UserServiceImpl implements UserService {
 
         redisTemplate.opsForValue().set(accesssToken, "sign-out", expiration - now, TimeUnit.MILLISECONDS);
         redisTemplate.delete(id);
-    }
-
-    @Override
-    public void validEmail(String email) throws Exception {
-        if (userRepository.existsByEmail(email)) {
-            throw new Exception("이미 존재하는 이메일입니다.");
-        }
-    }
-
-    @Override
-    public void ValidNickname(String nickname) throws Exception {
-        if (userRepository.existsByNickname(nickname)) {
-            throw new Exception("이미 존재하는 닉네임입니다.");
-        }
     }
 }

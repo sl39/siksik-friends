@@ -1,8 +1,13 @@
 package com.ssf.auth.domain.user.controller;
 
+import com.ssf.auth.domain.user.domain.Message;
 import com.ssf.auth.domain.user.dto.UserDto;
+import com.ssf.auth.domain.user.dto.UserRequest;
 import com.ssf.auth.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,6 +20,13 @@ public class UserController {
 
     private static final String ACCESS_HEADER = "Authorization";
 
+    @GetMapping("/email")
+    public ResponseEntity<Message> checkEmail(@Validated final UserRequest.Email emailDto) {
+        return userService.checkEmailDuplication(emailDto).emailRedundancyStatus()
+                ? ResponseEntity.status(HttpStatus.CONFLICT).body(Message.IMPOSSIBLE_EMAIL)
+                : ResponseEntity.ok(Message.IMPOSSIBLE_EMAIL);
+    }
+
     @PostMapping("/sign-up")
     public String signUp(@RequestBody UserDto.Request userRequest) throws Exception {
         userService.signUp(userRequest);
@@ -25,12 +37,6 @@ public class UserController {
     public String signOut(@RequestHeader(ACCESS_HEADER) String accessHeader) {
         userService.signOut(accessHeader);
         return "로그아웃 완료";
-    }
-
-    @GetMapping("/email")
-    public String validEmail(String email) throws Exception {
-        userService.validEmail(email);
-        return "사용 가능 이메일";
     }
 
     @GetMapping("/nickname")
