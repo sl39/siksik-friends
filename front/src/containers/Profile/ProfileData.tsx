@@ -6,20 +6,12 @@ import { useState } from "react";
 import styles from "./Profile.module.scss";
 
 export default function ProfileData() {
-  const [activeTab, setActiveTab] = useState(2);
+  const [activeTab, setActiveTab] = useState(1);
   const handleTabClick = (tabId: number) => {
     setActiveTab(tabId);
   };
   // 프로필 회원의 모든 정보 받아오기
   // const [data] = useAtom(profileAtom);
-
-  const userStat = {
-    경제: 1,
-    사회: 1,
-    "생활/문화": 1,
-    세계: 1,
-    "IT/과학": 1,
-  };
 
   const dataXY = {
     1: {
@@ -128,7 +120,7 @@ export default function ProfileData() {
                           세계
                         </text>
                         <text transform="translate(320.09 323.06)">IT/과학</text>
-                        <text transform="translate(326.68 185.19)">전체</text>
+                        <text transform="translate(326.68 185.19)">종합</text>
                       </g>
 
                       <g className={styles.chart} fill="none" stroke="#333" strokeMiterlimit="10">
