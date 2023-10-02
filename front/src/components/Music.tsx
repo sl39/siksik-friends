@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MdMusicNote, MdMusicOff } from "react-icons/md";
 import styled from "styled-components";
-import { atom, useAtom } from "jotai";
 
 const MusicContainer = styled.div`
   z-index: 90;
@@ -17,12 +16,10 @@ const MusicButton = styled.button`
   position: relative;
 `;
 
-const isMusicPlayingAtom = atom(false);
-
 export default function Music() {
   // eslint-disable-next-line no-null/no-null
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isMusicPlaying, setIsMusicPlaying] = useAtom(isMusicPlayingAtom);
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
 
   const playAudioOnce = () => {
     // 노래 켬
@@ -68,11 +65,11 @@ export default function Music() {
       }
       audioRef.current.play();
     }
-    setIsMusicPlaying(!isMusicPlaying);
 
     // 클라이언트 사이드에서만 localStorage에 접근
     if (typeof window !== "undefined") {
       localStorage.setItem("isMusicPlaying", String(!isMusicPlaying));
+      setIsMusicPlaying(!isMusicPlaying);
     }
   };
 

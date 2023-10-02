@@ -37,7 +37,7 @@
 .rightBottom {
   width: 100%;
   margin-top: 25px;
-  height: calc(100% - 90px);
+  height: calc(100% - 100px);
 }
 
 // 회원 검색창
@@ -48,14 +48,32 @@
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 90%;
+  width: 100%;
 
   .searchText {
-    height: 80%;
+    height: 90%;
+    width: 70%;
     margin: 0 10px;
+    padding: 0 10px;
+    border-radius: 30px;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    color: #444;
+    &:focus,
+    &:active {
+      outline: none;
+      border: none;
+    }
   }
   .searchBtn {
-    height: 60%;
+    width: 10%;
+    height: 90%;
+
+    background: #fff;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
     font-size: 2.5vh;
     padding: 0 5px;
   }
@@ -67,14 +85,14 @@
 
 .leftProfile {
   position: relative;
-  left: 7%;
+  left: 8%;
   width: 100%;
   height: 70%;
 }
 .buttonContainer {
   width: 100%;
-  height: 20%;
-  margin-top: 5%;
+  height: 23%;
+  margin-top: 3%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -102,8 +120,7 @@
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
 }
 .buttonText {
-  font-size: 3vh;
-  font-weight: bold;
+  font-size: 3.5vh;
 }
 @mixin transform($properties) {
   -webkit-transform: $properties;
