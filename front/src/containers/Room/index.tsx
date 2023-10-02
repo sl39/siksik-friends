@@ -32,7 +32,7 @@ export default function Index() {
         <div className={styles.roomUser}>{/* 그거 컴포넌트 정리해서 가져오기 */}</div>
         <div className={styles.startBtn}>
           레디 / 취소 , 시작 버튼 ||
-          {/* <StartBtn gameId={gameId} /> */}
+          <StartBtn gameId={gameId} />
         </div>
       </div>
     </WebSocketProvider>

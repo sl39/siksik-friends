@@ -12,7 +12,7 @@ export default function StartBtn({ gameId }: Props) {
 
   /** 게임으로 연결하는 함수 */
   const handleStart = () => {
-    router.push(`/play/${gameId}`);
+    router.push(`/game/play/${gameId}`);
   };
 
   return (
