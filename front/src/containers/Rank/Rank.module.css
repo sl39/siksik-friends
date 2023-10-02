@@ -55,7 +55,7 @@
   width: 30%;
   bottom: -20%;
   left: 37%;
-  font-size: calc(2.5vh);
+  font-size: 3vh;
   font-weight: bold;
   transform: rotate(-7.634deg);
   text-align: center;
@@ -65,7 +65,6 @@
 .RankArray {
   width: 95%;
   height: 98%;
-  min-height: 570px;
   background-color: rgba(255, 255, 255, 0.6);
   border-radius: 30px;
   display: flex;
@@ -103,6 +102,8 @@
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   border-radius: 30px;
+
+  font-size: 3vh;
 }
 .dummy {
   border: none;
@@ -112,10 +113,20 @@
 }
 .itemNum {
   width: 60px;
-  font-size: 1.2rem;
-  font-weight: bold;
+  font-size: 3.5vh;
   text-align: end;
+  color: black;
 }
+.first {
+  color: #ffd700;
+}
+.second {
+  color: #c0c0c0;
+}
+.third {
+  color: #cd7f32;
+}
+
 .rankLevel {
   width: 80px;
 }
