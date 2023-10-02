@@ -79,14 +79,19 @@ public class StompRoomController {
 
         Room targetRoom = roomRepository.findByRoomId(roomId).orElseThrow();
 
+        boolean check = false;
+
         for (Member member : targetRoom.getMembers()) {
             if (member.getUserId().equals(body.getUserId())) {
                 targetRoom.memberExit(body);
                 targetRoom.setRoomCurrent(targetRoom.getRoomCurrent() - 1);
+                check = true;
                 break;
-            } else {
-                return;
             }
+        }
+
+        if (!check) {
+            return;
         }
 
         if (targetRoom.getMembers().isEmpty()) {
