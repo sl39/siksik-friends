@@ -12,7 +12,8 @@ public enum Message {
     POSSIBLE_NICKNAME("사용 가능한 닉네임입니다."),
     USING_NICKNAME("사용 중인 닉네임입니다."),
     SIGN_UP_SUCCESS("회원가입에 성공했습니다."),
-    SIGN_OUT_SUCCESS("로그아웃에 성공했습니다");
+    SIGN_OUT_SUCCESS("로그아웃에 성공했습니다."),
+    RE_ISSUANCE_ACCESS_TOKEN_SUCCESS("액세스 토큰 재발급에 성공했습니다.");
 
     private final String value;
 }

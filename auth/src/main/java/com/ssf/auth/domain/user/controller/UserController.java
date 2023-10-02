@@ -3,7 +3,6 @@ package com.ssf.auth.domain.user.controller;
 import com.ssf.auth.domain.user.dto.UserRequest;
 import com.ssf.auth.domain.user.service.UserService;
 import com.ssf.auth.global.common.ValidationSequence;
-import com.ssf.auth.global.jwt.dto.JwtDto;
 import com.ssf.auth.global.jwt.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +32,6 @@ public class UserController {
             BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
-            log.info(bindingResult.getFieldError().getDefaultMessage());
             return ResponseEntity.badRequest().body(bindingResult.getFieldError().getDefaultMessage());
         }
 
@@ -74,12 +72,17 @@ public class UserController {
     }
 
     @GetMapping("/sign-out")
-    public ResponseEntity<String> signOut(@RequestHeader(ACCESS_HEADER) final String accessHeader) {
-        JwtDto jwtDto = jwtService.extractHeader(UserRequest.AccessHeader.builder()
-                .accessHeader(accessHeader)
-                .build());
-
-        userService.signOut(jwtDto);
+    public ResponseEntity<String> signOut(@RequestHeader(ACCESS_HEADER) final UserRequest.AccessHeader accessHeader) {
+        userService.signOut(jwtService.extractHeader(accessHeader));
         return ResponseEntity.ok().body(SIGN_OUT_SUCCESS.getValue());
+    }
+
+    @GetMapping("/access-token")
+    public ResponseEntity<String> reIssuanceAccessToken(
+            @RequestHeader(ACCESS_HEADER) final UserRequest.AccessHeader accessHeader
+    ) {
+        return ResponseEntity.ok()
+                .header(ACCESS_HEADER, jwtService.reIssuanceAccessToken(accessHeader))
+                .body(RE_ISSUANCE_ACCESS_TOKEN_SUCCESS.getValue());
     }
 }
