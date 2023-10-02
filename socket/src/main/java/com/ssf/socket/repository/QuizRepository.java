@@ -2,6 +2,6 @@ package com.ssf.socket.repository;
 
 import com.ssf.socket.domain.Quiz;
 
-public interface GameRepository {
+public interface QuizRepository {
     void saveQuiz(Quiz quiz);
 }
