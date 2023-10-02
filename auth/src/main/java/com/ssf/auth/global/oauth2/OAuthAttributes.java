@@ -1,8 +1,8 @@
 package com.ssf.auth.global.oauth2;
 
-import com.ssf.auth.domain.user.Role;
-import com.ssf.auth.domain.user.SocialType;
-import com.ssf.auth.domain.user.User;
+import com.ssf.auth.domain.user.domain.Role;
+import com.ssf.auth.domain.user.domain.SocialType;
+import com.ssf.auth.domain.user.domain.User;
 import com.ssf.auth.global.oauth2.userinfo.KakaoOAuth2UserInfo;
 import com.ssf.auth.global.oauth2.userinfo.OAuth2UserInfo;
 import lombok.Builder;

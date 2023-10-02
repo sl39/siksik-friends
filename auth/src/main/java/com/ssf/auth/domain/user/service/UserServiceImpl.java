@@ -1,25 +1,17 @@
 package com.ssf.auth.domain.user.service;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.Claim;
-import com.auth0.jwt.interfaces.DecodedJWT;
-import com.ssf.auth.domain.user.Role;
-import com.ssf.auth.domain.user.dto.UserDto;
-import com.ssf.auth.domain.user.User;
+import com.ssf.auth.domain.user.domain.Role;
+import com.ssf.auth.domain.user.domain.User;
+import com.ssf.auth.domain.user.dto.UserRequest;
+import com.ssf.auth.domain.user.dto.UserResponse;
 import com.ssf.auth.domain.user.repository.UserRepository;
-import com.ssf.auth.global.jwt.service.JwtService;
+import com.ssf.auth.global.jwt.dto.JwtDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -27,77 +19,50 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final RedisTemplate redisTemplate;
-    private final JwtService jwtService;
-    private final UserRepository userRepository;
+    private final RedisTemplate<String, String> redisTemplate;
     private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
-    private static final String ID_CLAIM = "id";
-    private static final String KEY = "rank";
-    private static final String BEARER = "Bearer ";
+    private static final String BLACK_LIST = "blackList";
+    private static final String RANK_KEY = "rank";
 
-    @Value("${jwt.secretKey}")
-    private String secretKey;
+    @Override
+    public UserResponse.EmailRedundancy checkEmailDuplication(UserRequest.Email email) {
+        return UserResponse.EmailRedundancy.builder()
+                .emailRedundancyStatus(userRepository.existsByEmail(email.email()))
+                .build();
+    }
 
-    @Value("${jwt.access.expiration}")
-    private Long accessTokenExpirationPeriod;
+    @Override
+    public UserResponse.NicknameRedundancy checkNicknameDuplication(UserRequest.Nickname nickname) {
+        return UserResponse.NicknameRedundancy.builder()
+                .nicknameRedundancyStatus(userRepository.existsByNickname(nickname.nickname()))
+                .build();
+    }
 
-    public void signUp(UserDto.Request userRequest) throws Exception {
-
-        if (userRepository.existsByEmail(userRequest.getEmail())) {
-            throw new Exception("이미 존재하는 이메일입니다.");
-        }
-
-        if (userRepository.existsByNickname(userRequest.getNickname())) {
-            throw new Exception("이미 존재하는 닉네임입니다.");
-        }
-
+    @Override
+    public void addUser(UserRequest.SignUp signUpDto) {
         User user = User.builder()
-                .email(userRequest.getEmail())
-                .password(userRequest.getPassword())
-                .nickname(userRequest.getNickname())
-                .profile(StringUtils.hasText(userRequest.getProfile()) ? userRequest.getProfile() : "/default.png")
+                .email(signUpDto.getEmail())
+                .password(signUpDto.getPassword())
+                .nickname(signUpDto.getNickname())
+                .profile(signUpDto.getProfile())
                 .role(Role.USER)
                 .build();
 
         user.encodePassword(passwordEncoder);
         userRepository.save(user);
-        redisTemplate.opsForZSet().add(KEY, String.valueOf(user.getId()), 1000);
-    }
 
-    public void signOut(String accessHeader) {
-        String accesssToken = Optional.ofNullable(accessHeader)
-                .filter(accessToken -> accessToken.startsWith(BEARER))
-                .map(accessToken -> accessToken.replace(BEARER, "")).orElse(null);
-
-        if (!jwtService.isTokenValid(accesssToken)) {
-            System.out.println("잘못된 요청입니다.");
-            return;
-        }
-
-        DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512(secretKey))
-                .build()
-                .verify(accesssToken);
-
-        String id = decodedJWT.getClaim(ID_CLAIM).toString();
-        Long expiration = decodedJWT.getClaim("exp").asLong() * 1000;
-        Long now = System.currentTimeMillis();
-
-        redisTemplate.opsForValue().set(accesssToken, "sign-out", expiration - now, TimeUnit.MILLISECONDS);
-        redisTemplate.delete(id);
+        redisTemplate.opsForZSet().add(RANK_KEY, String.valueOf(user.getId()), 1000);
     }
 
     @Override
-    public void validEmail(String email) throws Exception {
-        if (userRepository.existsByEmail(email)) {
-            throw new Exception("이미 존재하는 이메일입니다.");
-        }
-    }
+    public void signOut(JwtDto accessHeader) {
+        User user = userRepository.findById(Long.parseLong(accessHeader.id())).orElseThrow();
+        user.changeActivated();
 
-    @Override
-    public void ValidNickname(String nickname) throws Exception {
-        if (userRepository.existsByNickname(nickname)) {
-            throw new Exception("이미 존재하는 닉네임입니다.");
-        }
+        redisTemplate.delete(accessHeader.id());
+        redisTemplate.opsForValue().set(accessHeader.accessToken(),
+                BLACK_LIST, accessHeader.exp(), TimeUnit.MILLISECONDS);
     }
 }

@@ -1,7 +1,7 @@
 package com.ssf.auth.global.oauth2.service;
 
-import com.ssf.auth.domain.user.SocialType;
-import com.ssf.auth.domain.user.User;
+import com.ssf.auth.domain.user.domain.SocialType;
+import com.ssf.auth.domain.user.domain.User;
 import com.ssf.auth.domain.user.repository.UserRepository;
 import com.ssf.auth.global.oauth2.CustomOAuth2User;
 import com.ssf.auth.global.oauth2.OAuthAttributes;
@@ -45,7 +45,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         User createdUser = getUser(extractAttributes, socialType);
 
         return new CustomOAuth2User(
-                Collections.singleton(new SimpleGrantedAuthority(createdUser.getRole().getKey())),
+                Collections.singleton(new SimpleGrantedAuthority(createdUser.getRole().getValue())),
                 attributes,
                 extractAttributes.getNameAttributeKey(),
                 createdUser.getId(),
