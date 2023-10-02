@@ -2,9 +2,9 @@ package com.ssf.auth.global.jwt.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.ssf.auth.domain.user.User;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.ssf.auth.domain.user.repository.UserRepository;
-import jakarta.servlet.http.HttpServletRequest;
+import com.ssf.auth.global.jwt.dto.JwtDto;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,15 +12,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+import static com.ssf.auth.global.jwt.domain.JwtConstants.*;
+
+
 @Service
-@RequiredArgsConstructor
-@Getter
 @Slf4j
+@Transactional
+@Getter
+@RequiredArgsConstructor
 public class JwtService {
 
     @Value("${jwt.secretKey}")
@@ -38,21 +43,16 @@ public class JwtService {
     @Value("${jwt.refresh.header}")
     private String refreshHeader;
 
-    private static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
-    private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
-    private static final String ID_CLAIM = "id";
-    private static final String BEARER = "Bearer ";
-
-    private final RedisTemplate redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
     private final UserRepository userRepository;
 
-    public String createAccessToken(Long id) {
+    public String createAccessToken(String id) {
         Date now = new Date();
 
         return JWT.create()
-                .withSubject(ACCESS_TOKEN_SUBJECT)
+                .withSubject(ACCESS_TOKEN_SUBJECT.getValue())
                 .withExpiresAt(new Date(now.getTime() + accessTokenExpirationPeriod))
-                .withClaim(ID_CLAIM, id)
+                .withClaim(ID_CLAIM.getValue(), Long.parseLong(id))
                 .sign(Algorithm.HMAC512(secretKey));
     }
 
@@ -60,7 +60,7 @@ public class JwtService {
         Date now = new Date();
 
         return JWT.create()
-                .withSubject(REFRESH_TOKEN_SUBJECT)
+                .withSubject(REFRESH_TOKEN_SUBJECT.getValue())
                 .withExpiresAt(new Date(now.getTime() + refreshTokenExpirationPeriod))
                 .sign(Algorithm.HMAC512(secretKey));
     }
@@ -70,63 +70,44 @@ public class JwtService {
         response.setHeader(accessHeader, accessToken);
     }
 
-//    public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken) {
-//        response.setStatus(HttpServletResponse.SC_OK);
-//        response.setHeader(accessHeader, accessToken);
-//        response.setHeader(refreshHeader, refreshToken);
-//    }
+    public JwtDto extractHeader(UserRequest.AccessHeader accessHeader) {
+        String accessToken = extractAccessToken(accessHeader).orElseThrow();
+        DecodedJWT decodedJWT = extractJwt(accessToken).orElseThrow();
 
-//    public void sendAccessAndRefreshTokenAndId(HttpServletResponse response, String accessToken, String refreshToken, User user) {
-//        response.setStatus(HttpServletResponse.SC_OK);
-//        response.setHeader(accessHeader, accessToken);
-//        response.setHeader(refreshHeader, refreshToken);
-//        response.setHeader("id", String.valueOf(user.getId()));
-//    }
-
-    public Optional<String> extractAccessToken(HttpServletRequest request) {
-        return Optional.ofNullable(request.getHeader(accessHeader))
-                .filter(accessToken -> accessToken.startsWith(BEARER))
-                .map(accessToken -> accessToken.replace(BEARER, ""));
+        return JwtDto.builder()
+                .accessToken(accessToken)
+                .id(extractId(decodedJWT))
+                .exp(extractExpiration(decodedJWT))
+                .build();
     }
 
-//    public Optional<String> extractRefreshToken(HttpServletRequest request) {
-//        return Optional.ofNullable(request.getHeader(refreshHeader))
-//                .filter(refreshToken -> refreshToken.startsWith(BEARER))
-//                .map(refreshToken -> refreshToken.replace(BEARER, ""));
-//    }
-
-    public String extractRefreshToken(String id) {
-        return (String) redisTemplate.opsForValue().get(id);
+    public Optional<String> extractAccessToken(UserRequest.AccessHeader accessHeader) {
+        return Optional.ofNullable(accessHeader.accessHeader())
+                .filter(accessToken -> accessToken.startsWith(AUTH_TYPE.getValue()))
+                .map(accessToken -> accessToken.replace(AUTH_TYPE.getValue(), ""));
     }
 
-    public Optional<String> extractId(String accessToken) {
+    private Optional<DecodedJWT> extractJwt(String accessToken) {
         try {
             return Optional.ofNullable(JWT.require(Algorithm.HMAC512(secretKey))
                     .build()
-                    .verify(accessToken)
-                    .getClaim(ID_CLAIM).toString());
+                    .verify(accessToken));
+
         } catch (Exception e) {
             return Optional.empty();
         }
     }
 
-    public void updateRefreshToken(Long id, String refreshToken) {
-        userRepository.findById(id)
-                .ifPresentOrElse(
-                        user -> {
-                            redisTemplate.opsForValue().set(String.valueOf(id), refreshToken, 300L, TimeUnit.SECONDS);
-                        },
-                        () -> new Exception("일치하는 회원이 없습니다.")
-                );
+    public String extractId(DecodedJWT decodedJWT) {
+        return String.valueOf(decodedJWT.getClaim(ID_CLAIM.getValue()));
     }
 
-    public boolean isTokenValid(String token) {
-        try {
-            JWT.require(Algorithm.HMAC512(secretKey)).build().verify(token);
-            return true;
+    public Long extractExpiration(DecodedJWT decodedJWT) {
+        return decodedJWT.getClaim(EXP_CLAIM.getValue()).asLong() * 1000
+                - System.currentTimeMillis();
+    }
 
-        } catch (Exception e) {
-            return false;
-        }
+    public void updateRefreshToken(String id, String refreshToken) {
+        redisTemplate.opsForValue().set(id, refreshToken, refreshTokenExpirationPeriod, TimeUnit.SECONDS);
     }
 }
