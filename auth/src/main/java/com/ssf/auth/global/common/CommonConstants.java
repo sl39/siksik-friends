@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum CommonConstants {
 
+    ACCESS_HEADER("Authorization"),
     RANK_KEY("rank"),
     BLACK_LIST("blackList");
 
