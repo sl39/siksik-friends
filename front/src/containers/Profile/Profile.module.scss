@@ -297,7 +297,6 @@ $n02: var(--color-blue-n2);
 .wrapper_tabcontent {
   background-color: white;
   margin-top: 0px;
-  z-index: -3;
   position: relative;
   opacity: 1;
   padding: 20px;
@@ -309,6 +308,8 @@ $n02: var(--color-blue-n2);
 .tabcontent {
   display: none;
   height: 80%;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 @keyframes tabEffect {
   from {
@@ -330,7 +331,6 @@ $n02: var(--color-blue-n2);
   background-image: linear-gradient(135deg, $m01 0%, $m02 100%);
   left: 0;
   bottom: 0;
-  z-index: -2;
   transition: all 1s ease;
 }
 
@@ -358,9 +358,8 @@ $n02: var(--color-blue-n2);
     left: -90px;
   }
 }
-
 /* Text*/
-.tabcontent p {
+.tabcontent .p {
   color: $text;
   margin: 0;
   padding: 0;
@@ -380,4 +379,95 @@ $n02: var(--color-blue-n2);
     opacity: 1;
     margin-left: 0;
   }
+}
+
+// stat
+.stat {
+  border: solid black;
+  box-sizing: border-box;
+  width: 30%;
+}
+.tool-set {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  svg {
+    max-width: 600px;
+    height: auto;
+    width: 100%;
+    margin-bottom: 100px;
+
+    .text {
+      font-size: 12px;
+      text-align: center;
+      display: flex;
+      position: relative;
+    }
+
+    .tool-illustrator {
+      position: absolute;
+      transform: translate(170px, 110px);
+    }
+
+    .tool-indesign {
+      position: absolute;
+      transform: translate(180px, 390px);
+    }
+
+    .tool-sketch {
+      position: absolute;
+      transform: translate(50px, 190px);
+    }
+
+    .tool-invision {
+      position: absolute;
+      transform: translate(35px, 317px);
+    }
+
+    .tool-scss {
+      position: absolute;
+      transform: translate(65px, 190px);
+    }
+
+    .tool-git {
+      position: absolute;
+      transform: translate(53px, 315px);
+    }
+
+    .tool-vscode {
+      position: absolute;
+      transform: translate(185px, 390px);
+    }
+
+    .tool-css {
+      position: absolute;
+      transform: translate(198px, 120px);
+    }
+  }
+}
+
+//design tool
+@keyframes designTool {
+  0% {
+    stroke-dashoffset: 700;
+  }
+  10% {
+    stroke-dashoffset: 0;
+  }
+  70% {
+    stroke-dashoffset: 0;
+  }
+  90% {
+    stroke-dashoffset: -700;
+  }
+  100% {
+    stroke-dashoffset: -700;
+  }
+}
+
+.design-tool-line {
+  stroke-dasharray: 700;
+  stroke-dashoffset: 700;
+  animation: designTool 6s ease-out infinite running;
 }
