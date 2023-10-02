@@ -63,9 +63,18 @@ public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Conf
                 return handleForbidden(response, INVALID_TOKEN.getValue());
             }
 
-            if (uri.equals(CommonConstants.RE_ISSUANCE_ACCESS_TOKEN_URL.getValue())
-                    || jwtService.isTokenValid(accessToken)) {
+            if (uri.equals(CommonConstants.RE_ISSUANCE_ACCESS_TOKEN_URL.getValue())) {
+                String id = jwtService.extractId(accessToken);
+                String refreshToken = jwtService.getRefreshToken(id);
 
+                if (jwtService.isTokenValid(refreshToken)) {
+                    return chain.filter(exchange);
+                }
+
+                return handleForbidden(response, SIGN_IN_REQUIRED.getValue());
+            }
+
+            if (jwtService.isTokenValid(accessToken)) {
                 return chain.filter(exchange);
             }
 
