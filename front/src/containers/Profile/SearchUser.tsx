@@ -35,6 +35,7 @@ export default function SearchUser() {
         type="text"
         value={searchUser}
         onChange={(e) => setSearchUser(e.target.value)}
+        onBlur={() => setSearchUser("")}
       />
       <button className={styles.searchBtn} type="submit">
         <BiSearchAlt className={styles.icon} size={28} color="#666" />
