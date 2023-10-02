@@ -23,6 +23,7 @@ public class JwtService {
     private String accessHeader;
 
     private static final String AUTH_TYPE = "Bearer ";
+    private static final String ID_CLAIM = "id";
 
     private final RedisTemplate<String, String> redisTemplate;
 
@@ -32,6 +33,17 @@ public class JwtService {
 
     public String extractAccessToken(String token) {
         return token.replace(AUTH_TYPE, "");
+    }
+
+    public String extractId(String accessToken) {
+        return String.valueOf(JWT.require(Algorithm.HMAC512(secretKey))
+                .build()
+                .verify(accessToken)
+                .getClaim(ID_CLAIM));
+    }
+
+    public String getRefreshToken(String id) {
+        return redisTemplate.opsForValue().get(id);
     }
 
     public boolean isTokenValid(String token) {
