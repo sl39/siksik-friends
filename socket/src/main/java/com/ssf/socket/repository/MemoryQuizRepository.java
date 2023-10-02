@@ -1,4 +1,4 @@
-//package com.ssf.socket.repository;
+package com.ssf.socket.repository;
 //
 //import com.ssf.socket.domain.Quiz;
 //import com.ssf.socket.dto.QuizDTO;
