@@ -1,8 +1,8 @@
 "use client";
 
-import { useAtom } from "jotai";
+// import { useAtom } from "jotai";
 import { useState } from "react";
-import { profileAtom } from "@/store/userAtom";
+// import { profileAtom } from "@/store/userAtom";
 import styles from "./Profile.module.scss";
 
 export default function ProfileData() {
@@ -11,7 +11,7 @@ export default function ProfileData() {
     setActiveTab(tabId);
   };
   // 프로필 회원의 모든 정보 받아오기
-  const [data] = useAtom(profileAtom);
+  // const [data] = useAtom(profileAtom);
 
   return (
     <div className={styles.profileData}>
