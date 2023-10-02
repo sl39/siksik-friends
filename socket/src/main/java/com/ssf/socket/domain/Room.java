@@ -26,7 +26,7 @@ public class Room {
     List<Member> members = new ArrayList<>();
 
     public void memberExit(Member outMember) {
-        members.removeIf(e -> e.getUserName().equals(outMember.getUserName()));
+        members.removeIf(e -> e.getUserId().equals(outMember.getUserId()));
     }
 
     public void memberEntrance(Member inMember) {
