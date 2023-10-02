@@ -125,6 +125,15 @@ public class StompRoomController {
         messageTemplate.convertAndSend("/sub/room/roomList", rooms);
     }
 
+    @MessageMapping("/room/check/{roomId}")
+    public void checkRoomInfo(
+            @DestinationVariable Long roomId) {
+
+        Room targetRoom = roomRepository.findByRoomId(roomId).orElseThrow();
+
+        messageTemplate.convertAndSend("/sub/room/info/" + roomId, targetRoom);
+    }
+
     @MessageMapping("/room/terminate")
     public void terminate() {
 

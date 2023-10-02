@@ -1,5 +1,3 @@
-
-
 # Front를 위한 Socket 통신 매뉴얼
 
 ---
@@ -83,7 +81,7 @@
       
       "password": String
       
-      "quizDateTime": LocalDateTime
+      "quizDateTime": String
       
       "roomStatus": int
       
@@ -112,7 +110,7 @@
           "category": "경제",
           "quizCount": 10,
           "password": null,
-          "quizDateTime": "2023-10-01T15:30:00",
+          "quizDateTime": "2023-10-01",
           "roomStatus": 0,
           "members": [
             {
@@ -142,7 +140,7 @@
           "category": "연예",
           "quizCount": 20,
           "password": "game123",
-          "quizDateTime": "2023-10-01T15:35:00",
+          "quizDateTime": "2023-10-01",
           "roomStatus": 0,
           "members": [
             {
@@ -164,7 +162,7 @@
           "category": "생활/문화",
           "quizCount": 10,
           "password": "gogo123!",
-          "quizDateTime": "2023-10-01T15:55:00",
+          "quizDateTime": "2023-10-01",
           "roomStatus": 0,
           "members": [
             {
@@ -347,7 +345,7 @@
       
       "password": String
       
-      "quizDateTime": LocalDateTime
+      "quizDateTime": String
       
       "roomStatus": int
       
@@ -374,7 +372,7 @@
         "category": "연예",
         "quizCount": 10,
         "password": "example_password",
-        "quizDateTime": "2023-10-01T15:30:00",
+        "quizDateTime": "2023-10-01",
         "roomStatus": 0,
         "members": [
           {
@@ -411,7 +409,7 @@
       
       "password": String
       
-      "quizDateTime": LocalDateTime
+      "quizDateTime": String
       
       "roomStatus": int
       
@@ -433,13 +431,13 @@
       {
           "roomId": 3,
           "roomName": "나랑 퀴즈 풀 사람!",
-      	"roomSize": 10,
-      	"roomCurrent": 1,
-      	"roomReady": 0,
+          "roomSize": 10,
+          "roomCurrent": 1,
+          "roomReady": 0,
           "category": "연예",
           "quizCount": 10,
           "password": "example_password",
-          "quizDateTime": "2023-10-01T15:30:00",
+          "quizDateTime": "2023-10-01",
           "roomStatus": 0,
           "members": [
               {
@@ -476,7 +474,7 @@
       
       "password": String
       
-      "quizDateTime": LocalDateTime
+      "quizDateTime": String
       
       "roomStatus": int
       
@@ -498,13 +496,13 @@
       {
           "roomId": 3,
           "roomName": "나랑 퀴즈 풀 사람!",
-      	"roomSize": 10,
-      	"roomCurrent": 1,
-      	"roomReady": 0,
+          "roomSize": 10,
+          "roomCurrent": 1,
+          "roomReady": 0,
           "category": "연예",
           "quizCount": 10,
           "password": "example_password",
-          "quizDateTime": "2023-10-01T15:30:00",
+          "quizDateTime": "2023-10-01",
           "roomStatus": 0,
           "members": [
               {
@@ -627,7 +625,7 @@
       
       "password": String
       
-      "quizDateTime": LocalDateTime
+      "quizDateTime": String
       
       "roomStatus": int
       
@@ -649,13 +647,13 @@
       {
           "roomId": 3,
           "roomName": "나랑 퀴즈 풀 사람!",
-      	"roomSize": 10,
-      	"roomCurrent": 2,
-      	"roomReady": 0,
+          "roomSize": 10,
+          "roomCurrent": 2,
+          "roomReady": 0,
           "category": "연예",
           "quizCount": 10,
           "password": "example_password",
-          "quizDateTime": "2023-10-01T15:30:00",
+          "quizDateTime": "2023-10-01",
           "roomStatus": 0,
           "members": [
               {
@@ -761,8 +759,6 @@
       ```
   
   - /sub/lobby/list(로비 유저 목록)
-
-
 
 > ### Ready & UnReady
 
