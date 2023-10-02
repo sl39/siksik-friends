@@ -17,7 +17,7 @@ export interface Rank {
   nickname: string;
   profile?: string;
   odds?: string;
-  rank?: number;
+  rank: number;
   score?: number;
   level?: number;
 }
