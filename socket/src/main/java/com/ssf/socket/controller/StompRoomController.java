@@ -79,13 +79,19 @@ public class StompRoomController {
 
         Room targetRoom = roomRepository.findByRoomId(roomId).orElseThrow();
 
+        boolean check = false;
+
         for (Member member : targetRoom.getMembers()) {
             if (member.getUserId().equals(body.getUserId())) {
                 targetRoom.memberExit(body);
                 targetRoom.setRoomCurrent(targetRoom.getRoomCurrent() - 1);
-            } else {
-                return;
+                check = true;
+                break;
             }
+        }
+
+        if (!check) {
+            return;
         }
 
         if (targetRoom.getMembers().isEmpty()) {
@@ -93,6 +99,8 @@ public class StompRoomController {
         } else {
             if (body.isLeader()) {
                 targetRoom.getMembers().get(0).setLeader(true);
+                messageTemplate.convertAndSend("/sub/room/info/" + roomId, targetRoom);
+            } else {
                 messageTemplate.convertAndSend("/sub/room/info/" + roomId, targetRoom);
             }
         }
