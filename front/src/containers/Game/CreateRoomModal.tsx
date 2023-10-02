@@ -3,12 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import type { RoomInfo } from "@/types";
-import styles from "./modal.module.scss";
-import { userAtom } from "@/store/userAtom";
-import { serverAxios } from "@/services/api";
 import axios from "axios";
+import type { RoomInfo } from "@/types";
+import { userAtom } from "@/store/userAtom";
 import { useWebSocket } from "@/socket/WebSocketProvider";
+import styles from "./modal.module.scss";
 
 interface Props {
   onClose: () => void;
@@ -32,6 +31,7 @@ export default function CreateRoomModal({ onClose }: Props) {
     countProblem: 1,
     type: "",
     password: "",
+    countTimer: 5,
   });
   const stompClient = useWebSocket();
 

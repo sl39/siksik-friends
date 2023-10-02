@@ -1,9 +1,9 @@
-import styles from "./room.module.scss";
-import { useWebSocket } from "@/socket/WebSocketProvider";
 import { useEffect, useState } from "react";
-import { Frame } from "stompjs";
+import type { Frame } from "stompjs";
+import { useWebSocket } from "@/socket/WebSocketProvider";
 import { userAtom } from "@/store/userAtom";
-import { Room } from "@/types";
+import type { Room } from "@/types";
+import styles from "./room.module.scss";
 
 interface Props {
   roomId: number;

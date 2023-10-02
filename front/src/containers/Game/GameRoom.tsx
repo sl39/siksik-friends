@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
+import type { Frame } from "stompjs";
 import type { Room } from "@/types";
+import { useWebSocket } from "@/socket/WebSocketProvider";
+import type { CompatClient } from "@stomp/stompjs";
 import GameRoomItem from "./GameRoomItem";
 import styles from "./game.module.scss";
 import EnterRoom from "./EnterRoom";
-import { useWebSocket } from "@/socket/WebSocketProvider";
-import { Frame } from "stompjs";
-import { CompatClient } from "@stomp/stompjs";
 
 export default function GameRoom() {
   const [roomBtn, setRoomBtn] = useState(0);
@@ -31,12 +30,12 @@ export default function GameRoom() {
   const stompClient = useWebSocket();
 
   // lobby 들어갈때 메시지 보내기
-  const refreshRoom = (stompClient: CompatClient) => {
+  const refreshRoom = (StompClient: CompatClient) => {
     const message = {
       enter: "enter to lobby",
     };
 
-    stompClient.send("/pub/room/roomList", {}, JSON.stringify(message));
+    StompClient.send("/pub/room/roomList", {}, JSON.stringify(message));
   };
 
   useEffect(() => {
@@ -63,6 +62,7 @@ export default function GameRoom() {
         subscription.unsubscribe();
       };
     }
+    return undefined;
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stompClient]);

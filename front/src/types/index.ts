@@ -17,7 +17,7 @@ export interface Rank {
   nickname: string;
   profile?: string;
   odds?: string;
-  rank?: number;
+  rank: number;
   score?: number;
   level?: number;
 }
@@ -42,11 +42,19 @@ export interface RoomInfo {
   countProblem: number;
   type: string;
   password: string;
+  countTimer: number;
+}
+
+export interface Quiz {
+  type: string;
+  title: string;
+  description: string;
+  answer: string;
 }
 
 export interface soketUser {
   userId: number;
-  userName: String;
+  userName: string;
   userScore: number;
   userRanking: number;
   ready: boolean;

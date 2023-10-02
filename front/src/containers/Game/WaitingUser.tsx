@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { User } from "@/types";
+import type { Frame } from "stompjs";
+import type { soketUser, User } from "@/types";
 import { serverAxios } from "@/services/api";
+import { useWebSocket } from "@/socket/WebSocketProvider";
+import { userAtom } from "@/store/userAtom";
 import UserItem from "./UserItem";
 import styles from "./game.module.scss";
-import { useWebSocket } from "@/socket/WebSocketProvider";
-import { Frame } from "stompjs";
-import { userAtom } from "@/store/userAtom";
-import { soketUser } from "./../../types/index";
 
 export default function WaitingUser() {
   const [openTab, setOpenTab] = useState(1);
@@ -24,13 +23,15 @@ export default function WaitingUser() {
     }
   };
 
-  /** 친구 요청 조회 */
+  /** 받은 친구 요청 조회 */
   const myRequest = async () => {
     try {
-      const response = await serverAxios("/user/friend/request");
+      // response / request
+      const response = await serverAxios("/user/friend/response");
+      // setCount(response.data.size);
       setItems(response.data.friendList);
     } catch (err) {
-      console.log("요청 목록 에러", err);
+      console.log("받은 요청 목록 에러", err);
     }
   };
 
