@@ -1,10 +1,10 @@
 "use client";
 
-import { useAtom } from "jotai";
-// import { roomAtom } from "@/store/gameAtom";
-// import StartBtn from "./StartBtn";
+// import { useAtom } from "jotai";
 import { usePathname } from "next/navigation";
+// import { roomAtom } from "@/store/gameAtom";
 import WebSocketProvider from "@/socket/WebSocketProvider";
+import StartBtn from "./StartBtn";
 import styles from "./room.module.scss";
 import RoomInfo from "./RoomInfo";
 import Chatting from "./Chatting";
@@ -32,7 +32,7 @@ export default function Index() {
         <div className={styles.roomUser}>{/* 그거 컴포넌트 정리해서 가져오기 */}</div>
         <div className={styles.startBtn}>
           레디 / 취소 , 시작 버튼 ||
-          <StartBtn gameId={gameId} />
+          <StartBtn gameId={roomId} />
         </div>
       </div>
     </WebSocketProvider>
