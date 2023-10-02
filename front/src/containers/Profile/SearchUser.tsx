@@ -31,13 +31,13 @@ export default function SearchUser() {
     <form className={styles.searchForm} onSubmit={handleSearch}>
       <input
         className={styles.searchText}
-        placeholder="닉네임"
+        placeholder="닉네임으로 검색"
         type="text"
         value={searchUser}
         onChange={(e) => setSearchUser(e.target.value)}
       />
       <button className={styles.searchBtn} type="submit">
-        <BiSearchAlt className={styles.icon} size={28} />
+        <BiSearchAlt className={styles.icon} size={28} color="#666" />
       </button>
     </form>
   );
