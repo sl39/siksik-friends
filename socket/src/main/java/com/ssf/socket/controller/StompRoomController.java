@@ -52,6 +52,14 @@ public class StompRoomController {
 
         Room targetRoom = roomRepository.findByRoomId(roomId).orElseThrow();
 
+        List<Member> members = targetRoom.getMembers();
+
+        for (Member member : members) {
+            if (body.getUserId().equals(member.getUserId())) {
+                break;
+            }
+        }
+
         targetRoom.memberEntrance(body);
 
         targetRoom.setRoomCurrent(targetRoom.getRoomCurrent() + 1);
