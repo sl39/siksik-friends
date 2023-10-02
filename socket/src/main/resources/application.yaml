@@ -6,6 +6,7 @@ spring:
     mongodb:
       host: j9e101.p.ssafy.io
       port: 27017
+      authentication-database: admin
       database: market
       username: elefante
       password: E1efante1!
