@@ -7,39 +7,34 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.concurrent.TimeUnit;
-
-@RequiredArgsConstructor
 @Slf4j
+@Transactional
+@RequiredArgsConstructor
 public class SignInSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-    private final RedisTemplate redisTemplate;
     private final JwtService jwtService;
     private final UserRepository userRepository;
 
-    @Value("${jwt.access.expiration}")
-    private String accessTokenExpiration;
-
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        Long id = Long.valueOf(extractUsername(authentication));
+    public void onAuthenticationSuccess(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            Authentication authentication) {
+
+        String id = extractUsername(authentication);
         String accessToken = jwtService.createAccessToken(id);
         String refreshToken = jwtService.createRefreshToken();
-        User target = userRepository.findById(id).get();
 
-//        jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
-//        jwtService.sendAccessAndRefreshTokenAndId(response, accessToken, refreshToken, target);
         jwtService.sendAccessToken(response, accessToken);
         jwtService.updateRefreshToken(id, refreshToken);
 
-        userRepository.findById(id)
-                .ifPresent(userRepository::saveAndFlush);
+        User user = userRepository.findById(Long.parseLong(id)).orElseThrow();
+        user.changeActivated();
     }
 
     private String extractUsername(Authentication authentication) {
