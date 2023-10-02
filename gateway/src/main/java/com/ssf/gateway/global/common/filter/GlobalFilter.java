@@ -35,6 +35,7 @@ public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Conf
 
             for (CommonConstants constant : CommonConstants.values()) {
                 if (uri.equals(constant.getValue())) {
+                    log.info("인증이 필요없는 서비스");
                     return chain.filter(exchange);
                 }
             }
@@ -42,6 +43,7 @@ public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Conf
             HttpHeaders headers = request.getHeaders();
 
             if (!jwtService.hasAccessHeader(headers)) {
+                log.info("해더가 없음");
                 return handleForbidden(response);
             }
 
@@ -55,15 +57,18 @@ public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Conf
             String accessToken = jwtService.extractAccessToken(token);
 
             if (jwtService.hasKeyBlackList(accessToken)) {
+                log.info("블랙리스트 등록 토큰");
                 return handleForbidden(response);
             }
 
             if (uri.equals(CommonConstants.RE_ISSUANCE_ACCESS_TOKEN_URL.getValue())
                     || jwtService.isTokenValid(accessToken)) {
 
+                log.info("유효하거나 액세스 토큰 재발급");
                 return chain.filter(exchange);
             }
 
+            log.info("액세스 토큰 유효기간 지남");
             return handleUnAuthorized(response);
         });
     }
