@@ -20,7 +20,7 @@ public class Room {
     String category;
     int quizCount;
     String password;
-    String quizDateTime;
+    String quizDate;
     // 0 == Waiting, 1 == Playing
     int roomStatus;
     List<Member> members = new ArrayList<>();
