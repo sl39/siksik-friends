@@ -109,6 +109,6 @@ public class JwtService {
     }
 
     public void updateRefreshToken(String id, String refreshToken) {
-        redisTemplate.opsForValue().set(id, refreshToken, refreshTokenExpirationPeriod, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(id, refreshToken, refreshTokenExpirationPeriod, TimeUnit.MILLISECONDS);
     }
 }
