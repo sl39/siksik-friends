@@ -4,6 +4,7 @@ import com.ssf.auth.domain.user.domain.Message;
 import com.ssf.auth.domain.user.dto.UserRequest;
 import com.ssf.auth.domain.user.service.UserService;
 import com.ssf.auth.global.jwt.dto.JwtDto;
+import com.ssf.auth.global.jwt.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
 
+    private final JwtService jwtService;
     private final UserService userService;
 
     private static final String ACCESS_HEADER = "Authorization";
