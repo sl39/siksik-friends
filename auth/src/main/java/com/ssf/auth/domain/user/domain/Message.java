@@ -7,10 +7,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum Message {
 
-    POSSIBLE_EMAIL("사용 가능한 이메일"),
-    IMPOSSIBLE_EMAIL("사용 중인 이메일"),
-    POSSIBLE_NICKNAME("사용 가능한 닉네임"),
-    IMPOSSIBLE_NICKNAME("사용 중인 닉네임");
+    POSSIBLE_EMAIL("사용 가능한 이메일입니다."),
+    USING_EMAIL("사용 중인 이메일입니다."),
+    POSSIBLE_NICKNAME("사용 가능한 닉네임입니다."),
+    USING_NICKNAME("사용 중인 닉네임입니다.");
 
     private final String value;
 }
