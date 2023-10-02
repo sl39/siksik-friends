@@ -3,6 +3,7 @@ package com.ssf.auth.global.jwt.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.ssf.auth.domain.user.dto.UserRequest;
 import com.ssf.auth.domain.user.repository.UserRepository;
 import com.ssf.auth.global.jwt.dto.JwtDto;
 import jakarta.servlet.http.HttpServletResponse;
