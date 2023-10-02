@@ -23,8 +23,8 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    private static final String RANK_KEY = "rank";
     private static final String BLACK_LIST = "blackList";
+    private static final String RANK_KEY = "rank";
 
     @Override
     public UserResponse.EmailRedundancy checkEmailDuplication(UserRequest.Email email) {
