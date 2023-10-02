@@ -57,12 +57,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void signOut(JwtDto accessHeader) {
-        User user = userRepository.findById(Long.parseLong(accessHeader.id())).orElseThrow();
+    public void signOut(JwtDto jwtDto) {
+        User user = userRepository.findById(Long.parseLong(jwtDto.id())).orElseThrow();
         user.changeActivated();
 
-        redisTemplate.delete(accessHeader.id());
-        redisTemplate.opsForValue().set(accessHeader.accessToken(),
-                BLACK_LIST, accessHeader.exp(), TimeUnit.MILLISECONDS);
+        redisTemplate.delete(jwtDto.id());
+        redisTemplate.opsForValue().set(jwtDto.accessToken(),
+                BLACK_LIST, jwtDto.exp(), TimeUnit.MILLISECONDS);
     }
 }

@@ -24,7 +24,8 @@ public class SignInSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     public void onAuthenticationSuccess(
             HttpServletRequest request,
             HttpServletResponse response,
-            Authentication authentication) {
+            Authentication authentication
+    ) {
 
         String id = extractUsername(authentication);
         String accessToken = jwtService.createAccessToken(id);

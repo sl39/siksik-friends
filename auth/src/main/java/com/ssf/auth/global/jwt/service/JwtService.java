@@ -108,6 +108,10 @@ public class JwtService {
                 - System.currentTimeMillis();
     }
 
+    public String reIssuanceAccessToken(UserRequest.AccessHeader accessHeader) {
+        return createAccessToken(extractHeader(accessHeader).id());
+    }
+
     public void updateRefreshToken(String id, String refreshToken) {
         redisTemplate.opsForValue().set(id, refreshToken, refreshTokenExpirationPeriod, TimeUnit.MILLISECONDS);
     }

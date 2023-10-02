@@ -9,5 +9,5 @@ public interface UserService {
     UserResponse.EmailRedundancy checkEmailDuplication(UserRequest.Email email);
     UserResponse.NicknameRedundancy checkNicknameDuplication(UserRequest.Nickname nickname);
     void addUser(UserRequest.SignUp signUpDto);
-    void signOut(JwtDto accessHeader);
+    void signOut(JwtDto jwtDto);
 }
