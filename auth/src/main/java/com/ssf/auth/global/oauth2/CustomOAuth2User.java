@@ -1,6 +1,6 @@
 package com.ssf.auth.global.oauth2;
 
-import com.ssf.auth.domain.user.Role;
+import com.ssf.auth.domain.user.domain.Role;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
