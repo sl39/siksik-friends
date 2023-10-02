@@ -6,12 +6,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.nio.charset.StandardCharsets;
+
+import static com.ssf.gateway.global.common.domain.Message.*;
 
 @Component
 @Slf4j
@@ -42,19 +48,19 @@ public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Conf
             HttpHeaders headers = request.getHeaders();
 
             if (!jwtService.hasAccessHeader(headers)) {
-                return handleForbidden(response);
+                return handleForbidden(response, NO_TOKEN.getValue());
             }
 
             String token = jwtService.extractToken(headers);
 
             if (!jwtService.hasAuthType(token)) {
-                return handleForbidden(response);
+                return handleForbidden(response, INVALID_AUTH_TYPE.getValue());
             }
 
             String accessToken = jwtService.extractAccessToken(token);
 
             if (jwtService.hasKeyBlackList(accessToken)) {
-                return handleForbidden(response);
+                return handleForbidden(response, INVALID_TOKEN.getValue());
             }
 
             if (uri.equals(CommonConstants.RE_ISSUANCE_ACCESS_TOKEN_URL.getValue())
@@ -63,17 +69,21 @@ public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Conf
                 return chain.filter(exchange);
             }
 
-            return handleUnAuthorized(response);
+            return handleUnAuthorized(response, EXPIRED_TOKEN.getValue());
         });
     }
 
-    private Mono<Void> handleUnAuthorized(ServerHttpResponse response) {
+    private Mono<Void> handleUnAuthorized(ServerHttpResponse response, String message) {
         response.setStatusCode(HttpStatus.UNAUTHORIZED);
-        return response.setComplete();
+        byte[] bytes = message.getBytes(StandardCharsets.UTF_8);
+        DataBuffer buffer = response.bufferFactory().wrap(bytes);
+        return response.writeWith(Flux.just(buffer));
     }
 
-    private Mono<Void> handleForbidden(ServerHttpResponse response) {
+    private Mono<Void> handleForbidden(ServerHttpResponse response, String message) {
         response.setStatusCode(HttpStatus.FORBIDDEN);
-        return response.setComplete();
+        byte[] bytes = message.getBytes(StandardCharsets.UTF_8);
+        DataBuffer buffer = response.bufferFactory().wrap(bytes);
+        return response.writeWith(Flux.just(buffer));
     }
 }
