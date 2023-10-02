@@ -56,6 +56,7 @@ public class StompRoomController {
 
         for (Member member : members) {
             if (body.getUserId().equals(member.getUserId())) {
+                messageTemplate.convertAndSend("/sub/room/info/" + roomId, targetRoom);
                 return;
             }
         }
