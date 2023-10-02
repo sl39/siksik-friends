@@ -7,6 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class AnswerDTO {
+public class ReplyDTO {
+    int roomId;
+    Long userId;
     String answer;
+    int userScore;
 }
