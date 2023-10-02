@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import zingchart from "zingchart/es6";
 // eslint-disable-next-line import/extensions
 import "zingchart/modules-es6/zingchart-wordcloud.min.js";
-import { serverAxios, WordCloudAxios } from "@/services/api";
+import { serverAxios } from "@/services/api";
 import styles from "./home.module.scss";
 
 interface Config {
