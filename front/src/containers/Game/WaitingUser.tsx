@@ -1,16 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { User } from "@/types";
+import type { Frame } from "stompjs";
+import type { soketUser, User } from "@/types";
 import { serverAxios } from "@/services/api";
+import { useWebSocket } from "@/socket/WebSocketProvider";
+import { userAtom } from "@/store/userAtom";
 import UserItem from "./UserItem";
 import styles from "./game.module.scss";
 
 export default function WaitingUser() {
   const [openTab, setOpenTab] = useState(1);
-  // 친구 요청 수
-  // const [count, setCount] = useState(1);
-  const [items, setItems] = useState<Array<User>>([]);
+  const [items, setItems] = useState<Array<soketUser>>([]);
 
   /** 내 친구 조회  */
   const myFriends = async () => {
@@ -38,15 +39,14 @@ export default function WaitingUser() {
   const handleUser = (tab: number) => {
     if (tab === 1) {
       // 대기실 유저 보여주기
-      // setItems([]);
-      setItems([
-        { user_id: 1, nickname: "wait", profile: "/images/character/rabbit.png" },
-        { user_id: 2, nickname: "2", profile: "/images/character/rabbit.png" },
-        { user_id: 3, nickname: "3", profile: "/images/character/rabbit.png" },
-        { user_id: 4, nickname: "4", profile: "/images/character/rabbit.png" },
-        { user_id: 5, nickname: "5", profile: "/images/character/rabbit.png" },
-        { user_id: 6, nickname: "6", profile: "/images/character/rabbit.png" },
-      ]);
+      // setItems([
+      //   { user_id: 1, nickname: "wait", profile: "/images/character/rabbit.png" },
+      //   { user_id: 2, nickname: "2", profile: "/images/character/rabbit.png" },
+      //   { user_id: 3, nickname: "3", profile: "/images/character/rabbit.png" },
+      //   { user_id: 4, nickname: "4", profile: "/images/character/rabbit.png" },
+      //   { user_id: 5, nickname: "5", profile: "/images/character/rabbit.png" },
+      //   { user_id: 6, nickname: "6", profile: "/images/character/rabbit.png" },
+      // ]);
       setOpenTab(tab);
     } else if (tab === 2) {
       // 친구인 유저 보여주기
@@ -58,12 +58,38 @@ export default function WaitingUser() {
       setOpenTab(tab);
     }
   };
+  const user = userAtom.init;
+  const stompClient = useWebSocket();
 
   useEffect(() => {
-    handleUser(1);
+    if (stompClient) {
+      const subscription = stompClient.subscribe(
+        "/sub/lobby/list",
+        function handleRoomList(frame: Frame) {
+          const lobbyUserList = JSON.parse(frame.body);
+          console.log(lobbyUserList);
+          setItems(lobbyUserList);
+        },
+        {}
+      );
+      const soketUser = {
+        userId: user.user_id,
+        userName: user.nickname,
+        userScore: user.score,
+        userRanking: user.rank,
+        ready: false,
+        leader: false,
+      };
 
+      stompClient.send("/pub/lobby/entrance", {}, JSON.stringify(soketUser));
+      handleUser(1);
+      return () => {
+        stompClient.send("/pub/lobby/exit", {}, JSON.stringify(soketUser));
+        subscription.unsubscribe();
+      };
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [stompClient]);
 
   return (
     <div className={styles.folder}>
@@ -88,7 +114,7 @@ export default function WaitingUser() {
       <div className={`${styles.content} ${styles[`tab_${openTab}`]}`}>
         <div className={`${styles.page} ${styles.userBox}`}>
           {items.map((item) => (
-            <UserItem key={item.user_id} data={item} />
+            <UserItem key={item.userId} data={item} />
           ))}
         </div>
       </div>
