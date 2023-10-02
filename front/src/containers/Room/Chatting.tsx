@@ -3,9 +3,13 @@
 import { useEffect, useState } from "react";
 import type { Frame } from "stompjs";
 import { useWebSocket } from "@/socket/WebSocketProvider";
-import styles from "./game.module.scss";
+import styles from "../Game/game.module.scss";
 
-export default function Chatting() {
+interface Props {
+  roomId: number;
+}
+
+export default function Chatting({ roomId }: Props) {
   type Message = {
     sender: string;
     msg: string;
@@ -30,7 +34,7 @@ export default function Chatting() {
     if (stompClient) {
       // stompClient를 사용하여 채팅 메시지를 구독합니다.
       const subscription = stompClient.subscribe(
-        "/sub/lobby/chat",
+        `/sub/room/chat/${roomId}`,
         function handleMessageFunction(frame: Frame) {
           const receivedMessage = JSON.parse(frame.body);
           setChatLog((prevChatLog) => [...prevChatLog, receivedMessage]);
@@ -67,7 +71,7 @@ export default function Chatting() {
       // message.sendTime = String(time);
 
       // 펴블리셔
-      stompClient.send("/pub/lobby/chat", {}, JSON.stringify(message));
+      stompClient.send(`/pub/room/chat/${roomId}`, {}, JSON.stringify(message));
 
       // 입력 필드 초기화
       setMessage({
