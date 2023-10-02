@@ -6,16 +6,19 @@ import type { Room } from "@/types";
 import GameRoomItem from "./GameRoomItem";
 import styles from "./game.module.scss";
 import EnterRoom from "./EnterRoom";
+import { useWebSocket } from "@/socket/WebSocketProvider";
+import { Frame } from "stompjs";
+import { CompatClient } from "@stomp/stompjs";
 
 export default function GameRoom() {
-  const [roomBtn, setRoomBtn] = useState(-1);
+  const [roomBtn, setRoomBtn] = useState(0);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [filteredRooms, setFilteredRooms] = useState<Room[]>([]);
 
   /** 대기 중인 방만 보여주는 함수 */
   const showWaitingRooms = async () => {
     setRoomBtn(1);
-    await setFilteredRooms(rooms.filter((room) => room.waiting));
+    await setFilteredRooms(rooms.filter((room) => !room.roomStatus));
   };
   /** 모든 방을 보여주는 함수 */
   const showAllRooms = async () => {
@@ -24,33 +27,45 @@ export default function GameRoom() {
   };
 
   /** 방 전체 목록 받아오기 */
-  const fetchRoom = async () => {
-    try {
-      // 소켓에서 받아오기
-      const response = await axios.get("/1");
-      setRooms(response.data);
-    } catch (err) {
-      console.log("방 목록 에러", err);
-    }
-    showAllRooms();
+
+  const stompClient = useWebSocket();
+
+  // lobby 들어갈때 메시지 보내기
+  const refreshRoom = (stompClient: CompatClient) => {
+    const message = {
+      enter: "enter to lobby",
+    };
+
+    stompClient.send("/pub/room/roomList", {}, JSON.stringify(message));
   };
 
   useEffect(() => {
-    fetchRoom();
+    // fetchRoom();
+    if (stompClient) {
+      // stompClient를 사용하여 채팅 메시지를 구독합니다.
+      const subscription = stompClient.subscribe(
+        "/sub/room/roomList",
+        function handleRoomList(frame: Frame) {
+          const recievdRoomList = JSON.parse(frame.body);
+          console.log(recievdRoomList, "여기 새로운 방 생성 되면 들어오는곳");
+          setRooms(recievdRoomList);
+          if (roomBtn === 0) {
+            setFilteredRooms(recievdRoomList);
+          } else {
+            setFilteredRooms(recievdRoomList.filter((room: Room) => !room.roomStatus));
+          }
+        },
+        {}
+      );
+      refreshRoom(stompClient);
+      return () => {
+        // 컴포넌트가 언마운트될 때 구독을 언서브스크라이브합니다.
+        subscription.unsubscribe();
+      };
+    }
 
-    // 서버 요청 전 더미 데이터
-    setRooms([
-      { id: 1, name: "더미1", waiting: true },
-      { id: 2, name: "더미2", waiting: true },
-      { id: 3, name: "더미3", waiting: false },
-      { id: 4, name: "더미4", waiting: false },
-      { id: 5, name: "더미5", waiting: true },
-      { id: 6, name: "더미6", waiting: true },
-      { id: 7, name: "더미7", waiting: false },
-      { id: 82, name: "더미8", waiting: false },
-    ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [stompClient]);
 
   return (
     <>
@@ -69,11 +84,11 @@ export default function GameRoom() {
             대기 방 보기
           </button>
         </div>
-        {/* <button className={[styles.reload].join(" ")} onClick={fetchRoom}>
+        {/* <button className={[styles.reload].join(" ")} onClick={showAllRooms}>
           새로고침
         </button> */}
       </div>
-      <div className={styles.rooms}>{filteredRooms?.map((room) => <GameRoomItem key={room.id} room={room} />)}</div>
+      <div className={styles.rooms}>{filteredRooms?.map((room) => <GameRoomItem key={room.roomId} room={room} />)}</div>
     </>
   );
 }

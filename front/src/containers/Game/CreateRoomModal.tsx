@@ -5,6 +5,10 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import type { RoomInfo } from "@/types";
 import styles from "./modal.module.scss";
+import { userAtom } from "@/store/userAtom";
+import { serverAxios } from "@/services/api";
+import axios from "axios";
+import { useWebSocket } from "@/socket/WebSocketProvider";
 
 interface Props {
   onClose: () => void;
@@ -26,22 +30,48 @@ export default function CreateRoomModal({ onClose }: Props) {
     title: "",
     count: 1,
     countProblem: 1,
-    type: [],
+    type: "",
     password: "",
   });
+  const stompClient = useWebSocket();
 
   /** 게임 방 생성 */
   const handleCreateGame = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (titleValidation && passwordValidation && formData.type.length) {
-      console.log(formData);
+    if (titleValidation && passwordValidation && typeValidation) {
+      const user = userAtom.init;
+      const leaderMember = {
+        userId: user.user_id,
+        userName: user.nickname,
+        userScore: user.score,
+        userRanking: user.rank,
+        ready: false,
+        leader: true,
+      };
+      const roomData = {
+        roomName: formData.title,
+        roomStatus: 0,
+        category: formData.type,
+        quizCount: formData.countProblem,
+        members: [leaderMember],
+        roomSize: formData.count,
+      };
 
       /** 게임방 POST 요청 */
       try {
         // const response = await serverAxios.post("/", formData);
-        // console.log(response);
-        const id = 1;
-        router.push(`/room/${id}`);
+        const response = await axios
+          .create({
+            baseURL: "http://j9e101.p.ssafy.io:8083",
+            // headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
+          })
+          .post("/lobby", roomData);
+        console.log(response);
+        console.log("방 만들기");
+        if (stompClient) {
+          stompClient.send("/pub/room/roomList", {}, JSON.stringify({}));
+        }
+        router.push(`/room/${response.data.roomId}`);
       } catch (err) {
         console.log(err);
         // Axios 연결 전 임시 데이터
@@ -108,23 +138,33 @@ export default function CreateRoomModal({ onClose }: Props) {
   const typeClick = (val: string) => {
     // val이 typeList에 이미 포함되어 있는지 확인
     const typeList = formData.type;
-    const index = typeList.indexOf(val);
+    // const index = typeList.indexOf(val);
 
-    if (index !== -1) {
-      // val이 이미 존재하면 제거
-      const updatedList = [...typeList];
-      updatedList.splice(index, 1);
-      setFormData({ ...formData, type: updatedList });
-      if (updatedList.length > 0) {
-        setTypeValidation(false);
-      }
+    // if (index !== -1) {
+    //   // val이 이미 존재하면 제거
+    //   const updatedList = [...typeList];
+    //   updatedList.splice(index, 1);
+    //   setFormData({ ...formData, type: updatedList });
+    //   if (updatedList.length > 0) {
+    //     setTypeValidation(false);
+    //   }
+    // } else {
+    //   // val이 존재하지 않으면 추가
+    //   setFormData({ ...formData, type: [...typeList, val] });
+    //   setTypeValidation(true);
+    //   console.log(typeValidation);
+    // }
+
+    if (val === typeList) {
+      console.log(val);
+      setFormData({ ...formData, type: "" });
+      setTypeValidation(false);
     } else {
-      // val이 존재하지 않으면 추가
-      setFormData({ ...formData, type: [...typeList, val] });
+      setFormData({ ...formData, type: val });
       setTypeValidation(true);
-      console.log(typeValidation);
     }
   };
+
   const checkBtn = () => {
     setPaswordCheckBox(!passwordCheckBox);
     if (!passwordCheckBox) {
@@ -181,7 +221,7 @@ export default function CreateRoomModal({ onClose }: Props) {
               name="type"
               id="type"
               onClick={() => typeClick("경제")}
-              className={formData.type.includes("경제") ? styles.selected : ""}
+              className={formData.type === "경제" ? styles.selected : ""}
             >
               경제
             </button>{" "}
@@ -190,7 +230,7 @@ export default function CreateRoomModal({ onClose }: Props) {
               name="type"
               id="type"
               onClick={() => typeClick("사회")}
-              className={formData.type.includes("사회") ? styles.selected : ""}
+              className={formData.type === "사회" ? styles.selected : ""}
             >
               사회
             </button>
@@ -199,7 +239,7 @@ export default function CreateRoomModal({ onClose }: Props) {
               name="type"
               id="type"
               onClick={() => typeClick("생활/문화")}
-              className={formData.type.includes("생활/문화") ? styles.selected : ""}
+              className={formData.type === "생활/문화" ? styles.selected : ""}
             >
               생활/문화
             </button>
@@ -208,7 +248,7 @@ export default function CreateRoomModal({ onClose }: Props) {
               name="type"
               id="type"
               onClick={() => typeClick("세계")}
-              className={formData.type.includes("세계") ? styles.selected : ""}
+              className={formData.type === "세계" ? styles.selected : ""}
             >
               세계
             </button>
@@ -217,7 +257,7 @@ export default function CreateRoomModal({ onClose }: Props) {
               name="type"
               id="type"
               onClick={() => typeClick("It/과학")}
-              className={formData.type.includes("It/과학") ? styles.selected : ""}
+              className={formData.type === "It/과학" ? styles.selected : ""}
             >
               It/과학
             </button>

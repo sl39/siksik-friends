@@ -23,15 +23,32 @@ export interface Rank {
 }
 
 export interface Room {
-  id: number;
-  name: string;
-  waiting: boolean;
+  roomId: number;
+  roomName: string;
+  roomStatus: boolean;
+  quizDateTime: string;
+  category: string;
+  quizCount: string;
+  members: soketUser[];
+  roomSize: number;
+  roomCurrent: number;
+  roomReady: number;
+  password: string;
 }
 
 export interface RoomInfo {
   title: string;
   count: number;
   countProblem: number;
-  type: string[];
+  type: string;
   password: string;
+}
+
+export interface soketUser {
+  userId: number;
+  userName: String;
+  userScore: number;
+  userRanking: number;
+  ready: boolean;
+  leader: boolean;
 }

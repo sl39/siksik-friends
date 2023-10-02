@@ -28,8 +28,8 @@ export default function EnterRoom({ rooms }: Props) {
   const randomOnClick = () => {
     const arr: number[] = [];
     rooms.forEach((element: Room) => {
-      if (element.waiting) {
-        arr.push(element.id);
+      if (element.roomStatus) {
+        arr.push(element.roomId);
       }
     });
     console.log(arr);
