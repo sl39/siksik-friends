@@ -5,8 +5,9 @@ import { profileAtom } from "@/store/userAtom";
 import styles from "./Profile.module.scss";
 
 export default function ProfileData() {
-  // 프로필 데이터 아톰
   const [data] = useAtom(profileAtom);
+
+  // 프로필 회원의 모든 정보 받아오기
 
   return (
     <div className={styles.profileData}>

@@ -12,8 +12,8 @@ interface Props {
 export default function RankItem({ item }: Props) {
   const router = useRouter();
 
-  const onClick = (nickname: string, user_id: number) => {
-    router.replace(`/home/profile/${nickname}/${user_id}`);
+  const onClick = (user_id: number) => {
+    router.replace(`/home/profile/${user_id}`);
   };
 
   return (
@@ -36,7 +36,7 @@ export default function RankItem({ item }: Props) {
       </div> */}
       <span className={styles.rankLevel}>Lv. {item.level}</span>
       <span className={`${styles.rankName}`}>
-        <button onClick={() => onClick(item?.nickname, item?.user_id)} className={styles.highlight}>
+        <button onClick={() => onClick(item.user_id)} className={styles.highlight}>
           {item.nickname}
         </button>
       </span>
