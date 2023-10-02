@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum SignInConstants {
 
-    DEFAULT_SIGN_IN_REQUEST_URL("/api/user/sign-in"),
+    DEFAULT_SIGN_IN_REQUEST_URL("/api/auth/sign-in"),
     HTTP_METHOD("POST"),
     CONTENT_TYPE("application/json"),
     USERNAME_KEY("email"),
