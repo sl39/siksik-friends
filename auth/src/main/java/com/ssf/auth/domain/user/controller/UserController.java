@@ -28,14 +28,14 @@ public class UserController {
     @GetMapping("/email")
     public ResponseEntity<Message> checkEmail(@Validated final UserRequest.Email emailDto) {
         return userService.checkEmailDuplication(emailDto).emailRedundancyStatus()
-                ? ResponseEntity.status(HttpStatus.CONFLICT).body(Message.IMPOSSIBLE_EMAIL)
-                : ResponseEntity.ok(Message.IMPOSSIBLE_EMAIL);
+                ? ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Message.USING_EMAIL)
+                : ResponseEntity.ok(Message.POSSIBLE_EMAIL);
     }
 
     @GetMapping("/nickname")
     public ResponseEntity<Message> checkNickname(@Validated final UserRequest.Nickname nicknameDto) {
         return userService.checkNicknameDuplication(nicknameDto).nicknameRedundancyStatus()
-                ? ResponseEntity.status(HttpStatus.CONFLICT).body(Message.IMPOSSIBLE_NICKNAME)
+                ? ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Message.USING_NICKNAME)
                 : ResponseEntity.ok(Message.POSSIBLE_NICKNAME);
     }
 
