@@ -1,6 +1,6 @@
 package com.ssf.auth.global.oauth2.handler;
 
-import com.ssf.auth.domain.user.Role;
+import com.ssf.auth.domain.user.domain.Role;
 import com.ssf.auth.domain.user.repository.UserRepository;
 import com.ssf.auth.global.jwt.service.JwtService;
 import com.ssf.auth.global.oauth2.CustomOAuth2User;
@@ -31,7 +31,7 @@ public class OAuth2SignInSuccessHandler implements AuthenticationSuccessHandler 
             CustomOAuth2User customOAuth2User = (CustomOAuth2User) authentication.getPrincipal();
 
             if (customOAuth2User.getRole() == Role.GUEST) {
-                String accessToken = jwtService.createAccessToken(customOAuth2User.getId());
+                String accessToken = jwtService.createAccessToken(String.valueOf(customOAuth2User.getId()));
                 response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
                 response.sendRedirect("auth/oauth2/sign-up");
 
@@ -48,7 +48,7 @@ public class OAuth2SignInSuccessHandler implements AuthenticationSuccessHandler 
     }
 
     private void signInSuccess(HttpServletResponse response, CustomOAuth2User customOAuth2User) throws IOException {
-        String accessToken = jwtService.createAccessToken(customOAuth2User.getId());
+        String accessToken = jwtService.createAccessToken(String.valueOf(customOAuth2User.getId()));
         String refreshToken = jwtService.createRefreshToken();
 
         response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
@@ -56,6 +56,6 @@ public class OAuth2SignInSuccessHandler implements AuthenticationSuccessHandler 
 
 //        jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
         jwtService.sendAccessToken(response, accessToken);
-        jwtService.updateRefreshToken(customOAuth2User.getId(), refreshToken);
+        jwtService.updateRefreshToken(String.valueOf(customOAuth2User.getId()), refreshToken);
     }
 }
