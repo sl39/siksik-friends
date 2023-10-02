@@ -1,25 +1,32 @@
 "use client";
 
 import { useAtom } from "jotai";
-import { roomAtom } from "@/store/gameAtom";
-import StartBtn from "./StartBtn";
+// import { roomAtom } from "@/store/gameAtom";
+// import StartBtn from "./StartBtn";
+import { usePathname } from "next/navigation";
+import WebSocketProvider from "@/socket/WebSocketProvider";
 import styles from "./room.module.scss";
 import RoomInfo from "./RoomInfo";
+import Chatting from "./Chatting";
 
 export default function Index() {
   // 방 정보
-  const room = useAtom(roomAtom)[0];
+  // const room = useAtom(roomAtom)[0];
 
-  // 이거 받아와야함
-  const gameId = 1;
+  let pathname = usePathname();
+  pathname = pathname.replace("/room/", "");
+  const roomId = Number(pathname);
+  // const gameId = 1;
 
   return (
-    <>
+    <WebSocketProvider>
       <div className={styles.left}>
         <div className={styles.roomInfo}>
-          <RoomInfo room={room} />
+          <RoomInfo roomId={roomId} />
         </div>
-        <div className={styles.chatting}>채팅창</div>
+        <div className={styles.chatting}>
+          <Chatting roomId={roomId} />
+        </div>
       </div>
       <div className={styles.right}>
         <div className={styles.roomUser}>{/* 그거 컴포넌트 정리해서 가져오기 */}</div>
@@ -28,6 +35,6 @@ export default function Index() {
           <StartBtn gameId={gameId} />
         </div>
       </div>
-    </>
+    </WebSocketProvider>
   );
 }

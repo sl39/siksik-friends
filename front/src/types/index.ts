@@ -23,18 +23,26 @@ export interface Rank {
 }
 
 export interface Room {
-  id: number;
-  name: string;
-  waiting: boolean;
+  roomId: number;
+  roomName: string;
+  roomStatus: boolean;
+  quizDateTime: string;
+  category: string;
+  quizCount: string;
+  members: soketUser[];
+  roomSize: number;
+  roomCurrent: number;
+  roomReady: number;
+  password: string;
 }
 
 export interface RoomInfo {
   title: string;
   count: number;
   countProblem: number;
+  type: string;
+  password: string;
   countTimer: number;
-  type: string[];
-  password?: string;
 }
 
 export interface Quiz {
@@ -42,4 +50,13 @@ export interface Quiz {
   title: string;
   description: string;
   answer: string;
+}
+
+export interface soketUser {
+  userId: number;
+  userName: string;
+  userScore: number;
+  userRanking: number;
+  ready: boolean;
+  leader: boolean;
 }
