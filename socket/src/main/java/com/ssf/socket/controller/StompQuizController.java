@@ -2,7 +2,7 @@ package com.ssf.socket.controller;
 
 import com.ssf.socket.domain.Quiz;
 import com.ssf.socket.domain.Room;
-import com.ssf.socket.repository.MemoryQuizRepository;
+//import com.ssf.socket.repository.MemoryQuizRepository;
 import com.ssf.socket.repository.QuizRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class StompQuizController {
     private final SimpMessagingTemplate messageTemplate;
-    private final QuizRepository quizRepository = new MemoryQuizRepository();
+//    private final QuizRepository quizRepository = new MemoryQuizRepository();
 
 //    @MessageMapping("/game/quiz/{roomId}")
 //    public void takeQuiz(
