@@ -1,19 +1,19 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { soketUser, User } from "@/types";
+import type { User } from "@/types";
 import { serverAxios } from "@/services/api";
 import styles from "./game.module.scss";
 
 interface Props {
-  data: soketUser | User;
+  data: User;
 }
 
 interface TypeTextType {
   [key: number]: string[];
 }
 
-export default function UserItem({ data }: Props) {
+export default function FriendsItem({ data }: Props) {
   const [isActive, setIsActive] = useState(false);
   console.log(isActive);
   // eslint-disable-next-line no-null/no-null
