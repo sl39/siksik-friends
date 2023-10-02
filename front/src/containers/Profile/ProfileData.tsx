@@ -13,6 +13,70 @@ export default function ProfileData() {
   // 프로필 회원의 모든 정보 받아오기
   // const [data] = useAtom(profileAtom);
 
+  const userStat = {
+    경제: 1,
+    사회: 1,
+    "생활/문화": 1,
+    세계: 1,
+    "IT/과학": 1,
+  };
+
+  const dataXY = {
+    1: {
+      5: [209.29, 130.65],
+      4: [209, 154.16],
+      3: [209.28, 185.31],
+      2: [209.28, 209.7],
+      1: [209.3, 233.44],
+    },
+    2: {
+      5: [106.14, 190.21],
+      4: [126.97, 201.52],
+      3: [152.45, 218.14],
+      2: [173.56, 230.34],
+      1: [194.7, 241.88],
+    },
+    3: {
+      5: [106.14, 309.33],
+      4: [126.97, 296.33],
+      3: [152.45, 283.78],
+      2: [173.56, 271.6],
+      1: [194.7, 258.73],
+    },
+    4: {
+      5: [209.29, 368.89],
+      4: [209, 343.61],
+      3: [209.28, 316.6],
+      2: [209.28, 292.21],
+      1: [209.3, 267.16],
+    },
+    5: {
+      5: [312.46, 309.33],
+      4: [291.03, 296.23],
+      3: [266.13, 283.78],
+      2: [245, 271.6],
+      1: [223.9, 258.73],
+    },
+    6: {
+      5: [312.46, 190.21],
+      4: [291.03, 201.52],
+      3: [266.13, 218.14],
+      2: [245, 230.34],
+      1: [223.9, 241.88],
+    },
+  };
+
+  const [x1, y1] = dataXY[1][5];
+  const [x2, y2] = dataXY[2][5];
+  const [x3, y3] = dataXY[3][2];
+  const [x4, y4] = dataXY[4][3];
+  const [x5, y5] = dataXY[5][4];
+  const [x6, y6] = dataXY[6][5];
+
+  const d = `M${x1} ${y1}l${x2 - x1} ${y2 - y1} ${x3 - x2} ${y3 - y2} ${x4 - x3} ${y4 - y3} ${x5 - x4} ${y5 - y4} ${
+    x6 - x5
+  } ${y6 - y5} ${x1 - x6} ${y1 - y6}z`;
+
   return (
     <div className={styles.profileData}>
       <section id="wrapper" className={styles.profileContainer}>
@@ -46,31 +110,28 @@ export default function ProfileData() {
 
             <div className={`${styles.tabcontent} ${activeTab === 2 ? styles.active : ""}`}>
               <h3>데이터</h3>
-              <div className={styles.p}>
+              <div className={`${styles.p} ${styles.data}`}>
                 <div className={styles.stat}>
-                  <svg className="design-tool" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 420">
+                  <svg className={styles["design-tool"]} xmlns="http://www.w3.org/2000/svg" viewBox="0 80 420 340">
                     <g>
-                      <g className="text" opacity=".87" font-size="16" fill="#333" font-weight="300">
-                        <text className="tool-illustrator" transform="translate(152.31 114.99)">
-                          Illustrator
+                      <g className={styles.text} opacity=".87" font-size="16" fill="#333" font-weight="300">
+                        <text className="tool-illustrator" transform="translate(190.31 114.99)">
+                          경제
                         </text>
-                        <text className="tool-sketch" transform="translate(35.7 193.74)" />
+                        <text className="tool-sketch" transform="translate(50.7 193.74)">
+                          사회
+                        </text>
                         <text className="tool-invision" transform="translate(17.09 316.94)">
-                          Invision
+                          생활/문화
                         </text>
-                        <text className="tool-indesign" transform="translate(169.11 402.93)">
-                          InDesign
+                        <text className="tool-indesign" transform="translate(190.11 402.93)">
+                          세계
                         </text>
-                        <text transform="translate(326.68 185.19)">
-                          After
-                          <tspan x="0" y="19.2">
-                            Effects
-                          </tspan>
-                        </text>
-                        <text transform="translate(320.09 323.06)">Premiere</text>
+                        <text transform="translate(320.09 323.06)">IT/과학</text>
+                        <text transform="translate(326.68 185.19)">전체</text>
                       </g>
 
-                      <g className="chart" fill="none" stroke="#333" stroke-miterlimit="10">
+                      <g className={styles.chart} fill="none" stroke="#333" strokeMiterlimit="10">
                         <path
                           className="hexagon"
                           opacity=".8"
@@ -108,7 +169,7 @@ export default function ProfileData() {
                         <path className="bar-6" opacity=".4" stroke-dasharray="2" d="M209.3 130.65l-.02 102.79" />
                       </g>
 
-                      <g className="numbers" opacity=".3" fill="#333">
+                      <g className={styles.numbers} opacity=".3" fill="#333">
                         <path d="M298.75 252.92l.73-1a2.2 2.2 0 0 0 1.52.71 1.06 1.06 0 0 0 1.18-.93 1 1 0 0 0 0-.17 1 1 0 0 0-.95-1.09h-.17a1.61 1.61 0 0 0-1 .35l-.73-.48.21-3.58h4v1.37h-2.69l-.13 1.34a1.7 1.7 0 0 1 .8-.17 2.08 2.08 0 0 1 2.24 1.9 1.61 1.61 0 0 1 0 .31 2.43 2.43 0 0 1-2.38 2.48h-.22a3.35 3.35 0 0 1-2.41-1.04z" />
                         <path d="M279.77 251v-4.17h-2.08l-2.58 4.17v1.12h3.06l.08 1.81h1.52v-1.68h.82V251zm-1.6-1.27v1.14h-1.52l.94-1.54c.21-.39.41-.79.58-1.19z" />
                         <path d="M252.9 252.89l.75-1a2.21 2.21 0 0 0 1.54.71c.69 0 1.15-.29 1.15-.83s-.38-1-1.92-1v-1.17c1.27 0 1.67-.37 1.67-1s-.32-.77-.88-.77a2.06 2.06 0 0 0-1.33.63l-.83-1a3.33 3.33 0 0 1 2.29-1c1.45 0 2.43.71 2.43 1.94a1.66 1.66 0 0 1-1.18 1.56 1.78 1.78 0 0 1 1.39 1.73c0 1.31-1.21 2.08-2.62 2.08a3.1 3.1 0 0 1-2.46-.88z" />
@@ -116,12 +177,12 @@ export default function ProfileData() {
                         <path d="M207 252.44h1.54v-4.17h-1.33v-1a5.09 5.09 0 0 0 1.77-.64h1.21v5.74h1.33v1.34H207z" />
                       </g>
                       <path
-                        className="design-tool-line"
+                        className={styles["design-tool-line"]}
                         fill="none"
-                        stroke="salmon"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M209.29 130.65l-103.15 59.56 46.32 93.57 56.55 59.83 82.03-47.38-24.89-78.09-56.86-87.49z"
+                        stroke="#7ec0ee"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d={d}
                       />
                     </g>
                   </svg>
