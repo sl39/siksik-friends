@@ -2,7 +2,7 @@
 
 import { useAtom } from "jotai";
 import { roomAtom } from "@/store/gameAtom";
-// import StartBtn from "./StartBtn";
+import StartBtn from "./StartBtn";
 import styles from "./room.module.scss";
 import RoomInfo from "./RoomInfo";
 
@@ -10,7 +10,8 @@ export default function Index() {
   // 방 정보
   const room = useAtom(roomAtom)[0];
 
-  // const gameId = 1;
+  // 이거 받아와야함
+  const gameId = 1;
 
   return (
     <>
@@ -24,7 +25,7 @@ export default function Index() {
         <div className={styles.roomUser}>{/* 그거 컴포넌트 정리해서 가져오기 */}</div>
         <div className={styles.startBtn}>
           레디 / 취소 , 시작 버튼 ||
-          {/* <StartBtn gameId={gameId} /> */}
+          <StartBtn gameId={gameId} />
         </div>
       </div>
     </>
