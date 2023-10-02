@@ -1,4 +1,4 @@
-package com.ssf.auth.domain.user;
+package com.ssf.auth.domain.user.domain;
 
 import jakarta.persistence.*;
 import lombok.*;

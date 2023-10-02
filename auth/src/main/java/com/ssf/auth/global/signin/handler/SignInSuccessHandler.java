@@ -1,6 +1,6 @@
 package com.ssf.auth.global.signin.handler;
 
-import com.ssf.auth.domain.user.User;
+import com.ssf.auth.domain.user.domain.User;
 import com.ssf.auth.domain.user.repository.UserRepository;
 import com.ssf.auth.global.jwt.service.JwtService;
 import jakarta.servlet.http.HttpServletRequest;

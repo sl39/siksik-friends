@@ -1,6 +1,6 @@
 package com.ssf.auth.global.signin.service;
 
-import com.ssf.auth.domain.user.User;
+import com.ssf.auth.domain.user.domain.User;
 import com.ssf.auth.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

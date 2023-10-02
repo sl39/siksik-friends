@@ -1,7 +1,7 @@
 package com.ssf.auth.global.oauth2.service;
 
-import com.ssf.auth.domain.user.SocialType;
-import com.ssf.auth.domain.user.User;
+import com.ssf.auth.domain.user.domain.SocialType;
+import com.ssf.auth.domain.user.domain.User;
 import com.ssf.auth.domain.user.repository.UserRepository;
 import com.ssf.auth.global.oauth2.CustomOAuth2User;
 import com.ssf.auth.global.oauth2.OAuthAttributes;

@@ -2,11 +2,10 @@ package com.ssf.auth.domain.user.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.ssf.auth.domain.user.Role;
+import com.ssf.auth.domain.user.domain.Role;
 import com.ssf.auth.domain.user.dto.UserDto;
-import com.ssf.auth.domain.user.User;
+import com.ssf.auth.domain.user.domain.User;
 import com.ssf.auth.domain.user.repository.UserRepository;
 import com.ssf.auth.global.jwt.service.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Service

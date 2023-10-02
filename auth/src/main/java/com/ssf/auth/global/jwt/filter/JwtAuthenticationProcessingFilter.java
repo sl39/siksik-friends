@@ -2,7 +2,7 @@ package com.ssf.auth.global.jwt.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.ssf.auth.domain.user.User;
+import com.ssf.auth.domain.user.domain.User;
 import com.ssf.auth.domain.user.repository.UserRepository;
 import com.ssf.auth.global.jwt.service.JwtService;
 import jakarta.servlet.FilterChain;

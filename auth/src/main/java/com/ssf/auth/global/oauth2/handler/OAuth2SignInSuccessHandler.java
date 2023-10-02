@@ -1,6 +1,6 @@
 package com.ssf.auth.global.oauth2.handler;
 
-import com.ssf.auth.domain.user.Role;
+import com.ssf.auth.domain.user.domain.Role;
 import com.ssf.auth.domain.user.repository.UserRepository;
 import com.ssf.auth.global.jwt.service.JwtService;
 import com.ssf.auth.global.oauth2.CustomOAuth2User;
