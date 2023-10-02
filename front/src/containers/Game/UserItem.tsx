@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { soketUser, User } from "@/types";
+import type { SoketUser } from "@/types";
 import { serverAxios } from "@/services/api";
 import styles from "./game.module.scss";
 
 interface Props {
-  data: soketUser | User;
+  data: SoketUser;
 }
 
 interface TypeTextType {
@@ -27,9 +27,9 @@ export default function UserItem({ data }: Props) {
   // };
 
   /** 간단한 프로필 모달 열기 */
-  // const openProfile = () => {
-  //   console.log(1);
-  // };
+  const openProfile = () => {
+    console.log(1);
+  };
 
   /** data.user_id 로 친구 여부에 따른 버튼 */
   // const TypeText: TypeTextType = {
@@ -106,8 +106,12 @@ export default function UserItem({ data }: Props) {
         quality={100}
       /> */}
       <div className={styles.userItemBox}>
-        {/* <div className={styles.subBox}>{data.level}</div> */}
-        <div className={styles.subBox}>{data.userName}</div>
+        <div className={styles.profileInfo}>
+          <div className={styles.userInfo}>
+            <div className={`${styles.subBox} ${styles.level}`}>Lv.{data.userRanking}</div>
+            <div className={styles.subBox}>{data.userName}</div>
+          </div>
+        </div>
         {/* // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div
