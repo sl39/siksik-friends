@@ -26,17 +26,17 @@ public class UserController {
     private static final String DEFAULT_PROFILE_URL = "/images/character/rabbit.png";
 
     @GetMapping("/email")
-    public ResponseEntity<Message> checkEmail(@Validated final UserRequest.Email emailDto) {
+    public ResponseEntity<String> checkEmail(@Validated final UserRequest.Email emailDto) {
         return userService.checkEmailDuplication(emailDto).emailRedundancyStatus()
-                ? ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Message.USING_EMAIL)
-                : ResponseEntity.ok(Message.POSSIBLE_EMAIL);
+                ? ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Message.USING_EMAIL.getValue())
+                : ResponseEntity.ok(Message.POSSIBLE_EMAIL.getValue());
     }
 
     @GetMapping("/nickname")
-    public ResponseEntity<Message> checkNickname(@Validated final UserRequest.Nickname nicknameDto) {
+    public ResponseEntity<String> checkNickname(@Validated final UserRequest.Nickname nicknameDto) {
         return userService.checkNicknameDuplication(nicknameDto).nicknameRedundancyStatus()
-                ? ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Message.USING_NICKNAME)
-                : ResponseEntity.ok(Message.POSSIBLE_NICKNAME);
+                ? ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Message.USING_NICKNAME.getValue())
+                : ResponseEntity.ok(Message.POSSIBLE_NICKNAME.getValue());
     }
 
     @PostMapping("/sign-up")
