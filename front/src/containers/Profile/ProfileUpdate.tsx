@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAtom } from "jotai";
 import Image from "next/image";
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { serverAxios } from "@/services/api";
 import { ProfileImgAtom, userAtom } from "@/store/userAtom";
 import styles from "./ProfileUpdate.module.scss";
@@ -59,12 +60,11 @@ export default function ProfileUpdate() {
 
   const [profileImages] = useAtom(ProfileImgAtom);
   const [profileIndex, setProfileIndex] = useState(profileImages.indexOf(data.profile));
-
   /** 프로필 사진 변경 */
-  const changeProfile = (direction: string) => {
-    if (direction === "left") {
+  const changeProfile = (dir: string) => {
+    if (dir === "left") {
       setProfileIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : profileImages.length - 1));
-    } else if (direction === "right") {
+    } else if (dir === "right") {
       setProfileIndex((prevIndex) => (prevIndex < profileImages.length - 1 ? prevIndex + 1 : 0));
     }
   };
@@ -95,8 +95,8 @@ export default function ProfileUpdate() {
       <div className={`${styles.updateContainer}`}>
         <div className={styles.title}>회원 정보 수정</div>
         <form className={styles.form} onSubmit={handleUpdateProfile}>
-          {/* 프로필 사진 */}
           <div className={styles.flex}>
+            {/* 프로필 사진 */}
             <div className={styles.imageInput}>
               <input
                 className={styles.inputImg}
@@ -106,35 +106,69 @@ export default function ProfileUpdate() {
                 readOnly
               />
               <button type="button" onClick={() => changeProfile("left")}>
-                왼
+                <BsChevronLeft />
               </button>
-              <Image
-                className={styles.imageSelect}
-                src={profileImages[profileIndex]}
-                alt="프로필 선택"
-                quality={100}
-                width={200}
-                height={250}
-              />
+              <div style={{ overflow: "hidden" }}>
+                <Image
+                  className={`${styles.imageSelect} `}
+                  src={profileImages[profileIndex]}
+                  alt="프로필 선택"
+                  quality={100}
+                  width={200}
+                  height={250}
+                />
+              </div>
               <button type="button" onClick={() => changeProfile("right")}>
-                오
+                <BsChevronRight />
               </button>
             </div>
+
             <div className={styles.col}>
-              <div>
-                <label htmlFor="email">이메일</label>
-                <br />
-                <input type="text" id="email" value={data.email} disabled />
+              <div className={styles.inputBox}>
+                <label htmlFor="email" className={styles.details}>
+                  이메일
+                </label>
+                <div className={styles.input}>
+                  <input type="text" id="email" value={data.email} disabled />
+                </div>
               </div>
-              <div>
-                <label htmlFor="nickname">닉네임 </label>
-                <br />
-                <input type="text" id="nickname" value={nickname} onChange={(e) => setNickname(e.target.value)} />
-                <button type="button" onClick={handleCheckNickname} className={[styles.button, styles.check].join(" ")}>
-                  중복확인
-                </button>
+
+              <div className={styles.inputBox}>
+                <label htmlFor="nickname" className={styles.details}>
+                  닉네임
+                </label>
+                <div className={styles.input}>
+                  <input
+                    autoComplete="off"
+                    type="text"
+                    id="nickname"
+                    value={nickname}
+                    onChange={(e) => setNickname(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleCheckNickname}
+                    className={[styles.button, styles.check].join(" ")}
+                  >
+                    중복확인
+                  </button>
+                </div>
+                <div className={styles.checkText}>{checkNickname}</div>
               </div>
-              <div className={styles.checkText}>{checkNickname}</div>
+
+              {/* <div className={styles.inputBox}>
+                <label htmlFor="password1" className={styles.details}>
+                  비밀번호
+                </label>
+                <input type="text" id="password1" value={nickname} onChange={(e) => setNickname(e.target.value)} />
+              </div>
+
+              <div className={styles.inputBox}>
+                <label htmlFor="password2" className={styles.details}>
+                  비밀번호 확인
+                </label>
+                <input type="text" id="password2" value={nickname} onChange={(e) => setNickname(e.target.value)} />
+              </div> */}
             </div>
           </div>
 
@@ -146,6 +180,7 @@ export default function ProfileUpdate() {
               취소
             </button>
           </div>
+          {/* <div className={styles.deleteUser}>회원 탈퇴</div> */}
         </form>
       </div>
     </div>

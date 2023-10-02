@@ -97,7 +97,7 @@ export default function UpdateButton() {
 
   /** 정보 수정 페이지로 이동 */
   const handleUpdate = () => {
-    router.push(`/home/profile/${params.nickname}/${params.id}/update`);
+    router.push(`/home/profile/${params.id}/update`);
   };
   /** 로그아웃 */
   const handleLogout = async () => {
