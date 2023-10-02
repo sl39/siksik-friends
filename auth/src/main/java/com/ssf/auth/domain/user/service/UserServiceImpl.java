@@ -48,6 +48,13 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
+    @Override
+    public UserResponse.NicknameRedundancy checkNicknameDuplication(UserRequest.Nickname nickname) {
+        return UserResponse.NicknameRedundancy.builder()
+                .nicknameRedundancyStatus(userRepository.existsByNickname(nickname.nickname()))
+                .build();
+    }
+
     public void signUp(UserDto.Request userRequest) throws Exception {
 
         if (userRepository.existsByEmail(userRequest.getEmail())) {

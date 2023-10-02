@@ -27,6 +27,13 @@ public class UserController {
                 : ResponseEntity.ok(Message.IMPOSSIBLE_EMAIL);
     }
 
+    @GetMapping("/nickname")
+    public ResponseEntity<Message> checkNickname(@Validated final UserRequest.Nickname nicknameDto) {
+        return userService.checkNicknameDuplication(nicknameDto).nicknameRedundancyStatus()
+                ? ResponseEntity.status(HttpStatus.CONFLICT).body(Message.IMPOSSIBLE_NICKNAME)
+                : ResponseEntity.ok(Message.POSSIBLE_NICKNAME);
+    }
+
     @PostMapping("/sign-up")
     public String signUp(@RequestBody UserDto.Request userRequest) throws Exception {
         userService.signUp(userRequest);
@@ -37,12 +44,6 @@ public class UserController {
     public String signOut(@RequestHeader(ACCESS_HEADER) String accessHeader) {
         userService.signOut(accessHeader);
         return "로그아웃 완료";
-    }
-
-    @GetMapping("/nickname")
-    public String validNickname(String nickname) throws Exception {
-        userService.ValidNickname(nickname);
-        return "사용 가능 닉네임";
     }
 
     @GetMapping("/jwt-test")

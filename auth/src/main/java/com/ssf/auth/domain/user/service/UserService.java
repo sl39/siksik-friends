@@ -7,6 +7,7 @@ import com.ssf.auth.domain.user.dto.UserResponse;
 public interface UserService {
 
     UserResponse.EmailRedundancy checkEmailDuplication(UserRequest.Email email);
+    UserResponse.NicknameRedundancy checkNicknameDuplication(UserRequest.Nickname nickname);
     public void signUp(UserDto.Request userRequest) throws Exception;
     public void signOut(String accessHeader);
 }
