@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import zingchart from "zingchart/es6";
 // eslint-disable-next-line import/extensions
 import "zingchart/modules-es6/zingchart-wordcloud.min.js";
-import { WordCloudAxios } from "@/services/api";
+import { serverAxios, WordCloudAxios } from "@/services/api";
 import styles from "./home.module.scss";
 
 interface Config {
@@ -89,7 +89,7 @@ export default function WordCloud() {
 
   const fetchWord = async (newPath: number) => {
     try {
-      const response = await WordCloudAxios.get(`/${newPath}`);
+      const response = await serverAxios.get(`/user/word-cloud/${newPath}`);
       const words = response.data;
       setConfig({
         type: "wordcloud",
