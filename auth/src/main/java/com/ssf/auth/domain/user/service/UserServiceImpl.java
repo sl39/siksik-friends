@@ -1,24 +1,17 @@
 package com.ssf.auth.domain.user.service;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.ssf.auth.domain.user.domain.Role;
-import com.ssf.auth.domain.user.dto.UserDto;
 import com.ssf.auth.domain.user.domain.User;
 import com.ssf.auth.domain.user.dto.UserRequest;
 import com.ssf.auth.domain.user.dto.UserResponse;
 import com.ssf.auth.domain.user.repository.UserRepository;
-import com.ssf.auth.global.common.CommonConstants;
-import com.ssf.auth.global.jwt.service.JwtService;
+import com.ssf.auth.global.jwt.dto.JwtDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -27,19 +20,11 @@ import java.util.concurrent.TimeUnit;
 public class UserServiceImpl implements UserService {
 
     private final RedisTemplate<String, String> redisTemplate;
-    private final JwtService jwtService;
-    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
-    private static final String ID_CLAIM = "id";
-    private static final String KEY = "rank";
-    private static final String BEARER = "Bearer ";
-
-    @Value("${jwt.secretKey}")
-    private String secretKey;
-
-    @Value("${jwt.access.expiration}")
-    private Long accessTokenExpirationPeriod;
+    private static final String RANK_KEY = "rank";
+    private static final String BLACK_LIST = "blackList";
 
     @Override
     public UserResponse.EmailRedundancy checkEmailDuplication(UserRequest.Email email) {
@@ -68,28 +53,16 @@ public class UserServiceImpl implements UserService {
         user.encodePassword(passwordEncoder);
         userRepository.save(user);
 
-        redisTemplate.opsForZSet().add(CommonConstants.RANK_KEY.getValue(), String.valueOf(user.getId()), 1000);
+        redisTemplate.opsForZSet().add(RANK_KEY, String.valueOf(user.getId()), 1000);
     }
 
-    public void signOut(String accessHeader) {
-        String accesssToken = Optional.ofNullable(accessHeader)
-                .filter(accessToken -> accessToken.startsWith(BEARER))
-                .map(accessToken -> accessToken.replace(BEARER, "")).orElse(null);
+    @Override
+    public void signOut(JwtDto accessHeader) {
+        User user = userRepository.findById(Long.parseLong(accessHeader.id())).orElseThrow();
+        user.changeActivated();
 
-        if (!jwtService.isTokenValid(accesssToken)) {
-            System.out.println("잘못된 요청입니다.");
-            return;
-        }
-
-        DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512(secretKey))
-                .build()
-                .verify(accesssToken);
-
-        String id = decodedJWT.getClaim(ID_CLAIM).toString();
-        Long expiration = decodedJWT.getClaim("exp").asLong() * 1000;
-        Long now = System.currentTimeMillis();
-
-        redisTemplate.opsForValue().set(accesssToken, "sign-out", expiration - now, TimeUnit.MILLISECONDS);
-        redisTemplate.delete(id);
+        redisTemplate.delete(accessHeader.id());
+        redisTemplate.opsForValue().set(accessHeader.accessToken(),
+                BLACK_LIST, accessHeader.exp(), TimeUnit.MILLISECONDS);
     }
 }
