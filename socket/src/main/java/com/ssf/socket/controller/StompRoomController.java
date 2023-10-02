@@ -83,6 +83,7 @@ public class StompRoomController {
             if (member.getUserId().equals(body.getUserId())) {
                 targetRoom.memberExit(body);
                 targetRoom.setRoomCurrent(targetRoom.getRoomCurrent() - 1);
+                break;
             } else {
                 return;
             }
@@ -93,6 +94,8 @@ public class StompRoomController {
         } else {
             if (body.isLeader()) {
                 targetRoom.getMembers().get(0).setLeader(true);
+                messageTemplate.convertAndSend("/sub/room/info/" + roomId, targetRoom);
+            } else {
                 messageTemplate.convertAndSend("/sub/room/info/" + roomId, targetRoom);
             }
         }
