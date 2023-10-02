@@ -1,46 +1,61 @@
 package com.ssf.auth.domain.user.controller;
 
-import com.ssf.auth.domain.user.dto.UserDto;
+import com.ssf.auth.domain.user.domain.Message;
+import com.ssf.auth.domain.user.dto.UserRequest;
 import com.ssf.auth.domain.user.service.UserService;
+import com.ssf.auth.global.jwt.dto.JwtDto;
+import com.ssf.auth.global.jwt.service.JwtService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Slf4j
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-@CrossOrigin("*")
 public class UserController {
 
+    private final JwtService jwtService;
     private final UserService userService;
 
     private static final String ACCESS_HEADER = "Authorization";
-
-    @PostMapping("/sign-up")
-    public String signUp(@RequestBody UserDto.Request userRequest) throws Exception {
-        userService.signUp(userRequest);
-        return "회원가입 성공";
-    }
-
-    @GetMapping("/sign-out")
-    public String signOut(@RequestHeader(ACCESS_HEADER) String accessHeader) {
-        userService.signOut(accessHeader);
-        return "로그아웃 완료";
-    }
+    private static final String DEFAULT_PROFILE_URL = "/images/character/rabbit.png";
 
     @GetMapping("/email")
-    public String validEmail(String email) throws Exception {
-        userService.validEmail(email);
-        return "사용 가능 이메일";
+    public ResponseEntity<Message> checkEmail(@Validated final UserRequest.Email emailDto) {
+        return userService.checkEmailDuplication(emailDto).emailRedundancyStatus()
+                ? ResponseEntity.status(HttpStatus.CONFLICT).body(Message.IMPOSSIBLE_EMAIL)
+                : ResponseEntity.ok(Message.IMPOSSIBLE_EMAIL);
     }
 
     @GetMapping("/nickname")
-    public String validNickname(String nickname) throws Exception {
-        userService.ValidNickname(nickname);
-        return "사용 가능 닉네임";
+    public ResponseEntity<Message> checkNickname(@Validated final UserRequest.Nickname nicknameDto) {
+        return userService.checkNicknameDuplication(nicknameDto).nicknameRedundancyStatus()
+                ? ResponseEntity.status(HttpStatus.CONFLICT).body(Message.IMPOSSIBLE_NICKNAME)
+                : ResponseEntity.ok(Message.POSSIBLE_NICKNAME);
     }
 
-    @GetMapping("/jwt-test")
-    public String jwtTest() {
-        return "jwtTest 요청 성공";
+    @PostMapping("/sign-up")
+    public ResponseEntity<Void> signIn(@RequestBody final UserRequest.SignUp signUpDto) {
+        if (!StringUtils.hasText(signUpDto.getProfile())) {
+            signUpDto.changeProfile(DEFAULT_PROFILE_URL);
+        }
+
+        userService.addUser(signUpDto);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/sign-out")
+    public ResponseEntity<Void> signOut(@RequestHeader(ACCESS_HEADER) final String accessHeader) {
+        JwtDto jwtDto = jwtService.extractHeader(UserRequest.AccessHeader.builder()
+                .accessHeader(accessHeader)
+                .build());
+
+        userService.signOut(jwtDto);
+        return ResponseEntity.ok().build();
     }
 }
