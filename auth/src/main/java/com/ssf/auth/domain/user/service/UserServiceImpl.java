@@ -9,6 +9,7 @@ import com.ssf.auth.domain.user.domain.User;
 import com.ssf.auth.domain.user.dto.UserRequest;
 import com.ssf.auth.domain.user.dto.UserResponse;
 import com.ssf.auth.domain.user.repository.UserRepository;
+import com.ssf.auth.global.common.CommonConstants;
 import com.ssf.auth.global.jwt.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +17,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -55,27 +55,20 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
-    public void signUp(UserDto.Request userRequest) throws Exception {
-
-        if (userRepository.existsByEmail(userRequest.getEmail())) {
-            throw new Exception("이미 존재하는 이메일입니다.");
-        }
-
-        if (userRepository.existsByNickname(userRequest.getNickname())) {
-            throw new Exception("이미 존재하는 닉네임입니다.");
-        }
-
+    @Override
+    public void addUser(UserRequest.SignUp signUpDto) {
         User user = User.builder()
-                .email(userRequest.getEmail())
-                .password(userRequest.getPassword())
-                .nickname(userRequest.getNickname())
-                .profile(StringUtils.hasText(userRequest.getProfile()) ? userRequest.getProfile() : "/default.png")
+                .email(signUpDto.getEmail())
+                .password(signUpDto.getPassword())
+                .nickname(signUpDto.getNickname())
+                .profile(signUpDto.getProfile())
                 .role(Role.USER)
                 .build();
 
         user.encodePassword(passwordEncoder);
         userRepository.save(user);
-        redisTemplate.opsForZSet().add(KEY, String.valueOf(user.getId()), 1000);
+
+        redisTemplate.opsForZSet().add(CommonConstants.RANK_KEY.getValue(), String.valueOf(user.getId()), 1000);
     }
 
     public void signOut(String accessHeader) {

@@ -8,6 +8,6 @@ public interface UserService {
 
     UserResponse.EmailRedundancy checkEmailDuplication(UserRequest.Email email);
     UserResponse.NicknameRedundancy checkNicknameDuplication(UserRequest.Nickname nickname);
-    public void signUp(UserDto.Request userRequest) throws Exception;
+    void addUser(UserRequest.SignUp signUpDto);
     public void signOut(String accessHeader);
 }

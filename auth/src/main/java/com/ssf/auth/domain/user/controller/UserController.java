@@ -7,8 +7,11 @@ import com.ssf.auth.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import static com.ssf.auth.domain.user.domain.UserConstants.DEFAULT_PROFILE_URL;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -35,9 +38,13 @@ public class UserController {
     }
 
     @PostMapping("/sign-up")
-    public String signUp(@RequestBody UserDto.Request userRequest) throws Exception {
-        userService.signUp(userRequest);
-        return "회원가입 성공";
+    public ResponseEntity<Void> signIn(@RequestBody final UserRequest.SignUp signUpDto) {
+        if (!StringUtils.hasText(signUpDto.getProfile())) {
+            signUpDto.changeProfile(DEFAULT_PROFILE_URL.getValue());
+        }
+
+        userService.addUser(signUpDto);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/sign-out")
