@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 import static com.ssf.member.global.jwt.domain.JwtConstants.*;
 
 @Service
@@ -42,8 +40,8 @@ public class JwtService {
     private final UserRepository userRepository;
 
     public JwtDto extractHeader(UserRequest.AccessHeader accessHeader) {
-        String accessToken = extractAccessToken(accessHeader).orElseThrow();
-        DecodedJWT decodedJWT = extractJwt(accessToken).orElseThrow();
+        String accessToken = extractAccessToken(accessHeader);
+        DecodedJWT decodedJWT = extractJwt(accessToken);
 
         return JwtDto.builder()
                 .accessToken(accessToken)
@@ -52,21 +50,14 @@ public class JwtService {
                 .build();
     }
 
-    public Optional<String> extractAccessToken(UserRequest.AccessHeader accessHeader) {
-        return Optional.ofNullable(accessHeader.accessHeader())
-                .filter(accessToken -> accessToken.startsWith(AUTH_TYPE.getValue()))
-                .map(accessToken -> accessToken.replace(AUTH_TYPE.getValue(), ""));
+    public String extractAccessToken(UserRequest.AccessHeader accessHeader) {
+        return accessHeader.accessHeader().replace(AUTH_TYPE.getValue(), "");
     }
 
-    private Optional<DecodedJWT> extractJwt(String accessToken) {
-        try {
-            return Optional.ofNullable(JWT.require(Algorithm.HMAC512(secretKey))
+    private DecodedJWT extractJwt(String accessToken) {
+        return JWT.require(Algorithm.HMAC512(secretKey))
                     .build()
-                    .verify(accessToken));
-
-        } catch (Exception e) {
-            return Optional.empty();
-        }
+                    .verify(accessToken);
     }
 
     public String extractId(DecodedJWT decodedJWT) {
