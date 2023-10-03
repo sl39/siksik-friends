@@ -50,10 +50,10 @@ export default function SearchRoomModal({ onClose }: Props) {
       <div className={`${styles.modalContainer}`}>
         <form onSubmit={handleSearchRoom} className={`${styles.form}`}>
           <div className={styles.subText}>방 찾기</div>
-          <label className={styles.label} htmlFor="room">
-            코드
-          </label>
           <div className={styles.inputDiv}>
+            <label className={styles.label} htmlFor="room">
+              코드
+            </label>
             <input
               className={`${styles.input} ${styles.inputText}`}
               type="text"
