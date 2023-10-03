@@ -59,10 +59,10 @@ export default function WaitingUser() {
         {}
       );
       const soketUser = {
-        userId: user.user_id,
-        userName: user.nickname,
-        userScore: user.score,
-        userRanking: user.rank,
+        userId: 1211,
+        userName: "user.nickname",
+        userScore: 1111,
+        userRanking: 111,
         ready: false,
         leader: false,
       };
