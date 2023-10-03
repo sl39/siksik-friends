@@ -55,8 +55,16 @@ export interface Quiz {
 export interface soketUser {
   userId: number;
   userName: string;
-  userScore: number;
-  userRanking: number;
-  ready: boolean;
-  leader: boolean;
+  userScore?: number;
+  userRanking?: number;
+  ready?: boolean;
+  leader?: boolean;
+}
+export interface SoketUser {
+  userId: number;
+  userName: string;
+  userScore?: number;
+  userRanking?: number;
+  ready?: boolean;
+  leader?: boolean;
 }

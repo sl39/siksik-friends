@@ -6,9 +6,9 @@ import type { soketUser, User } from "@/types";
 import { serverAxios } from "@/services/api";
 import { useWebSocket } from "@/socket/WebSocketProvider";
 import { userAtom } from "@/store/userAtom";
-import UserItem from "./UserItem";
-import styles from "./game.module.scss";
-import FriendsItem from "./FriendsItem";
+import UserItem from "../Game/UserItem";
+import styles from "../Game/game.module.scss";
+import FriendsItem from "../Game/FriendsItem";
 
 export default function WaitingUser() {
   const [openTab, setOpenTab] = useState(1);
@@ -47,33 +47,33 @@ export default function WaitingUser() {
   const user = userAtom.init;
   const stompClient = useWebSocket();
 
+  // 룸으로 바꿔줘
   useEffect(() => {
-    if (stompClient) {
-      const subscription = stompClient.subscribe(
-        "/sub/lobby/list",
-        function handleRoomList(frame: Frame) {
-          const lobbyUserList = JSON.parse(frame.body);
-          console.log(lobbyUserList);
-          setItems(lobbyUserList);
-        },
-        {}
-      );
-      const soketUser = {
-        userId: user.user_id,
-        userName: user.nickname,
-        userScore: user.score,
-        userRanking: user.rank,
-        ready: false,
-        leader: false,
-      };
-
-      stompClient.send("/pub/lobby/entrance", {}, JSON.stringify(soketUser));
-      // handleUser(1);
-      return () => {
-        stompClient.send("/pub/lobby/exit", {}, JSON.stringify(soketUser));
-        subscription.unsubscribe();
-      };
-    }
+    // if (stompClient) {
+    //   const subscription = stompClient.subscribe(
+    //     "/sub/lobby/list",
+    //     function handleRoomList(frame: Frame) {
+    //       const lobbyUserList = JSON.parse(frame.body);
+    //       console.log(lobbyUserList);
+    //       setItems(lobbyUserList);
+    //     },
+    //     {}
+    //   );
+    //   const soketUser = {
+    //     userId: user.user_id,
+    //     userName: user.nickname,
+    //     userScore: user.score,
+    //     userRanking: user.rank,
+    //     ready: false,
+    //     leader: false,
+    //   };
+    //   stompClient.send("/pub/lobby/entrance", {}, JSON.stringify(soketUser));
+    //   // handleUser(1);
+    //   return () => {
+    //     stompClient.send("/pub/lobby/exit", {}, JSON.stringify(soketUser));
+    //     subscription.unsubscribe();
+    //   };
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stompClient]);
 
@@ -82,7 +82,7 @@ export default function WaitingUser() {
       <div className={styles.tabs}>
         <button className={`${styles.tab} ${openTab === 1 ? styles.tabActive : ""}`} onClick={() => handleUser(1)}>
           <div>
-            <span>대기실</span>
+            <span>게임방</span>
           </div>
         </button>
         <button className={`${styles.tab} ${openTab === 2 ? styles.tabActive : ""}`} onClick={() => handleUser(2)}>
