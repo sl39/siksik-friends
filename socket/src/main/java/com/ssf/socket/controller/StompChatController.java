@@ -1,7 +1,6 @@
 package com.ssf.socket.controller;
 
 import com.ssf.socket.dto.ChatMessageDTO;
-import com.ssf.socket.dto.ProblemsDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -11,7 +10,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.Date;
 
 
@@ -26,8 +24,6 @@ public class StompChatController {
     public void sendMsgToLobby(
             @Payload ChatMessageDTO body) {
 
-        log.info("로비 채팅");
-
         Date currentTime = new Date();
 
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
@@ -41,10 +37,6 @@ public class StompChatController {
     public void sendMsgToRoom(
             @DestinationVariable int roomId,
             @Payload ChatMessageDTO body) {
-
-
-        log.info(roomId + "번 방 메시지");
-        log.info(body.toString());
 
         Date currentTime = new Date();
 
