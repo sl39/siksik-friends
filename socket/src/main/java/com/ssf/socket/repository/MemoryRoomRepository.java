@@ -8,6 +8,15 @@ import java.util.*;
 public class MemoryRoomRepository implements RoomRepository{
     private static Map<Long, Room> store = new HashMap<>();
     private static long roomCount;
+
+    @Override
+    public void saveScore(Long roomId, long userId) {
+        for (Member member : store.get(roomId).getMembers()) {
+            if (userId == member.getUserId()) {
+                member.setGameScore(member.getGameScore() + 100);
+            }
+        }
+    }
     @Override
     public Room save(Room room) {
         store.put(++roomCount, room);

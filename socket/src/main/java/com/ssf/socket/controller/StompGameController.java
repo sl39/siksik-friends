@@ -4,15 +4,11 @@ import com.ssf.socket.domain.Member;
 import com.ssf.socket.domain.Quiz;
 import com.ssf.socket.domain.Room;
 import com.ssf.socket.dto.*;
-import com.ssf.socket.repository.MemoryScoreRepository;
-import com.ssf.socket.repository.ScoreRepository;
+import com.ssf.socket.repository.MemoryRoomRepository;
+import com.ssf.socket.repository.RoomRepository;
 import com.ssf.socket.service.QuizSaveService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -22,10 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -37,9 +30,8 @@ public class StompGameController {
     private final QuizSaveService quizSave;
     private final SimpMessagingTemplate messageTemplate;
 
-    private final ScoreRepository scoreRepository = new MemoryScoreRepository();
+    private final RoomRepository roomRepository = new MemoryRoomRepository();
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-    private final ArrayList<String> result = new ArrayList<>();
     private final ArrayList<String> finalResult = new ArrayList<>();
 
 
@@ -50,11 +42,11 @@ public class StompGameController {
 
         log.info("하이");
 
-        for (Member member : body.getMembers()) {
-            scoreRepository.saveMember(body.getRoomId(), member);
-        }
-
-        log.info(scoreRepository.findByRoomId(body.getRoomId()).toString());
+//        for (Member member : body.getMembers()) {
+//            scoreRepository.saveMember(body.getRoomId(), member);
+//        }
+//
+//        log.info(scoreRepository.findByRoomId(body.getRoomId()).toString());
 
         String category = body.getCategory();
 
@@ -65,20 +57,20 @@ public class StompGameController {
 
         scheduler.schedule(() -> loading(roomId), 0, TimeUnit.SECONDS); // 0, 23, 46, 69, ...
 
-        int time = 5;
+        int time = 3;
         for (int i = 0; i < quizList.getQuizSet().size(); i++) {
             int idx = i;
             scheduler.schedule(() -> sendQuiz(roomId, quizList.getQuizSet().get(idx)), time, TimeUnit.SECONDS); // 0, 23, 46, 69, ...
-            time += 10;
-            scheduler.schedule(() -> sendResult(roomId), time, TimeUnit.SECONDS); // 20, 43, 66, 89, ...
             time += 5;
+            scheduler.schedule(() -> sendResult(roomId), time, TimeUnit.SECONDS); // 20, 43, 66, 89, ...
+            time += 3;
         }
         scheduler.schedule(() -> endGame(roomId), time, TimeUnit.SECONDS); // 230 초 뒤에 게임 종료
     }
 
     public void loading(int roomId) {
 
-        String start = "start";
+        String start = "start!";
 
         messageTemplate.convertAndSend("/sub/game/quiz/" + roomId, start);
     }
@@ -90,26 +82,27 @@ public class StompGameController {
 
     @PostMapping("/score")
     @CrossOrigin(origins = "*")
-    public Optional<Member> scoreCalculation(
+    public List<Member> scoreCalculation(
             @RequestBody ReplyDTO replyDto) {
-        if ("check".equals(replyDto.getAnswer())) {
-            scoreRepository.saveScore(replyDto.getRoomId(), replyDto.getUserId());
+        if (replyDto.getAnswer().equals(replyDto.getUserAnswer())) {
+            roomRepository.saveScore(replyDto.getRoomId(), replyDto.getUserId());
         }
-        return scoreRepository.findByRoomId(replyDto.getRoomId());
+        return roomRepository.findByRoomId(replyDto.getRoomId()).orElseThrow().getMembers();
     }
 
     public void sendResult(long roomId) {
 
-        List<Member> result = new ArrayList<>();
+        List<Member> result = roomRepository.findByRoomId(roomId).orElseThrow().getMembers();
 
-        Optional<Member> replyDto = scoreRepository.findByRoomId(roomId);
+        result.sort(Comparator.comparingInt(e -> -e.getGameScore()));
 
-        messageTemplate.convertAndSend("/sub/game/result/" + roomId, replyDto);
+        messageTemplate.convertAndSend("/sub/game/result/" + roomId, result);
     }
     public void endGame(int roomId) {
 
+        String end = "end!";
 
-        messageTemplate.convertAndSend("/sub/game/finalResult/" + roomId, finalResult);
+        messageTemplate.convertAndSend("/sub/game/end/" + roomId, end);
     }
 
 }
