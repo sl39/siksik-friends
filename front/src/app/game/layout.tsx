@@ -1,8 +1,8 @@
 "use client";
 
 import { Provider } from "jotai";
-import Exit from "./quit";
 import WebSocketProvider from "@/socket/WebSocketProvider";
+import Exit from "./quit";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
