@@ -1,4 +1,3 @@
-import WebSocketProvider from "@/socket/WebSocketProvider";
 import SimpleMyProfile from "./SimpleMyProfile";
 import Chatting from "./Chatting";
 import GameRoom from "./GameRoom";

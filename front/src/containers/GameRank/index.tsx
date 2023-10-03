@@ -19,7 +19,8 @@ export default function GameRank() {
   ];
 
   // 방 정보
-  const room = [];
+  // const room = [];
+
   return (
     <div className={styles.container}>
       <div className={styles.roomInfo}>간단한 방정보</div>

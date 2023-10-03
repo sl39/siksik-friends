@@ -5,7 +5,6 @@ import type { Frame } from "stompjs";
 import type { soketUser, User } from "@/types";
 import { serverAxios } from "@/services/api";
 import { useWebSocket } from "@/socket/WebSocketProvider";
-import { userAtom } from "@/store/userAtom";
 import UserItem from "./UserItem";
 import styles from "./game.module.scss";
 import FriendsItem from "./FriendsItem";
@@ -13,6 +12,7 @@ import FriendsItem from "./FriendsItem";
 export default function WaitingUser() {
   const [openTab, setOpenTab] = useState(1);
   const [items, setItems] = useState<Array<soketUser>>([]);
+
   const [friends, setFriends] = useState<Array<User>>([]);
   const [NotFriends, setNotFriends] = useState<Array<User>>([]);
 
@@ -44,9 +44,10 @@ export default function WaitingUser() {
     myRequest();
   };
 
-  const user = userAtom.init;
+  // const user = userAtom.init;
   const stompClient = useWebSocket();
 
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (stompClient) {
       const subscription = stompClient.subscribe(
@@ -60,7 +61,7 @@ export default function WaitingUser() {
       );
       const soketUser = {
         userId: 1211,
-        userName: "user.nickname",
+        userName: "user.gdgd",
         userScore: 1111,
         userRanking: 111,
         ready: false,
@@ -68,7 +69,6 @@ export default function WaitingUser() {
       };
 
       stompClient.send("/pub/lobby/entrance", {}, JSON.stringify(soketUser));
-      // handleUser(1);
       return () => {
         stompClient.send("/pub/lobby/exit", {}, JSON.stringify(soketUser));
         subscription.unsubscribe();
