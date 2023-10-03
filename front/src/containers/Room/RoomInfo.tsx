@@ -48,12 +48,12 @@ export default function RoomData({ roomId }: Props) {
 
   return (
     <div className={styles.roomData}>
-      <div>방제목 {room?.roomName}</div>
-      <div>
+      <div className={styles.roomTitle}>방제목 {room?.roomName}</div>
+      <div className={styles.roomSize}>
         최대인원 {room?.roomSize} - 현재 인원 {room?.roomCurrent}
       </div>
-      <div>문제 수 {room?.quizCount}</div>
-      <div>문제유형 {room?.category}</div>
+      <div className={styles.quizCount}>문제 수 {room?.quizCount}</div>
+      <div className={styles.category}>문제유형 {room?.category}</div>
     </div>
   );
 }

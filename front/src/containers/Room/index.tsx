@@ -1,7 +1,7 @@
 "use client";
 
 // import { useAtom } from "jotai";
-import { usePathname } from "next/navigation";
+import { useParams } from "next/navigation";
 // import { roomAtom } from "@/store/gameAtom";
 import WebSocketProvider from "@/socket/WebSocketProvider";
 import StartBtn from "./StartBtn";
@@ -13,10 +13,9 @@ export default function Index() {
   // 방 정보
   // const room = useAtom(roomAtom)[0];
 
-  let pathname = usePathname();
-  pathname = pathname.replace("/room/", "");
-  const roomId = Number(pathname);
-  // const gameId = 1;
+  const params = useParams();
+  console.log(params);
+  const roomId = Number(params.id);
 
   return (
     <WebSocketProvider>

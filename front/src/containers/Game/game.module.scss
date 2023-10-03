@@ -256,83 +256,89 @@ $hardBlue: #6495ed;
 }
 
 // 채팅
-.chatBox {
-  .chatLog {
-    height: 72%;
-    width: 98%;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 5px;
-    overflow-y: auto;
-    box-sizing: border-box;
-    padding: 5px;
+.chatLog {
+  height: 72%;
+  width: 98%;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 5px;
 
-    &::-webkit-scrollbar {
-      width: 10px;
-      border-radius: 10px;
-    }
-    &::-webkit-scrollbar-thumb {
-      height: 30%;
-      background: var(--color-blue-m1);
-      border-radius: 10px;
-    }
-    &::-webkit-scrollbar-track {
-      background: var(--color-blue-n2);
-      border-radius: 10px;
-    }
+  &::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 10px;
   }
-  .chat {
-    display: flex;
-    height: auto;
-
-    p {
-      margin: 0;
-      padding: 0;
-    }
-    .senderLog {
-      padding-right: 3px;
-    }
+  &::-webkit-scrollbar-thumb {
+    height: 30%;
+    background: var(--color-blue-m1);
+    border-radius: 10px;
   }
-  .chatInput {
-    height: 20%;
-    width: 100%;
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-
-    .sender {
-      width: 300px;
-    }
-    input {
-      width: 90%;
-      height: 40px;
-      outline: none;
-      padding-left: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      border-bottom-width: 2px;
-      transition: all 0.3s ease;
-      margin: 0 3px;
-
-      &:focus {
-        border-color: $hardBlue;
-      }
-    }
-    button {
-      border: 1px solid $hardBlue;
-      border-radius: 15px;
-
-      box-sizing: border-box;
-      width: 150px;
-      height: 40px;
-      margin: 0 3px;
-      background-color: #fff;
-      text-align: center;
-    }
+  &::-webkit-scrollbar-track {
+    background: var(--color-blue-n2);
+    border-radius: 10px;
   }
 }
+.chat {
+  display: flex;
+  height: auto;
 
+  p {
+    margin: 0;
+    padding: 0;
+  }
+  .senderLog {
+    padding-right: 3px;
+  }
+}
+.chatInput {
+  height: 20%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+
+  .sender {
+    width: 300px;
+  }
+  input {
+    width: 90%;
+    height: 40px;
+    outline: none;
+    padding-left: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+    margin: 0 3px;
+
+    &:focus {
+      border-color: $hardBlue;
+    }
+  }
+  button {
+    border: 1px solid $hardBlue;
+    border-radius: 15px;
+
+    box-sizing: border-box;
+    width: 150px;
+    height: 40px;
+    margin: 0 3px;
+    background-color: #fff;
+    text-align: center;
+  }
+}
+.roomChat {
+  width: 100%;
+  height: 100%;
+  padding: 5px 8px;
+
+  .chatLog {
+    height: 85%;
+  }
+}
 // 대기실 유저
 .folder {
   box-sizing: border-box;
