@@ -71,12 +71,13 @@ export default function CreateRoomModal({ onClose }: Props) {
         if (stompClient) {
           stompClient.send("/pub/room/roomList", {}, JSON.stringify({}));
         }
-        router.push(`/room/${response.data.roomId}`);
+
+        router.push(`game/room/${response.data.roomId}`);
       } catch (err) {
         console.log(err);
         // Axios 연결 전 임시 데이터
         const id = 1;
-        router.push(`/room/${id}`);
+        router.push(`game/room/${id}`);
       }
     }
   };

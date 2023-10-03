@@ -6,45 +6,11 @@ import type { Room } from "@/types";
 import styles from "./room.module.scss";
 
 interface Props {
-  roomId: number;
+  room: Room;
 }
 
-export default function RoomData({ roomId }: Props) {
-  const stompClient = useWebSocket();
-  const [room, setRoom] = useState<Room>();
+export default function RoomData({ room }: Props) {
   const user = userAtom.init;
-  useEffect(() => {
-    if (stompClient) {
-      const subscription = stompClient.subscribe(
-        `/sub/room/info/${roomId}`,
-        function handleRoomInfo(frame: Frame) {
-          const roomInfo = JSON.parse(frame.body);
-          console.log(roomInfo);
-          setRoom(roomInfo);
-        },
-        {}
-      );
-      const soketUser = {
-        userId: user.user_id,
-        userName: user.nickname,
-        userScore: user.score,
-        userRanking: user.rank,
-        ready: false,
-        leader: false,
-      };
-      stompClient.send(`/pub/room/entrance/${roomId}`, {}, JSON.stringify(soketUser));
-      return () => {
-        // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
-        window.removeEventListener("beforeunload", () => {
-          stompClient.send(`/pub/room/exit/${roomId}`, {}, JSON.stringify(soketUser));
-          subscription.unsubscribe();
-        });
-        stompClient.send(`/pub/room/exit/${roomId}`, {}, JSON.stringify(soketUser));
-        subscription.unsubscribe();
-      };
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stompClient]);
 
   return (
     <div className={styles.roomData}>
