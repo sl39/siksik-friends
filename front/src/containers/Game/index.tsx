@@ -7,7 +7,7 @@ import styles from "./game.module.scss";
 
 export default function Index() {
   return (
-    <WebSocketProvider>
+    <>
       <div id="game-modal" className="z-99" />
       <div className={styles.left}>
         <div className={styles.GameRoom}>
@@ -25,6 +25,6 @@ export default function Index() {
           <SimpleMyProfile />
         </div>
       </div>
-    </WebSocketProvider>
+    </>
   );
 }
