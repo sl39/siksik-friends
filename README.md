@@ -49,6 +49,8 @@
 
 ## 데이터
 
+<img title="" src="https://img.shields.io/badge/hadoop-66CCFF?style=for-the-badge&logo=apachehadoop&logoColor=white" alt="">
+
 # 데이터 파이프라인
 
 <a name="dataPipelines"></a>
@@ -83,6 +85,6 @@ ERD
 
 | 이름      | **구희영**                             | **권인식**                                     | **김태환**                                 | **이세울**                           | **김나연**                                      | **황유성**                                  |
 |:-------:|:-----------------------------------:|:-------------------------------------------:| --------------------------------------- | --------------------------------- | -------------------------------------------- | ---------------------------------------- |
-| **사진**  | ![heeyoung]()                       | ![insik](./assets/insik.png)                | ![taehwan](./assets/th.png)             | ![sewool](./assets/sw.png)        | ![nayeon](./assets/ny.png)                   | ![yuseong](./assets/ys.png)              |
+| **사진**  | ![heeyoung](./assets/hy.png)        | ![insik](./assets/insik.png)                | ![taehwan](./assets/th.png)             | ![sewool](./assets/sw.png)        | ![nayeon](./assets/ny.png)                   | ![yuseong](./assets/ys.png)              |
 | **포지션** | 팀장<br/>프론트엔드                        | PM<br />서버<br/>Game/Socket MSA              | MSA 총괄 <br />Auth/Member MSA            | Member MSA<br />프론트엔드             | 데이터 파이프라인 설계<br />하둡 클러스터링 <br/> 데이터 수집 및 저장 | 자연어처리 <br />워드 클라우드 및 퀴즈 생성 <br />Socket |
 | **깃허브** | [Github](https://github.com/hi9900) | [Github](https://github.com/PassionSoftIan) | [Github](https://github.com/kimta2hwan) | [Github](https://github.com/sl39) | [Github](https://github.com/nayeonxkim)      | [Github](https://github.com/StarSein)    |
