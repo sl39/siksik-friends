@@ -64,7 +64,7 @@ export default function Index() {
       stompClient.send(`/pub/room/entrance/${roomId}`, {}, JSON.stringify(soketUser));
       console.log("if 문은 통과");
       return () => {
-        // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
+        // 컴포넌트가 언마운트될 때 이벤트 리스너  제거
 
         stompClient.send(`/pub/room/exit/${roomId}`, {}, JSON.stringify(soketUser));
         subscription.unsubscribe();
