@@ -35,6 +35,20 @@
 
 
 
+### 1. 메인 페이지
+
+![메인](/uploads/79fe71eca732b49aa6b99b98eae57cfb/메인.gif)
+
+게임의 특성을 살리기 위해 다양한 애니메이션 효과와 배경음악을 사용하여 밝고 신나는 분위기를 완성했습니다.
+
+- 애니메이션 효과
+
+- 배경음악 on/off 기능
+
+- 로그인 및 회원가입 모달 애니메이션 효과
+
+
+
 # 기술 스택
 
 <a name="skills"></a>
@@ -61,7 +75,7 @@
 
 <img title="" src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="">
 
-<img title="" src="https://img.shields.io/badge/Airflow-017CEE?style=for-the-badge&logo=apacheairflow&logoColor=black" alt=""> 
+<img title="" src="https://img.shields.io/badge/Airflow-017CEE?style=for-the-badge&logo=apacheairflow&logoColor=white" alt=""> 
 
 
 
