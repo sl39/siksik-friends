@@ -307,9 +307,23 @@ $n02: var(--color-blue-n2);
 }
 .tabcontent {
   display: none;
-  height: 80%;
+  height: 100%;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 30%;
+    background: var(--color-blue-m2);
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background: var(--color-blue-n2);
+    border-radius: 10px;
+  }
 }
 @keyframes tabEffect {
   from {
@@ -382,24 +396,20 @@ $n02: var(--color-blue-n2);
 }
 
 // stat
-.stat {
-  border: solid black;
-  box-sizing: border-box;
-  width: 30%;
-}
-.tool-set {
+.data {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+}
+.stat {
+  // border: solid black;
+  // box-sizing: border-box;
+  width: 50%;
 
   svg {
-    max-width: 600px;
     height: auto;
     width: 100%;
-    margin-bottom: 100px;
 
     .text {
-      font-size: 12px;
+      font-size: 2vh;
       text-align: center;
       display: flex;
       position: relative;
@@ -447,7 +457,6 @@ $n02: var(--color-blue-n2);
   }
 }
 
-//design tool
 @keyframes designTool {
   0% {
     stroke-dashoffset: 700;
@@ -465,7 +474,6 @@ $n02: var(--color-blue-n2);
     stroke-dashoffset: -700;
   }
 }
-
 .design-tool-line {
   stroke-dasharray: 700;
   stroke-dashoffset: 700;
