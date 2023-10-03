@@ -55,31 +55,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
-
-    @Bean
-    public AuthenticationManager authenticationManager() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(passwordEncoder());
-        provider.setUserDetailsService(signInService);
-        return new ProviderManager(provider);
-    }
-
-    @Bean
-    public SignInSuccessHandler signInSuccessHandler() {
-        return new SignInSuccessHandler(jwtService, userRepository);
-    }
-
-    @Bean
-    public SignInFailureHandler signInFailureHandler() {
-        return new SignInFailureHandler();
-    }
-
-    @Bean
-    public CustomJsonUsernamePasswordAuthenticationFilter customJsonUsernamePasswordAuthenticationFilter() {
-        CustomJsonUsernamePasswordAuthenticationFilter customJsonUsernamePasswordSignInFilter = new CustomJsonUsernamePasswordAuthenticationFilter(objectMapper);
-        customJsonUsernamePasswordSignInFilter.setAuthenticationManager(authenticationManager());
-        customJsonUsernamePasswordSignInFilter.setAuthenticationSuccessHandler(signInSuccessHandler());
-        customJsonUsernamePasswordSignInFilter.setAuthenticationFailureHandler(signInFailureHandler());
-        return customJsonUsernamePasswordSignInFilter;
-    }
 }
