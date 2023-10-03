@@ -35,20 +35,6 @@ public class UserFindServiceImpl implements UserFindService {
     private final UserRepository userRepository;
 
     @Override
-    public UserResponse.EmailRedundancy checkEmailDuplication(UserRequest.Email email) {
-        return UserResponse.EmailRedundancy.builder()
-                .emailRedundancyStatus(userRepository.existsByEmail(email.email()))
-                .build();
-    }
-
-    @Override
-    public UserResponse.NicknameRedundancy checkNicknameDuplication(UserRequest.Nickname nickname) {
-        return UserResponse.NicknameRedundancy.builder()
-                .nicknameRedundancyStatus(userRepository.existsByNickname(nickname.nickname()))
-                .build();
-    }
-
-    @Override
     public UserDto.Response findMyInfo(String accessHeader) {
         User user = userRepository.findById(Long
                 .parseLong(JWT

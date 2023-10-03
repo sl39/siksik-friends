@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface UserFindService {
 
-    UserResponse.EmailRedundancy checkEmailDuplication(UserRequest.Email email);
-    UserResponse.NicknameRedundancy checkNicknameDuplication(UserRequest.Nickname nickname);
     UserDto.Response findMyInfo(String accessHeader);
     UserDto.Response findUser(Long id);
     UserDto.Response findNickname(String nickname);
