@@ -2,16 +2,12 @@ package com.ssf.member.domain.user.controller;
 
 import com.ssf.member.domain.user.dto.UserDto;
 import com.ssf.member.domain.user.dto.UserRequest;
+import com.ssf.member.domain.user.dto.UserResponse;
 import com.ssf.member.domain.user.service.*;
-import com.ssf.member.domain.user.domain.Message;
-import com.ssf.member.global.jwt.dto.JwtDto;
 import com.ssf.member.global.jwt.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,9 +25,11 @@ public class UserController {
 
     private static final String ACCESS_HEADER = "Authorization";
 
-    @GetMapping("/my-info")
-    public UserDto.Response findMyInfo(@RequestHeader(ACCESS_HEADER) String accessHeader) {
-        return userFindService.findMyInfo(accessHeader);
+    @GetMapping("/")
+    public ResponseEntity<UserResponse.MyInfo> findMyInfo(
+            @RequestHeader(ACCESS_HEADER) final UserRequest.AccessHeader accessHeader
+    ) {
+        return ResponseEntity.ok(userFindService.findMyInfo(jwtService.extractHeader(accessHeader)));
     }
 
     @GetMapping("/{id}")
@@ -39,7 +37,7 @@ public class UserController {
         return userFindService.findUser(id);
     }
 
-    @GetMapping("/")
+    @GetMapping("/nickname")
     public UserDto.Response findUserToNickname(String nickname) {
         return userFindService.findNickname(nickname);
     }
