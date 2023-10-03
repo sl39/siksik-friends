@@ -26,9 +26,6 @@ public class StompLobbyController {
     public void entranceLobby(
             @Payload Member body) {
 
-        log.info("전송 중");
-//        log.info(body.getUserId().toString());
-
         lobbyRepository.join(body);
         List<Member> lobbyMembers = lobbyRepository.allLobbyMember();
 
