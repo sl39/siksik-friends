@@ -8,6 +8,7 @@ import WebSocketProvider from "@/socket/WebSocketProvider";
 import styles from "./room.module.scss";
 import RoomInfo from "./RoomInfo";
 import Chatting from "./Chatting";
+import WaitingUser from "./WaitingUser";
 
 export default function Index() {
   // 방 정보
@@ -50,7 +51,9 @@ export default function Index() {
         </div>
       </div>
       <div className={styles.right}>
-        <div className={styles.roomUser}>{/* 그거 컴포넌트 정리해서 가져오기 */}</div>
+        <div className={styles.roomUser}>
+          <WaitingUser />
+        </div>
         <div className={styles.startBtn}>
           <button onClick={handleStart} className={`${styles["button-wrapper"]}`}>
             <span
