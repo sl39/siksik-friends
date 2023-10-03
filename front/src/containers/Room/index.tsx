@@ -46,15 +46,12 @@ export default function Index() {
       const subscription = stompClient.subscribe(
         `/sub/room/info/${roomId}`,
         function handleRoomInfo(frame: Frame) {
-          console.log("여기는 들어오나");
           const roomInfo = JSON.parse(frame.body);
-          console.log(roomInfo);
           setRoom(roomInfo);
           setUserInfo(roomInfo.members);
           setleaderReady(roomInfo.roomCurrent - roomInfo.roomReady);
           roomInfo.members.forEach((element: soketUser) => {
             if (element.userId === soketUser.userId) {
-              console.log(element, "여기가 그 룸 받아올때");
               setSoketUser(soketUser);
               return;
             }
@@ -102,7 +99,7 @@ export default function Index() {
   // };
 
   return (
-    <>
+    <WebSocketProvider>
       <div className={styles.left}>
         <div className={styles.roomInfo}>{room ? <RoomInfo room={room} /> : null}</div>
         <div className={styles.chatting}>
@@ -117,11 +114,11 @@ export default function Index() {
             ))}
           </div>
         </div>
-        {/* <div className={styles.startBtn}>
-          <StartBtn gameId={roomId} soketUser={soketUser} leaderReady={leaderReady} stompClient={stompClient} />
-          <WaitingUser />
-        </div>
         <div className={styles.startBtn}>
+          <StartBtn gameId={roomId} soketUser={soketUser} leaderReady={leaderReady} stompClient={stompClient} />
+          {/* <WaitingUser /> */}
+        </div>
+        {/* <div className={styles.startBtn}>
           <button onClick={handleStart} className={`${styles["button-wrapper"]}`}>
             <span
               className={`${styles.span} ${styles["background-button"]} ${btnActive ? styles.BtnActive : ""}`}
@@ -130,6 +127,6 @@ export default function Index() {
           </button>
         </div> */}
       </div>
-    </>
+    </WebSocketProvider>
   );
 }

@@ -35,11 +35,7 @@ export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }
         setRoomUser({ ...roomUser, ready: true });
         console.log(roomUser, "여기는 ready가 안될때");
       }
-      try {
-        stompClient.send(`/pub/room/ready/${gameId}`, {}, JSON.stringify(roomUser));
-      } catch {
-        console.log("rrrrrrrrrrrrrrrrrrrrrrrr");
-      }
+      stompClient.send(`/pub/room/ready/${gameId}`, {}, JSON.stringify(roomUser));
     }
   };
   useEffect(() => {
