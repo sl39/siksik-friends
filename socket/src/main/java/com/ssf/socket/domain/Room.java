@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +20,10 @@ public class Room {
     int quizCount;
     String password;
     String quizDate;
+
     // 0 == Waiting, 1 == Playing
     int roomStatus;
+
     List<Member> members = new ArrayList<>();
 
     public void memberExit(Member outMember) {

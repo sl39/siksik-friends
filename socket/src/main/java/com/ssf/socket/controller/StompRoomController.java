@@ -2,11 +2,9 @@ package com.ssf.socket.controller;
 
 import com.ssf.socket.domain.Member;
 import com.ssf.socket.domain.Room;
-import com.ssf.socket.dto.RoomDTO;
 import com.ssf.socket.repository.MemoryRoomRepository;
 import com.ssf.socket.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;

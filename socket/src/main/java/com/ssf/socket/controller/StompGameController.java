@@ -32,40 +32,28 @@ public class StompGameController {
 
     private final RoomRepository roomRepository = new MemoryRoomRepository();
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-    private final ArrayList<String> finalResult = new ArrayList<>();
-
 
 
     @MessageMapping("/game/start/{roomId}")
     public void gameStart(@DestinationVariable int roomId,
                           @Payload Room body) {
 
-        log.info("하이");
-
-//        for (Member member : body.getMembers()) {
-//            scoreRepository.saveMember(body.getRoomId(), member);
-//        }
-//
-//        log.info(scoreRepository.findByRoomId(body.getRoomId()).toString());
-
         String category = body.getCategory();
 
         String date = body.getQuizDate();
         Quiz quizList = quizSave.getQuiz(date, category);
-
-        log.info(quizList.getQuizSet().get(0).toString());
 
         scheduler.schedule(() -> loading(roomId), 0, TimeUnit.SECONDS); // 0, 23, 46, 69, ...
 
         int time = 3;
         for (int i = 0; i < quizList.getQuizSet().size(); i++) {
             int idx = i;
-            scheduler.schedule(() -> sendQuiz(roomId, quizList.getQuizSet().get(idx)), time, TimeUnit.SECONDS); // 0, 23, 46, 69, ...
+            scheduler.schedule(() -> sendQuiz(roomId, quizList.getQuizSet().get(idx)), time, TimeUnit.SECONDS);
             time += 5;
-            scheduler.schedule(() -> sendResult(roomId), time, TimeUnit.SECONDS); // 20, 43, 66, 89, ...
+            scheduler.schedule(() -> sendResult(roomId), time, TimeUnit.SECONDS);
             time += 3;
         }
-        scheduler.schedule(() -> endGame(roomId), time, TimeUnit.SECONDS); // 230 초 뒤에 게임 종료
+        scheduler.schedule(() -> endGame(roomId), time, TimeUnit.SECONDS);
     }
 
     public void loading(int roomId) {

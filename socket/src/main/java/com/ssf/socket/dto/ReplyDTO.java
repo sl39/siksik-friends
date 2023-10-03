@@ -10,7 +10,6 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-//@ToString
 public class ReplyDTO {
     long roomId;
     Long userId;
