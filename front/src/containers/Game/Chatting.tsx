@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useAtom } from "jotai";
 import type { Frame } from "stompjs";
 import { useWebSocket } from "@/socket/WebSocketProvider";
+import { userAtom } from "@/store/userAtom";
 import styles from "./game.module.scss";
 
 export default function Chatting() {
@@ -14,8 +16,9 @@ export default function Chatting() {
 
   const [chatLog, setChatLog] = useState<Message[]>([]);
   const stompClient = useWebSocket();
+  const [user] = useAtom(userAtom);
   const [message, setMessage] = useState({
-    sender: "",
+    sender: user.nickname,
     msg: "",
     sendTime: "",
   });
@@ -71,7 +74,7 @@ export default function Chatting() {
 
       // 입력 필드 초기화
       setMessage({
-        sender: "",
+        sender: user.nickname,
         msg: "",
         sendTime: "",
       });
@@ -93,9 +96,9 @@ export default function Chatting() {
     <>
       <div className={styles.chatLog}>
         {chatLog.map((messages, idx) => (
-          <div key={messages.sendTime + String(idx)}>
-            <strong>{messages.sender}: </strong>
-            {messages.msg}
+          <div className={styles.chat} key={messages.sendTime + String(idx)}>
+            <p className={styles.senderLog}>{messages.sender}: </p>
+            <p className={styles.msgLog}>{messages.msg}</p>
           </div>
         ))}
       </div>
@@ -105,19 +108,24 @@ export default function Chatting() {
           id="sender"
           key="sender"
           value={message.sender}
-          onChange={(e) => handleInputChange(e)}
+          // onChange={(e) => handleInputChange(e)}
           placeholder="보낸이"
+          className={styles.sender}
+          autoComplete="off"
+          readOnly
         />
         <input
           type="text"
-          key="msg"
           id="msg"
+          key="msg"
           value={message.msg}
           onChange={(e) => handleInputChange(e)}
           placeholder="메시지"
+          className={styles.input}
+          autoComplete="off"
         />
-        <button type="submit" onClick={sendMessage}>
-          ㄱ
+        <button type="submit" onClick={sendMessage} className={styles.submitBtn}>
+          전송
         </button>
       </div>
     </>

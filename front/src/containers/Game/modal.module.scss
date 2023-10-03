@@ -33,8 +33,13 @@ $font-title: "Chelsea Market", sans-serif;
   margin-top: 50px;
   padding: 2rem 2rem 0;
 
-  background-color: #fff;
-  border: 1px solid #37353f;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 22px 0 rgba(31, 38, 135, 0.3);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  border-radius: 30px;
+  border: none;
 }
 
 .modalImg {
@@ -130,5 +135,29 @@ $font-title: "Chelsea Market", sans-serif;
   }
   .inputDiv {
     height: 20%;
+  }
+}
+
+// 프로필 모달
+.profiileModal {
+  display: flex;
+  flex-direction: row;
+
+  height: 500px;
+  .Card {
+    width: 40%;
+    height: 100%;
+  }
+  .data {
+    width: 50%;
+    height: 95%;
+    background: #fff;
+  }
+  .close {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 5px;
+    right: 5px;
   }
 }
