@@ -4,6 +4,8 @@ import com.ssf.socket.domain.Member;
 import com.ssf.socket.domain.Quiz;
 import com.ssf.socket.domain.Room;
 import com.ssf.socket.dto.*;
+import com.ssf.socket.repository.MemoryScoreRepository;
+import com.ssf.socket.repository.ScoreRepository;
 import com.ssf.socket.service.QuizSaveService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +17,15 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -31,6 +36,8 @@ import java.util.concurrent.TimeUnit;
 public class StompGameController {
     private final QuizSaveService quizSave;
     private final SimpMessagingTemplate messageTemplate;
+
+    private final ScoreRepository scoreRepository = new MemoryScoreRepository();
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
     private final ArrayList<String> result = new ArrayList<>();
     private final ArrayList<String> finalResult = new ArrayList<>();
@@ -43,6 +50,12 @@ public class StompGameController {
 
         log.info("하이");
 
+        for (Member member : body.getMembers()) {
+            scoreRepository.saveMember(body.getRoomId(), member);
+        }
+
+        log.info(scoreRepository.findByRoomId(body.getRoomId()).toString());
+
         String category = body.getCategory();
 
         String date = body.getQuizDate();
@@ -50,7 +63,9 @@ public class StompGameController {
 
         log.info(quizList.getQuizSet().get(0).toString());
 
-        int time = 0;
+        scheduler.schedule(() -> loading(roomId), 0, TimeUnit.SECONDS); // 0, 23, 46, 69, ...
+
+        int time = 5;
         for (int i = 0; i < quizList.getQuizSet().size(); i++) {
             int idx = i;
             scheduler.schedule(() -> sendQuiz(roomId, quizList.getQuizSet().get(idx)), time, TimeUnit.SECONDS); // 0, 23, 46, 69, ...
@@ -61,21 +76,35 @@ public class StompGameController {
         scheduler.schedule(() -> endGame(roomId), time, TimeUnit.SECONDS); // 230 초 뒤에 게임 종료
     }
 
+    public void loading(int roomId) {
+
+        String start = "start";
+
+        messageTemplate.convertAndSend("/sub/game/quiz/" + roomId, start);
+    }
+
     public void sendQuiz(int roomId, QuizDTO quiz) {
 
         messageTemplate.convertAndSend("/sub/game/quiz/" + roomId, quiz);
     }
 
     @PostMapping("/score")
-    public void scoreCalculation(QuizDTO quiz, ReplyDTO replyDto) {
-        if (quiz.getAnswer().equals(replyDto.getAnswer())) {
-            replyDto.setUserScore(replyDto.getUserScore()+100);
+    @CrossOrigin(origins = "*")
+    public Optional<Member> scoreCalculation(
+            @RequestBody ReplyDTO replyDto) {
+        if ("check".equals(replyDto.getAnswer())) {
+            scoreRepository.saveScore(replyDto.getRoomId(), replyDto.getUserId());
         }
+        return scoreRepository.findByRoomId(replyDto.getRoomId());
     }
 
-    public void sendResult(int roomId) {
+    public void sendResult(long roomId) {
 
-        messageTemplate.convertAndSend("/sub/game/result/" + roomId, result);
+        List<Member> result = new ArrayList<>();
+
+        Optional<Member> replyDto = scoreRepository.findByRoomId(roomId);
+
+        messageTemplate.convertAndSend("/sub/game/result/" + roomId, replyDto);
     }
     public void endGame(int roomId) {
 
