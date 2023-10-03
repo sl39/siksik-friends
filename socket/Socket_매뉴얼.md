@@ -1,4 +1,6 @@
-# Front를 위한 Socket 통신 매뉴얼
+# Front를 위한 WebSocket Server 통신 매뉴얼
+
+개발/작성 권인식
 
 ---
 
@@ -34,6 +36,8 @@
     - 채팅수신
     
     - "sendTime": String
+      
+      - 서버 시간 기준으로 자동 할당
       
       "sender": String
       
@@ -90,6 +94,8 @@
       - "userId": int
         
         "userName": String
+        
+        "gameScore": int
         
         "userScore": int
         
@@ -188,6 +194,8 @@
       
       "userName": String
       
+      "gameScore": int
+      
       "userScore": int
       
       "userRanking": int
@@ -200,6 +208,7 @@
       {
           "userId": 5,
           "userName": "저녁뭐먹지",
+          "gameScore": 0,
           "userScore": 543,
           "userRanking": 131,
           "ready": false,
@@ -215,6 +224,8 @@
       
       "userName": String
       
+      "gameScore": int
+      
       "userScore": int
       
       "userRanking": int
@@ -227,6 +238,7 @@
       {
           "userId": 5,
           "userName": "저녁뭐먹지",
+          "gameScore": 0,
           "userScore": 543,
           "userRanking": 131,
           "ready": false,
@@ -243,6 +255,7 @@
           {
               "userId": 1,
               "userName": "식식프렌즈123",
+              "gameScore": 0,
               "userScore": 1680,
               "userRanking": 2,
               "ready": false,
@@ -251,6 +264,7 @@
           {
               "userId": 11,
               "userName": "퀴즈풀자아아아",
+              "gameScore": 0,
               "userScore": 1230,
               "userRanking": 53,
               "ready": false,
@@ -355,6 +369,8 @@
         
         "userName": String
         
+        "gameScore": int
+        
         "userScore": int
         
         "userRanking": int
@@ -378,6 +394,7 @@
           {
             "userId": 11,
             "userName": "z상식지존z",
+            "gameScore": 0,
             "userScore": 9999,
             "userRanking": 1,
             "isLeader": true, //방 만들 때는 true가 기본
@@ -419,6 +436,8 @@
         
         "userName": String
         
+        "gameScore": int
+        
         "userScore": int
         
         "userRanking": int
@@ -443,6 +462,7 @@
               {
                   "userId": 11,
                   "userName": "z상식지존z",
+                  "gameScore": 0,
                   "userScore": 9999,
                   "userRanking": 1,
                   "ready": false,
@@ -484,6 +504,8 @@
         
         "userName": String
         
+        "gameScore": int
+        
         "userScore": int
         
         "userRanking": int
@@ -508,6 +530,7 @@
               {
                   "userId": 11,
                   "userName": "z상식지존z",
+                  "gameScore": 0,
                   "userScore": 9999,
                   "userRanking": 1,
                   "ready": false,
@@ -584,6 +607,8 @@
       
       "userName": String
       
+      "gameScore": int
+      
       "userScore": int
       
       "userRanking": int
@@ -596,6 +621,7 @@
       {
           "userId": 5,
           "userName": "저녁뭐먹지",
+          "gameScore": 0,
           "userScore": 543,
           "userRanking": 131,
           "ready": false,
@@ -635,6 +661,8 @@
         
         "userName": String
         
+        "gameScore": int
+        
         "userScore": int
         
         "userRanking": int
@@ -659,6 +687,7 @@
               {
                   "userId": 11,
                   "userName": "z상식지존z",
+                  "gameScore": 0,
                   "userScore": 9999,
                   "userRanking": 1,
                   "ready": false,
@@ -667,6 +696,7 @@
               {
                   "userId": 1031,
                   "userName": "상식마스터",
+                  "gameScore": 0,
                   "userScore": 320,
                   "userRanking": 1012,
                   "ready": false,
@@ -692,6 +722,8 @@
       
       "userName": String
       
+      "gameScore": int
+      
       "userScore": int
       
       "userRanking": int
@@ -704,6 +736,7 @@
       {
           "userId": 11,
           "userName": "z상식지존z",
+          "gameScore": 0,
           "userScore": 9999,
           "userRanking": 1,
           "ready": false,
@@ -739,6 +772,8 @@
       
       "userName": String
       
+      "gameScore": int
+      
       "userScore": int
       
       "userRanking": int
@@ -751,6 +786,7 @@
       {
           "userId": 11,
           "userName": "z상식지존z",
+          "gameScore": 0,
           "userScore": 9999,
           "userRanking": 1,
           "ready": false,
@@ -772,6 +808,8 @@
       
       "userName": String
       
+      "gameScore": int
+      
       "userScore": int
       
       "userRanking": int
@@ -784,6 +822,7 @@
       {
           "userId": 5,
           "userName": "저녁뭐먹지",
+          "gameScore": 0,
           "userScore": 543,
           "userRanking": 131,
           "ready": true,
@@ -803,6 +842,8 @@
       
       "userName": String
       
+      "gameScore": int
+      
       "userScore": int
       
       "userRanking": int
@@ -815,6 +856,7 @@
       {
           "userId": 5,
           "userName": "저녁뭐먹지",
+          "gameScore": 0,
           "userScore": 543,
           "userRanking": 131,
           "ready": false,
@@ -823,3 +865,188 @@
       ```
   
   - /sub/room/info/{roomId}
+
+
+
+
+
+## 게임 시작
+
+> ### Game Start
+
+- 게임 시작
+  
+  - "start!" -> 문제 -> 결과
+    
+    - Server에서 Thread Scheduling을 통해 지연시간을 할당하여 제공
+    
+    - "start!" 5초(로딩시간)
+    
+    - 문제
+      
+      - 각 문제 10초 제한 시간
+    
+    - 결과
+      
+      - 문제 이후 5초간 제공
+  
+  - /pub/game/start/{roomId}
+    
+    - 방 정보 전송
+    
+    - "roomId": int
+      
+      "roomName": String
+      
+      "roomSize": int
+      
+      "roomCurrent": int
+      
+      "roomReady": int
+      
+      "category": String
+      
+      "quizeCount": int
+      
+      "password": String
+      
+      "quizDateTime": String
+      
+      "roomStatus": int
+      
+      "member": List
+      
+      - "userId": int
+        
+        "userName": String
+        
+        "gameScore": int
+        
+        "userScore": int
+        
+        "userRanking": int
+        
+        "ready": boolean
+        
+        "leader": boolean
+    
+    - 방
+  
+  - /sub/game/quiz/{roomId}
+    
+    - Start 수신
+      
+      - "start!": String
+      
+      - ```json
+        "start!"
+        ```
+    
+    - 퀴즈 정보 수신
+    
+    - "quizType": String
+      
+      "question": String
+      
+      "hint": String
+      
+      "answer": String
+      
+      "articleTitle": String
+      
+      "articleContent": String
+    
+    - ```json
+      {
+        "quizType": "경제 분류의 2023-10-01 문제 1번 문제 유형입니다.",
+        "question": "경제 분류의 2023-10-01 문제 1번 질문입니다.",
+        "hint": "경제 분류의 2023-10-01 문제 1번 힌트입니다.",
+        "answer": "1번 정답",
+        "articleTitle": "경제 분류의 2023-10-01 문제 1번 기사 제목.",
+        "articleContent": "경제 분류의 2023-10-01 문제 1번 기사 원문."
+      }
+      ```
+  
+  - /sub/game/result/{roomId}
+    
+    - 문제 결과 수신
+    
+    - List 자료구조
+      
+      - 점수 순서대로 sort 된 리스트
+      
+      - 리스트 내 Type
+        
+        - "userId": int
+          
+          "userName": String
+          
+          "gameScore": int
+          
+          "userScore": int
+          
+          "userRanking": int
+          
+          "ready": boolean
+          
+          "leader": boolean
+    
+    - ```json
+      [
+        {
+          "userId": 11,
+          "userName": "z상식지존z",
+          "gameScore": 600,
+          "userScore": 9999,
+          "userRanking": 1,
+          "leader": true,
+          "ready": false
+        },
+        {
+          "userId": 12,
+          "userName": "z상식지존z11",
+          "gameScore": 300,
+          "userScore": 789,
+          "userRanking": 103,
+          "leader": false,
+          "ready": false
+        }
+      ]
+      ```
+  
+  - /sub/game/end/{roomId}
+    
+    - End 수신
+      
+      - "end": String
+      
+      - ```json
+        "end!"
+        ```
+
+- 답안 제출
+  
+  - POST 요청
+    
+    - /score
+    
+    - body
+      
+      - "roomId": long
+        
+        "userId": Long
+        
+        "userAnswer": String
+        
+        "quizNumber": int
+        
+        "answer": String
+    
+    - ```json
+      {
+          "roomId": 1,
+          "userId": 132,
+          "userAnswer": "초전도체",
+          "answer": "초전도체"
+      }
+      ```
