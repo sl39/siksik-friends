@@ -5,7 +5,7 @@ import type { User } from "@/types";
 export const userAtom = atom<User>({
   user_id: 0,
   email: "이메일",
-  nickname: "닉네임",
+  nickname: "asdf",
   profile: "/images/character/rabbit.png",
   odds: "",
   rank: 999,
