@@ -105,52 +105,8 @@ export default function UserItem({ data }: Props) {
         priority
         quality={100}
       /> */}
-      <div className={styles.userItemBox}>
-        <div className={styles.profileInfo}>
-          <div className={styles.userInfo}>
-            <div className={`${styles.subBox} ${styles.level}`}>Lv.{data.userRanking}</div>
-            <div className={styles.subBox}>{data.userName}</div>
-          </div>
-        </div>
-        {/* // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-    <div
-      role="button"
-      className={`${styles.userItem} ${isActive ? styles.active : ""}`}
-      onClick={() => setIsActive(true)}
-      onBlur={handleBlur}
-      ref={buttonRef}
-      tabIndex={0}
-    >
-      <div className={styles.profile}>
-        <Image
-          src={data?.profile || "/images/character/rabbit.png"}
-          alt="프로필"
-          fill
-          sizes="20vw"
-          style={{
-            objectFit: "contain",
-          }}
-          priority
-          quality={100}
-        />
-      </div>
-      <div className={styles.profileInfo}>
-        <div className={styles.userInfo}>
-          <div className={`${styles.subBox} ${styles.level}`}>Lv.{data.level}</div>
-          <div className={styles.subBox}>{data.nickname}</div>
-        </div>
-        <div className={`${styles.hiddenBtn} ${isActive ? styles.visible : ""}`}>
-          <button className={styles.subBtn} onClick={openProfile}>
-            프로필
-          </button>
-          {TypeText[userType].map((text) => (
-            <button key={text} className={styles.subBtn} onClick={() => handleFriend(text)}>
-              <span className={styles.buttonText}>{text}</span>
-            </button>
-          ))}
-        </div> */}
-      </div>
+      <div className={`${styles.subBox} ${styles.level}`}>{data.userRanking} 위</div>
+      <div className={`${styles.subBox} ${styles.name}`}>{data.userName}</div>
     </div>
   );
 }

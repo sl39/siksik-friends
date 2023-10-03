@@ -1,10 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import styles from "./room.module.scss";
-import { soketUser } from "@/types";
 import { useEffect, useState } from "react";
-import { CompatClient } from "node_modules/@stomp/stompjs";
+import type { CompatClient } from "node_modules/@stomp/stompjs";
+import type { soketUser } from "@/types";
+import styles from "./room.module.scss";
 
 interface Props {
   gameId: number;
@@ -14,14 +14,18 @@ interface Props {
 }
 
 export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }: Props) {
+  const [btnActive, setBtnActive] = useState(false);
+
   console.log(soketUser, "유저 값 받아오는곳 버튼");
   const router = useRouter();
   const [roomUser, setRoomUser] = useState<soketUser>(soketUser);
 
   const [title, setTitle] = useState("레디 하세요");
+
   /** 게임으로 연결하는 함수 */
   const handleStart = () => {
     console.log(soketUser.ready, "이거 맞나?");
+    setBtnActive(!btnActive);
 
     if (roomUser.leader) {
       if (leaderReady === 1) {
@@ -38,6 +42,7 @@ export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }
       stompClient.send(`/pub/room/ready/${gameId}`, {}, JSON.stringify(roomUser));
     }
   };
+
   useEffect(() => {
     console.log(roomUser, "여기는 props 받아온곳");
     if (!roomUser.leader) {
@@ -58,7 +63,10 @@ export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }
 
   return (
     <button onClick={handleStart} className={styles["button-wrapper"]}>
-      <span className={`${styles.span} ${styles["background-button"]}`} title={title} />
+      <span
+        className={`${styles.span} ${styles["background-button"]} ${btnActive ? styles.BtnActive : ""}`}
+        title={title}
+      />
     </button>
   );
 }

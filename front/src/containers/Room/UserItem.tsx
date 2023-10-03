@@ -1,8 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import type { soketUser } from "@/types";
-import { serverAxios } from "@/services/api";
 import styles from "../Game/game.module.scss";
 
 interface Props {
@@ -22,13 +20,11 @@ export default function UserItem({ data }: Props) {
         priority
         quality={100}
       /> */}
-      <div className={styles.userItemBox}>
-        {/* <div className={styles.subBox}>{data.level}</div> */}
-        <div className={styles.subBox}>{data.userName}</div>
-        <div className={styles.subBox}>
-          {data.ready ? "ready" : "wait"}
-          {data.leader ? " - 방장" : null}
-        </div>
+      <div className={`${styles.subBox} ${styles.level}`}>{data.userRanking}</div>
+      <div className={styles.subBox}>{data.userName}</div>
+      <div className={`${styles.subBox} ${styles.ready}`}>
+        {data.ready ? "ready" : "wait"}
+        {data.leader ? " - 방장" : ""}
       </div>
     </div>
   );
