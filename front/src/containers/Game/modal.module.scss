@@ -346,12 +346,14 @@ $font-title: "Chelsea Market", sans-serif;
   height: 500px;
   .Card {
     width: 40%;
-    height: 100%;
+    height: 80%;
+  }
+  .btns {
+    height: 20%;
   }
   .data {
-    width: 50%;
+    width: 60%;
     height: 95%;
-    background: #fff;
   }
   .close {
     position: absolute;
