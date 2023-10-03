@@ -1,18 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import type { Frame } from "stompjs";
-import type { soketUser, User } from "@/types";
+import { useState } from "react";
+import type { SoketUser, User } from "@/types";
 import { serverAxios } from "@/services/api";
-import { useWebSocket } from "@/socket/WebSocketProvider";
-import { userAtom } from "@/store/userAtom";
-import UserItem from "../Game/UserItem";
+import UserItem from "./UserItem";
 import styles from "../Game/game.module.scss";
 import FriendsItem from "../Game/FriendsItem";
 
-export default function WaitingUser() {
+interface Props {
+  data: Array<SoketUser>;
+}
+
+export default function WaitingUser({ data }: Props) {
   const [openTab, setOpenTab] = useState(1);
-  const [items, setItems] = useState<Array<soketUser>>([]);
+  const [items] = useState(data);
   const [friends, setFriends] = useState<Array<User>>([]);
   const [NotFriends, setNotFriends] = useState<Array<User>>([]);
 
@@ -43,39 +44,6 @@ export default function WaitingUser() {
     myFriends();
     myRequest();
   };
-
-  const user = userAtom.init;
-  const stompClient = useWebSocket();
-
-  // 룸으로 바꿔줘
-  useEffect(() => {
-    // if (stompClient) {
-    //   const subscription = stompClient.subscribe(
-    //     "/sub/lobby/list",
-    //     function handleRoomList(frame: Frame) {
-    //       const lobbyUserList = JSON.parse(frame.body);
-    //       console.log(lobbyUserList);
-    //       setItems(lobbyUserList);
-    //     },
-    //     {}
-    //   );
-    //   const soketUser = {
-    //     userId: user.user_id,
-    //     userName: user.nickname,
-    //     userScore: user.score,
-    //     userRanking: user.rank,
-    //     ready: false,
-    //     leader: false,
-    //   };
-    //   stompClient.send("/pub/lobby/entrance", {}, JSON.stringify(soketUser));
-    //   // handleUser(1);
-    //   return () => {
-    //     stompClient.send("/pub/lobby/exit", {}, JSON.stringify(soketUser));
-    //     subscription.unsubscribe();
-    //   };
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stompClient]);
 
   return (
     <div className={styles.folder}>
