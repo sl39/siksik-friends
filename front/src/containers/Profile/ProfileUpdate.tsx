@@ -18,7 +18,7 @@ export default function ProfileUpdate() {
   const [preNickname] = useState(data.nickname);
 
   const [checkNickname, setCheckNickname] = useState("");
-  const [updateValidation, setUpdateValidation] = useState(true);
+  const [updateValidation, setUpdateValidation] = useState(false);
 
   /** 닉네임 유효성 */
   const onBlurNickname = (e: string) => {
@@ -80,11 +80,11 @@ export default function ProfileUpdate() {
 
     try {
       await serverAxios.put(`/user/`, formData);
-      setData((prevUser) => ({
+      await setData((prevUser) => ({
         ...prevUser,
         ...formData,
       }));
-      router.push(`/home/profile/${formData.nickname}/${data.user_id}`);
+      router.replace(`/home/profile/${data.user_id}`);
     } catch (error) {
       console.log("프로필 업데이트 에러", error);
     }
