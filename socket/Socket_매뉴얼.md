@@ -110,7 +110,7 @@
           "category": "경제",
           "quizCount": 10,
           "password": null,
-          "quizDateTime": "2023-10-01",
+          "quizDate": "2023-10-01",
           "roomStatus": 0,
           "members": [
             {
@@ -140,7 +140,7 @@
           "category": "연예",
           "quizCount": 20,
           "password": "game123",
-          "quizDateTime": "2023-10-01",
+          "quizDate": "2023-10-01",
           "roomStatus": 0,
           "members": [
             {
@@ -162,7 +162,7 @@
           "category": "생활/문화",
           "quizCount": 10,
           "password": "gogo123!",
-          "quizDateTime": "2023-10-01",
+          "quizDate": "2023-10-01",
           "roomStatus": 0,
           "members": [
             {
@@ -372,7 +372,7 @@
         "category": "연예",
         "quizCount": 10,
         "password": "example_password",
-        "quizDateTime": "2023-10-01",
+        "quizDate": "2023-10-01",
         "roomStatus": 0,
         "members": [
           {
@@ -437,7 +437,7 @@
           "category": "연예",
           "quizCount": 10,
           "password": "example_password",
-          "quizDateTime": "2023-10-01",
+          "quizDate": "2023-10-01",
           "roomStatus": 0,
           "members": [
               {
@@ -502,7 +502,7 @@
           "category": "연예",
           "quizCount": 10,
           "password": "example_password",
-          "quizDateTime": "2023-10-01",
+          "quizDate": "2023-10-01",
           "roomStatus": 0,
           "members": [
               {
@@ -653,7 +653,7 @@
           "category": "연예",
           "quizCount": 10,
           "password": "example_password",
-          "quizDateTime": "2023-10-01",
+          "quizDate": "2023-10-01",
           "roomStatus": 0,
           "members": [
               {
