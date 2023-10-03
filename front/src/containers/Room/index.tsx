@@ -1,7 +1,7 @@
 "use client";
 
 // import { useAtom } from "jotai";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 // import { roomAtom } from "@/store/gameAtom";
 import WebSocketProvider, { useWebSocket } from "@/socket/WebSocketProvider";
 import StartBtn from "./StartBtn";
@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import { Frame } from "stompjs";
 import { Room, soketUser } from "@/types";
 import UserItem from "./UserItem";
+
+import WaitingUser from "./WaitingUser";
 
 export default function Index() {
   // 방 정보
@@ -73,6 +75,31 @@ export default function Index() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stompClient]);
+  // const params = useParams();
+  // const roomId = Number(params.id);
+
+  // const router = useRouter();
+  // // 내가 시작을 한지 여부
+  // const [btnActive, setBtnActive] = useState(false);
+
+  // const ImBoss = false;
+  // let data = "";
+  // /** 게임으로 연결하는 함수 */
+  // if (ImBoss) {
+  //   data = "게임 시작!";
+  // } else {
+  //   data = "Ready!";
+  // }
+  // const handleStart = () => {
+  //   // 내가 방장이고, 모두가 준비 되었으면 "게임 시작!", 모두 게임으로 입장 어케함?
+  //   if (ImBoss) {
+  //     // 모두가 준비 되었는 지 확인
+  //     router.push(`/game/play/${roomId}`);
+  //   } else {
+  //     // 방장이 아니면, Ready <-> 해제 번갈아서
+  //     setBtnActive(!btnActive);
+  //   }
+  // };
 
   return (
     <>
@@ -90,9 +117,18 @@ export default function Index() {
             ))}
           </div>
         </div>
-        <div className={styles.startBtn}>
+        {/* <div className={styles.startBtn}>
           <StartBtn gameId={roomId} soketUser={soketUser} leaderReady={leaderReady} stompClient={stompClient} />
+          <WaitingUser />
         </div>
+        <div className={styles.startBtn}>
+          <button onClick={handleStart} className={`${styles["button-wrapper"]}`}>
+            <span
+              className={`${styles.span} ${styles["background-button"]} ${btnActive ? styles.BtnActive : ""}`}
+              title={data}
+            />
+          </button>
+        </div> */}
       </div>
     </>
   );
