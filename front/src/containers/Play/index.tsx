@@ -1,7 +1,7 @@
 "use client";
 
 import { useAtom } from "jotai";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { roomAtom } from "@/store/gameAtom";
 import Timer from "./Timer";
 import styles from "./play.module.scss";
@@ -35,6 +35,10 @@ export default function GamePlay() {
     { name: "9등", score: 11 },
     { name: "10등", score: 11 },
   ];
+
+  // 모든 문제가 끝나면 결과 페이지로 이동
+  // const router = useRouter();
+  // router.push(`/game/rank/${roomId}`);
 
   return (
     <div className={styles.flex}>
