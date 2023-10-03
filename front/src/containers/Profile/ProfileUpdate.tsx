@@ -80,11 +80,11 @@ export default function ProfileUpdate() {
 
     try {
       await serverAxios.put(`/user/`, formData);
-      setData((prevUser) => ({
+      await setData((prevUser) => ({
         ...prevUser,
         ...formData,
       }));
-      router.push(`/home/profile/${formData.nickname}/${data.user_id}`);
+      router.replace(`/home/profile/${data.user_id}`);
     } catch (error) {
       console.log("프로필 업데이트 에러", error);
     }
