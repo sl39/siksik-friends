@@ -61,7 +61,7 @@ export default function WaitingUser() {
       );
       const soketUser = {
         userId: 1211,
-        userName: "user.gdgd",
+        userName: "user.ㅎㅇ",
         userScore: 1111,
         userRanking: 111,
         ready: false,
