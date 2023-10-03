@@ -1,7 +1,6 @@
 package com.ssf.socket.repository;
 
 import com.ssf.socket.domain.Member;
-import com.ssf.socket.domain.Room;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +10,6 @@ import java.util.Map;
 public class MemoryLobbyRepository implements LobbyRepository{
     public static Map<Long, Member> store = new HashMap<>();
 
-//    private static long lobbyCount;
     @Override
     public void join(Member member) {
         store.put(member.getUserId(), member);
