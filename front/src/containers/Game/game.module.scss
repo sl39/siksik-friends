@@ -257,13 +257,13 @@ $hardBlue: #6495ed;
 
 // 채팅
 .chatLog {
-  height: 72%;
+  height: 75%;
   width: 98%;
   background: rgba(255, 255, 255, 0.5);
   border-radius: 5px;
   overflow-y: auto;
-  box-sizing: border-box;
   padding: 5px;
+  box-sizing: border-box;
 
   &::-webkit-scrollbar {
     width: 10px;
@@ -299,9 +299,12 @@ $hardBlue: #6495ed;
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
+  padding: 0 10px;
+  box-sizing: border-box;
 
   .sender {
-    width: 300px;
+    width: 20%;
+    display: none;
   }
   input {
     width: 90%;
