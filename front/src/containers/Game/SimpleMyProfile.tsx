@@ -10,7 +10,7 @@ import SimpleProfileModal from "./SimpleProfileModal";
 
 export default function SimpleProfile() {
   const [data] = useAtom(userAtom);
-  const [openProfile, setOpenProfile] = useState(true);
+  const [openProfile, setOpenProfile] = useState(false);
 
   return (
     <div className={styles.myProfile}>
