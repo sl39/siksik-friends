@@ -14,9 +14,13 @@ import java.util.List;
 public class ReplyDTO {
     long roomId;
     Long userId;
-    String answer;
+    String userAnswer;
     int userScore;
-    String quizId;
-    String quizDate;
-    List<QuizDTO> quizSet;
+    int quizNumber;
+    String quizType;
+    String question;
+    String hint;
+    String answer;
+    String articleTitle;
+    String articleContent;
 }
