@@ -1,14 +1,18 @@
 "use client";
 
 import { useAtom } from "jotai";
+import { useParams } from "next/navigation";
 import { roomAtom } from "@/store/gameAtom";
 import Timer from "./Timer";
 import styles from "./play.module.scss";
 import Question from "./Question";
 import Score from "./Score";
+import Chatting from "../Room/Chatting";
 
 export default function GamePlay() {
   const [gameData] = useAtom(roomAtom);
+  const params = useParams();
+  const roomId = Number(params.id);
 
   // 문제 정보 받아오기
   const quiz = {
@@ -44,7 +48,10 @@ export default function GamePlay() {
         <div className={styles.center}>
           <Question data={quiz} />
         </div>
-        <div className={styles.right}>채팅</div>
+        <div className={styles.right}>
+          {/* room이랑 같은 채팅 */}
+          <Chatting roomId={roomId} />
+        </div>
       </div>
     </div>
   );
