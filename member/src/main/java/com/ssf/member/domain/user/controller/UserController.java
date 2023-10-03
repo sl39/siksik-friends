@@ -23,48 +23,11 @@ import java.util.List;
 public class UserController {
 
     private final JwtService jwtService;
-    private final UserAddService userAddService;
     private final UserFindService userFindService;
     private final UserModifyService userModifyService;
     private final UserRemoveService userRemoveService;
-    private final UserSaveService userSaveService;
 
     private static final String ACCESS_HEADER = "Authorization";
-    private static final String DEFAULT_PROFILE_URL = "/images/character/rabbit.png";
-
-    @GetMapping("/email")
-    public ResponseEntity<Message> checkEmail(@Validated final UserRequest.Email emailDto) {
-        return userFindService.checkEmailDuplication(emailDto).emailRedundancyStatus()
-                ? ResponseEntity.status(HttpStatus.CONFLICT).body(Message.IMPOSSIBLE_EMAIL)
-                : ResponseEntity.ok(Message.IMPOSSIBLE_EMAIL);
-    }
-
-    @GetMapping("/nickname")
-    public ResponseEntity<Message> checkNickname(@Validated final UserRequest.Nickname nicknameDto) {
-        return userFindService.checkNicknameDuplication(nicknameDto).nicknameRedundancyStatus()
-                ? ResponseEntity.status(HttpStatus.CONFLICT).body(Message.IMPOSSIBLE_NICKNAME)
-                : ResponseEntity.ok(Message.POSSIBLE_NICKNAME);
-    }
-
-    @PostMapping("/sign-up")
-    public ResponseEntity<Void> signIn(@RequestBody final UserRequest.SignUp signUpDto) {
-        if (!StringUtils.hasText(signUpDto.getProfile())) {
-            signUpDto.changeProfile(DEFAULT_PROFILE_URL);
-        }
-
-        userAddService.addUser(signUpDto);
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/sign-out")
-    public ResponseEntity<Void> signOut(@RequestHeader(ACCESS_HEADER) final String accessHeader) {
-        JwtDto jwtDto = jwtService.extractHeader(UserRequest.AccessHeader.builder()
-                .accessHeader(accessHeader)
-                .build());
-
-        userSaveService.signOut(jwtDto);
-        return ResponseEntity.ok().build();
-    }
 
     @GetMapping("/my-info")
     public UserDto.Response findMyInfo(@RequestHeader(ACCESS_HEADER) String accessHeader) {
