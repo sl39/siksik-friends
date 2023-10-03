@@ -18,11 +18,19 @@ export default function GamePlay() {
     answer: "이건 정답",
   };
 
-  // 스코어 상태 받아오기
-  // const roomScore = [
-  //   { id: 1, name: "일등", score: 999 },
-  //   { id: 2, name: "이등", score: 998 },
-  // ];
+  // 현재 스코어 상태 받아오기
+  const scoreData = [
+    { name: "1등", score: 11 },
+    { name: "2등", score: 11 },
+    { name: "3등", score: 11 },
+    { name: "4등", score: 11 },
+    { name: "5등", score: 11 },
+    { name: "6등", score: 11 },
+    { name: "7등", score: 11 },
+    { name: "8등", score: 11 },
+    { name: "9등", score: 11 },
+    { name: "10등", score: 11 },
+  ];
 
   return (
     <div className={styles.flex}>
@@ -31,7 +39,7 @@ export default function GamePlay() {
       </div>
       <div className={styles.flex2}>
         <div className={styles.left}>
-          <Score />
+          <Score data={scoreData} />
         </div>
         <div className={styles.center}>
           <Question data={quiz} />
