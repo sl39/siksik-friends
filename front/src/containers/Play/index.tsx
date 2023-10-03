@@ -59,7 +59,7 @@ export default function GamePlay() {
     }
   }, [StompClient]);
 
-  // 모든 문제가 끝나면 결과 페이지로 이동
+  // 모든 문제가 끝나면 결과 페이지로 이동;
   // const router = useRouter();
   // router.push(`/game/rank/${roomId}`);
 
