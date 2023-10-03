@@ -17,13 +17,13 @@ export default function Index() {
 
   const [room, setRoom] = useState<Room | undefined>(undefined);
 
-  const [soketUser, setSoketUser] = useState({
-    userId: 1211,
+  const [soketUser, setSoketUser] = useState<soketUser>({
+    userId: 0,
     userName: "user.nickname",
     userScore: 1111,
     userRanking: 111,
     ready: false,
-    leader: false,
+    leader: true,
   });
   const stompClient = useWebSocket();
   const [userInfo, setUserInfo] = useState<soketUser[]>([]);
@@ -42,9 +42,10 @@ export default function Index() {
           setRoom(roomInfo);
           setUserInfo(roomInfo.members);
           setleaderReady(roomInfo.roomCurrent - roomInfo.roomReady);
+          localStorage.setItem("roomInfo", JSON.stringify(roomInfo));
           roomInfo.members.forEach((element: soketUser) => {
             if (element.userId === soketUser.userId) {
-              setSoketUser(soketUser);
+              setSoketUser(element);
             }
           });
         },
@@ -52,7 +53,6 @@ export default function Index() {
       );
 
       stompClient.send(`/pub/room/entrance/${roomId}`, {}, JSON.stringify(soketUser));
-      console.log("if 문은 통과");
       return () => {
         // 컴포넌트가 언마운트될 때 이벤트 리스너  제거
 
@@ -64,7 +64,7 @@ export default function Index() {
   }, [stompClient]);
 
   return (
-    <WebSocketProvider>
+    <>
       <div className={styles.left}>
         <div className={styles.roomInfo}>{room ? <RoomInfo room={room} /> : null}</div>
         <div className={styles.chatting}>
@@ -75,10 +75,12 @@ export default function Index() {
         <div className={styles.roomUser}>
           <WaitingUser data={userInfo} />
         </div>
-        <div className={styles.startBtn}>
-          <StartBtn gameId={roomId} soketUser={soketUser} leaderReady={leaderReady} stompClient={stompClient} />
-        </div>
+        {stompClient && (
+          <div className={styles.startBtn}>
+            <StartBtn gameId={roomId} soketUser={soketUser} leaderReady={leaderReady} stompClient={stompClient} />
+          </div>
+        )}
       </div>
-    </WebSocketProvider>
+    </>
   );
 }

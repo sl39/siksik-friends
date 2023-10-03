@@ -1,26 +1,26 @@
 "use client";
 
 import { useAtom } from "jotai";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { roomAtom } from "@/store/gameAtom";
 import Timer from "./Timer";
 import styles from "./play.module.scss";
 import Question from "./Question";
 import Score from "./Score";
 import Chatting from "../Room/Chatting";
+import { useWebSocket } from "@/socket/WebSocketProvider";
+import { useEffect, useState } from "react";
+import { Quiz } from "@/types";
+import { Frame } from "stompjs";
 
 export default function GamePlay() {
   const [gameData] = useAtom(roomAtom);
   const params = useParams();
   const roomId = Number(params.id);
-
+  const [time, setTime] = useState<number>(3);
   // 문제 정보 받아오기
-  const quiz = {
-    type: "경제",
-    title: "문제 제목",
-    description: "문제 주절주절",
-    answer: "이건 정답",
-  };
+  const StompClient = useWebSocket();
+  const [quiz, setQuiz] = useState<Quiz | null>(null);
 
   // 현재 스코어 상태 받아오기
   const scoreData = [
@@ -36,27 +36,52 @@ export default function GamePlay() {
     { name: "10등", score: 11 },
   ];
 
+  useEffect(() => {
+    if (StompClient) {
+      const subscription = StompClient.subscribe(
+        `/sub/game/quiz/${roomId}`,
+        function handleRoomInfo(frame: Frame) {
+          if (frame.body === "start!") {
+            console.log(frame.body);
+          } else {
+            const quizInfo = JSON.parse(frame.body);
+            setQuiz(quizInfo);
+            console.log(quizInfo);
+          }
+        },
+        {}
+      );
+      StompClient.send(`/pub/game/start/${roomId}`, {}, JSON.stringify(JSON.parse(localStorage.getItem("roomInfo"))));
+
+      return () => {
+        subscription.unsubscribe();
+      };
+    }
+  }, [StompClient]);
+
   // 모든 문제가 끝나면 결과 페이지로 이동
   // const router = useRouter();
   // router.push(`/game/rank/${roomId}`);
 
   return (
-    <div className={styles.flex}>
-      <div className={styles.top}>
-        <Timer time={gameData.countTimer} resetTime={5} count={gameData.countProblem} />
+    <>
+      <div className={styles.flex}>
+        <div className={styles.top}>
+          <Timer time={gameData.countTimer} resetTime={time} count={gameData.countProblem} />
+        </div>
+        <div className={styles.flex2}>
+          <div className={styles.left}>
+            <Score data={scoreData} />
+          </div>
+          <div className={styles.center}>
+            <Question data={quiz} />
+          </div>
+          <div className={styles.right}>
+            {/* room이랑 같은 채팅 */}
+            <Chatting roomId={roomId} />
+          </div>
+        </div>
       </div>
-      <div className={styles.flex2}>
-        <div className={styles.left}>
-          <Score data={scoreData} />
-        </div>
-        <div className={styles.center}>
-          <Question data={quiz} />
-        </div>
-        <div className={styles.right}>
-          {/* room이랑 같은 채팅 */}
-          <Chatting roomId={roomId} />
-        </div>
-      </div>
-    </div>
+    </>
   );
 }

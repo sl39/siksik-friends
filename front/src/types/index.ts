@@ -26,7 +26,7 @@ export interface Room {
   roomId: number;
   roomName: string;
   roomStatus: boolean;
-  quizDateTime: string;
+  quizDate: string;
   category: string;
   quizCount: string;
   members: soketUser[];
@@ -43,13 +43,16 @@ export interface RoomInfo {
   type: string;
   password: string;
   countTimer: number;
+  quizDate: string;
 }
 
 export interface Quiz {
-  type: string;
-  title: string;
-  description: string;
-  answer: string;
+  quizType: String;
+  question: String;
+  hint: String;
+  answer: String;
+  articleTitle: String;
+  articleContent: String;
 }
 
 export interface soketUser {

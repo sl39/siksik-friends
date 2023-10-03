@@ -31,10 +31,8 @@ export default function Question({ data }: Props) {
       <div className={`${styles.backImage} z-9`}>
         <Image src="/images/backclock.png" alt="" sizes="10vw" fill objectFit="contain" />
       </div>
-      <div className={`${styles.quizTitle} z-10`}>
-        [{data.type}] {data.title}
-      </div>
-      <div className={`${styles.quizDesc} z-10`}>{data.description}</div>
+      {data ? <div className={`${styles.quizTitle} z-10`}>[{data.quizType}]</div> : "Start"}
+      {data ? <div className={`${styles.quizDesc} z-10`}>{data.question}</div> : null}
       <form onSubmit={handleSubmit} className={`${styles.answer} z-10`}>
         <div className={styles.quote}>
           <input type="text" value={myAnswer} onChange={handleChange} />
