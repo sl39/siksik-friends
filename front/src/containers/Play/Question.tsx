@@ -15,6 +15,8 @@ interface Props {
 
 export default function Question({ data }: Props) {
   const [myAnswer, setMyAnswer] = useState("");
+  const { quiz, isQuiz, isResult } = data;
+  console.log("여기가 문제 페이지", quiz, isQuiz, isResult);
   /** 정답 제출 */
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,9 +33,19 @@ export default function Question({ data }: Props) {
       <div className={`${styles.backImage} z-9`}>
         <Image src="/images/backclock.png" alt="" sizes="10vw" fill objectFit="contain" />
       </div>
-      {data ? <div className={`${styles.quizTitle} z-10`}>[{data.quizType}]</div> : "Start"}
-      {/* eslint-disable-next-line no-null/no-null */}
-      {data ? <div className={`${styles.quizDesc} z-10`}>{data.question}</div> : null}
+      {isQuiz && isResult === false ? (
+        <>
+          {quiz ? <div className={`${styles.quizTitle} z-10`}>[{quiz.quizType}]</div> : "Start"}
+          {/* eslint-disable-next-line no-null/no-null */}
+          {quiz ? <div className={`${styles.quizDesc} z-10`}>{quiz.question}</div> : null}
+        </>
+      ) : (
+        <>
+          {quiz ? <div className={`${styles.quizTitle} z-10`}>[정답]</div> : "Start"}
+          {/* eslint-disable-next-line no-null/no-null */}
+          {quiz ? <div className={`${styles.quizDesc} z-10`}>{quiz.answer}</div> : null}
+        </>
+      )}
       <form onSubmit={handleSubmit} className={`${styles.answer} z-10`}>
         <div className={styles.quote}>
           <input type="text" value={myAnswer} onChange={handleChange} />
