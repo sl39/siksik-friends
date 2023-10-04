@@ -69,7 +69,7 @@ export default function CreateRoomModal({ onClose }: Props) {
         // const response = await serverAxios.post("/", formData);
         const response = await axios
           .create({
-            baseURL: "http://j9e101.p.ssafy.io:8083",
+            baseURL: "https://j9e101.p.ssafy.io/socket",
             // headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
           })
           .post("/lobby", roomData);

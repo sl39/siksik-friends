@@ -51,7 +51,7 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
         function handleRoomInfo(frame: Frame) {
           const roomQuiz = frame.body;
           // eslint-disable-next-line no-empty
-          if (roomQuiz === "start") {
+          if (roomQuiz === "start!") {
             router.push(`/game/start/play/${roomId}`);
           } else {
             setQuiz(JSON.parse(roomQuiz));

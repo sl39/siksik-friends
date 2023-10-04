@@ -2,7 +2,7 @@
 
 import { useAtom } from "jotai";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { roomAtom } from "@/store/gameAtom";
 import { useWebSocket } from "@/socket/WebSocketProvider";
 import type { Quiz } from "@/types";
@@ -12,6 +12,7 @@ import styles from "./play.module.scss";
 import Question from "./Question";
 import Score from "./Score";
 import Chatting from "../Room/Chatting";
+import { TotalInfoContext } from "@/socket/SubscriptionQuiz";
 
 export default function GamePlay() {
   const [gameData] = useAtom(roomAtom);
@@ -21,7 +22,8 @@ export default function GamePlay() {
   // 문제 정보 받아오기
   const StompClient = useWebSocket();
   // eslint-disable-next-line no-null/no-null
-  const [quiz, setQuiz] = useState<Quiz | null>(null);
+  const { quiz, quizResult, end, roomInfoPlay } = useContext(TotalInfoContext);
+  console.log(quiz, quizResult, end, roomInfoPlay);
 
   // 현재 스코어 상태 받아오기
   const scoreData = [
@@ -38,34 +40,6 @@ export default function GamePlay() {
   ];
 
   // eslint-disable-next-line consistent-return
-  useEffect(() => {
-    if (StompClient) {
-      const subscription = StompClient.subscribe(
-        `/sub/game/quiz/${roomId}`,
-        function handleRoomInfo(frame: Frame) {
-          if (frame.body === "start!") {
-            console.log(frame.body);
-          } else {
-            const quizInfo = JSON.parse(frame.body);
-            setQuiz(quizInfo);
-            console.log(quizInfo);
-          }
-        },
-        {}
-      );
-      // 값이 null 또는 undefined인 경우 빈 문자열("")을 할당
-      StompClient.send(
-        `/pub/game/start/${roomId}`,
-        {},
-        JSON.stringify(JSON.parse(localStorage.getItem("roomInfo") ?? ""))
-      );
-
-      return () => {
-        subscription.unsubscribe();
-      };
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [StompClient]);
 
   // 모든 문제가 끝나면 결과 페이지로 이동;
   // const router = useRouter();
