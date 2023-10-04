@@ -61,6 +61,7 @@ export default function Index() {
         // 컴포넌트가 언마운트될 때 이벤트 리스너  제거
 
         stompClient.send(`/pub/room/exit/${roomId}`, {}, JSON.stringify(soketUser));
+
         subscription.unsubscribe();
       };
     }
