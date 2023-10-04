@@ -15,15 +15,6 @@ export default function RoomData({ room }: Props) {
     <div className={styles.roomData}>
       <div className={styles.roomName}>
         <span>{room?.roomName}</span>
-        <Image
-          className={styles.lock}
-          src={room?.password ? "/images/actor/locked.png" : "/images/actor/unlocked.png"}
-          alt="worm"
-          sizes="10vw"
-          fill
-          style={{ objectFit: "contain" }}
-          priority
-        />
       </div>
 
       <div className={styles.bottomInfo}>
@@ -45,14 +36,18 @@ export default function RoomData({ room }: Props) {
             <p>
               {room?.roomCurrent} / {room?.roomSize}
             </p>
-            <Image
-              src="/images/actor/bulea2.png"
-              alt="worm"
-              sizes="10vw"
-              fill
-              style={{ objectFit: "contain" }}
-              priority
-            />
+           
+            <div >
+              <Image
+                className={styles.worm}
+                src="/images/actor/bulea2.png"
+                alt="worm"
+                sizes="10vw"
+                fill
+                style={{ objectFit: "contain" }}
+                priority
+              />
+            </div>
           </div>
         </div>
       </div>
