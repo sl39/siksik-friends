@@ -7,6 +7,7 @@ import { profileAtom } from "@/store/userAtom";
 import { serverAxios } from "@/services/api";
 import type { User } from "@/types";
 import styles from "./Profile.module.scss";
+import FriendsTab from "./FriendsTab";
 
 interface Props {
   userId?: number;
@@ -255,7 +256,9 @@ export default function ProfileData({ userId }: Props) {
 
             <div className={`${styles.tabcontent} ${activeTab === 3 ? styles.active : ""}`}>
               <h3>친구</h3>
-              <div className={`${styles.p} `}>ㅇㅅㅇ</div>
+              <div className={`${styles.p} `}>
+                <FriendsTab />
+              </div>
             </div>
           </div>
         </div>
