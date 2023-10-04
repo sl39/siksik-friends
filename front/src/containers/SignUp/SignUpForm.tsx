@@ -65,7 +65,6 @@ export default function SignUpForm() {
   };
   /** 닉네임 중복 검사 */
   const handleCheckNickname = async () => {
-    console.log("닉네임 버튼");
     const params = {
       nickname,
     };
@@ -146,15 +145,21 @@ export default function SignUpForm() {
     const trimmedNickname = getNickname?.trim().toString();
     const exp = getNickname.search("^[가-힣a-zA-Z0-9._ -]{2,}$");
 
-    if (trimmedNickname.length <= 11 && trimmedNickname.length >= 1 && exp === 0) {
-      console.log("비밀번호");
-      setCheckNickname("");
-      setNicknameValidation(1);
-      return true;
+    if (trimmedNickname.length <= 1 || trimmedNickname.length >= 9) {
+      setCheckNickname("닉네임의 길이는 2자 이상,8자 이하입니다");
+      setNicknameValidation(0);
+      return false;
     }
-    setCheckNickname("닉네임의 길이는 2자 이상 10자 이하입니다");
-    setNicknameValidation(0);
-    return false;
+    if (trimmedNickname.length >= 2 && trimmedNickname.length <= 8 && exp !== 0) {
+      setCheckNickname("닉네임은 한글, 영문 대소문자, 숫자와 ._-만 사용 가능합니다");
+      setNicknameValidation(0);
+      return false;
+    }
+
+    // 모든 유효성 검사 통과
+    setCheckNickname("");
+    setNicknameValidation(1);
+    return true;
   };
 
   return (

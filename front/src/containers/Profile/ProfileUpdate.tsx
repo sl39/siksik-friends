@@ -27,12 +27,16 @@ export default function ProfileUpdate() {
     const trimmedNickname = getNickname?.trim().toString();
     const exp = getNickname.search("^[가-힣a-zA-Z0-9._ -]{2,}$");
 
-    if (trimmedNickname.length <= 11 && trimmedNickname.length >= 1 && exp === 0) {
-      setCheckNickname("");
-      return true;
+    if (trimmedNickname.length <= 1 || trimmedNickname.length >= 9) {
+      setCheckNickname("닉네임의 길이는 2자 이상,8자 이하입니다");
+      return false;
     }
-    setCheckNickname("닉네임의 길이는 2자 이상 10자 이하입니다");
-    return false;
+    if (trimmedNickname.length >= 2 && trimmedNickname.length <= 8 && exp !== 0) {
+      setCheckNickname("닉네임은 한글, 영문 대소문자, 숫자와 ._-만 사용 가능합니다");
+      return false;
+    }
+    setCheckNickname("");
+    return true;
   };
 
   /** 닉네임 중복확인 */
