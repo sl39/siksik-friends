@@ -3,12 +3,12 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { CompatClient } from "node_modules/@stomp/stompjs";
-import type { soketUser } from "@/types";
+import type { SoketUser } from "@/types";
 import styles from "./room.module.scss";
 
 interface Props {
   gameId: number;
-  soketUser: soketUser;
+  soketUser: SoketUser;
   leaderReady: number;
   stompClient: CompatClient;
 }
@@ -17,7 +17,7 @@ export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }
   const [btnActive, setBtnActive] = useState(false);
 
   const router = useRouter();
-  const [roomUser, setRoomUser] = useState<soketUser>(soketUser);
+  const [roomUser, setRoomUser] = useState<SoketUser>(soketUser);
 
   const [title, setTitle] = useState("레디 하세요");
 
@@ -27,7 +27,7 @@ export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }
     if (roomUser) {
       if (roomUser.leader) {
         if (leaderReady === 1) {
-          router.push(`/game/play/${gameId}`);
+          router.push(`start/game/play/${gameId}`);
         }
       } else if (roomUser.ready) {
         setRoomUser({ ...roomUser, ready: false });
