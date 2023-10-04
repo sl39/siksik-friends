@@ -62,6 +62,7 @@ export default function SearchRoomModal({ onClose }: Props) {
               value={searchRoom}
               onChange={(e) => setSearchRoom(e.target.value)}
               placeholder="0000"
+              autoComplete="off"
             />
             <div className={styles.errMsg}>{errRoom}</div>
           </div>
