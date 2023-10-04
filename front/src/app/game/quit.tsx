@@ -1,11 +1,18 @@
-import Link from "next/link";
+"use client";
+
+import { useRouter } from "next/navigation";
 
 export default function BackNav() {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.back();
+  };
   return (
     <nav className="back-nav z-4">
-      <Link href="/home" className="nav-item back">
+      <button onClick={handleClick} className="nav-item back">
         <div className="nav-text">나가기</div>
-      </Link>
+      </button>
     </nav>
   );
 }

@@ -3,8 +3,15 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import axios from "axios";
+import DatePicker from "react-datepicker";
+import { ko } from "date-fns/locale";
+import { format } from "date-fns";
 import type { RoomInfo } from "@/types";
+import { userAtom } from "@/store/userAtom";
+import { useWebSocket } from "@/socket/WebSocketProvider";
 import styles from "./modal.module.scss";
+import "react-datepicker/dist/react-datepicker.css";
 
 interface Props {
   onClose: () => void;
@@ -12,6 +19,7 @@ interface Props {
 
 export default function CreateRoomModal({ onClose }: Props) {
   const router = useRouter();
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
   const [checkTitle, setCheckTitle] = useState("");
   const [checkpassword, setCheckPassword] = useState("");
@@ -26,30 +34,63 @@ export default function CreateRoomModal({ onClose }: Props) {
     title: "",
     count: 1,
     countProblem: 1,
-    countTimer: 1,
-    type: [],
+    type: "",
     password: "",
+    countTimer: 5,
+    quizDate: format(new Date(), "yyyy-MM-dd"),
   });
+  const stompClient = useWebSocket();
 
   /** 게임 방 생성 */
   const handleCreateGame = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (titleValidation && passwordValidation && formData.type.length) {
-      console.log(formData);
+    if (titleValidation && passwordValidation && typeValidation) {
+      const user = userAtom.init;
+      const leaderMember = {
+        userId: user.user_id,
+        userName: user.nickname,
+        userScore: user.score,
+        userRanking: user.rank,
+        ready: false,
+        leader: true,
+      };
+      const roomData = {
+        roomName: formData.title,
+        roomStatus: 0,
+        category: formData.type,
+        quizCount: formData.countProblem,
+        members: [leaderMember],
+        roomSize: formData.count,
+        quizDate: formData.quizDate,
+      };
 
       /** 게임방 POST 요청 */
       try {
         // const response = await serverAxios.post("/", formData);
-        // console.log(response);
-        const id = 1;
-        router.push(`/room/${id}`);
+        const response = await axios
+          .create({
+            baseURL: "http://j9e101.p.ssafy.io:8083",
+            // headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
+          })
+          .post("/lobby", roomData);
+        console.log(response);
+        console.log("방 만들기");
+        if (stompClient) {
+          stompClient.send("/pub/room/roomList", {}, JSON.stringify({}));
+        }
+
+        router.push(`/game/start/room/${response.data.roomId}`);
       } catch (err) {
         console.log(err);
-        // Axios 연결 전 임시 데이터
-        const id = 1;
-        router.push(`/room/${id}`);
       }
     }
+  };
+  const handleDate = (date: Date) => {
+    const formatDate = new Date(date.toLocaleString("en-US", { timeZone: "Asia/Seoul" }));
+    const formQuizDate = format(formatDate, "yyyy-MM-dd");
+    console.log(typeof formQuizDate);
+    setSelectedDate(date);
+    setFormData({ ...formData, quizDate: formQuizDate });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,23 +150,33 @@ export default function CreateRoomModal({ onClose }: Props) {
   const typeClick = (val: string) => {
     // val이 typeList에 이미 포함되어 있는지 확인
     const typeList = formData.type;
-    const index = typeList.indexOf(val);
+    // const index = typeList.indexOf(val);
 
-    if (index !== -1) {
-      // val이 이미 존재하면 제거
-      const updatedList = [...typeList];
-      updatedList.splice(index, 1);
-      setFormData({ ...formData, type: updatedList });
-      if (updatedList.length > 0) {
-        setTypeValidation(false);
-      }
+    // if (index !== -1) {
+    //   // val이 이미 존재하면 제거
+    //   const updatedList = [...typeList];
+    //   updatedList.splice(index, 1);
+    //   setFormData({ ...formData, type: updatedList });
+    //   if (updatedList.length > 0) {
+    //     setTypeValidation(false);
+    //   }
+    // } else {
+    //   // val이 존재하지 않으면 추가
+    //   setFormData({ ...formData, type: [...typeList, val] });
+    //   setTypeValidation(true);
+    //   console.log(typeValidation);
+    // }
+
+    if (val === typeList) {
+      console.log(val);
+      setFormData({ ...formData, type: "" });
+      setTypeValidation(false);
     } else {
-      // val이 존재하지 않으면 추가
-      setFormData({ ...formData, type: [...typeList, val] });
+      setFormData({ ...formData, type: val });
       setTypeValidation(true);
-      console.log(typeValidation);
     }
   };
+
   const checkBtn = () => {
     setPaswordCheckBox(!passwordCheckBox);
     if (!passwordCheckBox) {
@@ -157,90 +208,128 @@ export default function CreateRoomModal({ onClose }: Props) {
           {/* 방제목 */}
           <div className={styles.inputDiv}>
             <label htmlFor="title">제목</label>
-            <input type="text" name="title" id="title" value={formData.title} onChange={(e) => handleChange(e)} />
+
+            <input
+              autoComplete="off"
+              type="text"
+              name="title"
+              id="title"
+              value={formData.title}
+              onChange={(e) => handleChange(e)}
+            />
             {checkTitle && <div className={styles.errMsg}>{checkTitle}</div>}
           </div>
-          {/* 문제수 */}
-          <div className={styles.inputDiv}>
-            <label htmlFor="countProblem">문제수</label>
-            <input
-              type="number"
-              name="countProblem"
-              id="countProblem"
-              value={formData.countProblem}
-              onChange={(e) => handleChange(e)}
-              max={20}
-              min={1}
-            />
+          <div className={`${styles.inputDiv} ${styles.input2}`}>
+            {/* 문제수 */}
+            <div className={styles.col}>
+              <div>
+                <label htmlFor="countProblem">문제수</label>
+                <input
+                  className={styles.number}
+                  type="number"
+                  name="countProblem"
+                  id="countProblem"
+                  value={formData.countProblem}
+                  onChange={(e) => handleChange(e)}
+                  max={20}
+                  min={1}
+                />
+              </div>
+              {/* 인원 */}
+              <div>
+                <label htmlFor="count">인원</label>
+                <input
+                  className={styles.number}
+                  type="number"
+                  name="count"
+                  id="count"
+                  value={formData.count}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+            </div>
           </div>
           {/* 문제 종류 */}
-          <div className={styles.inputDiv}>
+          <div className={`${styles.inputDiv} ${styles.type}`}>
             <label htmlFor="type">문제 종류</label>
-            <div>{formData.type}</div>
-            <button
-              type="button"
-              name="type"
-              id="type"
-              onClick={() => typeClick("경제")}
-              className={formData.type.includes("경제") ? styles.selected : ""}
-            >
-              경제
-            </button>{" "}
-            <button
-              type="button"
-              name="type"
-              id="type"
-              onClick={() => typeClick("사회")}
-              className={formData.type.includes("사회") ? styles.selected : ""}
-            >
-              사회
-            </button>
-            <button
-              type="button"
-              name="type"
-              id="type"
-              onClick={() => typeClick("생활/문화")}
-              className={formData.type.includes("생활/문화") ? styles.selected : ""}
-            >
-              생활/문화
-            </button>
-            <button
-              type="button"
-              name="type"
-              id="type"
-              onClick={() => typeClick("세계")}
-              className={formData.type.includes("세계") ? styles.selected : ""}
-            >
-              세계
-            </button>
-            <button
-              type="button"
-              name="type"
-              id="type"
-              onClick={() => typeClick("It/과학")}
-              className={formData.type.includes("It/과학") ? styles.selected : ""}
-            >
-              It/과학
-            </button>
+            <div className={styles.groupContainer}>
+              <div className={styles.wordButton}>
+                <button
+                  type="button"
+                  name="type"
+                  id="type"
+                  onClick={() => typeClick("경제")}
+                  className={formData.type === "경제" ? styles.selected : ""}
+                >
+                  경제
+                </button>
+                <button
+                  type="button"
+                  name="type"
+                  id="type"
+                  onClick={() => typeClick("사회")}
+                  className={formData.type === "사회" ? styles.selected : ""}
+                >
+                  사회
+                </button>
+                <button
+                  type="button"
+                  name="type"
+                  id="type"
+                  onClick={() => typeClick("생활/문화")}
+                  className={formData.type === "생활/문화" ? styles.selected : ""}
+                >
+                  생활/문화
+                </button>
+                <button
+                  type="button"
+                  name="type"
+                  id="type"
+                  onClick={() => typeClick("세계")}
+                  className={formData.type === "세계" ? styles.selected : ""}
+                >
+                  세계
+                </button>
+                <button
+                  type="button"
+                  name="type"
+                  id="type"
+                  onClick={() => typeClick("It/과학")}
+                  className={formData.type === "It/과학" ? styles.selected : ""}
+                >
+                  It/과학
+                </button>
+              </div>
+            </div>
           </div>
-          {/* 인원 */}
-          <div className={styles.inputDiv}>
-            <label htmlFor="count">인원</label>
-            <input type="number" name="count" id="count" value={formData.count} onChange={(e) => handleChange(e)} />
-          </div>
+          {/* 날짜 */}
+          <DatePicker
+            selected={selectedDate}
+            onChange={(date: Date) => handleDate(date)}
+            dateFormat="yyyy-MM-dd"
+            placeholderText="날짜를 선택하세요!"
+            minDate={new Date("2010-01-01")}
+            maxDate={new Date()}
+            showMonthDropdown
+            showYearDropdown
+            locale={ko}
+          />
           {/* 비밀번호 */}
           <div className={styles.inputDiv}>
             <label htmlFor="password">비밀번호</label>
-            <input
-              type="text"
-              name="password"
-              id="password"
-              value={formData.password}
-              onChange={(e) => handleChange(e)}
-              disabled={passwordCheckBox}
-            />
-            <input type="checkbox" onClick={checkBtn} />
-            {checkpassword && <p style={{ color: "red" }}>{checkpassword}</p>}
+            <div className={styles.div}>
+              <input
+                type="text"
+                name="password"
+                id="password"
+                value={formData.password}
+                onChange={(e) => handleChange(e)}
+                disabled={passwordCheckBox}
+                autoComplete="off"
+              />
+              <input type="checkbox" onClick={checkBtn} className={styles.Check} />
+            </div>
+            {checkpassword && <div className={styles.checkText}>{checkpassword}</div>}
           </div>
           <div className={styles.btns}>
             <button className={`${styles.btn}`} type="submit">

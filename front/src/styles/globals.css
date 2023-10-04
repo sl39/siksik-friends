@@ -61,6 +61,13 @@ input {
   font-family: "Bazzi", var(--font-poor), sans-serif;
   font-size: 1.2rem;
   padding: 0 5px;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  border-bottom-width: 2px;
+}
+input:focus {
+  border-color: #6495ed;
 }
 /* home layout */
 .body-container {

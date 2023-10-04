@@ -1,3 +1,7 @@
+$blue: #87ceeb;
+$softBlue: #cce5ff;
+$hardBlue: #6495ed;
+
 .left {
   width: 68%;
   margin-top: 5px;
@@ -6,7 +10,6 @@
   height: 96%;
 }
 .right {
-  border: 1px solid red;
   box-sizing: border-box;
   width: 29%;
   height: 100%;
@@ -23,10 +26,33 @@
   backdrop-filter: blur(1px);
   -webkit-backdrop-filter: blur(1px);
 }
-.chatting {
-  height: 68%;
+.roomData {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 
-  background: rgba(255, 255, 255, 0.5);
+  border-radius: 2px;
+  line-height: 160%;
+  background-color: #f9f9f9;
+  filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.15));
+  background-image: linear-gradient(#e4e4e4 1px, transparent 1px);
+  background-size:
+    20% 20%,
+    2px 2px;
+  // border: 0.5px solid;
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  span {
+    width: 20%;
+  }
+}
+
+.chatting {
+  height: 70%;
+  background: rgba($color: $softBlue, $alpha: 0.5);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
@@ -36,15 +62,15 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 5px;
+  padding-left: 15px;
   box-sizing: border-box;
 }
 
 .roomUser {
-  border: 1px solid black;
   box-sizing: border-box;
 
   width: 100%;
-  height: 80%;
+  height: 75%;
   position: relative;
   margin: 5px 0;
   display: flex;
@@ -52,21 +78,21 @@
 
 // 겜시작 버튼
 .startBtn {
-  border: 1px solid red;
   box-sizing: border-box;
 
   position: relative;
+  margin-top: 8%;
   bottom: 0;
   right: 0;
-  width: 100%;
-  height: 15%;
+  width: 98%;
+  height: 14%;
 }
 .span {
   position: relative;
   padding-top: 25.92%;
   display: block;
   background-size: 100% 100%;
-  font-size: 28px;
+  font-size: 4vh;
   text-decoration: none;
   color: #333;
   margin: 0;
@@ -106,10 +132,20 @@
   }
 }
 .button-wrapper {
+  box-sizing: border-box;
+
   display: inline-block;
-  position: absolute;
-  bottom: 5vh;
-  right: 2vw;
-  width: 23vw;
-  height: 10vh;
+  position: relative;
+  bottom: 13%;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+.BtnActive {
+  &:after {
+    -webkit-transform: translate(2.5%, 10%);
+    transform: translate(2.5%, 10%);
+    text-shadow: 2px 2px 1px white;
+    color: black;
+  }
 }

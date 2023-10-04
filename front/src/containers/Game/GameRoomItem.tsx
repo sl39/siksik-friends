@@ -8,23 +8,27 @@ interface GameRoomItemProps {
 
 export default function GameRoomItem({ room }: GameRoomItemProps) {
   const router = useRouter();
+  console.log(room);
 
   const enterRoom = (id: number) => {
-    router.push(`/room/${id}`);
+    router.push(`/game/start/room/${id}`);
   };
   return (
-    <button onClick={() => enterRoom(room.id)} className={styles.roomItem}>
-      <div className={styles.roomId}>{room.id}</div>
+    <button onClick={() => enterRoom(room.roomId!)} className={styles.roomItem}>
+      <div className={styles.roomId}>{room.roomId}</div>
       <div className={styles.roomData}>
-        <div className={styles.name}>{room.name}</div>
-        <div className={[room.waiting ? styles.waiting : styles.playing, styles.state].join(" ")}>
-          {room.waiting ? "WAITING" : "PLAYING"}
+        <div className={styles.name}>{room.roomName}</div>
+        <div className={[room.roomStatus ? styles.playing : styles.waiting, styles.state].join(" ")}>
+          {!room.roomStatus ? "WAITING" : "PLAYING"}
         </div>
       </div>
       <div className={styles.roomQuiz}>
-        <div>2023.09.12 - 2023.09.13</div>
-        <div>카테고리</div>
-        <div>00문제</div>
+        <div>{room.quizDate}</div>
+        <div>{room.category}</div>
+        <div>{room.quizCount}</div>
+        <div>
+          {room.roomCurrent} / {room.roomSize}
+        </div>
       </div>
     </button>
   );
