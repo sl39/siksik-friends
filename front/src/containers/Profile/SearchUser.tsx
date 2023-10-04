@@ -11,7 +11,7 @@ import styles from "./Profile.module.scss";
 export default function SearchUser() {
   const [searchUser, setSearchUser] = useState("");
   const [, setNewProfile] = useAtom(profileAtom);
-  // const [errMsg, setErrMsg] = useState("");
+  const [errMsg, setErrMsg] = useState("");
 
   const router = useRouter();
 
@@ -21,25 +21,30 @@ export default function SearchUser() {
 
     try {
       const response = await serverAxios(`/user/?nickname=${searchUser}`);
+      setErrMsg("");
       await setNewProfile(response.data);
       router.replace(`/home/profile/${response.data.user_id}`);
     } catch (err) {
+      setErrMsg("해당 유저가 없습니다.");
       console.log("닉네임 검색", err);
     }
   };
   return (
-    <form className={styles.searchForm} onSubmit={handleSearch}>
-      <input
-        className={styles.searchText}
-        placeholder="닉네임으로 검색"
-        type="text"
-        value={searchUser}
-        onChange={(e) => setSearchUser(e.target.value)}
-        onBlur={() => setSearchUser("")}
-      />
-      <button className={styles.searchBtn} type="submit">
-        <BiSearchAlt className={styles.icon} size={28} color="#666" />
-      </button>
-    </form>
+    <>
+      <div className={styles.errText}>{errMsg}</div>
+      <form className={styles.searchForm} onSubmit={handleSearch}>
+        <input
+          className={styles.searchText}
+          placeholder="닉네임으로 검색"
+          type="text"
+          value={searchUser}
+          onChange={(e) => setSearchUser(e.target.value)}
+          onBlur={() => setSearchUser("")}
+        />
+        <button className={styles.searchBtn} type="submit">
+          <BiSearchAlt className={styles.icon} size={28} color="#666" />
+        </button>
+      </form>
+    </>
   );
 }

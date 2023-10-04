@@ -41,7 +41,6 @@ export default function UpdateButton() {
     3: ["친구 요청"],
     4: ["친구 삭제"],
   };
-
   useEffect(() => {
     /** 친구 상태 확인 */
     const isFriend = async () => {
