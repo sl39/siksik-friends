@@ -1,9 +1,6 @@
-"use client";
-
 import "@/styles/globals.css";
 import "@/styles/colors.css";
 import "@/styles/levels.scss";
-import { Provider } from "jotai";
 import type { Metadata } from "next";
 import Music from "@/components/Music";
 import { IBMPlexSans, logo, notoSans, poorStory } from "public/fonts/fonts";
@@ -17,11 +14,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={`${logo.variable} ${poorStory.variable} ${IBMPlexSans.variable} ${notoSans.variable}`}>
-        <Provider>
-          <Music />
-          <div className="body-container">{children}</div>
-          <div id="modal-root" />
-        </Provider>
+        <Music />
+        <div className="body-container">{children}</div>
+        <div id="modal-root" />
       </body>
     </html>
   );
