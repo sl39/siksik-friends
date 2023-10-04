@@ -24,17 +24,26 @@ export default function GamePlay() {
   const [quiz, setQuiz] = useState<Quiz | null>(null);
 
   // 현재 스코어 상태 받아오기
+
   const scoreData = [
-    { name: "1등", score: 11 },
-    { name: "2등", score: 11 },
-    { name: "3등", score: 11 },
-    { name: "4등", score: 11 },
-    { name: "5등", score: 11 },
-    { name: "6등", score: 11 },
-    { name: "7등", score: 11 },
-    { name: "8등", score: 11 },
-    { name: "9등", score: 11 },
-    { name: "10등", score: 11 },
+    {
+      userId: 11,
+      userName: "z상식지존z",
+      gameScore: 600,
+      userScore: 9999,
+      userRanking: 1,
+      leader: true,
+      ready: false,
+    },
+    {
+      userId: 12,
+      userName: "z상식지존z11",
+      gameScore: 300,
+      userScore: 789,
+      userRanking: 103,
+      leader: false,
+      ready: false,
+    },
   ];
 
   // eslint-disable-next-line consistent-return

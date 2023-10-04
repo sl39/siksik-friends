@@ -1,8 +1,9 @@
 import { BsTrophy } from "react-icons/bs";
+import type { GamePlay } from "@/types";
 import styles from "./play.module.scss";
 
 interface Props {
-  data?: any;
+  data?: GamePlay;
 }
 
 export default function Score({ data }: Props) {

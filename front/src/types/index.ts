@@ -72,3 +72,15 @@ export interface SoketUser {
   level?: number;
   profile?: string;
 }
+
+export interface GamePlay {
+  userId?: number;
+  userName?: string;
+  gameScore?: number;
+  userScore?: number;
+  userRanking?: number;
+  leader?: boolean;
+  ready?: boolean;
+  level?: number;
+  profile?: string;
+}
