@@ -1,17 +1,26 @@
-import type { RoomInfo } from "@/types";
+// import { userAtom } from "@/store/userAtom";
+import type { Room } from "@/types";
 import styles from "./room.module.scss";
 
 interface Props {
-  room: RoomInfo;
+  room: Room;
 }
 
 export default function RoomData({ room }: Props) {
+  // const user = userAtom.init;
+
   return (
     <div className={styles.roomData}>
-      <div>방제목 {room.title}</div>
-      <div>최대인원 {room.count}</div>
-      <div>문제 수 {room.countProblem}</div>
-      <div>문제유형 {room.type}</div>
+      <div className={styles.roomContent}>
+        <span>방 제목</span> {room?.roomName}
+      </div>
+      <div className={styles.roomContent}>
+        <span>인원</span> {room?.roomCurrent} / {room?.roomSize}
+      </div>
+      <div className={styles.roomContent}>
+        <div className={styles.quizCount}>{room?.quizCount} 문제</div>
+        <div className={styles.category}>[{room?.category}]</div>
+      </div>
     </div>
   );
 }

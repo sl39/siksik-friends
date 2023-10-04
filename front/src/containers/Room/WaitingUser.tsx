@@ -1,19 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { Frame } from "stompjs";
 import type { SoketUser, User } from "@/types";
 import { serverAxios } from "@/services/api";
-import { useWebSocket } from "@/socket/WebSocketProvider";
-import { userAtom } from "@/store/userAtom";
-import { convertUserToSoketUser } from "@/utils/userConversion";
-import UserItem from "./UserItem";
-import styles from "./game.module.scss";
+import UserItem from "../Game/UserItem";
+import styles from "../Game/game.module.scss";
 
-export default function WaitingUser() {
+interface Props {
+  data: Array<SoketUser>;
+}
+
+export default function WaitingUser({ data }: Props) {
   const [openTab, setOpenTab] = useState(1);
-  const [items, setItems] = useState<Array<SoketUser>>([]);
-
+  const [items, setItems] = useState(data);
   const [friends, setFriends] = useState<Array<User>>([]);
   const [NotFriends, setNotFriends] = useState<Array<User>>([]);
 
@@ -22,9 +21,8 @@ export default function WaitingUser() {
     try {
       const response = await serverAxios("/user/friend/list");
       setFriends(response.data.friendList);
-    } catch (err) {
-      console.log("친구 목록 에러", err);
-    }
+      // eslint-disable-next-line no-empty
+    } catch (err) {}
   };
 
   /** 받은 친구 요청 조회 */
@@ -49,40 +47,17 @@ export default function WaitingUser() {
     myFriends();
     myRequest();
   };
-
-  const user = userAtom.init;
-  const stompClient = useWebSocket();
-
-  // eslint-disable-next-line consistent-return
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (stompClient) {
-      const subscription = stompClient.subscribe(
-        "/sub/lobby/list",
-        function handleRoomList(frame: Frame) {
-          const lobbyUserList = JSON.parse(frame.body);
-          console.log(lobbyUserList);
-          setItems(lobbyUserList);
-        },
-        {}
-      );
-      // Atom에 있는 정보로 socketUser 넣기
-      const soketUser = convertUserToSoketUser(user);
-
-      stompClient.send("/pub/lobby/entrance", {}, JSON.stringify(soketUser));
-      return () => {
-        stompClient.send("/pub/lobby/exit", {}, JSON.stringify(soketUser));
-        subscription.unsubscribe();
-      };
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stompClient]);
+    setItems(data);
+  });
 
   return (
     <div className={styles.folder}>
       <div className={styles.tabs}>
         <button className={`${styles.tab} ${openTab === 1 ? styles.tabActive : ""}`} onClick={() => handleUser(1)}>
           <div>
-            <span>대기실</span>
+            <span>게임방</span>
           </div>
         </button>
         <button className={`${styles.tab} ${openTab === 2 ? styles.tabActive : ""}`} onClick={() => handleUser(2)}>
@@ -100,7 +75,7 @@ export default function WaitingUser() {
       <div className={`${styles.content} ${styles[`tab_${openTab}`]}`}>
         <div className={`${styles.page} ${styles.userBox} ${openTab === 1 ? styles.tabContentActive : ""}`}>
           {items.map((item) => (
-            <UserItem key={item.userId} dataProp={item} />
+            <UserItem key={item.userId} dataProp={item} isRoom />
           ))}
         </div>
         <div className={`${styles.page} ${styles.userBox} ${openTab === 2 ? styles.tabContentActive : ""}`}>

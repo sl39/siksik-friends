@@ -18,7 +18,7 @@ export default function ProfileUpdate() {
   const [preNickname] = useState(data.nickname);
 
   const [checkNickname, setCheckNickname] = useState("");
-  const [updateValidation, setUpdateValidation] = useState(true);
+  const [updateValidation, setUpdateValidation] = useState(false);
 
   /** 닉네임 유효성 */
   const onBlurNickname = (e: string) => {
@@ -40,7 +40,7 @@ export default function ProfileUpdate() {
       nickname,
     };
     if (nickname !== preNickname) {
-      if (onBlurNickname(nickname)) {
+      if (onBlurNickname(nickname!)) {
         try {
           await serverAxios.get("/auth/nickname", { params });
           setCheckNickname("사용 가능한 닉네임입니다.");
@@ -59,7 +59,7 @@ export default function ProfileUpdate() {
   };
 
   const [profileImages] = useAtom(ProfileImgAtom);
-  const [profileIndex, setProfileIndex] = useState(profileImages.indexOf(data.profile));
+  const [profileIndex, setProfileIndex] = useState(profileImages.indexOf(data.profile!));
   /** 프로필 사진 변경 */
   const changeProfile = (dir: string) => {
     if (dir === "left") {
@@ -80,11 +80,11 @@ export default function ProfileUpdate() {
 
     try {
       await serverAxios.put(`/user/`, formData);
-      setData((prevUser) => ({
+      await setData((prevUser) => ({
         ...prevUser,
         ...formData,
       }));
-      router.push(`/home/profile/${formData.nickname}/${data.user_id}`);
+      router.replace(`/home/profile/${data.user_id}`);
     } catch (error) {
       console.log("프로필 업데이트 에러", error);
     }

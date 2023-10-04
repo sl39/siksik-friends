@@ -6,9 +6,9 @@ export interface User {
   exp?: number;
   score?: number;
   level?: number;
-  nickname: string;
+  nickname?: string;
   email?: string;
-  profile: string;
+  profile?: string;
   odds?: string;
 }
 
@@ -23,23 +23,45 @@ export interface Rank {
 }
 
 export interface Room {
-  id: number;
-  name: string;
-  waiting: boolean;
+  roomId?: number;
+  roomName?: string;
+  roomStatus?: boolean;
+  quizDate?: string;
+  category?: string;
+  quizCount?: string;
+  members?: SoketUser[];
+  roomSize?: number;
+  roomCurrent?: number;
+  roomReady?: number;
+  password?: string;
 }
 
 export interface RoomInfo {
   title: string;
   count: number;
   countProblem: number;
+  type: string;
   countTimer: number;
-  type: string[];
   password?: string;
+  quizDate?: string;
 }
 
 export interface Quiz {
-  type: string;
-  title: string;
-  description: string;
+  quizType: string;
+  question: string;
+  hint: string;
   answer: string;
+  articleTitle: string;
+  articleContent: string;
+}
+
+export interface SoketUser {
+  userId?: number;
+  userName?: string;
+  userScore?: number;
+  userRanking?: number;
+  ready?: boolean;
+  leader?: boolean;
+  level?: number;
+  profile?: string;
 }
