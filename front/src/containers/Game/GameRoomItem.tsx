@@ -14,7 +14,7 @@ export default function GameRoomItem({ room }: GameRoomItemProps) {
     router.push(`/game/start/room/${id}`);
   };
   return (
-    <button onClick={() => enterRoom(room.roomId)} className={styles.roomItem}>
+    <button onClick={() => enterRoom(room.roomId!)} className={styles.roomItem}>
       <div className={styles.roomId}>{room.roomId}</div>
       <div className={styles.roomData}>
         <div className={styles.name}>{room.roomName}</div>

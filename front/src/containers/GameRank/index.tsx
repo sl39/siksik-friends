@@ -3,6 +3,7 @@
 import { BsTrophy } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import RoomInfo from "@/containers/Room/RoomInfo";
+import type { Room } from "@/types";
 import styles from "./rankpage.module.scss";
 
 export default function GameRank() {
@@ -22,7 +23,7 @@ export default function GameRank() {
   ];
 
   // 방 정보
-  const room = {};
+  const room: Room = {};
   const router = useRouter();
 
   return (
