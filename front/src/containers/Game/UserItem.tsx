@@ -11,6 +11,7 @@ import SimpleProfileModal from "./SimpleProfileModal";
 
 interface Props {
   dataProp: any;
+  isRoom?: boolean;
 }
 
 interface TypeTextType {
@@ -22,9 +23,8 @@ function isUser(dataProp?: SoketUser | User): dataProp is User {
   return (dataProp as User)?.user_id !== undefined;
 }
 
-export default function UserItem({ dataProp }: Props) {
+export default function UserItem({ dataProp, isRoom = false }: Props) {
   const data = isUser(dataProp) ? convertUserToSoketUser(dataProp) : dataProp;
-  console.log(data);
 
   /** 간단한 프로필 모달 열기 */
   const [openProfile, setOpenProfile] = useState(false);
@@ -131,7 +131,12 @@ export default function UserItem({ dataProp }: Props) {
       <div className={styles.profileInfo}>
         <div className={styles.userInfo}>
           <div className={`${styles.subBox} ${styles.level}`}>Lv. {data.level}</div>
-          <div className={styles.subBox}>{data.userName}</div>
+          <div className={`${styles.subBox} ${styles.name}`}>{data.userName}</div>
+          {isRoom && (
+            <div className={`${styles.subBox} ${styles.isReady}`}>
+              {data.leader ? "방장" : data.ready ? "READY" : "WAIT"}
+            </div>
+          )}
         </div>
         <div className={`${styles.hiddenBtn} ${isActive ? styles.visible : ""}`}>
           <button className={`${styles.subBtn} ${styles.highlight}`} onClick={() => setOpenProfile(true)}>
@@ -149,18 +154,5 @@ export default function UserItem({ dataProp }: Props) {
         </div>
       </div>
     </div>
-
-    // <div className={styles.userItem}>
-    //   {/* <Image
-    //     className={styles.profile}
-    //     src={data?.profile || "/images/character/rabbit.png"}
-    //     alt="프로필"
-    //     fill
-    //     sizes="50%"
-    //     priority
-    //     quality={100}
-    //   /> */}
-    //   <div className={`${styles.subBox} ${styles.level}`}>{data.userRanking} 위</div>
-    //   <div className={`${styles.subBox} ${styles.name}`}>{data.userName}</div>
   );
 }

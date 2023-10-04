@@ -537,15 +537,16 @@ $hardBlue: #6495ed;
   }
 
   .level {
-    padding-left: 20px;
-    width: 15%;
+    padding-left: 10px;
+    width: 20%;
   }
   .name {
-    width: 60%;
+    width: 55%;
   }
-  .ready {
+  .isReady {
     width: 15%;
     color: $hardBlue;
+    letter-spacing: -2px;
   }
 }
 
@@ -602,7 +603,7 @@ $hardBlue: #6495ed;
 }
 
 .highlight:hover {
-  padding: 3px 5px;
+  // padding: 3px 5px;
   // width: 100%;
   background: linear-gradient(
     to right,

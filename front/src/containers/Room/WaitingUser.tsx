@@ -30,10 +30,16 @@ export default function WaitingUser({ data }: Props) {
     try {
       // response / request
       const response = await serverAxios("/user/friend/response");
+      const request = await serverAxios("/user/friend/request");
+
+      // 병합된 리스트 생성
+      const combinedList = [...response.data.friendList, ...request.data.friendsList];
+
       // setCount(response.data.size);
-      setNotFriends(response.data.friendList);
-      // eslint-disable-next-line no-empty
-    } catch (err) {}
+      setNotFriends(combinedList);
+    } catch (err) {
+      console.log("받은 요청 목록 에러", err);
+    }
   };
 
   const handleUser = (tab: number) => {
@@ -69,7 +75,7 @@ export default function WaitingUser({ data }: Props) {
       <div className={`${styles.content} ${styles[`tab_${openTab}`]}`}>
         <div className={`${styles.page} ${styles.userBox} ${openTab === 1 ? styles.tabContentActive : ""}`}>
           {items.map((item) => (
-            <UserItem key={item.userId} dataProp={item} />
+            <UserItem key={item.userId} dataProp={item} isRoom />
           ))}
         </div>
         <div className={`${styles.page} ${styles.userBox} ${openTab === 2 ? styles.tabContentActive : ""}`}>
