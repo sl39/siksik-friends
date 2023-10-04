@@ -2,26 +2,36 @@
 
 import { BsTrophy } from "react-icons/bs";
 import { useRouter } from "next/navigation";
+import type { SoketUser } from "@/types";
 import styles from "./rankpage.module.scss";
 import MyData from "./MyData";
 
 export default function GameRank() {
   // 전체 순위 정보
-  const data = [
-    { name: "1등", score: 11 },
-    { name: "2등", score: 11 },
-    { name: "3등", score: 11 },
-    { name: "4등", score: 11 },
-    { name: "5등", score: 11 },
-    { name: "6등", score: 11 },
-    { name: "7등", score: 11 },
-    { name: "8등", score: 11 },
-    { name: "9등", score: 11 },
-    { name: "10등", score: 11 },
-    { name: "11등", score: 11 },
-  ];
+  // 더미 스코어 상태
+  // setScoreData([
+  //   {
+  //     userId: 11,
+  //     userName: "z상식지존z",
+  //     gameScore: 600,
+  //     userScore: 9999,
+  //     userRanking: 1,
+  //     leader: true,
+  //     ready: false,
+  //   },
+  //   {
+  //     userId: 12,
+  //     userName: "z상식지존z11",
+  //     gameScore: 300,
+  //     userScore: 789,
+  //     userRanking: 103,
+  //     leader: false,
+  //     ready: false,
+  //   },
+  // ]);
+  const data: Array<SoketUser> = [];
 
-  // 내 점수 정보
+  // 이 게임에 대한 내 점수 정보
   const myData = {};
 
   const router = useRouter();
@@ -29,22 +39,24 @@ export default function GameRank() {
   return (
     <div className={styles.container}>
       <div className={styles.flex}>
-        <div className={`${styles.leaderboard} ${styles.left}`}>
-          <h1>
-            <span className={styles.icon}>
-              <BsTrophy size={24} />
-            </span>
-            전체 순위
-          </h1>
-          <ol>
-            {data.map((item) => (
-              <li key={item.name}>
-                <mark>{item.name}</mark>
-                <small>{item.score}</small>
-              </li>
-            ))}
-          </ol>
-        </div>
+        {data && (
+          <div className={`${styles.leaderboard} ${styles.left}`}>
+            <h1>
+              <span className={styles.icon}>
+                <BsTrophy size={24} />
+              </span>
+              전체 순위
+            </h1>
+            <ol>
+              {data?.map((item) => (
+                <li key={item.userName!}>
+                  <mark>{item.userName!}</mark>
+                  <small>{item.gameScore!}</small>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
         <div className={`${styles.myBoard} ${styles.right}`}>
           <MyData data={myData} />
         </div>

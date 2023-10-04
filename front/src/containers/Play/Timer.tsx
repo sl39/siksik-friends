@@ -28,7 +28,12 @@ export default function Timer({ time, resetTime, count }: Props) {
     "/images/actor/dodo1.png",
   ]);
 
+  const [randomImage, setRandomImage] = useState("");
+
   useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * movingImg.length);
+    setRandomImage(movingImg[randomIndex]);
+
     setQuizNum((prevQuizNum) => prevQuizNum + 1);
 
     if (!resetTimer) {
@@ -75,7 +80,7 @@ export default function Timer({ time, resetTime, count }: Props) {
       <div className={styles.timerTime}>남은 시간: {(sec / 10).toFixed(1)} 초</div>
       <div className={getImageClass()} style={{ right: `calc(${widthProgress}% - 20px)` }}>
         <Image
-          src={movingImg[quizNum % movingImg.length]}
+          src={randomImage}
           alt="moving image"
           fill
           sizes="10vw"

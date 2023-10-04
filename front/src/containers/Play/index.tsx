@@ -7,12 +7,12 @@ import { roomAtom } from "@/store/gameAtom";
 import { useWebSocket } from "@/socket/WebSocketProvider";
 import type { Quiz, SoketUser } from "@/types";
 import type { Frame } from "stompjs";
+import { TotalInfoContext } from "@/socket/SubscriptionQuiz";
 import Timer from "./Timer";
 import styles from "./play.module.scss";
 import Question from "./Question";
 import Score from "./Score";
 import Chatting from "../Room/Chatting";
-import { TotalInfoContext } from "@/socket/SubscriptionQuiz";
 
 export default function GamePlay() {
   // const [gameData] = useAtom(roomAtom);
@@ -48,9 +48,6 @@ export default function GamePlay() {
       setIsResult(false);
     }
   }, [quizResult]);
-  // 현재 스코어 상태 받아오기
-
-  // eslint-disable-next-line consistent-return
 
   // 모든 문제가 끝나면 결과 페이지로 이동;
   // const router = useRouter();
@@ -63,7 +60,7 @@ export default function GamePlay() {
         <Timer time={quiz ? 5 : 0} resetTime={3} count={roomInfoPlay ? roomInfoPlay.quizCount || 10 : 10} />
       </div>
       <div className={styles.flex2}>
-        <div className={styles.left}>{scoreData ? <Score data={scoreData} /> : null}</div>
+        <div className={styles.left}>{scoreData ? <Score data={scoreData} /> : undefined}</div>
         <div className={styles.center}>
           <Question data={{ quiz, isQuiz, isResult }} />
         </div>
