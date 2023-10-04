@@ -16,4 +16,15 @@ public record UserResponse() {
             long exp,
             String odds
     ) {}
+
+    @Builder
+    public record UserDetail(
+
+            long user_id,
+            String nickname,
+            String profile,
+            long rank,
+            int level,
+            String odds
+    ) {}
 }

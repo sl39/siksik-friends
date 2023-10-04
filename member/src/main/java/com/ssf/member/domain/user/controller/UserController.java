@@ -25,19 +25,20 @@ public class UserController {
 
     private static final String ACCESS_HEADER = "Authorization";
 
-    @GetMapping("/")
-    public ResponseEntity<UserResponse.MyInfo> findMyInfo(
+    @GetMapping("/my-info")
+    public ResponseEntity<UserResponse.MyInfo> findUser(
             @RequestHeader(ACCESS_HEADER) final UserRequest.AccessHeader accessHeader
     ) {
-        return ResponseEntity.ok(userFindService.findMyInfo(jwtService.extractHeader(accessHeader)));
+        return ResponseEntity.ok(userFindService.findUser(jwtService.extractHeader(accessHeader)));
     }
 
-    @GetMapping("/{id}")
-    public UserDto.Response findUserDetail(@PathVariable Long id) {
-        return userFindService.findUser(id);
+    @GetMapping("/{userId}")
+    public UserDto.Response findUserById(@PathVariable UserRequest.UserId userId) {
+//        return userFindService.findUserById(userId);
+        return null;
     }
 
-    @GetMapping("/nickname")
+    @GetMapping("/")
     public UserDto.Response findUserToNickname(String nickname) {
         return userFindService.findNickname(nickname);
     }
