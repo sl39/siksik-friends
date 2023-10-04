@@ -10,20 +10,21 @@ import styles from "./room.module.scss";
 import RoomInfo from "./RoomInfo";
 import Chatting from "./Chatting";
 import WaitingUser from "./WaitingUser";
+import { userAtom } from "@/store/userAtom";
 
 export default function Index() {
   const params = useParams();
   const roomId = Number(params.id);
 
   const [room, setRoom] = useState<Room | undefined>(undefined);
-
+  const user = userAtom.init;
   const [soketUser, setSoketUser] = useState<SoketUser>({
-    userId: 1,
-    userName: "user.nickname",
-    userScore: 1111,
-    userRanking: 111,
+    userId: user.user_id,
+    userName: user.nickname,
+    userScore: user.score,
+    userRanking: user.rank,
     ready: false,
-    leader: true,
+    leader: false,
   });
   const stompClient = useWebSocket();
   const [userInfo, setUserInfo] = useState<SoketUser[]>([]);
@@ -43,7 +44,6 @@ export default function Index() {
           setRoom(roomInfo);
           setUserInfo(roomInfo.members);
           setleaderReady(roomInfo.roomCurrent - roomInfo.roomReady);
-          localStorage.setItem("roomInfo", JSON.stringify(roomInfo));
           roomInfo.members.forEach((element: SoketUser) => {
             if (element.userId === soketUser.userId) {
               setSoketUser(element);
@@ -62,7 +62,7 @@ export default function Index() {
       };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stompClient]);
+  }, [stompClient, soketUser]);
 
   return (
     <>

@@ -17,7 +17,7 @@ export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }
   const [btnActive, setBtnActive] = useState(false);
 
   const router = useRouter();
-  const [roomUser, setRoomUser] = useState<SoketUser>(soketUser);
+  const [roomUser, setRoomUser] = useState<SoketUser>();
 
   const [title, setTitle] = useState("레디 하세요");
 
@@ -27,7 +27,7 @@ export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }
     if (roomUser) {
       if (roomUser.leader) {
         if (leaderReady === 1) {
-          router.push(`start/game/play/${gameId}`);
+          router.push(`/game/start/play/${gameId}`);
         }
       } else if (roomUser.ready) {
         setRoomUser({ ...roomUser, ready: false });
@@ -40,17 +40,23 @@ export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }
   };
 
   useEffect(() => {
-    console.log(leaderReady);
-    if (!roomUser.leader) {
-      if (!roomUser.ready) {
-        setTitle("레디 하세요");
+    setRoomUser(soketUser);
+    console.log(roomUser);
+    if (roomUser) {
+      if (!roomUser.leader) {
+        if (!roomUser.ready) {
+          setTitle("레디 하세요");
+        } else {
+          setTitle("레디 중입니다");
+        }
       } else {
-        setTitle("레디 중입니다");
+        if (leaderReady === 1) {
+          setTitle("게임 시작!");
+          console.log("게임 시작!");
+        } else {
+          setTitle("모든 유저가 레디 하지 않았습니다");
+        }
       }
-    } else if (leaderReady === 1) {
-      setTitle("게임 시작!");
-    } else {
-      setTitle("모든 유저가 레디 하지 않았습니다");
     }
   }, [roomUser, leaderReady]);
 
