@@ -46,6 +46,9 @@ body {
 body * {
   cursor: url("../../public/images/cursor/mouse_cursor2.png"), default !important;
 }
+* {
+  cursor: url("../../public/images/cursor/mouse_cursor2.png"), default !important;
+}
 img {
   -webkit-user-drag: none;
   -khtml-user-drag: none;
