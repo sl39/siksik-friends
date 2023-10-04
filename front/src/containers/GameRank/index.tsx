@@ -2,9 +2,8 @@
 
 import { BsTrophy } from "react-icons/bs";
 import { useRouter } from "next/navigation";
-import RoomInfo from "@/containers/Room/RoomInfo";
-import type { Room } from "@/types";
 import styles from "./rankpage.module.scss";
+import MyData from "./MyData";
 
 export default function GameRank() {
   // 전체 순위 정보
@@ -22,31 +21,33 @@ export default function GameRank() {
     { name: "11등", score: 11 },
   ];
 
-  // 방 정보
-  const room: Room = {};
+  // 내 점수 정보
+  const myData = [];
+
   const router = useRouter();
 
   return (
     <div className={styles.container}>
-      <div className={styles.roomInfo}>
-        <RoomInfo room={room} />
-      </div>
-
-      <div className={styles.leaderboard}>
-        <h1>
-          <span className={styles.icon}>
-            <BsTrophy size={24} />
-          </span>
-          전체 순위
-        </h1>
-        <ol>
-          {data.map((item) => (
-            <li key={item.name}>
-              <mark>{item.name}</mark>
-              <small>{item.score}</small>
-            </li>
-          ))}
-        </ol>
+      <div className={styles.flex}>
+        <div className={`${styles.leaderboard} ${styles.left}`}>
+          <h1>
+            <span className={styles.icon}>
+              <BsTrophy size={24} />
+            </span>
+            전체 순위
+          </h1>
+          <ol>
+            {data.map((item) => (
+              <li key={item.name}>
+                <mark>{item.name}</mark>
+                <small>{item.score}</small>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <div className={`${styles.myBoard} ${styles.right}`}>
+          <MyData data={myData} />
+        </div>
       </div>
 
       <div className={styles.btns}>
