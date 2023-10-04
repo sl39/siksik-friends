@@ -51,7 +51,7 @@ export default function WordCloud() {
   const [path, setPath] = useState<number>(101);
   const [config, setConfig] = useState<Config | undefined>();
   const style = {
-    fontFamily: "poor story",
+    fontFamily: "SUITE-Regular",
     hoverState: {
       borderRadius: "2px",
       fontColor: "#007BA7",
@@ -80,7 +80,6 @@ export default function WordCloud() {
     "#006400",
     "#FF0000",
     "#FFD700",
-    "#98FF98",
     "#800080",
     "#008000",
     "#FFB6C1",
@@ -146,7 +145,6 @@ export default function WordCloud() {
           style,
         },
       });
-      console.log("API 연결 전 더미 테스트");
     }
   };
 

@@ -1,5 +1,8 @@
+"use client";
+
 import { BsTrophy } from "react-icons/bs";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import RoomInfo from "@/containers/Room/RoomInfo";
 import styles from "./rankpage.module.scss";
 
 export default function GameRank() {
@@ -19,10 +22,14 @@ export default function GameRank() {
   ];
 
   // 방 정보
-  const room = [];
+  const room = {};
+  const router = useRouter();
+
   return (
     <div className={styles.container}>
-      <div className={styles.roomInfo}>간단한 방정보</div>
+      <div className={styles.roomInfo}>
+        <RoomInfo room={room} />
+      </div>
 
       <div className={styles.leaderboard}>
         <h1>
@@ -41,9 +48,13 @@ export default function GameRank() {
         </ol>
       </div>
 
-      <div>
-        <Link href="/home">메인 페이지</Link>
-        <Link href="/game">게임 대기실</Link>
+      <div className={styles.btns}>
+        <button onClick={() => router.push("/home")} className={styles.btn}>
+          메인 페이지
+        </button>
+        <button onClick={() => router.push("/game")} className={styles.btn}>
+          게임 대기실
+        </button>
       </div>
     </div>
   );
