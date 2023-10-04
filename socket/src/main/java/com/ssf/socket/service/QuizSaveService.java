@@ -39,8 +39,6 @@ public class QuizSaveService {
         return mongoTemplate.findOne(query, Quiz.class, categoryTable.get(collectionName));
     }
 
-
-
     public void pushHistory(int roomId, List<Member> memberList, QuizDTO article) {
 
         for (Member member : memberList) {
