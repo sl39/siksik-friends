@@ -1,18 +1,38 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function BackNav() {
+  const [isQuit, setIsQuit] = useState(true);
   const router = useRouter();
+  const pathName = usePathname();
+  console.log("===", pathName);
+
+  useEffect(() => {
+    if (pathName === "/game" || pathName.includes("/game/start/room/")) {
+      setIsQuit(true);
+    } else {
+      setIsQuit(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleClick = () => {
-    router.back();
+    if (pathName === "/game") {
+      router.replace("/home");
+    } else if (pathName.includes("/game/start/room/")) {
+      router.replace("/game");
+    }
   };
+
   return (
-    <nav className="back-nav z-4">
-      <button onClick={handleClick} className="nav-item back">
-        <div className="nav-text">나가기</div>
-      </button>
-    </nav>
+    isQuit && (
+      <nav className="back-nav z-4">
+        <button onClick={handleClick} className="nav-item back">
+          <div className="nav-text">나가기</div>
+        </button>
+      </nav>
+    )
   );
 }
