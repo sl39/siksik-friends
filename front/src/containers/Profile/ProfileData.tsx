@@ -27,6 +27,7 @@ export default function ProfileData({ userId }: Props) {
     if (userId) {
       fetchUser();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
   // data는 userId가 있는 경우 profileData를 사용
   const data = userId ? profileData : defaultData;

@@ -29,14 +29,12 @@ export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }
         if (leaderReady === 1) {
           router.push(`/game/play/${gameId}`);
         }
+      } else if (roomUser.ready) {
+        setRoomUser({ ...roomUser, ready: false });
+        stompClient.send(`/pub/room/unready/${gameId}`, {}, JSON.stringify(roomUser));
       } else {
-        if (roomUser.ready) {
-          setRoomUser({ ...roomUser, ready: false });
-          stompClient.send(`/pub/room/unready/${gameId}`, {}, JSON.stringify(roomUser));
-        } else {
-          setRoomUser({ ...roomUser, ready: true });
-          stompClient.send(`/pub/room/ready/${gameId}`, {}, JSON.stringify(roomUser));
-        }
+        setRoomUser({ ...roomUser, ready: true });
+        stompClient.send(`/pub/room/ready/${gameId}`, {}, JSON.stringify(roomUser));
       }
     }
   };
@@ -49,12 +47,10 @@ export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }
       } else {
         setTitle("레디 중입니다");
       }
+    } else if (leaderReady === 1) {
+      setTitle("게임 시작!");
     } else {
-      if (leaderReady === 1) {
-        setTitle("게임 시작!");
-      } else {
-        setTitle("모든 유저가 레디 하지 않았습니다");
-      }
+      setTitle("모든 유저가 레디 하지 않았습니다");
     }
   }, [roomUser, leaderReady]);
 
