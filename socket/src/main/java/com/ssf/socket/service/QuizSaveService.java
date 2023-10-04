@@ -1,13 +1,21 @@
 package com.ssf.socket.service;
 
+import com.ssf.socket.domain.History;
+import com.ssf.socket.domain.HistoryMember;
+import com.ssf.socket.domain.Member;
 import com.ssf.socket.domain.Quiz;
+import com.ssf.socket.dto.QuizDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.data.mongodb.core.query.UpdateDefinition;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -31,9 +39,21 @@ public class QuizSaveService {
         return mongoTemplate.findOne(query, Quiz.class, categoryTable.get(collectionName));
     }
 
-//    public Quiz pushHistory(int userId, ) {
-//        Query query = new Query(Criteria.where("date").is(date));
-//
-//        return mongoTemplate.findOne(query, Quiz.class, categoryTable.get(collectionName));
-//    }
+
+
+    public void pushHistory(int roomId, List<Member> memberList, QuizDTO article) {
+
+        for (Member member : memberList) {
+            Query query = new Query(Criteria.where("userId").is(member.getUserId()));
+
+            Update update = new Update();
+            update.addToSet("historyList", roomId);
+
+            mongoTemplate.upsert(query, update, HistoryMember.class);
+        }
+
+        History history = new History(roomId, article.getArticleTitle(), article.getArticleContent());
+
+        mongoTemplate.save(history);
+    }
 }
