@@ -13,7 +13,7 @@ interface TypeTextType {
 
 interface Props {
   userPropId?: number;
-  isMyShow: boolean;
+  isMyShow?: boolean;
 }
 
 export default function UpdateButton({ userPropId, isMyShow = false }: Props) {
