@@ -343,23 +343,41 @@ $font-title: "Chelsea Market", sans-serif;
   display: flex;
   flex-direction: row;
 
-  height: 500px;
+  width: 65vw;
+  height: 60vh;
   .Card {
+    .profileCard {
+      height: 80%;
+      position: relative;
+      left: 8%;
+    }
     width: 40%;
-    height: 80%;
+    height: 100%;
   }
   .btns {
     height: 20%;
+    button {
+      background: $softBlue;
+      color: var(--color-grey-text);
+    }
+    span {
+      font-size: 3vh;
+    }
   }
   .data {
     width: 60%;
+    margin-top: -5%;
     height: 95%;
   }
-  .close {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    top: 5px;
-    right: 5px;
+}
+.close {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: 5px;
+  right: 5px;
+
+  &:hover {
+    color: $hardBlue;
   }
 }
