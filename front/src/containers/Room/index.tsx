@@ -11,7 +11,6 @@ import styles from "./room.module.scss";
 import RoomInfo from "./RoomInfo";
 import Chatting from "./Chatting";
 import WaitingUser from "./WaitingUser";
-import { userAtom } from "@/store/userAtom";
 
 export default function Index() {
   const params = useParams();
@@ -59,11 +58,12 @@ export default function Index() {
         // 컴포넌트가 언마운트될 때 이벤트 리스너  제거
 
         stompClient.send(`/pub/room/exit/${roomId}`, {}, JSON.stringify(soketUser));
+
         subscription.unsubscribe();
       };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stompClient, soketUser]);
+  }, [stompClient]);
 
   return (
     <>

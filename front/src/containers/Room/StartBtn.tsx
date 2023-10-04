@@ -1,10 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import type { CompatClient } from "node_modules/@stomp/stompjs";
 import type { SoketUser } from "@/types";
 import styles from "./room.module.scss";
+import { TotalInfoContext } from "@/socket/SubscriptionQuiz";
 
 interface Props {
   gameId: number;
@@ -15,6 +16,7 @@ interface Props {
 
 export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }: Props) {
   const [btnActive, setBtnActive] = useState(false);
+  const { quiz, quizResult, end, roomInfoPlay } = useContext(TotalInfoContext);
 
   const router = useRouter();
   const [roomUser, setRoomUser] = useState<SoketUser>();
@@ -27,7 +29,9 @@ export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }
     if (roomUser) {
       if (roomUser.leader) {
         if (leaderReady === 1) {
-          router.push(`/game/start/play/${gameId}`);
+          // router.push(`/game/start/play/${gameId}`);
+          console.log("게임 시작", roomInfoPlay);
+          stompClient.send(`/pub/game/start/${gameId}`, {}, JSON.stringify(roomInfoPlay));
         }
       } else if (roomUser.ready) {
         setRoomUser({ ...roomUser, ready: false });
