@@ -7,6 +7,7 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/locale";
 import { format } from "date-fns";
+import { useAtom } from "jotai";
 import type { RoomInfo } from "@/types";
 import { userAtom } from "@/store/userAtom";
 import { useWebSocket } from "@/socket/WebSocketProvider";
@@ -22,6 +23,7 @@ export default function CreateRoomModal({ onClose }: Props) {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
   const [checkTitle, setCheckTitle] = useState("");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [checkpassword, setCheckPassword] = useState("");
 
   const [titleValidation, setTitleValidation] = useState(false);
@@ -40,12 +42,12 @@ export default function CreateRoomModal({ onClose }: Props) {
     quizDate: format(new Date(), "yyyy-MM-dd"),
   });
   const stompClient = useWebSocket();
+  const [user] = useAtom(userAtom);
 
   /** 게임 방 생성 */
   const handleCreateGame = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (titleValidation && passwordValidation && typeValidation) {
-      const user = userAtom.init;
       const leaderMember = {
         userId: user.user_id,
         userName: user.nickname,
@@ -176,6 +178,7 @@ export default function CreateRoomModal({ onClose }: Props) {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const checkBtn = () => {
     setPaswordCheckBox(!passwordCheckBox);
     if (!passwordCheckBox) {
@@ -317,7 +320,7 @@ export default function CreateRoomModal({ onClose }: Props) {
             />
           </div>
           {/* 비밀번호 */}
-          <div className={styles.inputDiv}>
+          {/* <div className={styles.inputDiv}>
             <label htmlFor="password">비밀번호</label>
             <div className={styles.div}>
               <input
@@ -332,7 +335,7 @@ export default function CreateRoomModal({ onClose }: Props) {
               <input type="checkbox" onClick={checkBtn} className={styles.Check} />
             </div>
             {checkpassword && <div className={styles.checkText}>{checkpassword}</div>}
-          </div>
+          </div> */}
           <div className={styles.btns}>
             <button className={`${styles.btn}`} type="submit">
               확인
