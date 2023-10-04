@@ -1,27 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useAtom } from "jotai";
 import type { Frame } from "stompjs";
 import type { SoketUser, User } from "@/types";
 import { serverAxios } from "@/services/api";
 import { useWebSocket } from "@/socket/WebSocketProvider";
 import { userAtom } from "@/store/userAtom";
+import { convertUserToSoketUser } from "@/utils/userConversion";
 import UserItem from "./UserItem";
 import styles from "./game.module.scss";
-
-/** User -> SoketUser */
-function convertUserToSoketUser(inputUser: User): SoketUser {
-  return {
-    userId: inputUser.user_id ?? 0, // user_id가 없는 경우 기본값으로 0 사용
-    userName: inputUser.nickname,
-    userScore: inputUser.score,
-    userRanking: inputUser.rank,
-    level: inputUser.level,
-    ready: false,
-    leader: false,
-  };
-}
 
 export default function WaitingUser() {
   const [openTab, setOpenTab] = useState(1);
@@ -63,10 +50,8 @@ export default function WaitingUser() {
     myRequest();
   };
 
-  // const user = userAtom.init;
+  const user = userAtom.init;
   const stompClient = useWebSocket();
-
-  const [user] = useAtom(userAtom);
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
@@ -80,15 +65,6 @@ export default function WaitingUser() {
         },
         {}
       );
-      // const soketUser = {
-      //   userId: 121211,
-      //   userName: "user.ㅎㅇ",
-      //   userScore: 1111,
-      //   userRanking: 111,
-      //   ready: false,
-      //   leader: false,
-      // };
-
       // Atom에 있는 정보로 socketUser 넣기
       const soketUser = convertUserToSoketUser(user);
 
