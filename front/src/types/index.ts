@@ -35,7 +35,7 @@ export interface Room {
   roomStatus?: boolean;
   quizDate?: string;
   category?: string;
-  quizCount?: string;
+  quizCount?: number;
   members?: SoketUser[];
   roomSize?: number;
   roomCurrent?: number;
@@ -65,6 +65,7 @@ export interface Quiz {
 export interface SoketUser {
   userId?: number;
   userName?: string;
+  gameScore?: number;
   userScore?: number;
   userRanking?: number;
   ready?: boolean;
