@@ -90,11 +90,13 @@ public class StompGameController {
 
         String end = "end!";
 
-        List<Member> members = roomRepository.findByRoomId(roomId).get().getMembers();
+        List<Member> members = roomRepository.findByRoomId(roomId).orElseThrow().getMembers();
 
 //        for (Member member : members) {
 //            redisTemplate.opsForZSet().incrementScore("rank", member.getUserId(), member.getGameScore());
 //        }
+
+
 
         messageTemplate.convertAndSend("/sub/game/end/" + roomId, end);
     }
