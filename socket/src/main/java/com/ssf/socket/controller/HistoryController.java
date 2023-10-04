@@ -36,11 +36,11 @@ public class HistoryController {
             return null;
         }
 
-        // historyList 내부의 roomId 값을 가져와서 "history" 컬렉션에서 정보를 가져옵니다.
+        // historyList 내부의 historyId 값을 가져와서 "history" 컬렉션에서 정보를 가져옵니다.
         List<Long> historyList = member.getHistoryList();
 
-        for (Long roomId : historyList) {
-            Query historyQuery = new Query(Criteria.where("_id").is(roomId));
+        for (Long historyId : historyList) {
+            Query historyQuery = new Query(Criteria.where("historyId").is(historyId));
             History history = mongoTemplate.findOne(historyQuery, History.class);
 
             if (history != null) {
