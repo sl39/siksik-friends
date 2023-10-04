@@ -9,6 +9,7 @@ import com.ssf.socket.repository.RoomRepository;
 import com.ssf.socket.service.QuizSaveService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -29,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 public class StompGameController {
     private final QuizSaveService quizSave;
     private final SimpMessagingTemplate messageTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
 
     private final RoomRepository roomRepository = new MemoryRoomRepository();
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
@@ -92,9 +94,9 @@ public class StompGameController {
 
         List<Member> members = roomRepository.findByRoomId(roomId).orElseThrow().getMembers();
 
-//        for (Member member : members) {
-//            redisTemplate.opsForZSet().incrementScore("rank", member.getUserId(), member.getGameScore());
-//        }
+        for (Member member : members) {
+            redisTemplate.opsForZSet().incrementScore("rank", member.getUserId().toString(), member.getGameScore());
+        }
 
 
 
