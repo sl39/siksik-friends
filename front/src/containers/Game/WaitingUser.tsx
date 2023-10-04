@@ -28,18 +28,18 @@ export default function WaitingUser() {
     }
   };
 
-  /** 받은/전달한 친구 요청 조회 */
+  /** 받은 친구 요청 조회 */
   const myRequest = async () => {
     try {
       // response / request
       const response = await serverAxios("/user/friend/response");
-      const request = await serverAxios("/user/friend/request");
+      // const request = await serverAxios("/user/friend/request");
 
       // 병합된 리스트 생성
-      const combinedList = [...response.data.friendList, ...request.data.friendsList];
+      // const combinedList = [...response.data.friendList, ...request.data.friendsList];
 
       // setCount(response.data.size);
-      setNotFriends(combinedList);
+      setNotFriends(response.data.friendList);
     } catch (err) {
       console.log("받은 요청 목록 에러", err);
     }
@@ -61,12 +61,11 @@ export default function WaitingUser() {
         "/sub/lobby/list",
         function handleRoomList(frame: Frame) {
           const lobbyUserList = JSON.parse(frame.body);
-          console.log(lobbyUserList);
+          // console.log(lobbyUserList);
           setItems(lobbyUserList);
         },
         {}
       );
-      // Atom에 있는 정보로 socketUser
       const soketUser = convertUserToSoketUser(user);
 
       stompClient.send("/pub/lobby/entrance", {}, JSON.stringify(soketUser));
