@@ -8,6 +8,7 @@ interface Props {
 
 export default function RoomData({ room }: Props) {
   // const user = userAtom.init;
+  console.log(room);
 
   return (
     <div className={styles.roomData}>
