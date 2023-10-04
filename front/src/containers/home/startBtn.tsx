@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { userAtom } from "@/store/userAtom";
 import styles from "./home.module.scss";
 
 export default function StartBtn() {
@@ -10,6 +11,7 @@ export default function StartBtn() {
   const handleClick = () => {
     // 게임 소켓에 입장하는 로직
     router.push("/game");
+    console.log("====", userAtom);
   };
 
   return (
