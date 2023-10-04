@@ -28,7 +28,7 @@ public class StompRoomController {
     private final SimpMessagingTemplate messageTemplate; //특정 Broker로 메세지를 전달
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
-    @PostMapping("/lobby")
+    @PostMapping("/socket/lobby")
     @CrossOrigin(origins = "*")
     public Room createRoom(
             @RequestBody Room body) {

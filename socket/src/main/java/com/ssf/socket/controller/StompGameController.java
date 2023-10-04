@@ -70,7 +70,7 @@ public class StompGameController {
         messageTemplate.convertAndSend("/sub/game/quiz/" + roomId, quiz);
     }
 
-    @PostMapping("/score")
+    @PostMapping("/socket/score")
     @CrossOrigin(origins = "*")
     public List<Member> scoreCalculation(
             @RequestBody ReplyDTO replyDto) {
