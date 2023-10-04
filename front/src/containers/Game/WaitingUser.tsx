@@ -9,7 +9,19 @@ import { useWebSocket } from "@/socket/WebSocketProvider";
 import { userAtom } from "@/store/userAtom";
 import UserItem from "./UserItem";
 import styles from "./game.module.scss";
-import FriendsItem from "./FriendsItem";
+
+/** User -> SoketUser */
+function convertUserToSoketUser(inputUser: User): SoketUser {
+  return {
+    userId: inputUser.user_id ?? 0, // user_id가 없는 경우 기본값으로 0 사용
+    userName: inputUser.nickname,
+    userScore: inputUser.score,
+    userRanking: inputUser.rank,
+    level: inputUser.level,
+    ready: false,
+    leader: false,
+  };
+}
 
 export default function WaitingUser() {
   const [openTab, setOpenTab] = useState(1);
@@ -55,18 +67,6 @@ export default function WaitingUser() {
   const stompClient = useWebSocket();
 
   const [user] = useAtom(userAtom);
-  /** User -> SoketUser */
-  function convertUserToSoketUser(inputUser: User): SoketUser {
-    return {
-      userId: inputUser.user_id ?? 0, // user_id가 없는 경우 기본값으로 0 사용
-      userName: inputUser.nickname,
-      userScore: inputUser.score,
-      userRanking: inputUser.rank,
-      level: inputUser.level,
-      ready: false,
-      leader: false,
-    };
-  }
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
@@ -80,15 +80,17 @@ export default function WaitingUser() {
         },
         {}
       );
-      const soketUser = {
-        userId: 121211,
-        userName: "user.ㅎㅇ",
-        userScore: 1111,
-        userRanking: 111,
-        ready: false,
-        leader: false,
-      };
-      // const soketUser = convertUserToSoketUser(user);
+      // const soketUser = {
+      //   userId: 121211,
+      //   userName: "user.ㅎㅇ",
+      //   userScore: 1111,
+      //   userRanking: 111,
+      //   ready: false,
+      //   leader: false,
+      // };
+
+      // Atom에 있는 정보로 socketUser 넣기
+      const soketUser = convertUserToSoketUser(user);
 
       stompClient.send("/pub/lobby/entrance", {}, JSON.stringify(soketUser));
       return () => {
