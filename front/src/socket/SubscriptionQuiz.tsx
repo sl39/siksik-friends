@@ -29,7 +29,7 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
   const [quizResult, setQuizResult] = useState<SoketUser[]>([]);
   const [end, setEnd] = useState<string>("");
   const [roomInfoPlay, setRoomInfoPlay] = useState<RoomInfo | undefined>(undefined);
-  const user = userAtom();
+  const user = userAtom.init;
   const [soketUser, setSoketUser] = useState<SoketUser>({
     userId: user.user_id,
     userName: user.nickname,

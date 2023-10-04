@@ -3,9 +3,9 @@ import type { User } from "@/types";
 
 // export const userAtom = atom<User>({} as User);
 export const userAtom = atom<User>({
-  user_id: 10,
+  user_id: 11,
   email: "이메일",
-  nickname: "나는희영나는희영나",
+  nickname: "나는세울",
   profile: "/images/character/rabbit2.png",
   odds: "",
   rank: 999,
