@@ -8,6 +8,10 @@ import type { RoomInfo } from "@/types";
 import { userAtom } from "@/store/userAtom";
 import { useWebSocket } from "@/socket/WebSocketProvider";
 import styles from "./modal.module.scss";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { ko } from "date-fns/locale";
+import { format } from "date-fns";
 
 interface Props {
   onClose: () => void;
@@ -15,6 +19,7 @@ interface Props {
 
 export default function CreateRoomModal({ onClose }: Props) {
   const router = useRouter();
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
   const [checkTitle, setCheckTitle] = useState("");
   const [checkpassword, setCheckPassword] = useState("");
@@ -32,6 +37,7 @@ export default function CreateRoomModal({ onClose }: Props) {
     type: "",
     password: "",
     countTimer: 5,
+    quizDate: format(new Date(), "yyyy-MM-dd"),
   });
   const stompClient = useWebSocket();
 
@@ -55,6 +61,7 @@ export default function CreateRoomModal({ onClose }: Props) {
         quizCount: formData.countProblem,
         members: [leaderMember],
         roomSize: formData.count,
+        quizDate: formData.quizDate,
       };
 
       /** 게임방 POST 요청 */
@@ -80,6 +87,13 @@ export default function CreateRoomModal({ onClose }: Props) {
         router.push(`game/room/${id}`);
       }
     }
+  };
+  const handleDate = (date: Date) => {
+    const formatDate = new Date(date.toLocaleString("en-US", { timeZone: "Asia/Seoul" }));
+    const formQuizDate = format(formatDate, "yyyy-MM-dd");
+    console.log(typeof formQuizDate);
+    setSelectedDate(date);
+    setFormData({ ...formData, ["quizDate"]: formQuizDate });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -268,6 +282,18 @@ export default function CreateRoomModal({ onClose }: Props) {
             <label htmlFor="count">인원</label>
             <input type="number" name="count" id="count" value={formData.count} onChange={(e) => handleChange(e)} />
           </div>
+          {/* 날짜 */}
+          <DatePicker
+            selected={selectedDate}
+            onChange={(date: Date) => handleDate(date)}
+            dateFormat="yyyy-MM-dd"
+            placeholderText="날짜를 선택하세요!"
+            minDate={new Date("2010-01-01")}
+            maxDate={new Date()}
+            showMonthDropdown
+            showYearDropdown
+            locale={ko}
+          />
           {/* 비밀번호 */}
           <div className={styles.inputDiv}>
             <label htmlFor="password">비밀번호</label>

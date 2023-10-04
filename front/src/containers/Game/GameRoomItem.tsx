@@ -8,6 +8,7 @@ interface GameRoomItemProps {
 
 export default function GameRoomItem({ room }: GameRoomItemProps) {
   const router = useRouter();
+  console.log(room);
 
   const enterRoom = (id: number) => {
     router.push(`/game/room/${id}`);
@@ -22,7 +23,7 @@ export default function GameRoomItem({ room }: GameRoomItemProps) {
         </div>
       </div>
       <div className={styles.roomQuiz}>
-        <div>{room.quizDateTime}</div>
+        <div>{room.quizDate}</div>
         <div>{room.category}</div>
         <div>{room.quizCount}</div>
         <div>
