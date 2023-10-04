@@ -30,7 +30,7 @@ export default function SimpleProfile() {
       <div className={styles.col}>
         <div className={styles.userInfo}>
           <div className={`${styles.subBox} ${styles.level}`}>Lv.{data.level}</div>
-          <div className={styles.subBox}>{data.nickname}</div>
+          <div className={`${styles.subBox} ${styles.name}`}>{data.nickname}</div>
         </div>
         <div className={styles.centerBox} />
         <div className={styles.btn}>

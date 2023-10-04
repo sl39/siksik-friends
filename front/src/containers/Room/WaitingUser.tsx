@@ -3,9 +3,8 @@
 import { useEffect, useState } from "react";
 import type { SoketUser, User } from "@/types";
 import { serverAxios } from "@/services/api";
-import UserItem from "./UserItem";
+import UserItem from "../Game/UserItem";
 import styles from "../Game/game.module.scss";
-import FriendsItem from "../Game/FriendsItem";
 
 interface Props {
   data: Array<SoketUser>;
@@ -70,17 +69,17 @@ export default function WaitingUser({ data }: Props) {
       <div className={`${styles.content} ${styles[`tab_${openTab}`]}`}>
         <div className={`${styles.page} ${styles.userBox} ${openTab === 1 ? styles.tabContentActive : ""}`}>
           {items.map((item) => (
-            <UserItem key={item.userId} data={item} />
+            <UserItem key={item.userId} dataProp={item} />
           ))}
         </div>
         <div className={`${styles.page} ${styles.userBox} ${openTab === 2 ? styles.tabContentActive : ""}`}>
           {friends.map((item) => (
-            <FriendsItem key={item.user_id} data={item} />
+            <UserItem key={item.user_id} dataProp={item} />
           ))}
         </div>
         <div className={`${styles.page} ${styles.userBox} ${openTab === 3 ? styles.tabContentActive : ""}`}>
           {NotFriends.map((item) => (
-            <FriendsItem key={item.user_id} data={item} />
+            <UserItem key={item.user_id} dataProp={item} />
           ))}
         </div>
       </div>

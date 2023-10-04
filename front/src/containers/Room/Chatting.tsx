@@ -56,34 +56,37 @@ export default function Chatting({ roomId }: Props) {
   }, [stompClient]);
 
   // 메시지 전송 함수
-  function sendMessage() {
-    if (stompClient) {
-      // const curr = new Date();
-      // let hour = String(curr.getHours());
-      // let minutes = String(curr.getMinutes());
-      // let sec = String(curr.getSeconds());
-      // if (hour.length === 1) {
-      //   hour = `0${hour}`;
-      // }
-      // if (minutes.length === 1) {
-      //   minutes = `0${minutes}`;
-      // }
-      // if (sec.length === 1) {
-      //   sec = `0${sec}`;
-      // }
-      // const time = `${hour}:${minutes}:${sec}`;
+  function sendMessage(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (message.msg !== "") {
+      if (stompClient) {
+        // const curr = new Date();
+        // let hour = String(curr.getHours());
+        // let minutes = String(curr.getMinutes());
+        // let sec = String(curr.getSeconds());
+        // if (hour.length === 1) {
+        //   hour = `0${hour}`;
+        // }
+        // if (minutes.length === 1) {
+        //   minutes = `0${minutes}`;
+        // }
+        // if (sec.length === 1) {
+        //   sec = `0${sec}`;
+        // }
+        // const time = `${hour}:${minutes}:${sec}`;
 
-      // message.sendTime = String(time);
+        // message.sendTime = String(time);
 
-      // 펴블리셔
-      stompClient.send(`/pub/room/chat/${roomId}`, {}, JSON.stringify(message));
+        // 펴블리셔
+        stompClient.send(`/pub/room/chat/${roomId}`, {}, JSON.stringify(message));
 
-      // 입력 필드 초기화
-      setMessage({
-        sender: user.nickname,
-        msg: "",
-        sendTime: "",
-      });
+        // 입력 필드 초기화
+        setMessage({
+          sender: user.nickname,
+          msg: "",
+          sendTime: "",
+        });
+      }
     }
   }
 
@@ -108,7 +111,7 @@ export default function Chatting({ roomId }: Props) {
           </div>
         ))}
       </div>
-      <div className={styles.chatInput}>
+      <form onSubmit={sendMessage} className={styles.chatInput}>
         <input
           type="text"
           id="sender"
@@ -130,10 +133,10 @@ export default function Chatting({ roomId }: Props) {
           className={styles.input}
           autoComplete="off"
         />
-        <button type="submit" onClick={sendMessage} className={styles.submitBtn}>
+        <button type="submit" className={styles.submitBtn}>
           전송
         </button>
-      </div>
+      </form>
     </div>
   );
 }

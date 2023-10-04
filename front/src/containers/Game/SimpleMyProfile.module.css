@@ -36,7 +36,7 @@
 
   box-sizing: border-box;
   padding-top: 20px;
-  padding-left: 15px;
+  padding-left: 0px;
   font-size: 3vh;
 }
 .subBox {
@@ -67,4 +67,7 @@
   background: rgba(135, 206, 235, 0.5);
   color: var(--color-grey-text);
   margin-bottom: 15px;
+}
+.name {
+  width: auto;
 }
