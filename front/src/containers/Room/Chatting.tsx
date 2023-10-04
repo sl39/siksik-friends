@@ -52,6 +52,7 @@ export default function Chatting({ roomId }: Props) {
       };
     }
     return undefined;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stompClient]);
 
   // 메시지 전송 함수

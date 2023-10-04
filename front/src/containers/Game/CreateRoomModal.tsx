@@ -4,14 +4,14 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import axios from "axios";
+import DatePicker from "react-datepicker";
+import { ko } from "date-fns/locale";
+import { format } from "date-fns";
 import type { RoomInfo } from "@/types";
 import { userAtom } from "@/store/userAtom";
 import { useWebSocket } from "@/socket/WebSocketProvider";
 import styles from "./modal.module.scss";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { ko } from "date-fns/locale";
-import { format } from "date-fns";
 
 interface Props {
   onClose: () => void;
@@ -90,7 +90,7 @@ export default function CreateRoomModal({ onClose }: Props) {
     const formQuizDate = format(formatDate, "yyyy-MM-dd");
     console.log(typeof formQuizDate);
     setSelectedDate(date);
-    setFormData({ ...formData, ["quizDate"]: formQuizDate });
+    setFormData({ ...formData, quizDate: formQuizDate });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

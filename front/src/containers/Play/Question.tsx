@@ -32,6 +32,7 @@ export default function Question({ data }: Props) {
         <Image src="/images/backclock.png" alt="" sizes="10vw" fill objectFit="contain" />
       </div>
       {data ? <div className={`${styles.quizTitle} z-10`}>[{data.quizType}]</div> : "Start"}
+      {/* eslint-disable-next-line no-null/no-null */}
       {data ? <div className={`${styles.quizDesc} z-10`}>{data.question}</div> : null}
       <form onSubmit={handleSubmit} className={`${styles.answer} z-10`}>
         <div className={styles.quote}>
