@@ -866,10 +866,6 @@
   
   - /sub/room/info/{roomId}
 
-
-
-
-
 ## 게임 시작
 
 > ### Game Start
@@ -930,7 +926,40 @@
         
         "leader": boolean
     
-    - 방
+    - ```json
+      {
+          "roomId": 3,
+          "roomName": "나랑 퀴즈 풀 사람!",
+          "roomSize": 10,
+          "roomCurrent": 2,
+          "roomReady": 0,
+          "category": "연예",
+          "quizCount": 10,
+          "password": "example_password",
+          "quizDate": "2023-10-01",
+          "roomStatus": 0,
+          "members": [
+                {
+                  "userId": 11,
+                  "userName": "z상식지존z",
+                  "gameScore": 600,
+                  "userScore": 9999,
+                  "userRanking": 1,
+                  "leader": true,
+                  "ready": false
+                },
+                {
+                  "userId": 12,
+                  "userName": "z상식지존z11",
+                  "gameScore": 300,
+                  "userScore": 789,
+                  "userRanking": 103,
+                  "leader": false,
+                  "ready": false
+                }
+             ]
+      }
+      ```
   
   - /sub/game/quiz/{roomId}
     
