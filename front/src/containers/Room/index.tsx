@@ -39,6 +39,7 @@ export default function Index() {
   // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (stompClient) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const subscription = stompClient.subscribe(
         `/sub/room/info/${roomId}`,
         function handleRoomInfo(frame: Frame) {
