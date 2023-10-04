@@ -2,13 +2,18 @@
 
 import type { soketUser } from "@/types";
 import styles from "../Game/game.module.scss";
+import { useEffect, useState } from "react";
 
 interface Props {
   data: soketUser;
 }
 
 export default function UserItem({ data }: Props) {
-  console.log(data.ready);
+  const [user, setUser] = useState<soketUser>(data);
+
+  useEffect(() => {
+    setUser(data);
+  });
   return (
     <div className={styles.userItem}>
       {/* <Image
@@ -20,11 +25,11 @@ export default function UserItem({ data }: Props) {
         priority
         quality={100}
       /> */}
-      <div className={`${styles.subBox} ${styles.level}`}>{data.userRanking}</div>
-      <div className={styles.subBox}>{data.userName}</div>
+      <div className={`${styles.subBox} ${styles.level}`}>{user.userRanking}</div>
+      <div className={styles.subBox}>{user.userName}</div>
       <div className={`${styles.subBox} ${styles.ready}`}>
-        {data.ready ? "ready" : "wait"}
-        {data.leader ? " - 방장" : ""}
+        {user.ready ? "ready" : "wait"}
+        {user.leader ? " - 방장" : ""}
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ interface Props {
 
 export default function EnterRoom({ rooms }: Props) {
   const router = useRouter();
+  console.log(rooms);
 
   // 방 생성 모달
   const [openCreateRoom, setOpenCreateRoom] = useState(false);
@@ -26,8 +27,10 @@ export default function EnterRoom({ rooms }: Props) {
   const randomOnClick = () => {
     const arr: number[] = [];
     rooms.forEach((element: Room) => {
-      if (element.roomStatus) {
-        arr.push(element.roomId);
+      if (!element.roomStatus) {
+        if (element.roomCurrent < element.roomSize) {
+          arr.push(element.roomId);
+        }
       }
     });
     console.log(arr);
@@ -36,7 +39,7 @@ export default function EnterRoom({ rooms }: Props) {
     }
     const randomIndex = Math.floor(Math.random() * arr.length);
     const randomRoomNum = arr[randomIndex];
-    router.push(`/room/${randomRoomNum}`);
+    router.push(`/game/room/${randomRoomNum}`);
     return 0;
   };
 
