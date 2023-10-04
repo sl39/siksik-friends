@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { SoketUser, User } from "@/types";
 import { serverAxios } from "@/services/api";
 import UserItem from "./UserItem";
@@ -13,7 +13,7 @@ interface Props {
 
 export default function WaitingUser({ data }: Props) {
   const [openTab, setOpenTab] = useState(1);
-  const [items] = useState(data);
+  const [items, setItems] = useState(data);
   const [friends, setFriends] = useState<Array<User>>([]);
   const [NotFriends, setNotFriends] = useState<Array<User>>([]);
 
@@ -22,9 +22,7 @@ export default function WaitingUser({ data }: Props) {
     try {
       const response = await serverAxios("/user/friend/list");
       setFriends(response.data.friendList);
-    } catch (err) {
-      console.log("친구 목록 에러", err);
-    }
+    } catch (err) {}
   };
 
   /** 받은 친구 요청 조회 */
@@ -34,9 +32,7 @@ export default function WaitingUser({ data }: Props) {
       const response = await serverAxios("/user/friend/response");
       // setCount(response.data.size);
       setNotFriends(response.data.friendList);
-    } catch (err) {
-      console.log("받은 요청 목록 에러", err);
-    }
+    } catch (err) {}
   };
 
   const handleUser = (tab: number) => {
@@ -44,6 +40,9 @@ export default function WaitingUser({ data }: Props) {
     myFriends();
     myRequest();
   };
+  useEffect(() => {
+    setItems(data);
+  });
 
   return (
     <div className={styles.folder}>

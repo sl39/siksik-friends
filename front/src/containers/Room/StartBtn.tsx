@@ -16,7 +16,6 @@ interface Props {
 export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }: Props) {
   const [btnActive, setBtnActive] = useState(false);
 
-  console.log(soketUser, "유저 값 받아오는곳 버튼");
   const router = useRouter();
   const [roomUser, setRoomUser] = useState<soketUser>(soketUser);
 
@@ -24,27 +23,26 @@ export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }
 
   /** 게임으로 연결하는 함수 */
   const handleStart = () => {
-    console.log(soketUser.ready, "이거 맞나?");
     setBtnActive(!btnActive);
-
-    if (roomUser.leader) {
-      if (leaderReady === 1) {
-        router.push(`/game/play/${gameId}`);
-      }
-    } else {
-      if (roomUser.ready) {
-        setRoomUser({ ...roomUser, ready: false });
-        console.log(roomUser, "여기는 ready 였을때");
+    if (roomUser) {
+      if (roomUser.leader) {
+        if (leaderReady === 1) {
+          router.push(`/game/play/${gameId}`);
+        }
       } else {
-        setRoomUser({ ...roomUser, ready: true });
-        console.log(roomUser, "여기는 ready가 안될때");
+        if (roomUser.ready) {
+          setRoomUser({ ...roomUser, ready: false });
+          stompClient.send(`/pub/room/unready/${gameId}`, {}, JSON.stringify(roomUser));
+        } else {
+          setRoomUser({ ...roomUser, ready: true });
+          stompClient.send(`/pub/room/ready/${gameId}`, {}, JSON.stringify(roomUser));
+        }
       }
-      stompClient.send(`/pub/room/ready/${gameId}`, {}, JSON.stringify(roomUser));
     }
   };
 
   useEffect(() => {
-    console.log(roomUser, "여기는 props 받아온곳");
+    console.log(leaderReady);
     if (!roomUser.leader) {
       if (!roomUser.ready) {
         setTitle("레디 하세요");
@@ -54,12 +52,11 @@ export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }
     } else {
       if (leaderReady === 1) {
         setTitle("게임 시작!");
-      }
-      {
+      } else {
         setTitle("모든 유저가 레디 하지 않았습니다");
       }
     }
-  }, [roomUser]);
+  }, [roomUser, leaderReady]);
 
   return (
     <button onClick={handleStart} className={styles["button-wrapper"]}>
