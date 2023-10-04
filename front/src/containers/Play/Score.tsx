@@ -17,9 +17,9 @@ export default function Score({ data }: Props) {
 
       <ol>
         {data.map((item: any) => (
-          <li key={item.name}>
-            <mark>{item.name}</mark>
-            <small>{item.score}</small>
+          <li key={item.userName}>
+            <mark>{item.userName}</mark>
+            <small>{item.userScore}</small>
           </li>
         ))}
       </ol>
