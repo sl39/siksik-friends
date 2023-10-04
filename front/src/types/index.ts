@@ -11,6 +11,13 @@ export interface User {
   profile?: string;
   odds?: string;
 }
+export interface Friend {
+  user_id?: string;
+  nickname?: string;
+  profile?: string;
+  level?: number;
+  activated?: boolean;
+}
 
 export interface Rank {
   user_id: number;

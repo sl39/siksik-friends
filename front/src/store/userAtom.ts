@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import type { User } from "@/types";
+import type { Friend, User } from "@/types";
 // export const userAtom = atom<User>({} as User);
 export const userAtom = atom<User>({
   user_id: 15,
@@ -51,3 +51,6 @@ export const levelAtom = atom<Array<string>>([
   "/images/thrumpCards/03_clover.png",
   "/images/thrumpCards/04_heart.png",
 ]);
+
+export const friendsAtom = atom<Array<Friend>>([]);
+export const notFriendsAtom = atom<Array<Friend>>([]);
