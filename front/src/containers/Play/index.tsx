@@ -32,7 +32,6 @@ export default function GamePlay() {
     if (quiz) {
       setIsQuiz(true);
       setIsResult(false);
-      console.log("문제가 들어왔나?");
     } else {
       setIsQuiz(false);
     }
@@ -43,7 +42,6 @@ export default function GamePlay() {
     if (quizResult.length > 0) {
       setIsResult(true);
       setIsQuiz(false);
-      console.log("결과가 들어왔나?");
     } else {
       setIsResult(false);
     }

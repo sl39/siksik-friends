@@ -72,3 +72,10 @@ export interface SoketUser {
   level?: number;
   profile?: string;
 }
+
+export interface Answer {
+  roomId: number;
+  userId: number;
+  userAnswer: string;
+  answer: string;
+}
