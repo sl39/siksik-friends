@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -27,6 +28,15 @@ public class StompRoomController {
     private final RoomRepository roomRepository = new MemoryRoomRepository();
     private final SimpMessagingTemplate messageTemplate; //특정 Broker로 메세지를 전달
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+
+
+    @PostMapping
+    @CrossOrigin(origins = "*")
+    public Optional<Room> searchRoom(
+            @RequestBody long roomId) {
+
+       return roomRepository.findByRoomId(roomId);
+    }
 
     @PostMapping("/socket/lobby")
     @CrossOrigin(origins = "*")
