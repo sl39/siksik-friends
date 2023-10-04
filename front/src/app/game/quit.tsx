@@ -15,6 +15,7 @@ export default function BackNav() {
     } else {
       setIsQuit(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleClick = () => {
