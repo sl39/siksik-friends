@@ -11,7 +11,6 @@ import styles from "./room.module.scss";
 import RoomInfo from "./RoomInfo";
 import Chatting from "./Chatting";
 import WaitingUser from "./WaitingUser";
-import { userAtom } from "@/store/userAtom";
 
 export default function Index() {
   const params = useParams();
@@ -19,15 +18,18 @@ export default function Index() {
 
   const [room, setRoom] = useState<Room | undefined>(undefined);
   const user = userAtom.init;
+  console.log(user, "uuuu");
   const [soketUser, setSoketUser] = useState<SoketUser>({
     userId: user.user_id,
     userName: user.nickname,
     userScore: user.score,
     userRanking: user.rank,
+
     ready: false,
     leader: false,
   });
   const stompClient = useWebSocket();
+  // 이 방에 있는 사람들
   const [userInfo, setUserInfo] = useState<SoketUser[]>([]);
   const [leaderReady, setleaderReady] = useState(0);
 
@@ -63,10 +65,11 @@ export default function Index() {
       };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stompClient, soketUser]);
+  }, [stompClient]);
 
   return (
     <>
+      <div id="game-modal" className="z-99" />
       <div className={styles.left}>
         <div className={styles.roomInfo}>{room && <RoomInfo room={room} />}</div>
         <div className={styles.chatting}>
