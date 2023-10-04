@@ -30,4 +30,10 @@ public class QuizSaveService {
         Query query = new Query(Criteria.where("date").is(date));
         return mongoTemplate.findOne(query, Quiz.class, categoryTable.get(collectionName));
     }
+
+//    public Quiz pushHistory(int userId, ) {
+//        Query query = new Query(Criteria.where("date").is(date));
+//
+//        return mongoTemplate.findOne(query, Quiz.class, categoryTable.get(collectionName));
+//    }
 }
