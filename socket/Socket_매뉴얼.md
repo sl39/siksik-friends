@@ -89,7 +89,7 @@
       
       "roomStatus": int
       
-      "member": List
+      "members": List
       
       - "userId": int
         
@@ -363,7 +363,7 @@
       
       "roomStatus": int
       
-      "member": List
+      "members": List
       
       - "userId": int
         
@@ -430,7 +430,7 @@
       
       "roomStatus": int
       
-      "member": List
+      "members": List
       
       - "userId": int
         
@@ -498,7 +498,7 @@
       
       "roomStatus": int
       
-      "member": List
+      "members": List
       
       - "userId": int
         
@@ -655,7 +655,7 @@
       
       "roomStatus": int
       
-      "member": List
+      "members": List
       
       - "userId": int
         
@@ -910,7 +910,7 @@
       
       "roomStatus": int
       
-      "member": List
+      "members": List
       
       - "userId": int
         
