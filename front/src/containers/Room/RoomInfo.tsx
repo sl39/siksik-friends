@@ -8,8 +8,7 @@ interface Props {
 }
 
 export default function RoomData({ room }: Props) {
-  // const user = userAtom.init;
-  console.log(room);
+  // console.log(room);
 
   return (
     <div className={styles.roomData}>
@@ -36,8 +35,8 @@ export default function RoomData({ room }: Props) {
             <p>
               {room?.roomCurrent} / {room?.roomSize}
             </p>
-           
-            <div >
+
+            <div>
               <Image
                 className={styles.worm}
                 src="/images/actor/bulea2.png"

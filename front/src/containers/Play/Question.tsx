@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
-import styles from "./play.module.scss";
 import { Quiz } from "@/types";
+import styles from "./play.module.scss";
 
 interface Props {
   data?: any;
