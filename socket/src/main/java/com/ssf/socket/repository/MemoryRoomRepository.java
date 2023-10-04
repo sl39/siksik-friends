@@ -30,7 +30,7 @@ public class MemoryRoomRepository implements RoomRepository{
     }
 
     @Override
-    public Optional<Room> findByRoomId(Long id) {
+    public Optional<Room> findByRoomId(long id) {
 
         return Optional.ofNullable(store.get(id));
     }
