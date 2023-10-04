@@ -18,14 +18,16 @@ export default function SearchUser() {
   /** 닉네임으로 유저 검색 */
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    console.log(searchUser);
     try {
       const response = await serverAxios(`/user/?nickname=${searchUser}`);
       setErrMsg("");
       await setNewProfile(response.data);
       router.replace(`/home/profile/${response.data.user_id}`);
+      setSearchUser("");
     } catch (err) {
       setErrMsg("해당 유저가 없습니다.");
+      setSearchUser("");
       console.log("닉네임 검색", err);
     }
   };
@@ -39,9 +41,9 @@ export default function SearchUser() {
           type="text"
           value={searchUser}
           onChange={(e) => setSearchUser(e.target.value)}
-          onBlur={() => setSearchUser("")}
+          onBlur={() => setErrMsg("")}
         />
-        <button className={styles.searchBtn} type="submit">
+        <button type="submit" className={styles.searchBtn}>
           <BiSearchAlt className={styles.icon} size={28} color="#666" />
         </button>
       </form>
