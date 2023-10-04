@@ -1,12 +1,18 @@
 import { atom } from "jotai";
-import type { User } from "@/types";
-
+import type { Friend, User } from "@/types";
 // export const userAtom = atom<User>({} as User);
 export const userAtom = atom<User>({
+<<<<<<< HEAD
   user_id: 11,
   email: "이메일",
   nickname: "나는세울",
   profile: "/images/character/rabbit2.png",
+=======
+  user_id: 15,
+  email: "이메일",
+  nickname: "나는희영나는희영나",
+  profile: "/images/character/rabbit1.png",
+>>>>>>> front/develop
   odds: "",
   rank: 999,
   exp: 0,
@@ -16,13 +22,13 @@ export const userAtom = atom<User>({
 
 export const profileAtom = atom<User>({
   user_id: 0,
-  email: "프로필이메일",
-  nickname: "프로필닉네임",
+  email: "",
+  nickname: ".",
   profile: "/images/character/rabbit.png",
   odds: "",
-  rank: 999,
+  rank: 0,
   exp: 0,
-  score: 10,
+  score: 0,
   level: 1,
 });
 
@@ -52,3 +58,6 @@ export const levelAtom = atom<Array<string>>([
   "/images/thrumpCards/03_clover.png",
   "/images/thrumpCards/04_heart.png",
 ]);
+
+export const friendsAtom = atom<Array<Friend>>([]);
+export const notFriendsAtom = atom<Array<Friend>>([]);

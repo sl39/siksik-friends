@@ -81,6 +81,7 @@ export default function Timer({ time, resetTime, count }: Props) {
           sizes="10vw"
           className={`${styles.movingImage} z-10`}
           style={{ objectFit: "contain" }}
+          priority
         />
       </div>
       <div className={styles.progressBar}>

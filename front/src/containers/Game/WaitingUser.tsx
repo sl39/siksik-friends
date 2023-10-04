@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useAtom } from "jotai";
 import type { Frame } from "stompjs";
-import type { SoketUser, User } from "@/types";
+import type { SoketUser } from "@/types";
 import { serverAxios } from "@/services/api";
 import { useWebSocket } from "@/socket/WebSocketProvider";
-import { userAtom } from "@/store/userAtom";
+import { friendsAtom, notFriendsAtom, userAtom } from "@/store/userAtom";
 import { convertUserToSoketUser } from "@/utils/userConversion";
 import UserItem from "./UserItem";
 import styles from "./game.module.scss";
@@ -14,13 +15,16 @@ export default function WaitingUser() {
   const [openTab, setOpenTab] = useState(1);
   const [items, setItems] = useState<Array<SoketUser>>([]);
 
-  const [friends, setFriends] = useState<Array<User>>([]);
-  const [NotFriends, setNotFriends] = useState<Array<User>>([]);
+  // const [friends, setFriends] = useState<Array<User>>([]);
+  // const [NotFriends, setNotFriends] = useState<Array<User>>([]);
+  const [friends, setFriends] = useAtom(friendsAtom);
+  const [NotFriends, setNotFriends] = useAtom(notFriendsAtom);
 
   /** 내 친구 조회 */
   const myFriends = async () => {
     try {
       const response = await serverAxios("/user/friend/list");
+      console.log("친구목록", response.data);
       setFriends(response.data.friendList);
     } catch (err) {
       console.log("친구 목록 에러", err);
@@ -32,13 +36,9 @@ export default function WaitingUser() {
     try {
       // response / request
       const response = await serverAxios("/user/friend/response");
-      const request = await serverAxios("/user/friend/request");
+      console.log("받은목록", response.data);
 
-      // 병합된 리스트 생성
-      const combinedList = [...response.data.friendList, ...request.data.friendsList];
-
-      // setCount(response.data.size);
-      setNotFriends(combinedList);
+      setNotFriends(response.data.friendList);
     } catch (err) {
       console.log("받은 요청 목록 에러", err);
     }
@@ -50,7 +50,7 @@ export default function WaitingUser() {
     myRequest();
   };
 
-  const user = userAtom.init;
+  const [user] = useAtom(userAtom);
   const stompClient = useWebSocket();
 
   // eslint-disable-next-line consistent-return
@@ -60,12 +60,11 @@ export default function WaitingUser() {
         "/sub/lobby/list",
         function handleRoomList(frame: Frame) {
           const lobbyUserList = JSON.parse(frame.body);
-          console.log(lobbyUserList);
+          // console.log(lobbyUserList);
           setItems(lobbyUserList);
         },
         {}
       );
-      // Atom에 있는 정보로 socketUser 넣기
       const soketUser = convertUserToSoketUser(user);
 
       stompClient.send("/pub/lobby/entrance", {}, JSON.stringify(soketUser));
