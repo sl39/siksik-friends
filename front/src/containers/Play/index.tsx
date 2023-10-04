@@ -1,7 +1,7 @@
 "use client";
 
 import { useAtom } from "jotai";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { roomAtom } from "@/store/gameAtom";
 import { useWebSocket } from "@/socket/WebSocketProvider";
@@ -23,9 +23,10 @@ export default function GamePlay() {
   // eslint-disable-next-line no-null/no-null
   const { quiz, quizResult, end, roomInfoPlay } = useContext(TotalInfoContext);
   console.log(quiz, quizResult, end, roomInfoPlay);
-  const [scoreData, setScoreData] = useState<SoketUser[] | undefined>(roomInfoPlay?.members);
+  const [scoreData, setScoreData] = useState<SoketUser[] | undefined>(quizResult);
   const [isQuiz, setIsQuiz] = useState<boolean>(false);
   const [isResult, setIsResult] = useState<boolean>(false);
+  const router = useRouter();
 
   useEffect(() => {
     // quiz 값이 변경될 때 실행
@@ -42,10 +43,18 @@ export default function GamePlay() {
     if (quizResult.length > 0) {
       setIsResult(true);
       setIsQuiz(false);
+      setScoreData(quizResult);
     } else {
       setIsResult(false);
     }
   }, [quizResult]);
+
+  useEffect(() => {
+    if (end) {
+      router.push("/home");
+    }
+  }, [end]);
+
   // 현재 스코어 상태 받아오기
 
   // eslint-disable-next-line consistent-return
