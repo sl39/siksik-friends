@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Image from "next/image";
-import { Quiz } from "@/types";
 import styles from "./play.module.scss";
 
 interface Props {

@@ -1,13 +1,10 @@
 "use client";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Children, createContext, useEffect, useState } from "react";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { useParams, useRouter } from "next/navigation";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import type { ReactNode } from "react";
+import { createContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAtom } from "jotai";
 import type { Frame } from "stompjs";
-import type { Quiz, Room, RoomInfo, SoketUser } from "@/types";
+import type { Quiz, Room, SoketUser } from "@/types";
 import { userAtom } from "@/store/userAtom";
 import { useWebSocket } from "./WebSocketProvider";
 
@@ -32,9 +29,8 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
   const [quizResult, setQuizResult] = useState<SoketUser[]>([]);
   const [end, setEnd] = useState<string>("");
   const [roomInfoPlay, setRoomInfoPlay] = useState<Room | undefined>(undefined);
-  const user = userAtom.init;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [soketUser, setSoketUser] = useState<SoketUser>({
+  const [user] = useAtom(userAtom);
+  const [soketUser] = useState<SoketUser>({
     userId: user.user_id,
     userName: user.nickname,
     userScore: user.score,
@@ -42,6 +38,7 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
     ready: false,
     leader: false,
   });
+
   // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (stompClient) {
