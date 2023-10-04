@@ -131,7 +131,6 @@ export default function ProfileData({ userId }: Props) {
               <div className={`${styles.p} `}>
                 <div className={styles.myData}>
                   <div className={styles.item}>
-                    <div>닉네임</div>
                     <div className={styles.itemContent}>{data.nickname}</div>
                   </div>
                   <div className={styles.item}>

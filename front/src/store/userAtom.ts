@@ -16,13 +16,13 @@ export const userAtom = atom<User>({
 
 export const profileAtom = atom<User>({
   user_id: 0,
-  email: "프로필이메일",
-  nickname: "프로필닉네임",
+  email: "",
+  nickname: ".",
   profile: "/images/character/rabbit.png",
   odds: "",
-  rank: 999,
+  rank: 0,
   exp: 0,
-  score: 10,
+  score: 0,
   level: 1,
 });
 

@@ -84,7 +84,7 @@ export default function ProfileUpdate() {
         ...prevUser,
         ...formData,
       }));
-      router.replace(`/home/profile/${data.user_id}`);
+      router.push(`/home/profile/${data.user_id}`);
     } catch (error) {
       console.log("프로필 업데이트 에러", error);
     }
