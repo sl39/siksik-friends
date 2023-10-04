@@ -39,7 +39,7 @@ export default function EnterRoom({ rooms }: Props) {
     }
     const randomIndex = Math.floor(Math.random() * arr.length);
     const randomRoomNum = arr[randomIndex];
-    router.push(`/game/room/${randomRoomNum}`);
+    router.push(`/game/start/room/${randomRoomNum}`);
     return 0;
   };
 

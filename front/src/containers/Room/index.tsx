@@ -18,7 +18,7 @@ export default function Index() {
   const [room, setRoom] = useState<Room | undefined>(undefined);
 
   const [soketUser, setSoketUser] = useState<SoketUser>({
-    userId: 0,
+    userId: 1,
     userName: "user.nickname",
     userScore: 1111,
     userRanking: 111,
