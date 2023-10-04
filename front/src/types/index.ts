@@ -28,7 +28,7 @@ export interface Room {
   roomStatus?: boolean;
   quizDate?: string;
   category?: string;
-  quizCount?: string;
+  quizCount?: number;
   members?: SoketUser[];
   roomSize?: number;
   roomCurrent?: number;

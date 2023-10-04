@@ -58,9 +58,8 @@ export default function Index() {
       stompClient.send(`/pub/room/entrance/${roomId}`, {}, JSON.stringify(soketUser));
       return () => {
         // 컴포넌트가 언마운트될 때 이벤트 리스너  제거
-        stompClient.send(`/pub/room/exit/${roomId}`, {}, JSON.stringify(soketUser));
-
-        subscription.unsubscribe();
+        // stompClient.send(`/pub/room/exit/${roomId}`, {}, JSON.stringify(soketUser));
+        // subscription.unsubscribe();
       };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
