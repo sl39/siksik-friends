@@ -1,5 +1,7 @@
 package com.ssf.socket.service;
 
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import com.ssf.socket.domain.History;
 import com.ssf.socket.domain.HistoryMember;
 import com.ssf.socket.domain.Member;
@@ -7,6 +9,7 @@ import com.ssf.socket.domain.Quiz;
 import com.ssf.socket.dto.QuizDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -53,5 +56,14 @@ public class QuizSaveService {
         History history = new History(roomId, article.getArticleTitle(), article.getArticleContent());
 
         mongoTemplate.save(history);
+    }
+
+    public void deleteAllHistory() {
+        MongoDatabase database = mongoTemplate.getDb();
+        MongoCollection<org.bson.Document> collection = database.getCollection("history");
+        collection.deleteMany(new org.bson.Document());
+
+        MongoCollection<org.bson.Document> member = database.getCollection("member");
+        member.deleteMany(new org.bson.Document());
     }
 }

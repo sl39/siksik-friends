@@ -2,7 +2,9 @@ package com.ssf.socket.controller;
 
 import com.ssf.socket.domain.History;
 import com.ssf.socket.domain.HistoryMember;
+import com.ssf.socket.service.QuizSaveService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,12 +15,14 @@ import org.springframework.data.mongodb.core.query.Query;
 import java.util.List;
 
 @RestController
-public class HistoryGetController {
+public class HistoryController {
     private final MongoTemplate mongoTemplate;
+    private final QuizSaveService quizSaveService;
 
     @Autowired
-    public HistoryGetController(MongoTemplate mongoTemplate) {
+    public HistoryController(MongoTemplate mongoTemplate, QuizSaveService quizSaveService) {
         this.mongoTemplate = mongoTemplate;
+        this.quizSaveService = quizSaveService;
     }
 
     @PostMapping("/history")
@@ -46,6 +50,12 @@ public class HistoryGetController {
 
         // roomId에 대한 정보를 찾을 수 없을 경우 적절한 처리를 수행합니다.
         return null;
+    }
+
+    @DeleteMapping("/delete")
+    public String deleteHistory () {
+        quizSaveService.deleteAllHistory();
+        return "모든 전적 삭제";
     }
 }
 
