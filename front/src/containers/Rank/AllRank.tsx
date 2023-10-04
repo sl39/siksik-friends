@@ -122,6 +122,7 @@ export default function AllRank() {
   useEffect(() => {
     rankData();
     resetProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
