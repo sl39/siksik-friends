@@ -3,7 +3,10 @@ package com.ssf.socket.controller;
 import com.ssf.socket.domain.History;
 import com.ssf.socket.domain.HistoryMember;
 import com.ssf.socket.service.QuizSaveService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,8 +15,10 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @RestController
 public class HistoryController {
     private final MongoTemplate mongoTemplate;
@@ -26,7 +31,7 @@ public class HistoryController {
     }
 
     @PostMapping("/socket/history")
-    public History getHistory(@RequestBody int userId) {
+    public List<History> getHistory(@RequestBody int userId) {
         // "member" 컬렉션에서 userId를 이용하여 historyList를 가져옵니다.
         Query memberQuery = new Query(Criteria.where("userId").is(userId));
         HistoryMember member = mongoTemplate.findOne(memberQuery, HistoryMember.class);
@@ -36,6 +41,8 @@ public class HistoryController {
             return null;
         }
 
+        List<History> allHistory = new ArrayList<>();
+
         // historyList 내부의 historyId 값을 가져와서 "history" 컬렉션에서 정보를 가져옵니다.
         List<Long> historyList = member.getHistoryList();
 
@@ -43,13 +50,12 @@ public class HistoryController {
             Query historyQuery = new Query(Criteria.where("historyId").is(historyId));
             History history = mongoTemplate.findOne(historyQuery, History.class);
 
-            if (history != null) {
-                return history;
-            }
+            allHistory.add(history);
+
         }
 
         // roomId에 대한 정보를 찾을 수 없을 경우 적절한 처리를 수행합니다.
-        return null;
+        return allHistory;
     }
 
     @DeleteMapping("/socket/delete")

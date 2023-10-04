@@ -7,6 +7,7 @@ import com.ssf.socket.domain.HistoryMember;
 import com.ssf.socket.domain.Member;
 import com.ssf.socket.domain.Quiz;
 import com.ssf.socket.dto.QuizDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,11 +17,9 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.mongodb.core.query.UpdateDefinition;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+@Slf4j
 @Service
 public class QuizSaveService {
     private final MongoTemplate mongoTemplate;
@@ -42,8 +41,7 @@ public class QuizSaveService {
         return mongoTemplate.findOne(query, Quiz.class, categoryTable.get(collectionName));
     }
 
-    public void pushHistory(int roomId, List<Member> memberList, QuizDTO article) {
-
+    public  void  pushMember(int roomId, List<Member> memberList) {
         for (Member member : memberList) {
             Query query = new Query(Criteria.where("userId").is(member.getUserId()));
 
@@ -52,10 +50,26 @@ public class QuizSaveService {
 
             mongoTemplate.upsert(query, update, HistoryMember.class);
         }
+    }
 
-        History history = new History(roomId, article.getArticleTitle(), article.getArticleContent());
+    public void pushHistory(int roomId, QuizDTO article) {
 
-        mongoTemplate.save(history);
+        Query query = new Query(Criteria.where("historyId").is(roomId));
+
+        List<List<String>> articles = new ArrayList<>();
+
+        List<String> container = new ArrayList<>();
+
+        container.add(0, article.getArticleTitle());
+        container.add(1, article.getArticleContent());
+
+        articles.add(container);
+
+        Update update = new Update();
+        update.addToSet("articles", articles);
+
+        mongoTemplate.upsert(query, update, History.class);
+
     }
 
     public void deleteAllHistory() {

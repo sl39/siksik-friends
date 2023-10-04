@@ -6,6 +6,9 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+import java.util.Map;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,7 +17,6 @@ public class History {
 
     @Id
     int historyId;
-    String articleTitle;
-    String articleContent;
+    List<List<String>> articles;
 
 }
