@@ -7,7 +7,7 @@ import { useParams, useRouter } from "next/navigation";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { ReactNode } from "react";
 import type { Frame } from "stompjs";
-import type { Quiz, RoomInfo, SoketUser } from "@/types";
+import type { Quiz, Room, RoomInfo, SoketUser } from "@/types";
 import { userAtom } from "@/store/userAtom";
 import { useWebSocket } from "./WebSocketProvider";
 
@@ -19,7 +19,7 @@ export const TotalInfoContext = createContext<{
   quiz: Quiz | undefined | null;
   quizResult: SoketUser[];
   end: string;
-  roomInfoPlay: RoomInfo | undefined;
+  roomInfoPlay: Room | undefined;
 }>({ quiz: undefined, quizResult: [], end: "", roomInfoPlay: undefined });
 
 export default function SubscriptionQuiz({ roomId, children }: { roomId: number; children: React.ReactNode }) {
@@ -31,7 +31,7 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
   const [quiz, setQuiz] = useState<Quiz | null>(null);
   const [quizResult, setQuizResult] = useState<SoketUser[]>([]);
   const [end, setEnd] = useState<string>("");
-  const [roomInfoPlay, setRoomInfoPlay] = useState<RoomInfo | undefined>(undefined);
+  const [roomInfoPlay, setRoomInfoPlay] = useState<Room | undefined>(undefined);
   const user = userAtom.init;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [soketUser, setSoketUser] = useState<SoketUser>({
@@ -50,8 +50,9 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
         `/sub/game/quiz/${roomId}`,
         function handleRoomInfo(frame: Frame) {
           const roomQuiz = frame.body;
+          console.log(frame.body);
           // eslint-disable-next-line no-empty
-          if (roomQuiz === "start") {
+          if (roomQuiz === "start!") {
             router.push(`/game/start/play/${roomId}`);
           } else {
             setQuiz(JSON.parse(roomQuiz));
@@ -65,6 +66,7 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
         function handleRoomInfo(frame: Frame) {
           const resultUsers = JSON.parse(frame.body);
           setQuizResult(resultUsers);
+          console.log(resultUsers, "게임 결과");
         },
         {}
       );
@@ -73,7 +75,8 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
       const subscription2 = stompClient.subscribe(
         `/sub/game/end/${roomId}`,
         function handleRoomInfo(frame: Frame) {
-          const gameEnd = JSON.parse(frame.body);
+          const gameEnd = frame.body;
+          console.log(gameEnd, "게임 end 구독");
           setEnd(gameEnd);
         },
         {}
@@ -85,12 +88,16 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
         function handleRoomInfo(frame: Frame) {
           const gameEnd = JSON.parse(frame.body);
           setRoomInfoPlay(gameEnd);
+          console.log(gameEnd, "gameinfo");
         },
         {}
       );
       stompClient.send(`/pub/room/entrance/${roomId}`, {}, JSON.stringify(soketUser));
 
       return () => {
+        stompClient.send(`/pub/room/exit/${roomId}`, {}, JSON.stringify(soketUser));
+        console.log("URL 접근했을때 ");
+
         subscription.unsubscribe();
         subscription1.unsubscribe();
         subscription2.unsubscribe();
