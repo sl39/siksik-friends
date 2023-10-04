@@ -1,11 +1,10 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { serverAxios } from "@/services/api";
 import { userAtom } from "@/store/userAtom";
-// import type { User } from "@/types";
 import styles from "./Profile.module.scss";
 
 interface TypeTextType {
@@ -14,30 +13,16 @@ interface TypeTextType {
 
 interface Props {
   userPropId?: number;
+  isMyShow: boolean;
 }
 
-export default function UpdateButton({ userPropId }: Props) {
+export default function UpdateButton({ userPropId, isMyShow = false }: Props) {
   const router = useRouter();
+  const userId = userPropId;
 
-  const params = useParams();
-  let defaultId = 0;
-  if (typeof params.id === "string") {
-    defaultId = parseInt(params.id, 10);
-  }
-
-  // 나
-  const myData = useAtom(userAtom)[0];
+  // 내 정보
+  const [myData] = useAtom(userAtom);
   const myId = myData.user_id;
-
-  const [profileId, setProfileId] = useState(0);
-
-  useEffect(() => {
-    if (userPropId) {
-      setProfileId(userPropId);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  const userId = userPropId ? profileId : defaultId;
 
   /** * 친구인지, 아닌지 상태 확인하기
    * 1. 내가 걔한테 요청을 보냈고, 아직 친구가 아니다.
@@ -114,7 +99,7 @@ export default function UpdateButton({ userPropId }: Props) {
 
   /** 정보 수정 페이지로 이동 */
   const handleUpdate = () => {
-    router.push(`/home/profile/${params.id}/update`);
+    router.replace(`/home/profile/${myId}/update`);
   };
   /** 로그아웃 */
   const handleLogout = async () => {
@@ -127,10 +112,9 @@ export default function UpdateButton({ userPropId }: Props) {
   };
 
   // 내 프로필
-  // userPropId가 있으면 안보임
   if (myId === userId) {
     return (
-      userPropId === undefined && (
+      isMyShow && (
         <>
           <button onClick={handleUpdate} className={styles.button}>
             <span className={styles.buttonText}>정보 수정</span>
