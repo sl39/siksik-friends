@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useWebSocket } from "@/socket/WebSocketProvider";
 import type { Frame } from "stompjs";
 import type { Room, SoketUser } from "@/types";
+import { userAtom } from "@/store/userAtom";
 import StartBtn from "./StartBtn";
 import styles from "./room.module.scss";
 import RoomInfo from "./RoomInfo";

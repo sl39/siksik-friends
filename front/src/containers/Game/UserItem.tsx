@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import type { SoketUser, User } from "@/types";
 import { serverAxios } from "@/services/api";
+import { convertSoketUserToUser, convertUserToSoketUser } from "@/utils/userConversion";
 import styles from "./game.module.scss";
 import Modal from "@/components/gameModal";
 import SimpleProfileModal from "./SimpleProfileModal";
@@ -14,35 +15,6 @@ interface Props {
 
 interface TypeTextType {
   [key: number]: string[];
-}
-
-/** soketUser -> User */
-function convertSoketUserToUser(soketUser: SoketUser): User {
-  return {
-    user_id: soketUser.userId,
-    rank: soketUser.userRanking,
-    exp: undefined,
-    score: soketUser.userScore,
-    level: soketUser.level,
-    nickname: soketUser.userName,
-    email: undefined,
-    profile: "",
-    odds: undefined,
-  };
-}
-
-/** User -> socketUser */
-function convertUserToSoketUser(user: User): SoketUser {
-  return {
-    userId: user.user_id,
-    userName: user.nickname,
-    userScore: user.score,
-    userRanking: user.rank,
-    ready: false,
-    leader: false,
-    level: user.level,
-    profile: user.profile,
-  };
 }
 
 // Type Guard 함수
@@ -83,7 +55,7 @@ export default function UserItem({ dataProp }: Props) {
   useEffect(() => {
     const isFriend = async () => {
       try {
-        const response = await serverAxios(`/user/friend/${userId}`);
+        const response = await serverAxios(`/user/friend/${data.userId}`);
         setUserType(response.data.status);
       } catch (err) {
         console.log("친구 확인 에러", err);
@@ -158,7 +130,7 @@ export default function UserItem({ dataProp }: Props) {
       </div>
       <div className={styles.profileInfo}>
         <div className={styles.userInfo}>
-          <div className={`${styles.subBox} ${styles.level}`}>Lv.{data?.level}</div>
+          <div className={`${styles.subBox} ${styles.level}`}>Lv. {data.level}</div>
           <div className={styles.subBox}>{data.userName}</div>
         </div>
         <div className={`${styles.hiddenBtn} ${isActive ? styles.visible : ""}`}>
