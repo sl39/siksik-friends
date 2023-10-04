@@ -23,7 +23,7 @@ export default function WebSocketProvider({ children }: WebSocketProviderProps) 
   const [stompClient, setStompClient] = useState<WebSocketContextType | undefined>(undefined);
 
   useEffect(() => {
-    const socket = new SockJS("https://j9e101.p.ssafy.io:8083/ws");
+    const socket = new SockJS("http://j9e101.p.ssafy.io:8083/ws");
     const client = Stomp.over(socket);
 
     function connect() {
