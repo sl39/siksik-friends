@@ -86,9 +86,15 @@ public class StompGameController {
 
         messageTemplate.convertAndSend("/sub/game/result/" + roomId, result);
     }
-    public void endGame(int roomId) {
+    public void endGame(Long roomId) {
 
         String end = "end!";
+
+        List<Member> members = roomRepository.findByRoomId(roomId).get().getMembers();
+
+//        for (Member member : members) {
+//            redisTemplate.opsForZSet().incrementScore("rank", member.getUserId(), member.getGameScore());
+//        }
 
         messageTemplate.convertAndSend("/sub/game/end/" + roomId, end);
     }
