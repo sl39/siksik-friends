@@ -15,6 +15,9 @@ public class Member {
     private int userScore;
     private int userRanking;
 
+    private int level;
+    private String profile;
+
     // True == 방장, False == 일반
     private boolean isLeader;
 
