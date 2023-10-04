@@ -2,9 +2,9 @@
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import WebSocketProvider, { useWebSocket } from "@/socket/WebSocketProvider";
+import { useWebSocket } from "@/socket/WebSocketProvider";
 import type { Frame } from "stompjs";
-import type { Room, soketUser } from "@/types";
+import type { Room, SoketUser } from "@/types";
 import StartBtn from "./StartBtn";
 import styles from "./room.module.scss";
 import RoomInfo from "./RoomInfo";
@@ -17,7 +17,7 @@ export default function Index() {
 
   const [room, setRoom] = useState<Room | undefined>(undefined);
 
-  const [soketUser, setSoketUser] = useState<soketUser>({
+  const [soketUser, setSoketUser] = useState<SoketUser>({
     userId: 0,
     userName: "user.nickname",
     userScore: 1111,
@@ -26,13 +26,14 @@ export default function Index() {
     leader: true,
   });
   const stompClient = useWebSocket();
-  const [userInfo, setUserInfo] = useState<soketUser[]>([]);
+  const [userInfo, setUserInfo] = useState<SoketUser[]>([]);
   const [leaderReady, setleaderReady] = useState(0);
 
   // {
   //   !soketUser.leader ? (!soketUser.ready ? setReady(4) : setReady(3)) : start === 1 ? setReady(1) : setReady(2);
   // }
 
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (stompClient) {
       const subscription = stompClient.subscribe(
@@ -43,7 +44,7 @@ export default function Index() {
           setUserInfo(roomInfo.members);
           setleaderReady(roomInfo.roomCurrent - roomInfo.roomReady);
           localStorage.setItem("roomInfo", JSON.stringify(roomInfo));
-          roomInfo.members.forEach((element: soketUser) => {
+          roomInfo.members.forEach((element: SoketUser) => {
             if (element.userId === soketUser.userId) {
               setSoketUser(element);
             }
@@ -66,7 +67,7 @@ export default function Index() {
   return (
     <>
       <div className={styles.left}>
-        <div className={styles.roomInfo}>{room ? <RoomInfo room={room} /> : null}</div>
+        <div className={styles.roomInfo}>{room && <RoomInfo room={room} />}</div>
         <div className={styles.chatting}>
           <Chatting roomId={roomId} />
         </div>

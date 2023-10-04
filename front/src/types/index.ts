@@ -29,7 +29,7 @@ export interface Room {
   quizDate: string;
   category: string;
   quizCount: string;
-  members: soketUser[];
+  members: SoketUser[];
   roomSize: number;
   roomCurrent: number;
   roomReady: number;
@@ -47,22 +47,14 @@ export interface RoomInfo {
 }
 
 export interface Quiz {
-  quizType: String;
-  question: String;
-  hint: String;
-  answer: String;
-  articleTitle: String;
-  articleContent: String;
+  quizType: string;
+  question: string;
+  hint: string;
+  answer: string;
+  articleTitle: string;
+  articleContent: string;
 }
 
-export interface soketUser {
-  userId: number;
-  userName: string;
-  userScore?: number;
-  userRanking?: number;
-  ready?: boolean;
-  leader?: boolean;
-}
 export interface SoketUser {
   userId: number;
   userName: string;

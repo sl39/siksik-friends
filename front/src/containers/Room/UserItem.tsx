@@ -1,16 +1,17 @@
 "use client";
 
-import type { soketUser } from "@/types";
-import styles from "../Game/game.module.scss";
 import { useEffect, useState } from "react";
+import type { SoketUser } from "@/types";
+import styles from "../Game/game.module.scss";
 
 interface Props {
-  data: soketUser;
+  data: SoketUser;
 }
 
 export default function UserItem({ data }: Props) {
-  const [user, setUser] = useState<soketUser>(data);
+  const [user, setUser] = useState<SoketUser>(data);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     setUser(data);
   });

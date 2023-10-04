@@ -22,6 +22,7 @@ export default function WaitingUser({ data }: Props) {
     try {
       const response = await serverAxios("/user/friend/list");
       setFriends(response.data.friendList);
+      // eslint-disable-next-line no-empty
     } catch (err) {}
   };
 
@@ -32,6 +33,7 @@ export default function WaitingUser({ data }: Props) {
       const response = await serverAxios("/user/friend/response");
       // setCount(response.data.size);
       setNotFriends(response.data.friendList);
+      // eslint-disable-next-line no-empty
     } catch (err) {}
   };
 
@@ -40,6 +42,7 @@ export default function WaitingUser({ data }: Props) {
     myFriends();
     myRequest();
   };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     setItems(data);
   });
