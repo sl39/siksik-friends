@@ -6,20 +6,19 @@ import { useAtom } from "jotai";
 import Image from "next/image";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { serverAxios } from "@/services/api";
-import { profileAtom, ProfileImgAtom, userAtom } from "@/store/userAtom";
+import { ProfileImgAtom, userAtom } from "@/store/userAtom";
 import styles from "./ProfileUpdate.module.scss";
 
 export default function ProfileUpdate() {
   const router = useRouter();
 
   const [data, setData] = useAtom(userAtom);
-  const [, setProfile] = useAtom(profileAtom);
 
   const [nickname, setNickname] = useState(data.nickname);
   const [preNickname] = useState(data.nickname);
 
   const [checkNickname, setCheckNickname] = useState("");
-  const [updateValidation, setUpdateValidation] = useState(false);
+  const [updateValidation, setUpdateValidation] = useState(true);
 
   /** 닉네임 유효성 */
   const onBlurNickname = (e: string) => {
@@ -29,13 +28,16 @@ export default function ProfileUpdate() {
 
     if (trimmedNickname.length <= 1 || trimmedNickname.length >= 9) {
       setCheckNickname("닉네임의 길이는 2자 이상,8자 이하입니다");
+      setUpdateValidation(true);
       return false;
     }
     if (trimmedNickname.length >= 2 && trimmedNickname.length <= 8 && exp !== 0) {
       setCheckNickname("닉네임은 한글, 영문 대소문자, 숫자와 ._-만 사용 가능합니다");
+      setUpdateValidation(true);
       return false;
     }
     setCheckNickname("");
+    setUpdateValidation(false);
     return true;
   };
 
@@ -59,7 +61,7 @@ export default function ProfileUpdate() {
       }
     } else {
       setCheckNickname("기존 닉네임과 동일합니다");
-      setUpdateValidation(false);
+      setUpdateValidation(true);
     }
   };
 
@@ -85,11 +87,12 @@ export default function ProfileUpdate() {
 
     try {
       await serverAxios.put(`/user/`, formData);
-      await setData((prevUser) => ({
+      // userAtom 수정
+      setData((prevUser) => ({
         ...prevUser,
         ...formData,
       }));
-      await setProfile(data);
+
       router.push(`/home/profile/${data.user_id}`);
     } catch (error) {
       console.log("프로필 업데이트 에러", error);
@@ -122,6 +125,7 @@ export default function ProfileUpdate() {
                   quality={100}
                   width={200}
                   height={250}
+                  priority
                 />
               </div>
               <button type="button" onClick={() => changeProfile("right")}>
@@ -179,7 +183,11 @@ export default function ProfileUpdate() {
           </div>
 
           <div className={styles.buttons}>
-            <button type="submit" className={styles.button} disabled={updateValidation}>
+            <button
+              type="submit"
+              className={`${styles.button} ${updateValidation ? styles.disabled : ""}`}
+              disabled={updateValidation}
+            >
               수정
             </button>
             <button type="button" className={styles.button} onClick={() => router.back()}>
