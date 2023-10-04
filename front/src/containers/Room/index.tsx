@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useWebSocket } from "@/socket/WebSocketProvider";
 import type { Frame } from "stompjs";
 import type { Room, SoketUser } from "@/types";
+import { userAtom } from "@/store/userAtom";
 import StartBtn from "./StartBtn";
 import styles from "./room.module.scss";
 import RoomInfo from "./RoomInfo";
@@ -16,14 +17,14 @@ export default function Index() {
   const roomId = Number(params.id);
 
   const [room, setRoom] = useState<Room | undefined>(undefined);
-
+  const user = userAtom.init;
   const [soketUser, setSoketUser] = useState<SoketUser>({
-    userId: 1,
-    userName: "user.nickname",
-    userScore: 1111,
-    userRanking: 111,
+    userId: user.user_id,
+    userName: user.nickname,
+    userScore: user.score,
+    userRanking: user.rank,
     ready: false,
-    leader: true,
+    leader: false,
   });
   const stompClient = useWebSocket();
   const [userInfo, setUserInfo] = useState<SoketUser[]>([]);

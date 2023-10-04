@@ -79,7 +79,7 @@ export default function CreateRoomModal({ onClose }: Props) {
           stompClient.send("/pub/room/roomList", {}, JSON.stringify({}));
         }
 
-        router.push(`game/start/room/${response.data.roomId}`);
+        router.push(`/game/start/room/${response.data.roomId}`);
       } catch (err) {
         console.log(err);
       }
