@@ -2,7 +2,6 @@
 import Image from "next/image";
 import type { Room } from "@/types";
 import styles from "./room.module.scss";
-import Image from "next/image";
 
 interface Props {
   room: Room;
