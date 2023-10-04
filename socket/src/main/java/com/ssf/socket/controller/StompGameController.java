@@ -86,7 +86,7 @@ public class StompGameController {
 
         messageTemplate.convertAndSend("/sub/game/result/" + roomId, result);
     }
-    public void endGame(Long roomId) {
+    public void endGame(int roomId) {
 
         String end = "end!";
 
