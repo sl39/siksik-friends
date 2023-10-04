@@ -538,12 +538,13 @@ $hardBlue: #6495ed;
 
   .level {
     padding-left: 10px;
-    width: 20%;
+    letter-spacing: -2px;
+    width: 17%;
   }
   .name {
-    width: 55%;
+    width: 60%;
   }
-  .isReady {
+  .isReader {
     width: 15%;
     color: $hardBlue;
     letter-spacing: -2px;
