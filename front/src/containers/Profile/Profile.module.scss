@@ -222,7 +222,7 @@ $n02: var(--color-blue-n2);
   justify-content: space-around;
   align-items: center;
   height: 15%;
-  width: 50%;
+  width: 70%;
   border-radius: 2px 2px 0px 0px;
 }
 .tablinks {
@@ -449,18 +449,23 @@ $n02: var(--color-blue-n2);
 // stat
 .data {
   display: flex;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
 }
 .stat {
   // border: solid black;
   // box-sizing: border-box;
   width: 50%;
+  position: fixed;
 
   svg {
     height: auto;
     width: 100%;
 
     .text {
-      font-size: 2vh;
+      font-size: 3vh;
       text-align: center;
       display: flex;
       position: relative;
@@ -530,12 +535,18 @@ $n02: var(--color-blue-n2);
   stroke-dashoffset: 700;
   animation: designTool 6s ease-out infinite running;
 }
-
+.items {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  left: 55%;
+  width: 50%;
+}
 .item {
   box-sizing: border-box;
 
   border-radius: 10px;
-  width: 45%;
+  width: 85%;
   height: 100px;
   padding: 5px;
   margin: 2px 2px 10px;
@@ -552,4 +563,10 @@ $n02: var(--color-blue-n2);
     inset -10px -10px 7px 0px rgba(204, 229, 255, 0.4),
     inset 15px 15px 7px 0px rgb(255, 255, 255);
   transition: all 0.3s ease;
+  &:hover {
+    box-shadow:
+      0px 15px 30px -2px rgba(204, 229, 255, 0.8),
+      inset 10px 10px 7px 0px rgba(204, 229, 255, 0.4),
+      inset -15px -15px 7px 0px rgb(255, 255, 255);
+  }
 }
