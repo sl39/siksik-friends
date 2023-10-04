@@ -50,6 +50,62 @@ $hardBlue: #6495ed;
   }
 }
 
+
+////////////
+.lock{
+  position: absolute;
+  top: 10px; right: 700px;
+}
+
+.roomName{
+  height: 30px;
+  margin-bottom: 20px;
+  position: absolute;
+  top: 10px; 
+}
+
+.roomName>span{
+  font-size: 30px;
+  font-weight: bold;
+  margin-left: 12px;
+}
+
+.bottomInfo{
+  height: 70px;
+  display: flex;
+  justify-content: space-around; 
+}
+
+.quizInfo {
+  flex: 1; 
+  margin: 0 5px; 
+  display: flex;
+  justify-content: space-around; 
+}
+
+.quizInfoTitle{
+  flex: 1; 
+  margin: 0 5px;
+}
+
+.quizInfoContent{
+  flex: 1; 
+  margin: 0 5px;
+  color: #c93131;
+}
+
+.quizInfoContent>p{
+  margin: 0;
+  font-size: 18px;
+}
+
+.numberInfo {
+  flex: 1;
+  margin: 0 5px; 
+}
+
+///////////////////
+
 .chatting {
   height: 70%;
   background: rgba($color: $softBlue, $alpha: 0.5);
