@@ -40,7 +40,7 @@ export default function ProfileUpdate() {
       nickname,
     };
     if (nickname !== preNickname) {
-      if (onBlurNickname(nickname)) {
+      if (onBlurNickname(nickname!)) {
         try {
           await serverAxios.get("/auth/nickname", { params });
           setCheckNickname("사용 가능한 닉네임입니다.");
@@ -59,7 +59,7 @@ export default function ProfileUpdate() {
   };
 
   const [profileImages] = useAtom(ProfileImgAtom);
-  const [profileIndex, setProfileIndex] = useState(profileImages.indexOf(data.profile));
+  const [profileIndex, setProfileIndex] = useState(profileImages.indexOf(data.profile!));
   /** 프로필 사진 변경 */
   const changeProfile = (dir: string) => {
     if (dir === "left") {

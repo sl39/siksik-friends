@@ -28,8 +28,8 @@ export default function EnterRoom({ rooms }: Props) {
     const arr: number[] = [];
     rooms.forEach((element: Room) => {
       if (!element.roomStatus) {
-        if (element.roomCurrent < element.roomSize) {
-          arr.push(element.roomId);
+        if (element.roomCurrent! < element.roomSize!) {
+          arr.push(element.roomId!);
         }
       }
     });

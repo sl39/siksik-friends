@@ -1,12 +1,12 @@
 // 타입
 
 export interface User {
-  user_id: number;
+  user_id?: number;
   rank?: number;
   exp?: number;
   score?: number;
   level?: number;
-  nickname: string;
+  nickname?: string;
   email?: string;
   profile?: string;
   odds?: string;
@@ -23,17 +23,17 @@ export interface Rank {
 }
 
 export interface Room {
-  roomId: number;
-  roomName: string;
-  roomStatus: boolean;
-  quizDate: string;
-  category: string;
-  quizCount: string;
-  members: SoketUser[];
-  roomSize: number;
-  roomCurrent: number;
-  roomReady: number;
-  password: string;
+  roomId?: number;
+  roomName?: string;
+  roomStatus?: boolean;
+  quizDate?: string;
+  category?: string;
+  quizCount?: string;
+  members?: SoketUser[];
+  roomSize?: number;
+  roomCurrent?: number;
+  roomReady?: number;
+  password?: string;
 }
 
 export interface RoomInfo {
@@ -41,9 +41,9 @@ export interface RoomInfo {
   count: number;
   countProblem: number;
   type: string;
-  password: string;
   countTimer: number;
-  quizDate: string;
+  password?: string;
+  quizDate?: string;
 }
 
 export interface Quiz {
@@ -56,8 +56,8 @@ export interface Quiz {
 }
 
 export interface SoketUser {
-  userId: number;
-  userName: string;
+  userId?: number;
+  userName?: string;
   userScore?: number;
   userRanking?: number;
   ready?: boolean;
