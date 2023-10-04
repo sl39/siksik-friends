@@ -18,3 +18,8 @@ spring:
         database: market
         username: elefante
         password: E1efante1!
+
+      redis:
+        host: j9e101.p.ssafy.io
+        port: 6379
+        password: E1efante1!
