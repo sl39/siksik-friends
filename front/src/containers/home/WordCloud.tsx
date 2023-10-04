@@ -92,6 +92,7 @@ export default function WordCloud() {
       const words = response.data;
       setConfig({
         type: "wordcloud",
+        backgroundColor: "rgba(255, 255, 255, 0)",
         options: {
           words,
           minLength: 1,

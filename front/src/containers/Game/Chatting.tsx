@@ -23,12 +23,7 @@ export default function Chatting() {
     sendTime: "",
   });
 
-  // 메시지 핸들링 함수
-  // const handleMessage = (frame: Frame) => {
-  //   const receivedMessage = JSON.parse(frame.body);
-  //   setChatLog((prevChatLog) => [...prevChatLog, receivedMessage]);
-  // };
-
+  /** 채팅 소켓 연결 */
   useEffect(() => {
     if (stompClient) {
       // stompClient를 사용하여 채팅 메시지를 구독합니다.
@@ -49,7 +44,7 @@ export default function Chatting() {
     return undefined;
   }, [stompClient]);
 
-  // 메시지 전송 함수
+  /**  메시지 전송 함수 */
   function sendMessage(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (message.msg !== "") {
@@ -84,9 +79,7 @@ export default function Chatting() {
     }
   }
 
-  // 받은 메시지 관리
-
-  // Message 핸들러
+  /**  받은 메시지 관리 */
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setMessage((prevMessage) => ({
@@ -98,8 +91,8 @@ export default function Chatting() {
   // eslint-disable-next-line no-null/no-null
   const chatLogRef = useRef<HTMLDivElement>(null);
 
+  // 스크롤을 항상 아래로 이동
   useEffect(() => {
-    // 스크롤을 항상 아래로 이동
     if (chatLogRef.current) {
       chatLogRef.current.scrollTop = chatLogRef.current.scrollHeight;
     }

@@ -50,15 +50,14 @@ $hardBlue: #6495ed;
   }
 }
 
-
 ////////////
 
 
-.roomName{
+.roomName {
   height: 30px;
   margin-bottom: 20px;
   position: absolute;
-  top: 10px; 
+  top: 10px;
 }
 
 .roomName>span{
@@ -67,38 +66,38 @@ $hardBlue: #6495ed;
   margin-left: 12px;
 }
 
-.bottomInfo{
+.bottomInfo {
   height: 70px;
   display: flex;
-  justify-content: space-around; 
+  justify-content: space-around;
 }
 
 .quizInfo {
-  flex: 1; 
-  margin: 0 5px; 
+  flex: 1;
+  margin: 0 5px;
   display: flex;
-  justify-content: space-around; 
+  justify-content: space-around;
 }
 
-.quizInfoTitle{
-  flex: 1; 
+.quizInfoTitle {
+  flex: 1;
   margin: 0 5px;
 }
 
-.quizInfoContent{
-  flex: 1; 
+.quizInfoContent {
+  flex: 1;
   margin: 0 5px;
   color: #554f4f;
 }
 
-.quizInfoContent>p{
+.quizInfoContent > p {
   margin: 0;
   font-size: 18px;
 }
 
 .numberInfo {
   flex: 1;
-  margin: 0 5px; 
+  margin: 0 5px;
 }
 
 .worm{

@@ -2,9 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useAtom } from "jotai";
 import type { SoketUser, User } from "@/types";
 import { serverAxios } from "@/services/api";
 import { convertSoketUserToUser, convertUserToSoketUser } from "@/utils/userConversion";
+import { friendsAtom, notFriendsAtom, userAtom } from "@/store/userAtom";
 import styles from "./game.module.scss";
 import Modal from "@/components/gameModal";
 import SimpleProfileModal from "./SimpleProfileModal";
@@ -65,9 +67,13 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const [friends, setFriends] = useAtom(friendsAtom);
+  const [NotFriends, setNotFriends] = useAtom(notFriendsAtom);
+
   /** 친구 요청 | 삭제 */
-  const handleFriend = async (text: string) => {
-    if (userType === 3) {
+  const handleFriend = async (type: number, text: string) => {
+    let newFriends;
+    if (type === 3) {
       // 친구 요청
       try {
         await serverAxios.post(`/user/friend/${data.userId}`);
@@ -75,27 +81,36 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
       } catch (err) {
         console.log("친구 요청 에러", err);
       }
-    } else if (userType === 4 || userType === 1) {
+    } else if (type === 4 || type === 1) {
       // 친구 삭제, 친구 요청 취소
       try {
         await serverAxios.delete(`user/friend/${data.userId}`);
+        // 친구 목록에서 삭제
+        newFriends = friends.filter((item) => item.user_id !== data.userId);
+        setFriends(newFriends);
         setUserType(3);
       } catch (err) {
         console.log("친구 삭제 | 취소 에러", err);
       }
-    } else if (userType === 2) {
-      if (text === "친구 요청 수락") {
+    } else if (type === 2) {
+      if (text === "요청 수락") {
         // 친구 수락
         try {
           await serverAxios.put(`user/friend/${data.userId}`);
+          // 요청 목록에서 삭제
+          newFriends = NotFriends.filter((item) => item.user_id !== data.userId);
+          setNotFriends(newFriends);
           setUserType(4);
         } catch (err) {
           console.log("친구 수락 에러", err);
         }
-      } else if (text === "친구 요청 거절") {
+      } else if (text === "거절") {
         // 친구 삭제
         try {
           await serverAxios.delete(`user/friend/${data.userId}`);
+          // 요청 목록에서 삭제
+          newFriends = NotFriends.filter((item) => item.user_id !== data.userId);
+          setNotFriends(newFriends);
           setUserType(3);
         } catch (err) {
           console.log("친구 거절 에러", err);
@@ -151,11 +166,19 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
             <SimpleProfileModal user={convertSoketUserToUser(data)} onClose={() => setOpenProfile(false)} />
           </Modal>
 
-          {TypeText[userType].map((text) => (
-            <button key={text} className={`${styles.subBtn} ${styles.highlight}`} onClick={() => handleFriend(text)}>
-              <span className={styles.buttonText}>{text}</span>
-            </button>
-          ))}
+          {data.userId !== useAtom(userAtom)[0].user_id && (
+            <>
+              {TypeText[userType].map((text) => (
+                <button
+                  key={text}
+                  className={`${styles.subBtn} ${styles.highlight}`}
+                  onClick={() => handleFriend(userType, text)}
+                >
+                  <span className={styles.buttonText}>{text}</span>
+                </button>
+              ))}
+            </>
+          )}
         </div>
       </div>
     </div>
