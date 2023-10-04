@@ -10,10 +10,7 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +32,7 @@ public class StompRoomController {
     public Optional<Room> searchRoom(
             @RequestBody long roomId) {
 
-       return roomRepository.findByRoomId(roomId);
+        return roomRepository.findByRoomId(roomId);
     }
 
     @PostMapping("/socket/lobby")
