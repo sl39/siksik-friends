@@ -1,13 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useAtom } from "jotai";
 import { serverAxios } from "@/services/api";
 import type { Rank } from "@/types";
+import { profileAtom } from "@/store/userAtom";
 import styles from "./Rank.module.css";
 import RankItem from "./RankItem";
 
 export default function AllRank() {
   const [ranks, setRanks] = useState<Array<Rank>>([]);
+
+  const [, setProfile] = useAtom(profileAtom);
+  // atom 초기화
+  const resetProfile = () => {
+    setProfile({});
+  };
 
   const rankData = async () => {
     try {
@@ -113,6 +121,7 @@ export default function AllRank() {
 
   useEffect(() => {
     rankData();
+    resetProfile();
   }, []);
 
   return (
