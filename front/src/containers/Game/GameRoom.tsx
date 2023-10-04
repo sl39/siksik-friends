@@ -25,8 +25,6 @@ export default function GameRoom() {
     await setFilteredRooms(rooms);
   };
 
-  /** 방 전체 목록 받아오기 */
-
   const stompClient = useWebSocket();
 
   // lobby 들어갈때 메시지 보내기
@@ -34,19 +32,17 @@ export default function GameRoom() {
     const message = {
       enter: "enter to lobby",
     };
-
     StompClient.send("/pub/room/roomList", {}, JSON.stringify(message));
   };
 
   useEffect(() => {
-    // fetchRoom();
     if (stompClient) {
       // stompClient를 사용하여 채팅 메시지를 구독합니다.
       const subscription = stompClient.subscribe(
         "/sub/room/roomList",
         function handleRoomList(frame: Frame) {
           const recievdRoomList = JSON.parse(frame.body);
-          console.log(recievdRoomList, "여기 새로운 방 생성 되면 들어오는곳");
+          // console.log(recievdRoomList, "여기 새로운 방 생성 되면 들어오는곳");
           setRooms(recievdRoomList);
           if (roomBtn === 0) {
             setFilteredRooms(recievdRoomList);
