@@ -82,9 +82,6 @@ export default function CreateRoomModal({ onClose }: Props) {
         router.push(`game/room/${response.data.roomId}`);
       } catch (err) {
         console.log(err);
-        // Axios 연결 전 임시 데이터
-        const id = 1;
-        router.push(`game/room/${id}`);
       }
     }
   };
@@ -211,76 +208,99 @@ export default function CreateRoomModal({ onClose }: Props) {
           {/* 방제목 */}
           <div className={styles.inputDiv}>
             <label htmlFor="title">제목</label>
-            <input type="text" name="title" id="title" value={formData.title} onChange={(e) => handleChange(e)} />
+
+            <input
+              autoComplete="off"
+              type="text"
+              name="title"
+              id="title"
+              value={formData.title}
+              onChange={(e) => handleChange(e)}
+            />
             {checkTitle && <div className={styles.errMsg}>{checkTitle}</div>}
           </div>
-          {/* 문제수 */}
-          <div className={styles.inputDiv}>
-            <label htmlFor="countProblem">문제수</label>
-            <input
-              type="number"
-              name="countProblem"
-              id="countProblem"
-              value={formData.countProblem}
-              onChange={(e) => handleChange(e)}
-              max={20}
-              min={1}
-            />
+          <div className={`${styles.inputDiv} ${styles.input2}`}>
+            {/* 문제수 */}
+            <div className={styles.col}>
+              <div>
+                <label htmlFor="countProblem">문제수</label>
+                <input
+                  className={styles.number}
+                  type="number"
+                  name="countProblem"
+                  id="countProblem"
+                  value={formData.countProblem}
+                  onChange={(e) => handleChange(e)}
+                  max={20}
+                  min={1}
+                />
+              </div>
+              {/* 인원 */}
+              <div>
+                <label htmlFor="count">인원</label>
+                <input
+                  className={styles.number}
+                  type="number"
+                  name="count"
+                  id="count"
+                  value={formData.count}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+            </div>
           </div>
           {/* 문제 종류 */}
-          <div className={styles.inputDiv}>
+          <div className={`${styles.inputDiv} ${styles.type}`}>
             <label htmlFor="type">문제 종류</label>
-            <div>{formData.type}</div>
-            <button
-              type="button"
-              name="type"
-              id="type"
-              onClick={() => typeClick("경제")}
-              className={formData.type === "경제" ? styles.selected : ""}
-            >
-              경제
-            </button>{" "}
-            <button
-              type="button"
-              name="type"
-              id="type"
-              onClick={() => typeClick("사회")}
-              className={formData.type === "사회" ? styles.selected : ""}
-            >
-              사회
-            </button>
-            <button
-              type="button"
-              name="type"
-              id="type"
-              onClick={() => typeClick("생활/문화")}
-              className={formData.type === "생활/문화" ? styles.selected : ""}
-            >
-              생활/문화
-            </button>
-            <button
-              type="button"
-              name="type"
-              id="type"
-              onClick={() => typeClick("세계")}
-              className={formData.type === "세계" ? styles.selected : ""}
-            >
-              세계
-            </button>
-            <button
-              type="button"
-              name="type"
-              id="type"
-              onClick={() => typeClick("It/과학")}
-              className={formData.type === "It/과학" ? styles.selected : ""}
-            >
-              It/과학
-            </button>
-          </div>
-          {/* 인원 */}
-          <div className={styles.inputDiv}>
-            <label htmlFor="count">인원</label>
-            <input type="number" name="count" id="count" value={formData.count} onChange={(e) => handleChange(e)} />
+            <div className={styles.groupContainer}>
+              <div className={styles.wordButton}>
+                <button
+                  type="button"
+                  name="type"
+                  id="type"
+                  onClick={() => typeClick("경제")}
+                  className={formData.type === "경제" ? styles.selected : ""}
+                >
+                  경제
+                </button>
+                <button
+                  type="button"
+                  name="type"
+                  id="type"
+                  onClick={() => typeClick("사회")}
+                  className={formData.type === "사회" ? styles.selected : ""}
+                >
+                  사회
+                </button>
+                <button
+                  type="button"
+                  name="type"
+                  id="type"
+                  onClick={() => typeClick("생활/문화")}
+                  className={formData.type === "생활/문화" ? styles.selected : ""}
+                >
+                  생활/문화
+                </button>
+                <button
+                  type="button"
+                  name="type"
+                  id="type"
+                  onClick={() => typeClick("세계")}
+                  className={formData.type === "세계" ? styles.selected : ""}
+                >
+                  세계
+                </button>
+                <button
+                  type="button"
+                  name="type"
+                  id="type"
+                  onClick={() => typeClick("It/과학")}
+                  className={formData.type === "It/과학" ? styles.selected : ""}
+                >
+                  It/과학
+                </button>
+              </div>
+            </div>
           </div>
           {/* 날짜 */}
           <DatePicker
@@ -297,16 +317,19 @@ export default function CreateRoomModal({ onClose }: Props) {
           {/* 비밀번호 */}
           <div className={styles.inputDiv}>
             <label htmlFor="password">비밀번호</label>
-            <input
-              type="text"
-              name="password"
-              id="password"
-              value={formData.password}
-              onChange={(e) => handleChange(e)}
-              disabled={passwordCheckBox}
-            />
-            <input type="checkbox" onClick={checkBtn} />
-            {checkpassword && <p style={{ color: "red" }}>{checkpassword}</p>}
+            <div className={styles.div}>
+              <input
+                type="text"
+                name="password"
+                id="password"
+                value={formData.password}
+                onChange={(e) => handleChange(e)}
+                disabled={passwordCheckBox}
+                autoComplete="off"
+              />
+              <input type="checkbox" onClick={checkBtn} className={styles.Check} />
+            </div>
+            {checkpassword && <div className={styles.checkText}>{checkpassword}</div>}
           </div>
           <div className={styles.btns}>
             <button className={`${styles.btn}`} type="submit">

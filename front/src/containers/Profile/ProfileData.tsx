@@ -1,17 +1,40 @@
 "use client";
 
-// import { useAtom } from "jotai";
-import { useState } from "react";
-// import { profileAtom } from "@/store/userAtom";
+import { useAtom } from "jotai";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { profileAtom } from "@/store/userAtom";
+import { serverAxios } from "@/services/api";
 import styles from "./Profile.module.scss";
 
-export default function ProfileData() {
+interface Props {
+  userId?: number;
+}
+
+export default function ProfileData({ userId }: Props) {
+  const [profileData, setProfileData] = useState({});
+  const [defaultData] = useAtom(profileAtom);
+
+  const fetchUser = async () => {
+    try {
+      const resposne = await serverAxios(`/user/${userId}`);
+      setProfileData(resposne.data);
+    } catch (err) {
+      console.log("프로필 에러", err);
+    }
+  };
+  useEffect(() => {
+    if (userId) {
+      fetchUser();
+    }
+  }, [userId]);
+  // data는 userId가 있는 경우 profileData를 사용
+  const data = userId ? profileData : defaultData;
+
   const [activeTab, setActiveTab] = useState(1);
   const handleTabClick = (tabId: number) => {
     setActiveTab(tabId);
   };
-  // 프로필 회원의 모든 정보 받아오기
-  // const [data] = useAtom(profileAtom);
 
   const dataXY = {
     1: {
@@ -58,6 +81,7 @@ export default function ProfileData() {
     },
   };
 
+  // 경제, 사회, 생활/문화, 세계, IT/과학, 종합
   const [x1, y1] = dataXY[1][5];
   const [x2, y2] = dataXY[2][5];
   const [x3, y3] = dataXY[3][2];
@@ -68,6 +92,16 @@ export default function ProfileData() {
   const d = `M${x1} ${y1}l${x2 - x1} ${y2 - y1} ${x3 - x2} ${y3 - y2} ${x4 - x3} ${y4 - y3} ${x5 - x4} ${y5 - y4} ${
     x6 - x5
   } ${y6 - y5} ${x1 - x6} ${y1 - y6}z`;
+
+  const badgeImg = [
+    { image: "/images/actor/alice1.png", isGet: true },
+    { image: "/images/actor/alice2.png", isGet: false },
+    { image: "/images/actor/card.png", isGet: false },
+    { image: "/images/actor/cat1.png", isGet: true },
+    { image: "/images/actor/dodo1.png", isGet: false },
+    { image: "/images/actor/queen.png", isGet: false },
+    { image: "/images/actor/rabbit1.png", isGet: false },
+  ];
 
   return (
     <div className={styles.profileData}>
@@ -92,11 +126,33 @@ export default function ProfileData() {
           <div className={`${styles.wrapper_tabcontent}`}>
             <div className={`${styles.tabcontent} ${activeTab === 1 ? styles.active : ""}`}>
               <h3>정보</h3>
-              <div className={styles.p}>
-                <div>닉네임</div>
-                <div>레벨</div>
-                <div>랭킹</div>
-                <div>뱃지(업적)</div>
+              <div className={`${styles.p} `}>
+                <div className={styles.myData}>
+                  <div className={styles.item}>
+                    <div>닉네임</div>
+                    <div className={styles.itemContent}>{data.nickname}</div>
+                  </div>
+                  <div className={styles.item}>
+                    <div>Lv. </div>
+                    <div>{data.level}</div>
+                  </div>
+                  <div className={styles.item}>
+                    <div>종합</div>
+                    <div>{data.rank} 등</div>
+                  </div>
+                </div>
+                <div className={styles.badge}>
+                  <div className={styles.item}>
+                    <div>뱃지</div>
+                  </div>
+                  <div className={styles.ImgContainer}>
+                    {badgeImg.map((item) => (
+                      <div className={`${styles.imgItem} ${item.isGet ? styles.itemGet : ""}`} key={item.image}>
+                        <Image src={item.image} alt="뱃지" size="30vw" fill style={{ objectFit: "contain" }} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -180,8 +236,7 @@ export default function ProfileData() {
                   </svg>
                 </div>
 
-                <div>전적</div>
-                <div>게임 관련 데이터</div>
+                <div className={styles.item}>전적 관련 데이터</div>
               </div>
             </div>
           </div>

@@ -22,6 +22,31 @@
   backdrop-filter: blur(1px);
   -webkit-backdrop-filter: blur(1px);
 }
+.roomData {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+
+  border-radius: 2px;
+  line-height: 160%;
+  background-color: #f9f9f9;
+  filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.15));
+  background-image: linear-gradient(#e4e4e4 1px, transparent 1px);
+  background-size:
+    20% 20%,
+    2px 2px;
+  // border: 0.5px solid;
+
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  span {
+    width: 20%;
+  }
+}
+
 .chatting {
   height: 70%;
 

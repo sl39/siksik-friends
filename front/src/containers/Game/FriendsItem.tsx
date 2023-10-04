@@ -28,9 +28,9 @@ export default function FriendsItem({ data }: Props) {
   };
 
   /** 간단한 프로필 모달 열기 */
-  // const openProfile = () => {
-  //   console.log(1);
-  // };
+  const openProfile = () => {
+    console.log(1);
+  };
 
   /** data.user_id 로 친구 여부에 따른 버튼 */
   const TypeText: TypeTextType = {
