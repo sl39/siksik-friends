@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useAtom } from "jotai";
 import type { Frame } from "stompjs";
 import type { SoketUser, User } from "@/types";
 import { serverAxios } from "@/services/api";
@@ -27,7 +28,7 @@ export default function WaitingUser() {
     }
   };
 
-  /** 받은 친구 요청 조회 */
+  /** 받은/전달한 친구 요청 조회 */
   const myRequest = async () => {
     try {
       // response / request
@@ -50,7 +51,7 @@ export default function WaitingUser() {
     myRequest();
   };
 
-  const user = userAtom.init;
+  const [user] = useAtom(userAtom);
   const stompClient = useWebSocket();
 
   // eslint-disable-next-line consistent-return
@@ -65,7 +66,7 @@ export default function WaitingUser() {
         },
         {}
       );
-      // Atom에 있는 정보로 socketUser 넣기
+      // Atom에 있는 정보로 socketUser
       const soketUser = convertUserToSoketUser(user);
 
       stompClient.send("/pub/lobby/entrance", {}, JSON.stringify(soketUser));

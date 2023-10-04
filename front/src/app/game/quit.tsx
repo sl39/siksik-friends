@@ -7,7 +7,6 @@ export default function BackNav() {
   const [isQuit, setIsQuit] = useState(true);
   const router = useRouter();
   const pathName = usePathname();
-  console.log("===", pathName);
 
   useEffect(() => {
     if (pathName === "/game" || pathName.includes("/game/start/room/")) {
