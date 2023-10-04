@@ -42,7 +42,7 @@ export default function Index() {
         <ProfileCard userProp={user} />
       </div>
       <div className={styles.buttonContainer}>
-        <UpdateButton userPropId={userId} isMyShow={true} />
+        <UpdateButton userPropId={userId} isMyShow />
       </div>
     </>
   );

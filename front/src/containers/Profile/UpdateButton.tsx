@@ -45,7 +45,6 @@ export default function UpdateButton({ userPropId, isMyShow = false }: Props) {
   };
   useEffect(() => {
     /** 친구 상태 확인 */
-    console.log(userId, myId);
     const isFriend = async () => {
       try {
         const response = await serverAxios(`/user/friend/${userId}`);
