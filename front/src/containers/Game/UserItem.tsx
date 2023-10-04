@@ -172,7 +172,7 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
                 <button
                   key={text}
                   className={`${styles.subBtn} ${styles.highlight}`}
-                  onClick={() => handleFriend(userType, text, data.user_id)}
+                  onClick={() => handleFriend(userType, text)}
                 >
                   <span className={styles.buttonText}>{text}</span>
                 </button>
