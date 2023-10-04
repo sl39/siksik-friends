@@ -31,8 +31,8 @@ body {
   width: 100vw;
   height: 100vh;
 
-  min-height: 648px;
-  min-width: 1152px;
+  min-height: 720px;
+  min-width: 1280px;
   display: flex;
   align-items: center;
   justify-content: center;
