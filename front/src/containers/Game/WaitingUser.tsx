@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { Frame } from "stompjs";
-import type { soketUser, User } from "@/types";
+import type { SoketUser, User } from "@/types";
 import { serverAxios } from "@/services/api";
 import { useWebSocket } from "@/socket/WebSocketProvider";
 import UserItem from "./UserItem";
@@ -11,7 +11,7 @@ import FriendsItem from "./FriendsItem";
 
 export default function WaitingUser() {
   const [openTab, setOpenTab] = useState(1);
-  const [items, setItems] = useState<Array<soketUser>>([]);
+  const [items, setItems] = useState<Array<SoketUser>>([]);
 
   const [friends, setFriends] = useState<Array<User>>([]);
   const [NotFriends, setNotFriends] = useState<Array<User>>([]);
@@ -60,8 +60,8 @@ export default function WaitingUser() {
         {}
       );
       const soketUser = {
-        userId: 1211,
-        userName: "user.ㅎㅇ",
+        userId: 1212,
+        userName: "user123123",
         userScore: 1111,
         userRanking: 111,
         ready: false,
