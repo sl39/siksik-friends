@@ -2,9 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useAtom } from "jotai";
 import type { SoketUser, User } from "@/types";
 import { serverAxios } from "@/services/api";
 import { convertSoketUserToUser, convertUserToSoketUser } from "@/utils/userConversion";
+import { userAtom } from "@/store/userAtom";
 import styles from "./game.module.scss";
 import Modal from "@/components/gameModal";
 import SimpleProfileModal from "./SimpleProfileModal";
@@ -151,11 +153,19 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
             <SimpleProfileModal user={convertSoketUserToUser(data)} onClose={() => setOpenProfile(false)} />
           </Modal>
 
-          {TypeText[userType].map((text) => (
-            <button key={text} className={`${styles.subBtn} ${styles.highlight}`} onClick={() => handleFriend(text)}>
-              <span className={styles.buttonText}>{text}</span>
-            </button>
-          ))}
+          {data.userId !== useAtom(userAtom)[0].user_id && (
+            <>
+              {TypeText[userType].map((text) => (
+                <button
+                  key={text}
+                  className={`${styles.subBtn} ${styles.highlight}`}
+                  onClick={() => handleFriend(text)}
+                >
+                  <span className={styles.buttonText}>{text}</span>
+                </button>
+              ))}
+            </>
+          )}
         </div>
       </div>
     </div>
