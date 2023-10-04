@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { profileAtom } from "@/store/userAtom";
 import { serverAxios } from "@/services/api";
+import type { User } from "@/types";
 import styles from "./Profile.module.scss";
 
 interface Props {
@@ -12,7 +13,7 @@ interface Props {
 }
 
 export default function ProfileData({ userId }: Props) {
-  const [profileData, setProfileData] = useState({});
+  const [profileData, setProfileData] = useState<User>({});
   const [defaultData] = useAtom(profileAtom);
 
   const fetchUser = async () => {
@@ -149,7 +150,7 @@ export default function ProfileData({ userId }: Props) {
                   <div className={styles.ImgContainer}>
                     {badgeImg.map((item) => (
                       <div className={`${styles.imgItem} ${item.isGet ? styles.itemGet : ""}`} key={item.image}>
-                        <Image src={item.image} alt="뱃지" size="30vw" fill style={{ objectFit: "contain" }} />
+                        <Image src={item.image} alt="뱃지" fill style={{ objectFit: "contain" }} />
                       </div>
                     ))}
                   </div>
