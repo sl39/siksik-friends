@@ -1,9 +1,9 @@
 import { BsTrophy } from "react-icons/bs";
-import type { GamePlay } from "@/types";
+import type { SoketUser } from "@/types";
 import styles from "./play.module.scss";
 
 interface Props {
-  data?: GamePlay;
+  data?: SoketUser[];
 }
 
 export default function Score({ data }: Props) {
@@ -38,7 +38,7 @@ export default function Score({ data }: Props) {
       </h1>
 
       <ol>
-        {data.map((item: any) => (
+        {data?.map((item: any) => (
           <li key={item.userName}>
             <mark>{item.userName}</mark>
             <small>{item.gameScore}</small>
