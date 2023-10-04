@@ -1,19 +1,22 @@
 "use client";
 
-import { Children, ReactNode, createContext, useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Children, createContext, useEffect, useState } from "react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { useParams, useRouter } from "next/navigation";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type { ReactNode } from "react";
 import type { Frame } from "stompjs";
-import { RoomInfo, type Quiz, type SoketUser } from "@/types";
-import { useWebSocket } from "./WebSocketProvider";
-import { useRouter } from "next/navigation";
+import type { Quiz, RoomInfo, SoketUser } from "@/types";
 import { userAtom } from "@/store/userAtom";
+import { useWebSocket } from "./WebSocketProvider";
 
-type SubscriptionQuizProps = {
-  children: ReactNode;
-};
+// type SubscriptionQuizProps = {
+//   children: ReactNode;
+// };
 
 export const TotalInfoContext = createContext<{
-  quiz: Quiz | undefined;
+  quiz: Quiz | undefined | null;
   quizResult: SoketUser[];
   end: string;
   roomInfoPlay: RoomInfo | undefined;
@@ -29,7 +32,8 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
   const [quizResult, setQuizResult] = useState<SoketUser[]>([]);
   const [end, setEnd] = useState<string>("");
   const [roomInfoPlay, setRoomInfoPlay] = useState<RoomInfo | undefined>(undefined);
-  const user = userAtom();
+  const user = userAtom.init;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [soketUser, setSoketUser] = useState<SoketUser>({
     userId: user.user_id,
     userName: user.nickname,
@@ -41,7 +45,7 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
   // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (stompClient) {
-      //게임 퀴즈 구독
+      // 게임 퀴즈 구독
       const subscription = stompClient.subscribe(
         `/sub/game/quiz/${roomId}`,
         function handleRoomInfo(frame: Frame) {
@@ -55,7 +59,7 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
         },
         {}
       );
-      //게임 결과 구독
+      // 게임 결과 구독
       const subscription1 = stompClient.subscribe(
         `/sub/game/result/${roomId}`,
         function handleRoomInfo(frame: Frame) {
@@ -96,6 +100,7 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stompClient]);
   return (
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
     <TotalInfoContext.Provider value={{ quiz, quizResult, end, roomInfoPlay }}>
       {/* 자식 컴포넌트 렌더링 */}
       {children}

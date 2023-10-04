@@ -104,6 +104,15 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
     }
   };
 
+  let status;
+  if (data.leader) {
+    status = "방장";
+  } else if (data.ready) {
+    status = "READY";
+  } else {
+    status = "WAIT";
+  }
+
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
@@ -132,11 +141,7 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
         <div className={styles.userInfo}>
           <div className={`${styles.subBox} ${styles.level}`}>Lv. {data.level}</div>
           <div className={`${styles.subBox} ${styles.name}`}>{data.userName}</div>
-          {isRoom && (
-            <div className={`${styles.subBox} ${styles.isReady}`}>
-              {data.leader ? "방장" : data.ready ? "READY" : "WAIT"}
-            </div>
-          )}
+          {isRoom && <div className={`${styles.subBox} ${styles.isReader}`}>{status}</div>}
         </div>
         <div className={`${styles.hiddenBtn} ${isActive ? styles.visible : ""}`}>
           <button className={`${styles.subBtn} ${styles.highlight}`} onClick={() => setOpenProfile(true)}>
