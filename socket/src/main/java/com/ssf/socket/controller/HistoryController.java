@@ -25,7 +25,7 @@ public class HistoryController {
         this.quizSaveService = quizSaveService;
     }
 
-    @PostMapping("/history")
+    @PostMapping("/socket/history")
     public History getHistory(@RequestBody int userId) {
         // "member" 컬렉션에서 userId를 이용하여 historyList를 가져옵니다.
         Query memberQuery = new Query(Criteria.where("userId").is(userId));
@@ -52,7 +52,7 @@ public class HistoryController {
         return null;
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/socket/delete")
     public String deleteHistory () {
         quizSaveService.deleteAllHistory();
         return "모든 전적 삭제";
