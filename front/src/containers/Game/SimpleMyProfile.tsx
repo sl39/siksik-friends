@@ -4,7 +4,7 @@ import { useAtom } from "jotai";
 import { useState } from "react";
 import Image from "next/image";
 import { userAtom } from "@/store/userAtom";
-import styles from "./SimpleMyProfile.module.css";
+import styles from "./SimpleMyProfile.module.scss";
 import Modal from "@/components/gameModal";
 import SimpleProfileModal from "./SimpleProfileModal";
 

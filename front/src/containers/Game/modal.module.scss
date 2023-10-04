@@ -219,7 +219,7 @@ $font-title: "Chelsea Market", sans-serif;
 
   .modalContainer {
     max-width: 600px;
-    width: 35vw;
+    width: 40vw;
     height: 650px;
   }
   .form {
@@ -276,7 +276,19 @@ $font-title: "Chelsea Market", sans-serif;
     }
   }
   .input2 {
-    height: 13%;
+    height: 10%;
+    margin-bottom: 10px;
+  }
+  .input3 {
+    height: 15%;
+    margin-bottom: 10px;
+
+    input {
+      height: 40px;
+      width: 80%;
+      padding: 0 10px;
+      outline: none;
+    }
   }
   .type {
     display: block;

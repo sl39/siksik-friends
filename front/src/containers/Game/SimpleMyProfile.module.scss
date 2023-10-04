@@ -68,6 +68,69 @@
   color: var(--color-grey-text);
   margin-bottom: 15px;
 }
+.level {
+  width: 25%;
+}
 .name {
   width: auto;
+}
+
+.btn,
+.btn:link,
+.btn:visited {
+  &:hover,
+  &:focus {
+    transition-timing-function: cubic-bezier(0.6, 4, 0.3, 0.8);
+    animation: gelatine 0.5s 1;
+  }
+}
+@mixin transform($properties) {
+  -webkit-transform: $properties;
+  -ms-transform: $properties;
+  transform: $properties;
+}
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+
+  @keyframes #{$name} {
+    @content;
+  }
+}
+@include keyframes(gelatine) {
+  from,
+  to {
+    @include transform(scale(1, 1));
+  }
+  25% {
+    @include transform(scale(0.9, 1.1));
+  }
+  50% {
+    @include transform(scale(1.1, 0.9));
+  }
+  75% {
+    @include transform(scale(0.95, 1.05));
+  }
+  from,
+  to {
+    @include transform(scale(1, 1));
+  }
+  25% {
+    @include transform(scale(0.9, 1.1));
+  }
+  50% {
+    @include transform(scale(1.1, 0.9));
+  }
+  75% {
+    @include transform(scale(0.95, 1.05));
+  }
 }
