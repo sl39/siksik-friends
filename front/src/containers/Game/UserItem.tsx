@@ -2,20 +2,61 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import type { SoketUser } from "@/types";
+import type { SoketUser, User } from "@/types";
 import { serverAxios } from "@/services/api";
 import styles from "./game.module.scss";
+import Modal from "@/components/gameModal";
+import SimpleProfileModal from "./SimpleProfileModal";
 
 interface Props {
-  data: SoketUser;
+  dataProp: any;
 }
 
 interface TypeTextType {
   [key: number]: string[];
 }
 
-export default function UserItem({ data }: Props) {
-  const { userId } = data;
+/** soketUser -> User */
+function convertSoketUserToUser(soketUser: SoketUser): User {
+  return {
+    user_id: soketUser.userId,
+    rank: soketUser.userRanking,
+    exp: undefined,
+    score: soketUser.userScore,
+    level: soketUser.level,
+    nickname: soketUser.userName,
+    email: undefined,
+    profile: "",
+    odds: undefined,
+  };
+}
+
+/** User -> socketUser */
+function convertUserToSoketUser(user: User): SoketUser {
+  return {
+    userId: user.user_id,
+    userName: user.nickname,
+    userScore: user.score,
+    userRanking: user.rank,
+    ready: false,
+    leader: false,
+    level: user.level,
+    profile: user.profile,
+  };
+}
+
+// Type Guard 함수
+function isUser(dataProp?: SoketUser | User): dataProp is User {
+  return (dataProp as User)?.user_id !== undefined;
+}
+
+export default function UserItem({ dataProp }: Props) {
+  const data = isUser(dataProp) ? convertUserToSoketUser(dataProp) : dataProp;
+  console.log(data);
+
+  /** 간단한 프로필 모달 열기 */
+  const [openProfile, setOpenProfile] = useState(false);
+
   const [isActive, setIsActive] = useState(false);
 
   // eslint-disable-next-line no-null/no-null
@@ -26,11 +67,6 @@ export default function UserItem({ data }: Props) {
     if (buttonRef.current && !buttonRef.current.contains(e.relatedTarget as Node)) {
       setIsActive(false);
     }
-  };
-
-  /** 간단한 프로필 모달 열기 */
-  const openProfile = () => {
-    console.log(1);
   };
 
   /** data.user_id 로 친구 여부에 따른 버튼 */
@@ -126,11 +162,15 @@ export default function UserItem({ data }: Props) {
           <div className={styles.subBox}>{data.userName}</div>
         </div>
         <div className={`${styles.hiddenBtn} ${isActive ? styles.visible : ""}`}>
-          <button className={styles.subBtn} onClick={openProfile}>
+          <button className={`${styles.subBtn} ${styles.highlight}`} onClick={() => setOpenProfile(true)}>
             프로필
           </button>
+          <Modal isOpen={openProfile}>
+            <SimpleProfileModal user={convertSoketUserToUser(data)} onClose={() => setOpenProfile(false)} />
+          </Modal>
+
           {TypeText[userType].map((text) => (
-            <button key={text} className={styles.subBtn} onClick={() => handleFriend(text)}>
+            <button key={text} className={`${styles.subBtn} ${styles.highlight}`} onClick={() => handleFriend(text)}>
               <span className={styles.buttonText}>{text}</span>
             </button>
           ))}

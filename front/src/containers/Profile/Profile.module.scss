@@ -41,6 +41,14 @@
 }
 
 // 회원 검색창
+.errText {
+  position: absolute;
+  top: 25%;
+  left: -180px;
+  width: 300px;
+  height: 100%;
+  color: red;
+}
 .searchForm {
   position: relative;
   display: flex;

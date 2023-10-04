@@ -1,13 +1,27 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useAtom } from "jotai";
 import type { Frame } from "stompjs";
 import type { SoketUser, User } from "@/types";
 import { serverAxios } from "@/services/api";
 import { useWebSocket } from "@/socket/WebSocketProvider";
+import { userAtom } from "@/store/userAtom";
 import UserItem from "./UserItem";
 import styles from "./game.module.scss";
-import FriendsItem from "./FriendsItem";
+
+/** User -> SoketUser */
+function convertUserToSoketUser(inputUser: User): SoketUser {
+  return {
+    userId: inputUser.user_id ?? 0, // user_id가 없는 경우 기본값으로 0 사용
+    userName: inputUser.nickname,
+    userScore: inputUser.score,
+    userRanking: inputUser.rank,
+    level: inputUser.level,
+    ready: false,
+    leader: false,
+  };
+}
 
 export default function WaitingUser() {
   const [openTab, setOpenTab] = useState(1);
@@ -31,8 +45,13 @@ export default function WaitingUser() {
     try {
       // response / request
       const response = await serverAxios("/user/friend/response");
+      const request = await serverAxios("/user/friend/request");
+
+      // 병합된 리스트 생성
+      const combinedList = [...response.data.friendList, ...request.data.friendsList];
+
       // setCount(response.data.size);
-      setNotFriends(response.data.friendList);
+      setNotFriends(combinedList);
     } catch (err) {
       console.log("받은 요청 목록 에러", err);
     }
@@ -47,6 +66,8 @@ export default function WaitingUser() {
   // const user = userAtom.init;
   const stompClient = useWebSocket();
 
+  const [user] = useAtom(userAtom);
+
   // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (stompClient) {
@@ -59,14 +80,17 @@ export default function WaitingUser() {
         },
         {}
       );
-      const soketUser = {
-        userId: 1212,
-        userName: "user123123",
-        userScore: 1111,
-        userRanking: 111,
-        ready: false,
-        leader: false,
-      };
+      // const soketUser = {
+      //   userId: 121211,
+      //   userName: "user.ㅎㅇ",
+      //   userScore: 1111,
+      //   userRanking: 111,
+      //   ready: false,
+      //   leader: false,
+      // };
+
+      // Atom에 있는 정보로 socketUser 넣기
+      const soketUser = convertUserToSoketUser(user);
 
       stompClient.send("/pub/lobby/entrance", {}, JSON.stringify(soketUser));
       return () => {
@@ -100,17 +124,17 @@ export default function WaitingUser() {
       <div className={`${styles.content} ${styles[`tab_${openTab}`]}`}>
         <div className={`${styles.page} ${styles.userBox} ${openTab === 1 ? styles.tabContentActive : ""}`}>
           {items.map((item) => (
-            <UserItem key={item.userId} data={item} />
+            <UserItem key={item.userId} dataProp={item} />
           ))}
         </div>
         <div className={`${styles.page} ${styles.userBox} ${openTab === 2 ? styles.tabContentActive : ""}`}>
           {friends.map((item) => (
-            <FriendsItem key={item.user_id} data={item} />
+            <UserItem key={item.user_id} dataProp={item} />
           ))}
         </div>
         <div className={`${styles.page} ${styles.userBox} ${openTab === 3 ? styles.tabContentActive : ""}`}>
           {NotFriends.map((item) => (
-            <FriendsItem key={item.user_id} data={item} />
+            <UserItem key={item.user_id} dataProp={item} />
           ))}
         </div>
       </div>

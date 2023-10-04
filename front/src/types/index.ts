@@ -1,7 +1,7 @@
 // 타입
 
 export interface User {
-  user_id?: number;
+  user_id: number;
   rank?: number;
   exp?: number;
   score?: number;
@@ -62,4 +62,6 @@ export interface SoketUser {
   userRanking?: number;
   ready?: boolean;
   leader?: boolean;
+  level?: number;
+  profile?: string;
 }

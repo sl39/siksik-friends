@@ -53,15 +53,16 @@ $hardBlue: #6495ed;
   position: absolute;
   bottom: 2vh;
   right: 10px;
-
   box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 22px 0 rgba(31, 38, 135, 0.3);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
   border-radius: 30px;
-
   padding: 10px 20px;
+  backdrop-filter: blur(8px);
+  background-color: rgba($color: #fff, $alpha: 1);
+  box-shadow:
+    0px 10px 18px -5px rgba(204, 229, 255, 0.8),
+    inset -10px -10px 7px 0px rgba(204, 229, 255, 0.4),
+    inset 15px 15px 7px 0px rgb(255, 255, 255);
+  transition: all 0.3s ease;
 }
 
 // 방 목록
@@ -514,6 +515,9 @@ $hardBlue: #6495ed;
 
   transition: height 0.2s ease-in-out;
 
+  border-radius: 10px;
+  margin: 2px 2px 10px;
+
   &:focus {
     height: 20%;
   }
@@ -581,4 +585,17 @@ $hardBlue: #6495ed;
   background-color: #007bff; /* 선택된 경우의 배경색 (파란색) */
   color: #fff; /* 선택된 경우의 글자색 (흰색) */
   /* 기타 스타일 설정 */
+}
+
+.highlight:hover {
+  padding: 3px 5px;
+  // width: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(94, 172, 254, 0.3) 0%,
+    rgba(94, 172, 254, 0.4) 60%,
+    rgba(94, 172, 254, 0.4) 60%,
+    rgba(94, 172, 254, 0.6) 85%,
+    rgba(94, 172, 254, 0.8) 100%
+  );
 }
