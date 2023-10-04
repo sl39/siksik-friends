@@ -22,7 +22,7 @@ export default function GameRank() {
   ];
 
   // 내 점수 정보
-  const myData = [];
+  const myData = {};
 
   const router = useRouter();
 
