@@ -9,7 +9,7 @@ public interface RoomRepository {
     void saveScore(Long roomId, long userId);
     Room save(Room room);
     void delete(Room room);
-    Optional<Room> findByRoomId(Long roomId);
+    Optional<Room> findByRoomId(long roomId);
     List<Room> findAll();
     List<Room> terminate();
 }
