@@ -6,13 +6,13 @@ export default function Home() {
   return (
     <div className={styles.main}>
       <div className={`${styles.alice} ${styles.image}`}>
-        <Image src="/images/actor/alice4.png" alt="alice" sizes="10vw" fill style={{ objectFit: "contain" }} />
+        <Image src="/images/actor/alice4.png" alt="alice" sizes="10vw" fill style={{ objectFit: "contain" }} priority />
       </div>
       {/* <div className={`${styles.cat} ${styles.image}`}>
         <Image src="/images/actor/cat2.png" alt="cat" sizes="10vw" fill style={{ objectFit: "contain" }} />
       </div> */}
       <div className={`${styles.dodo} ${styles.image}`}>
-        <Image src="/images/actor/dodo3.png" alt="dodo" sizes="10vw" fill style={{ objectFit: "contain" }} />
+        <Image src="/images/actor/dodo3.png" alt="dodo" sizes="10vw" fill style={{ objectFit: "contain" }} priority />
       </div>
 
       <h1 className={styles.logo}>
