@@ -1,6 +1,5 @@
 import { atom } from "jotai";
 import type { User } from "@/types";
-
 // export const userAtom = atom<User>({} as User);
 export const userAtom = atom<User>({
   user_id: 10,
