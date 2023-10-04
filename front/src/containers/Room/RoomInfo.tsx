@@ -1,7 +1,7 @@
 // import { userAtom } from "@/store/userAtom";
+import Image from "next/image";
 import type { Room } from "@/types";
 import styles from "./room.module.scss";
-import Image from "next/image";
 
 interface Props {
   room: Room;
@@ -13,17 +13,11 @@ export default function RoomData({ room }: Props) {
 
   return (
     <div className={styles.roomData}>
-       <div className={styles.roomName}>
+      <div className={styles.roomName}>
         <span>{room?.roomName}</span>
-          <Image 
-          className={styles.lock}
-          src={room?.password ? "/images/actor/locked.png" : "/images/actor/unlocked.png"} 
-          alt="worm" 
-          sizes="10vw" 
-          fill style={{ objectFit: "contain" }} priority/>
-       </div>
+      </div>
 
-       <div className={styles.bottomInfo}>
+      <div className={styles.bottomInfo}>
         <div className={styles.quizInfo}>
           <div className={styles.quizInfoTitle}>
             <span>문제정보</span>
@@ -39,10 +33,22 @@ export default function RoomData({ room }: Props) {
             <span>인원</span>
           </div>
           <div className={styles.quizInfoContent}>
-            <p>{room?.roomCurrent} / {room?.roomSize}</p>
-            <Image src="/images/actor/bulea2.png" alt="worm" sizes="10vw" fill style={{ objectFit: "contain" }} priority />
+            <p>
+              {room?.roomCurrent} / {room?.roomSize}
+            </p>
+           
+            <div >
+              <Image
+                className={styles.worm}
+                src="/images/actor/bulea2.png"
+                alt="worm"
+                sizes="10vw"
+                fill
+                style={{ objectFit: "contain" }}
+                priority
+              />
+            </div>
           </div>
-          
         </div>
       </div>
     </div>
