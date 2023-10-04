@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function BackNav() {
   const [isQuit, setIsQuit] = useState(true);
@@ -15,6 +15,7 @@ export default function BackNav() {
     } else {
       setIsQuit(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleClick = () => {
