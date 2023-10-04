@@ -71,12 +71,12 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
   const [NotFriends, setNotFriends] = useAtom(notFriendsAtom);
 
   /** 친구 요청 | 삭제 */
-  const handleFriend = async (type: number, text: string, id: number) => {
+  const handleFriend = async (type: number, text: string) => {
     let newFriends;
     if (type === 3) {
       // 친구 요청
       try {
-        await serverAxios.post(`/user/friend/${id}`);
+        await serverAxios.post(`/user/friend/${data.userId}`);
         setUserType(1);
       } catch (err) {
         console.log("친구 요청 에러", err);
@@ -84,9 +84,9 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
     } else if (type === 4 || type === 1) {
       // 친구 삭제, 친구 요청 취소
       try {
-        await serverAxios.delete(`user/friend/${id}`);
+        await serverAxios.delete(`user/friend/${data.userId}`);
         // 친구 목록에서 삭제
-        newFriends = friends.filter((item) => item.user_id !== `${id}`);
+        newFriends = friends.filter((item) => item.user_id !== data.userId);
         setFriends(newFriends);
         setUserType(3);
       } catch (err) {
@@ -96,9 +96,9 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
       if (text === "친구 요청 수락") {
         // 친구 수락
         try {
-          await serverAxios.put(`user/friend/${id}`);
+          await serverAxios.put(`user/friend/${data.userId}`);
           // 요청 목록에서 삭제
-          newFriends = NotFriends.filter((item) => item.user_id !== `${id}`);
+          newFriends = NotFriends.filter((item) => item.user_id !== data.userId);
           setNotFriends(newFriends);
           setUserType(4);
         } catch (err) {
@@ -107,9 +107,9 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
       } else if (text === "친구 요청 거절") {
         // 친구 삭제
         try {
-          await serverAxios.delete(`user/friend/${id}`);
+          await serverAxios.delete(`user/friend/${data.userId}`);
           // 요청 목록에서 삭제
-          newFriends = NotFriends.filter((item) => item.user_id !== `${id}`);
+          newFriends = NotFriends.filter((item) => item.user_id !== data.userId);
           setNotFriends(newFriends);
           setUserType(3);
         } catch (err) {
@@ -172,7 +172,7 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
                 <button
                   key={text}
                   className={`${styles.subBtn} ${styles.highlight}`}
-                  onClick={() => handleFriend(userType, text, data.user_id)}
+                  onClick={() => handleFriend(userType, text)}
                 >
                   <span className={styles.buttonText}>{text}</span>
                 </button>
