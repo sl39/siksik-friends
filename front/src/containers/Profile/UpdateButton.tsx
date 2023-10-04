@@ -5,22 +5,39 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { serverAxios } from "@/services/api";
 import { userAtom } from "@/store/userAtom";
+// import type { User } from "@/types";
 import styles from "./Profile.module.scss";
 
 interface TypeTextType {
   [key: number]: string[];
 }
 
-export default function UpdateButton() {
+interface Props {
+  userPropId?: number;
+}
+
+export default function UpdateButton({ userPropId }: Props) {
   const router = useRouter();
 
   const params = useParams();
-  let userId = 0;
+  let defaultId = 0;
   if (typeof params.id === "string") {
-    userId = parseInt(params.id, 10);
+    defaultId = parseInt(params.id, 10);
   }
+
+  // 나
   const myData = useAtom(userAtom)[0];
   const myId = myData.user_id;
+
+  const [profileId, setProfileId] = useState(0);
+
+  useEffect(() => {
+    if (userPropId) {
+      setProfileId(userPropId);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const userId = userPropId ? profileId : defaultId;
 
   /** * 친구인지, 아닌지 상태 확인하기
    * 1. 내가 걔한테 요청을 보냈고, 아직 친구가 아니다.
@@ -32,7 +49,7 @@ export default function UpdateButton() {
    * 4. 친구다
    * (친구 삭제 버튼(4) -> 친구 요청(3))
    */
-  const [userType, setUserType] = useState(0);
+  const [userType, setUserType] = useState(2);
 
   const TypeText: TypeTextType = {
     0: [],
@@ -43,6 +60,7 @@ export default function UpdateButton() {
   };
   useEffect(() => {
     /** 친구 상태 확인 */
+    console.log(userId, myId);
     const isFriend = async () => {
       try {
         const response = await serverAxios(`/user/friend/${userId}`);
@@ -53,7 +71,7 @@ export default function UpdateButton() {
     };
     isFriend();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [userId]);
 
   /** 친구 요청 | 삭제 */
   const handleFriend = async (text: string) => {
@@ -109,16 +127,19 @@ export default function UpdateButton() {
   };
 
   // 내 프로필
+  // userPropId가 있으면 안보임
   if (myId === userId) {
     return (
-      <>
-        <button onClick={handleUpdate} className={styles.button}>
-          <span className={styles.buttonText}>정보 수정</span>
-        </button>
-        <button onClick={handleLogout} className={styles.button}>
-          <span className={styles.buttonText}>로그아웃</span>
-        </button>
-      </>
+      userPropId === undefined && (
+        <>
+          <button onClick={handleUpdate} className={styles.button}>
+            <span className={styles.buttonText}>정보 수정</span>
+          </button>
+          <button onClick={handleLogout} className={styles.button}>
+            <span className={styles.buttonText}>로그아웃</span>
+          </button>
+        </>
+      )
     );
   }
 
