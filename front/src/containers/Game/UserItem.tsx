@@ -93,7 +93,7 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
         console.log("친구 삭제 | 취소 에러", err);
       }
     } else if (type === 2) {
-      if (text === "친구 요청 수락") {
+      if (text === "요청 수락") {
         // 친구 수락
         try {
           await serverAxios.put(`user/friend/${data.userId}`);
@@ -104,7 +104,7 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
         } catch (err) {
           console.log("친구 수락 에러", err);
         }
-      } else if (text === "친구 요청 거절") {
+      } else if (text === "거절") {
         // 친구 삭제
         try {
           await serverAxios.delete(`user/friend/${data.userId}`);
