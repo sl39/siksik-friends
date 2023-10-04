@@ -6,7 +6,7 @@ import { useAtom } from "jotai";
 import type { SoketUser, User } from "@/types";
 import { serverAxios } from "@/services/api";
 import { convertSoketUserToUser, convertUserToSoketUser } from "@/utils/userConversion";
-import { userAtom } from "@/store/userAtom";
+import { friendsAtom, notFriendsAtom, userAtom } from "@/store/userAtom";
 import styles from "./game.module.scss";
 import Modal from "@/components/gameModal";
 import SimpleProfileModal from "./SimpleProfileModal";
@@ -67,8 +67,12 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const [friends, setFriends] = useAtom(friendsAtom);
+  const [NotFriends, setNotFriends] = useAtom(notFriendsAtom);
+
   /** 친구 요청 | 삭제 */
   const handleFriend = async (text: string) => {
+    let newFriends;
     if (userType === 3) {
       // 친구 요청
       try {
@@ -81,6 +85,9 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
       // 친구 삭제, 친구 요청 취소
       try {
         await serverAxios.delete(`user/friend/${data.userId}`);
+        // 친구 목록에서 삭제
+        newFriends = friends.filter((item) => item.user_id !== data.userId);
+        setFriends(newFriends);
         setUserType(3);
       } catch (err) {
         console.log("친구 삭제 | 취소 에러", err);
@@ -90,6 +97,9 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
         // 친구 수락
         try {
           await serverAxios.put(`user/friend/${data.userId}`);
+          // 요청 목록에서 삭제
+          newFriends = NotFriends.filter((item) => item.user_id !== data.userId);
+          setNotFriends(newFriends);
           setUserType(4);
         } catch (err) {
           console.log("친구 수락 에러", err);
@@ -98,6 +108,9 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
         // 친구 삭제
         try {
           await serverAxios.delete(`user/friend/${data.userId}`);
+          // 요청 목록에서 삭제
+          newFriends = NotFriends.filter((item) => item.user_id !== data.userId);
+          setNotFriends(newFriends);
           setUserType(3);
         } catch (err) {
           console.log("친구 거절 에러", err);

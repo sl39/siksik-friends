@@ -51,3 +51,6 @@ export const levelAtom = atom<Array<string>>([
   "/images/thrumpCards/03_clover.png",
   "/images/thrumpCards/04_heart.png",
 ]);
+
+export const friendsAtom = atom<Array<User>>([]);
+export const notFriendsAtom = atom<Array<User>>([]);
