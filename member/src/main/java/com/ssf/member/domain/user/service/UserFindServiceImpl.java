@@ -1,14 +1,12 @@
 package com.ssf.member.domain.user.service;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.ssf.member.domain.user.domain.User;
 import com.ssf.member.domain.user.dto.UserDto;
 import com.ssf.member.domain.user.dto.UserRequest;
 import com.ssf.member.domain.user.dto.UserResponse;
 import com.ssf.member.domain.user.repository.UserRepository;
+import com.ssf.member.global.jwt.dto.JwtDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
@@ -24,43 +22,17 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequiredArgsConstructor
 public class UserFindServiceImpl implements UserFindService {
 
-    @Value("${jwt.secretKey}")
-    private String secretKey;
-
-    private static final String ID_CLAIM = "id";
-    private static final String BEARER = "Bearer ";
     private static final String KEY = "rank";
 
     private final RedisTemplate<String, String> redisTemplate;
     private final UserRepository userRepository;
 
     @Override
-    public UserResponse.EmailRedundancy checkEmailDuplication(UserRequest.Email email) {
-        return UserResponse.EmailRedundancy.builder()
-                .emailRedundancyStatus(userRepository.existsByEmail(email.email()))
-                .build();
-    }
-
-    @Override
-    public UserResponse.NicknameRedundancy checkNicknameDuplication(UserRequest.Nickname nickname) {
-        return UserResponse.NicknameRedundancy.builder()
-                .nicknameRedundancyStatus(userRepository.existsByNickname(nickname.nickname()))
-                .build();
-    }
-
-    @Override
-    public UserDto.Response findMyInfo(String accessHeader) {
-        User user = userRepository.findById(Long
-                .parseLong(JWT
-                        .require(Algorithm.HMAC512(secretKey))
-                        .build()
-                        .verify(accessHeader
-                                .replace(BEARER, ""))
-                        .getClaim(ID_CLAIM)
-                        .toString()))
+    public UserResponse.MyInfo findUser(JwtDto jwtDto) {
+        User user = userRepository.findById(Long.parseLong(jwtDto.id()))
                 .orElseThrow();
 
-        return UserDto.Response.builder()
+        return UserResponse.MyInfo.builder()
                 .user_id(user.getId())
                 .email(user.getEmail())
                 .nickname(user.getNickname())
@@ -68,21 +40,23 @@ public class UserFindServiceImpl implements UserFindService {
                 .rank(findRank(user.getId()))
                 .level(user.getLevel())
                 .exp(user.getExp())
-                .odds(user.getTotalGame() == 0L ? (user.getWin() == 0L ? "0.0%" : "100.0%") : String.format("%.1f%%", user.getWin() / (double) user.getTotalGame() * 100))
+                .odds(user.getTotalGame() == 0L ? (user.getWin() == 0L ? "0.0%" : "100.0%")
+                        : String.format("%.1f%%", user.getWin() / (double) user.getTotalGame() * 100))
                 .build();
     }
 
     @Override
-    public UserDto.Response findUser(Long id) {
-        User user = userRepository.findById(id).orElseThrow(null);
+    public UserResponse.UserDetail findUserById(UserRequest.UserId userId) {
+        User user = userRepository.findById(userId.id()).orElseThrow(null);
 
-        return UserDto.Response.builder()
+        return UserResponse.UserDetail.builder()
                 .user_id(user.getId())
                 .nickname(user.getNickname())
                 .profile(user.getProfile())
-                .rank(findRank(id))
+                .rank(findRank(userId.id()))
                 .level(user.getLevel())
-                .odds(user.getTotalGame() == 0L ? (user.getWin() == 0L ? "0.0%" : "100.0%") : String.format("%.1f%%", user.getWin() / (double) user.getTotalGame() * 100))
+                .odds(user.getTotalGame() == 0L ? (user.getWin() == 0L ? "0.0%" : "100.0%")
+                        : String.format("%.1f%%", user.getWin() / (double) user.getTotalGame() * 100))
                 .build();
     }
 

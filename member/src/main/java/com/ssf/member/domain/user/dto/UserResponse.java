@@ -5,8 +5,26 @@ import lombok.Builder;
 public record UserResponse() {
 
     @Builder
-    public record EmailRedundancy(boolean emailRedundancyStatus) {}
+    public record MyInfo(
+
+            long user_id,
+            String email,
+            String nickname,
+            String profile,
+            long rank,
+            int level,
+            long exp,
+            String odds
+    ) {}
 
     @Builder
-    public record NicknameRedundancy(boolean nicknameRedundancyStatus) {}
+    public record UserDetail(
+
+            long user_id,
+            String nickname,
+            String profile,
+            long rank,
+            int level,
+            String odds
+    ) {}
 }
