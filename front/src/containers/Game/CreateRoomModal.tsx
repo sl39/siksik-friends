@@ -73,12 +73,11 @@ export default function CreateRoomModal({ onClose }: Props) {
             // headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
           })
           .post("/lobby", roomData);
-        console.log(response);
-        console.log("방 만들기");
+        // console.log(response);
+        // console.log("방 만들기");
         if (stompClient) {
           stompClient.send("/pub/room/roomList", {}, JSON.stringify({}));
         }
-
         router.push(`/game/start/room/${response.data.roomId}`);
       } catch (err) {
         console.log(err);
@@ -250,7 +249,7 @@ export default function CreateRoomModal({ onClose }: Props) {
             </div>
           </div>
           {/* 문제 종류 */}
-          <div className={`${styles.inputDiv} ${styles.type}`}>
+          <div className={`${styles.inputDiv} ${styles.type} ${styles.input3}`}>
             <label htmlFor="type">문제 종류</label>
             <div className={styles.groupContainer}>
               <div className={styles.wordButton}>
@@ -303,17 +302,20 @@ export default function CreateRoomModal({ onClose }: Props) {
             </div>
           </div>
           {/* 날짜 */}
-          <DatePicker
-            selected={selectedDate}
-            onChange={(date: Date) => handleDate(date)}
-            dateFormat="yyyy-MM-dd"
-            placeholderText="날짜를 선택하세요!"
-            minDate={new Date("2010-01-01")}
-            maxDate={new Date()}
-            showMonthDropdown
-            showYearDropdown
-            locale={ko}
-          />
+          <div className={`${styles.inputDiv} ${styles.input3}`}>
+            <label htmlFor="date">출제 날짜</label>
+            <DatePicker
+              selected={selectedDate}
+              onChange={(date: Date) => handleDate(date)}
+              dateFormat="yyyy-MM-dd"
+              placeholderText="날짜를 선택하세요!"
+              minDate={new Date("2010-01-01")}
+              maxDate={new Date()}
+              showMonthDropdown
+              showYearDropdown
+              locale={ko}
+            />
+          </div>
           {/* 비밀번호 */}
           <div className={styles.inputDiv}>
             <label htmlFor="password">비밀번호</label>

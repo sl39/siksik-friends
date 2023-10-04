@@ -49,9 +49,9 @@ export default function EnterRoom({ rooms }: Props) {
         <button className={styles.boxButton} onClick={randomOnClick}>
           빠른 시작
         </button>
-        <button className={styles.boxButton} onClick={() => setOpenSearchRoom(true)}>
+        {/* <button className={styles.boxButton} onClick={() => setOpenSearchRoom(true)}>
           방 찾기
-        </button>
+        </button> */}
         {openSearchRoom && (
           <Modal isOpen={openSearchRoom}>
             <SearchRoomModal onClose={() => setOpenSearchRoom(false)} />

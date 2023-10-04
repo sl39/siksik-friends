@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
 import type { Frame } from "stompjs";
 import { useWebSocket } from "@/socket/WebSocketProvider";
@@ -101,9 +101,19 @@ export default function Chatting({ roomId }: Props) {
     }));
   };
 
+  // eslint-disable-next-line no-null/no-null
+  const chatLogRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // 스크롤을 항상 아래로 이동
+    if (chatLogRef.current) {
+      chatLogRef.current.scrollTop = chatLogRef.current.scrollHeight;
+    }
+  }, [chatLog]);
+
   return (
     <div className={styles.roomChat}>
-      <div className={styles.chatLog}>
+      <div className={styles.chatLog} ref={chatLogRef}>
         {chatLog.map((messages, idx) => (
           <div className={styles.chat} key={messages.sendTime + String(idx)}>
             <p className={styles.senderLog}>{messages.sender}: </p>

@@ -258,10 +258,11 @@ $hardBlue: #6495ed;
 
 // 채팅
 .chatLog {
-  height: 75%;
+  height: 73%;
   width: 98%;
   background: rgba(255, 255, 255, 0.5);
   border-radius: 5px;
+  overflow-x: hidden;
   overflow-y: auto;
   padding: 5px;
   box-sizing: border-box;
@@ -293,7 +294,7 @@ $hardBlue: #6495ed;
   }
 }
 .chatInput {
-  height: 20%;
+  height: 18%;
   width: 100%;
 
   display: flex;
@@ -538,12 +539,13 @@ $hardBlue: #6495ed;
 
   .level {
     padding-left: 10px;
-    width: 20%;
+    letter-spacing: -2px;
+    width: 17%;
   }
   .name {
-    width: 55%;
+    width: 60%;
   }
-  .isReady {
+  .isReader {
     width: 15%;
     color: $hardBlue;
     letter-spacing: -2px;
