@@ -51,11 +51,7 @@ $hardBlue: #6495ed;
 }
 
 ////////////
-.lock {
-  position: absolute;
-  top: 10px;
-  right: 700px;
-}
+
 
 .roomName {
   height: 30px;
@@ -64,8 +60,8 @@ $hardBlue: #6495ed;
   top: 10px;
 }
 
-.roomName > span {
-  font-size: 30px;
+.roomName>span{
+  font-size: 28px;
   font-weight: bold;
   margin-left: 12px;
 }
@@ -91,7 +87,7 @@ $hardBlue: #6495ed;
 .quizInfoContent {
   flex: 1;
   margin: 0 5px;
-  color: #c93131;
+  color: #554f4f;
 }
 
 .quizInfoContent > p {
@@ -104,6 +100,10 @@ $hardBlue: #6495ed;
   margin: 0 5px;
 }
 
+.worm{
+  position: relative;
+  top: 50px; right: 0px;
+}
 ///////////////////
 
 .chatting {
