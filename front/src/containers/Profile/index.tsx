@@ -34,7 +34,7 @@ export default function Index() {
     resetProfile();
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [params]);
 
   return (
     <>
