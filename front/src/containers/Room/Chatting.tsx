@@ -5,9 +5,15 @@ import { useAtom } from "jotai";
 import type { Frame } from "stompjs";
 import { useWebSocket } from "@/socket/WebSocketProvider";
 import { userAtom } from "@/store/userAtom";
-import styles from "./game.module.scss";
+import styles from "../Game/game.module.scss";
 
-export default function Chatting() {
+interface Props {
+  roomId: number;
+}
+
+export default function Chatting({ roomId }: Props) {
+  const [user] = useAtom(userAtom);
+
   type Message = {
     sender: string;
     msg: string;
@@ -16,7 +22,6 @@ export default function Chatting() {
 
   const [chatLog, setChatLog] = useState<Message[]>([]);
   const stompClient = useWebSocket();
-  const [user] = useAtom(userAtom);
   const [message, setMessage] = useState({
     sender: user.nickname,
     msg: "",
@@ -33,7 +38,7 @@ export default function Chatting() {
     if (stompClient) {
       // stompClient를 사용하여 채팅 메시지를 구독합니다.
       const subscription = stompClient.subscribe(
-        "/sub/lobby/chat",
+        `/sub/room/chat/${roomId}`,
         function handleMessageFunction(frame: Frame) {
           const receivedMessage = JSON.parse(frame.body);
           setChatLog((prevChatLog) => [...prevChatLog, receivedMessage]);
@@ -47,6 +52,7 @@ export default function Chatting() {
       };
     }
     return undefined;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stompClient]);
 
   // 메시지 전송 함수
@@ -72,7 +78,7 @@ export default function Chatting() {
         // message.sendTime = String(time);
 
         // 펴블리셔
-        stompClient.send("/pub/lobby/chat", {}, JSON.stringify(message));
+        stompClient.send(`/pub/room/chat/${roomId}`, {}, JSON.stringify(message));
 
         // 입력 필드 초기화
         setMessage({
@@ -96,7 +102,7 @@ export default function Chatting() {
   };
 
   return (
-    <>
+    <div className={styles.roomChat}>
       <div className={styles.chatLog}>
         {chatLog.map((messages, idx) => (
           <div className={styles.chat} key={messages.sendTime + String(idx)}>
@@ -131,6 +137,6 @@ export default function Chatting() {
           전송
         </button>
       </form>
-    </>
+    </div>
   );
 }

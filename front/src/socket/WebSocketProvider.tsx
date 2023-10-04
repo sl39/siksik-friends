@@ -1,0 +1,45 @@
+"use client";
+
+import React, { createContext, useContext, useEffect, useState } from "react";
+import SockJS from "sockjs-client";
+import { Stomp } from "@stomp/stompjs";
+import type { CompatClient } from "@stomp/stompjs";
+import type { ReactNode } from "react";
+
+// WebSocket 컨텍스트 타입
+type WebSocketContextType = CompatClient | null;
+
+const WebSocketContext = createContext<WebSocketContextType | undefined>(undefined);
+
+export function useWebSocket(): WebSocketContextType | undefined {
+  return useContext(WebSocketContext);
+}
+
+type WebSocketProviderProps = {
+  children: ReactNode;
+};
+
+export default function WebSocketProvider({ children }: WebSocketProviderProps) {
+  const [stompClient, setStompClient] = useState<WebSocketContextType | undefined>(undefined);
+
+  useEffect(() => {
+    const socket = new SockJS("http://j9e101.p.ssafy.io:8083/ws");
+    const client = Stomp.over(socket);
+
+    function connect() {
+      client.connect({}, function connection() {
+        setStompClient(client);
+      });
+    }
+
+    connect();
+
+    return () => {
+      if (client) {
+        client.disconnect();
+      }
+    };
+  }, []);
+
+  return <WebSocketContext.Provider value={stompClient}>{children}</WebSocketContext.Provider>;
+}

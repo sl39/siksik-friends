@@ -1,21 +1,36 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import type { User } from "@/types";
+import Image from "next/image";
+import type { SoketUser, User } from "@/types";
 import { serverAxios } from "@/services/api";
+import { convertSoketUserToUser, convertUserToSoketUser } from "@/utils/userConversion";
 import styles from "./game.module.scss";
+import Modal from "@/components/gameModal";
+import SimpleProfileModal from "./SimpleProfileModal";
 
 interface Props {
-  data: User;
+  dataProp: any;
+  isRoom?: boolean;
 }
 
 interface TypeTextType {
   [key: number]: string[];
 }
 
-export default function UserItem({ data }: Props) {
+// Type Guard 함수
+function isUser(dataProp?: SoketUser | User): dataProp is User {
+  return (dataProp as User)?.user_id !== undefined;
+}
+
+export default function UserItem({ dataProp, isRoom = false }: Props) {
+  const data = isUser(dataProp) ? convertUserToSoketUser(dataProp) : dataProp;
+
+  /** 간단한 프로필 모달 열기 */
+  const [openProfile, setOpenProfile] = useState(false);
+
   const [isActive, setIsActive] = useState(false);
+
   // eslint-disable-next-line no-null/no-null
   const buttonRef = useRef<HTMLDivElement>(null);
 
@@ -24,11 +39,6 @@ export default function UserItem({ data }: Props) {
     if (buttonRef.current && !buttonRef.current.contains(e.relatedTarget as Node)) {
       setIsActive(false);
     }
-  };
-
-  /** 간단한 프로필 모달 열기 */
-  const openProfile = () => {
-    console.log(1);
   };
 
   /** data.user_id 로 친구 여부에 따른 버튼 */
@@ -41,11 +51,11 @@ export default function UserItem({ data }: Props) {
   };
   const [userType, setUserType] = useState(0);
 
+  /** 친구 상태 확인 */
   useEffect(() => {
-    /** 친구 상태 확인 */
     const isFriend = async () => {
       try {
-        const response = await serverAxios(`/user/friend/${data.user_id}`);
+        const response = await serverAxios(`/user/friend/${data.userId}`);
         setUserType(response.data.status);
       } catch (err) {
         console.log("친구 확인 에러", err);
@@ -60,7 +70,7 @@ export default function UserItem({ data }: Props) {
     if (userType === 3) {
       // 친구 요청
       try {
-        await serverAxios.post(`/user/friend/${data.user_id}`);
+        await serverAxios.post(`/user/friend/${data.userId}`);
         setUserType(1);
       } catch (err) {
         console.log("친구 요청 에러", err);
@@ -68,7 +78,7 @@ export default function UserItem({ data }: Props) {
     } else if (userType === 4 || userType === 1) {
       // 친구 삭제, 친구 요청 취소
       try {
-        await serverAxios.delete(`user/friend/${data.user_id}`);
+        await serverAxios.delete(`user/friend/${data.userId}`);
         setUserType(3);
       } catch (err) {
         console.log("친구 삭제 | 취소 에러", err);
@@ -77,7 +87,7 @@ export default function UserItem({ data }: Props) {
       if (text === "친구 요청 수락") {
         // 친구 수락
         try {
-          await serverAxios.put(`user/friend/${data.user_id}`);
+          await serverAxios.put(`user/friend/${data.userId}`);
           setUserType(4);
         } catch (err) {
           console.log("친구 수락 에러", err);
@@ -85,7 +95,7 @@ export default function UserItem({ data }: Props) {
       } else if (text === "친구 요청 거절") {
         // 친구 삭제
         try {
-          await serverAxios.delete(`user/friend/${data.user_id}`);
+          await serverAxios.delete(`user/friend/${data.userId}`);
           setUserType(3);
         } catch (err) {
           console.log("친구 거절 에러", err);
@@ -94,12 +104,21 @@ export default function UserItem({ data }: Props) {
     }
   };
 
+  let status;
+  if (data.leader) {
+    status = "방장";
+  } else if (data.ready) {
+    status = "READY";
+  } else {
+    status = "WAIT";
+  }
+
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div
       role="button"
-      className={`${styles.userItem} ${isActive ? styles.active : ""}`}
+      className={`${styles.userItem} ${styles.friend} ${isActive ? styles.active : ""}`}
       onClick={() => setIsActive(true)}
       onBlur={handleBlur}
       ref={buttonRef}
@@ -120,15 +139,20 @@ export default function UserItem({ data }: Props) {
       </div>
       <div className={styles.profileInfo}>
         <div className={styles.userInfo}>
-          <div className={`${styles.subBox} ${styles.level}`}>Lv.{data.level}</div>
-          <div className={styles.subBox}>{data.nickname}</div>
+          <div className={`${styles.subBox} ${styles.level}`}>Lv. {data.level}</div>
+          <div className={`${styles.subBox} ${styles.name}`}>{data.userName}</div>
+          {isRoom && <div className={`${styles.subBox} ${styles.isReader}`}>{status}</div>}
         </div>
         <div className={`${styles.hiddenBtn} ${isActive ? styles.visible : ""}`}>
-          <button className={styles.subBtn} onClick={openProfile}>
+          <button className={`${styles.subBtn} ${styles.highlight}`} onClick={() => setOpenProfile(true)}>
             프로필
           </button>
+          <Modal isOpen={openProfile}>
+            <SimpleProfileModal user={convertSoketUserToUser(data)} onClose={() => setOpenProfile(false)} />
+          </Modal>
+
           {TypeText[userType].map((text) => (
-            <button key={text} className={styles.subBtn} onClick={() => handleFriend(text)}>
+            <button key={text} className={`${styles.subBtn} ${styles.highlight}`} onClick={() => handleFriend(text)}>
               <span className={styles.buttonText}>{text}</span>
             </button>
           ))}

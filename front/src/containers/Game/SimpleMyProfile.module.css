@@ -1,11 +1,10 @@
 .myProfile {
+  width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
 
-  border: solid black;
   box-sizing: border-box;
-
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -29,28 +28,46 @@
   height: 100%;
 }
 .userInfo {
+  margin-top: 10px;
   height: 50%;
   width: 100%;
   display: flex;
+  align-items: center;
+
+  box-sizing: border-box;
+  padding-top: 20px;
+  padding-left: 0px;
+  font-size: 3vh;
 }
 .subBox {
   height: 100%;
-
-  /* &:first-child {
-    width: 20%;
-  }
-  &:last-child {
-    width: 75%;
-  } */
+  width: 30%;
 }
-
+.centerBox {
+  height: 20%;
+}
 .btn {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+
+  width: 100%;
+  height: 30%;
+
+  box-sizing: border-box;
 }
 .button {
+  height: 90%;
+  width: 50%;
   font-size: 2.5vh;
-  border: 1px solid black;
+  padding: 4px 8px;
+  text-align: center;
+  border-radius: 10px;
+  background: rgba(135, 206, 235, 0.5);
+  color: var(--color-grey-text);
+  margin-bottom: 15px;
+}
+.name {
+  width: auto;
 }
