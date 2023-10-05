@@ -3,6 +3,7 @@
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useParams } from "next/navigation";
 import { profileAtom } from "@/store/userAtom";
 import { serverAxios, socketAxios } from "@/services/api";
 import type { User } from "@/types";
@@ -14,20 +15,23 @@ interface Props {
 }
 
 export default function ProfileData({ userId }: Props) {
-  // 전적 데이터
-  const fetchHistory = async () => {
-    try {
-      const response = await socketAxios.post("/history", { userId });
-      console.log("히스토리", response);
-    } catch (err) {
-      console.error("히스토리 에러", err);
-    }
-  };
-
   const [profileData, setProfileData] = useState<User>({});
-  const [defaultData] = useAtom(profileAtom);
+  const [defaultData, setDefaultData] = useAtom(profileAtom);
+
+  const params = useParams();
   useEffect(() => {
-    fetchHistory();
+    const profileId = params.id;
+    const profileUser = async () => {
+      try {
+        const resposne = await serverAxios(`/user/${profileId}`);
+        setDefaultData(resposne.data);
+      } catch (err) {
+        console.error("프로필 다시 에러", err);
+      }
+    };
+    if (defaultData.user_id === 0) {
+      profileUser();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -36,9 +40,10 @@ export default function ProfileData({ userId }: Props) {
       const resposne = await serverAxios(`/user/${userId}`);
       setProfileData(resposne.data);
     } catch (err) {
-      console.log("프로필 에러", err);
+      console.error("프로필 에러", err);
     }
   };
+
   useEffect(() => {
     if (userId) {
       fetchUser();
@@ -49,9 +54,22 @@ export default function ProfileData({ userId }: Props) {
   // data는 userId가 있는 경우 profileData를 사용
   const data = userId ? profileData : defaultData;
 
+  // 전적 데이터
+  const fetchHistory = async () => {
+    try {
+      const response = await socketAxios.post("/history", {
+        userId: data.user_id,
+      });
+      console.log("히스토리", response);
+    } catch (err) {
+      console.error("히스토리 에러", err);
+    }
+  };
+
   const [activeTab, setActiveTab] = useState(1);
   const handleTabClick = (tabId: number) => {
     setActiveTab(tabId);
+    fetchHistory();
   };
 
   const dataXY = {
