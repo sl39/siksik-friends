@@ -2,6 +2,7 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
+import Image from "next/image";
 import type { SoketUser } from "@/types";
 import { TotalInfoContext } from "@/socket/SubscriptionQuiz";
 import Timer from "./Timer";
@@ -17,9 +18,9 @@ export default function GamePlay() {
   const roomId = Number(params.id);
 
   // 문제 정보 받아오기
-  // eslint-disable-next-line no-null/no-null
-  const { quiz, quizResult, end, roomInfoPlay } = useContext(TotalInfoContext);
-  console.log(quiz, quizResult, end, roomInfoPlay);
+  // const { quiz, quizResult, end, roomInfoPlay } = useContext(TotalInfoContext);
+  const { quiz, quizResult, end } = useContext(TotalInfoContext);
+  // console.log(quiz, quizResult, end, roomInfoPlay);
   const [scoreData, setScoreData] = useState<SoketUser[] | undefined>(quizResult);
   const [isQuiz, setIsQuiz] = useState(false);
   const [isResult, setIsResult] = useState(false);
@@ -58,21 +59,26 @@ export default function GamePlay() {
   }, [end]);
 
   return (
-    <div className={styles.flex}>
-      <div className={styles.top}>
-        {/* <Timer time={gameData.countTimer} resetTime={quiz ? 5 : 3} count={10} /> */}
-        <Timer time={isQuiz ? 5 : 3} />
-      </div>
-      <div className={styles.flex2}>
-        <div className={styles.left}>{scoreData ? <Score data={scoreData} /> : undefined}</div>
-        <div className={styles.center}>
-          <Question data={{ quiz, isQuiz, isResult }} isDone={isDone} />
+    <>
+      <div className={`${styles.flex} z-15`}>
+        <div className={styles.top}>
+          {/* <Timer time={gameData.countTimer} resetTime={quiz ? 5 : 3} count={10} /> */}
+          <Timer time={isQuiz ? 5 : 3} />
         </div>
-        <div className={styles.right}>
-          {/* room이랑 같은 채팅 */}
-          <Chatting roomId={roomId} />
+        <div className={styles.flex2}>
+          <div className={styles.left}>{scoreData ? <Score data={scoreData} /> : undefined}</div>
+          <div className={styles.center}>
+            <Question data={{ quiz, isQuiz, isResult }} isDone={isDone} />
+          </div>
+          <div className={styles.right}>
+            {/* room이랑 같은 채팅 */}
+            <Chatting roomId={roomId} />
+          </div>
         </div>
       </div>
-    </div>
+      <div className={`${styles.image1} z-11`}>
+        <Image src="/images/actor/queen.png" alt="이미지" sizes="30vw" fill priority style={{ objectFit: "contain" }} />
+      </div>
+    </>
   );
 }
