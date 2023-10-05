@@ -2,15 +2,15 @@ import { atom } from "jotai";
 import type { Friend, User } from "@/types";
 // export const userAtom = atom<User>({} as User);
 export const userAtom = atom<User>({
-  user_id: 1311,
-  email: "이메일",
-  nickname: "나는희영",
-  profile: "/images/character/rabbit1.png",
-  odds: "",
-  rank: 999,
-  exp: 0,
-  score: 10,
-  level: 99,
+  user_id: 0,
+  // email: "이메일",
+  // nickname: "나는희영",
+  // profile: "/images/character/rabbit1.png",
+  // odds: "",
+  // rank: 999,
+  // exp: 0,
+  // score: 10,
+  // level: 99,
 });
 
 // export const profileAtom = atom<User>({} as User);
