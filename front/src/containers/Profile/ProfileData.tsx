@@ -4,7 +4,7 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { profileAtom } from "@/store/userAtom";
-import { serverAxios } from "@/services/api";
+import { serverAxios, socketAxios } from "@/services/api";
 import type { User } from "@/types";
 import styles from "./Profile.module.scss";
 // import FriendsTab from "./FriendsTab";
@@ -14,6 +14,16 @@ interface Props {
 }
 
 export default function ProfileData({ userId }: Props) {
+  // 내 데이터 받아오기
+  const fetchHistory = async () => {
+    try {
+      const response = await socketAxios.post("/history", userId);
+      console.log(response);
+    } catch (err) {
+      console.error("히스토리 에러", err);
+    }
+  };
+
   const [profileData, setProfileData] = useState<User>({});
   const [defaultData] = useAtom(profileAtom);
 
