@@ -116,21 +116,36 @@
     top: 0;
     right: 0;
   }
+  .correctImage {
+    position: absolute;
+    top: 5%;
+    left: 15%;
+    height: 90%;
+    aspect-ratio: 1 / 1;
+    opacity: 0.6;
+    z-index: 11;
+  }
 
   z-index: 10;
   position: relative;
 
   width: 100%;
   height: 100%;
-  padding: 36px 50px;
+  padding: 10px 50px;
   box-sizing: border-box;
 
   background: #fff;
   border-radius: 3px;
   box-shadow: 0 2px rgba(0, 0, 0, 0.25);
 
+  .quizType {
+    font-size: 3vh;
+  }
   .quizTitle {
-    height: 15%;
+    box-sizing: border-box;
+
+    min-height: 20%;
+
     margin-top: 0;
     font-size: 5vh;
     color: #4f7482;
@@ -138,12 +153,24 @@
     padding-bottom: 0.2em;
     border-bottom: 1px solid #c2c2c2;
     position: relative;
+
+    word-wrap: break-word;
+
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+  .endTitle {
+    padding-top: 10%;
+    height: auto;
   }
   .quizDesc {
+    box-sizing: border-box;
+
     font-size: 3.5vh;
     line-height: 1.5em;
-    margin-bottom: 5%;
-    height: 50%;
+    margin-bottom: 8%;
+    height: 15%;
 
     background: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(2px);
@@ -151,10 +178,53 @@
 
     position: relative;
   }
+  .quizDescHint {
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+
+    box-sizing: border-box;
+    height: 55%;
+    width: 103%;
+    font-size: 2.5vh;
+
+    overflow-y: auto;
+
+    .hint {
+      padding: 5px 0;
+    }
+
+    /* 스크롤 CSS */
+    &::-webkit-scrollbar {
+      width: 10px;
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+      height: 30%;
+      background: var(--color-softblue);
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-track {
+      background: lightgray;
+      border-radius: 10px;
+    }
+  }
   .Isanswer {
+    height: 50%;
+    color: blue;
+    font-size: 10vh;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .IsEnd {
+    height: 40%;
     font-size: 5vh;
     box-sizing: border-box;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .answer {
@@ -163,30 +233,16 @@
     justify-content: center;
     align-items: stretch;
 
+    box-sizing: border-box;
     width: 100%;
-    height: 12%;
-    margin-left: -50px;
-    padding: 36px 50px;
-    position: relative;
-    background: #c2c2c2;
+    height: 20%;
+    padding: 34px 45px;
+    left: 0;
     bottom: 0;
 
-    &::before,
-    &::after {
-      top: 0;
-      bottom: 0;
-      width: 25px;
-      content: "";
-      position: absolute;
-      background: #c2c2c2;
-      box-shadow: 0 2px rgba(0, 0, 0, 0.25);
-    }
-    &::before {
-      right: 100%;
-    }
-    &::after {
-      left: 100%;
-    }
+    position: absolute;
+    background: #c2c2c2;
+
     input {
       margin: 0;
       font-size: 5vh;
@@ -201,7 +257,7 @@
 
     .quote {
       &::before {
-        top: -22px;
+        top: 0px;
         left: 16px;
         color: #fff;
         content: "“";
