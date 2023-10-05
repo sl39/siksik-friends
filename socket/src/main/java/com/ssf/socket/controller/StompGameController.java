@@ -48,14 +48,14 @@ public class StompGameController {
         scheduler.schedule(() -> loading(roomId, body), 0, TimeUnit.SECONDS); // 0, 23, 46, 69, ...
 
         int time = 3;
-        for (int i = 0; i < quizList.getQuizSet().size(); i++) {
+        for (int i = 0; i < body.getQuizCount(); i++) {
             int idx = i;
             scheduler.schedule(() -> sendQuiz(roomId, quizList.getQuizSet().get(idx)), time, TimeUnit.SECONDS);
             time += 1;
             scheduler.schedule(() -> sendResult(roomId), time, TimeUnit.SECONDS);
             time += 1;
         }
-        scheduler.schedule(() -> endGame(roomId, quizList.getQuizSet(), category, quizList.getQuizSet().size()), time, TimeUnit.SECONDS);
+        scheduler.schedule(() -> endGame(roomId, quizList.getQuizSet(), category, body.getQuizCount()), time, TimeUnit.SECONDS);
     }
 
     public void loading(int roomId, Room roomInfo) {
