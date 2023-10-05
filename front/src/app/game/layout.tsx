@@ -9,23 +9,27 @@ import { serverAxios } from "@/services/api";
 import Exit from "./quit";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const [user] = useAtom(userAtom);
+  const [user, setUser] = useAtom(userAtom);
   const router = useRouter();
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        await serverAxios("/user/my-info");
-        // const response = await serverAxios("/user/my-info");
-        // setUser(response.data);
+        const response = await serverAxios("/user/my-info");
+        setUser(response.data);
       } catch (err) {
         console.error("새로고침", err);
+        // eslint-disable-next-line no-alert
+        alert("잘못된 접근입니다");
         router.replace("/sign-up");
       }
     };
     fetchUserData();
     if (user.user_id === 0) {
-      router.replace("/");
+      // eslint-disable-next-line no-alert
+      alert("잘못된 접근입니다");
+      router.replace("/sign-up");
+      // router.replace("/");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
