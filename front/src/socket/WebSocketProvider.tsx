@@ -25,7 +25,7 @@ export default function WebSocketProvider({ children }: WebSocketProviderProps) 
   useEffect(() => {
     const socket = new SockJS("https://j9e101.p.ssafy.io/socket/ws");
     const client = Stomp.over(socket);
-    client.debug = () => {};
+    // client.debug = () => {};
     // client.configure({
     //    reconnectDelay: 5000,
     // });
