@@ -61,7 +61,7 @@ export default function Timer({ time }: Props) {
 
   return (
     <div className={styles.timerContainer}>
-      {quizNum}
+      <div className={styles.quizNum}>{Number.isInteger(quizNum / 2) ? `${quizNum / 2} 번째 문제` : ""}</div>
       <div className={styles.timerTime}>남은 시간: {(sec / 10).toFixed(1)} 초</div>
       <div className={getImageClass()} style={{ right: `calc(${widthProgress}% - 20px)` }}>
         <Image
