@@ -55,7 +55,6 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
         `/sub/game/quiz/${roomId}`,
         function handleRoomInfo(frame: Frame) {
           const roomQuiz = frame.body;
-          console.log(frame.body);
           // eslint-disable-next-line no-empty
           if (roomQuiz === "start!") {
             router.push(`/game/start/play/${roomId}`);
@@ -71,7 +70,6 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
         function handleRoomInfo(frame: Frame) {
           const resultUsers = JSON.parse(frame.body);
           setQuizResult(resultUsers);
-          console.log(resultUsers, "게임 결과");
         },
         {}
       );
@@ -81,7 +79,6 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
         `/sub/game/end/${roomId}`,
         function handleRoomInfo(frame: Frame) {
           const gameEnd = frame.body;
-          console.log(gameEnd, "게임 end 구독");
           setEnd(gameEnd);
         },
         {}
@@ -93,10 +90,12 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
         function handleRoomInfo(frame: Frame) {
           const gameEnd = JSON.parse(frame.body);
           setRoomInfoPlay(gameEnd);
-          console.log(gameEnd, "gameinfo");
           gameEnd.members.forEach((member: SoketUser) => {
             if (member.userId === soketUserRef.current.userId) {
               soketUserRef.current.leader = member.leader;
+              if (member.ready && member.leader) {
+                stompClient.send(`/pub/room/unready/${roomId}`, {}, JSON.stringify(member));
+              }
             }
           });
         },
@@ -106,7 +105,6 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
 
       return () => {
         stompClient.send(`/pub/room/exit/${roomId}`, {}, JSON.stringify(soketUserRef.current));
-        console.log("soketUserRef", soketUserRef);
 
         subscription.unsubscribe();
         subscription1.unsubscribe();
