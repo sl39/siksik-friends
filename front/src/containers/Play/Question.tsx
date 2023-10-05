@@ -14,6 +14,7 @@ interface Props {
 
 export default function Question({ data, isDone }: Props) {
   const { quiz, isQuiz, isResult } = data;
+  console.log(quiz, isQuiz, isResult);
   const [user] = useAtom(userAtom);
   const params = useParams();
   const roomId = Number(params.id);
