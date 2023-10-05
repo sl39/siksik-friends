@@ -49,7 +49,7 @@ export default function GamePlay() {
   useEffect(() => {
     if (end) {
       // 모든 문제가 끝나면 결과 페이지로 이동;
-      router.push(`/game/rank/${roomId}`);
+      router.push(`/game/start/rank/${roomId}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [end]);
