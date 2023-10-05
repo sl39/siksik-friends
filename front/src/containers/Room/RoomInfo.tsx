@@ -8,8 +8,6 @@ interface Props {
 }
 
 export default function RoomData({ room }: Props) {
-  // console.log(room);
-
   return (
     <div className={styles.roomData}>
       <div className={styles.roomName}>
@@ -21,7 +19,7 @@ export default function RoomData({ room }: Props) {
           <div className={styles.quizInfoTitle}>
             <span>문제정보</span>
           </div>
-          <div className={styles.quizInfoContent}>
+          <div className={`${styles.quizInfoContent} ${styles.left}`}>
             <p>{room?.category}</p>
             <p>{room?.quizCount} 문제</p>
             <p>{room?.quizDate}</p>
@@ -36,12 +34,21 @@ export default function RoomData({ room }: Props) {
               {room?.roomCurrent} / {room?.roomSize}
             </p>
 
-            <div>
+            <div className={styles.worm}>
               <Image
-                className={styles.worm}
-                src="/images/actor/bulea2.png"
+                src="/images/actor/bulea1.png"
                 alt="worm"
-                sizes="10vw"
+                sizes="30vw"
+                fill
+                style={{ objectFit: "contain" }}
+                priority
+              />
+            </div>
+            <div className={styles.alice}>
+              <Image
+                src="/images/actor/alice4.png"
+                alt="alice"
+                sizes="30vw"
                 fill
                 style={{ objectFit: "contain" }}
                 priority
