@@ -2,6 +2,8 @@ package com.ssf.socket.controller;
 
 import com.ssf.socket.domain.History;
 import com.ssf.socket.domain.HistoryMember;
+import com.ssf.socket.domain.Member;
+import com.ssf.socket.dto.HistoryDTO;
 import com.ssf.socket.service.QuizSaveService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +33,12 @@ public class HistoryController {
     }
 
     @PostMapping("/socket/history")
-    public List<History> getHistory(@RequestBody int userId) {
+    public HistoryDTO getHistory(@RequestBody Member user) {
+        
+        HistoryDTO allAboutUser = null;
+        
         // "member" 컬렉션에서 userId를 이용하여 historyList를 가져옵니다.
-        Query memberQuery = new Query(Criteria.where("userId").is(userId));
+        Query memberQuery = new Query(Criteria.where("userId").is(user.getUserId()));
         HistoryMember member = mongoTemplate.findOne(memberQuery, HistoryMember.class);
 
         if (member == null) {
@@ -51,11 +56,12 @@ public class HistoryController {
             History history = mongoTemplate.findOne(historyQuery, History.class);
 
             allHistory.add(history);
-
         }
 
+//        allAboutUser.setAllHistory(allHistory);
+
         // roomId에 대한 정보를 찾을 수 없을 경우 적절한 처리를 수행합니다.
-        return allHistory;
+        return allAboutUser;
     }
 
     @DeleteMapping("/socket/delete")

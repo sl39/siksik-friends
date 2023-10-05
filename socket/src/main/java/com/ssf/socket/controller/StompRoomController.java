@@ -30,9 +30,9 @@ public class StompRoomController {
     @PostMapping("/socket/find")
     @CrossOrigin(origins = "*")
     public Optional<Room> searchRoom(
-            @RequestBody long roomId) {
+            @RequestBody Room room) {
 
-        return roomRepository.findByRoomId(roomId);
+        return roomRepository.findByRoomId(room.getRoomId());
     }
 
     @PostMapping("/socket/lobby")

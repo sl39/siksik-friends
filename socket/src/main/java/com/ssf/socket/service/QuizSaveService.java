@@ -26,6 +26,8 @@ public class QuizSaveService {
 
     private final Map<String, String> categoryTable = new HashMap<>();
 
+    private final Map<String, String> categoryCountTable = new HashMap<>();
+
     @Autowired
     public QuizSaveService(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
@@ -34,6 +36,12 @@ public class QuizSaveService {
         categoryTable.put("생활/문화", "quiz3");
         categoryTable.put("IT/과학", "quiz4");
         categoryTable.put("세계", "quiz5");
+
+//        categoryCountTable.put("경제", "");
+//        categoryCountTable.put("사회", );
+//        categoryCountTable.put("생활/문화", );
+//        categoryCountTable.put("IT/과학", );
+//        categoryCountTable.put("세계", );
     }
 
     public Quiz getQuiz(String date, String collectionName) {
@@ -47,7 +55,24 @@ public class QuizSaveService {
 
             Update update = new Update();
             update.addToSet("historyList", roomId);
-            update.inc("allCorrect", member.getGameCorrect());
+
+//            update.inc("allSolvedQuizCount", member.getGameQuizCount());
+//            update.inc("allCorrectQuizCount", member.getGameCorrect());
+//
+//            update.inc("economySolvedQuizCount", member.getGameQuizCount());
+//            update.inc("economyCorrectQuizCount", member.getGameCorrect());
+//
+//            update.inc("livingSolvedQuizCount", member.getGameQuizCount());
+//            update.inc("livingCorrectQuizCount", member.getGameCorrect());
+//
+//            update.inc("scienceSolvedQuizCount", member.getGameQuizCount());
+//            update.inc("scienceCorrectQuizCount", member.getGameCorrect());
+//
+//            update.inc("socialSolvedQuizCount", member.getGameQuizCount());
+//            update.inc("socialCorrectQuizCount", member.getGameCorrect());
+//
+//            update.inc("globalSolvedQuizCount", member.getGameQuizCount());
+//            update.inc("globalCorrectQuizCount", member.getGameCorrect());
 
             mongoTemplate.upsert(query, update, HistoryMember.class);
         }

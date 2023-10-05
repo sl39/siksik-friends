@@ -15,7 +15,10 @@ public class Member {
     private int userScore;
     private int userRanking;
 
+    private int gameQuizCount;
     private int gameCorrect;
+
+    private String gameType;
 
     private int level;
     private String profile;

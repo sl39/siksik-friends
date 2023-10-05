@@ -1,21 +1,17 @@
-package com.ssf.socket.domain;
+package com.ssf.socket.dto;
 
+import com.ssf.socket.domain.History;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
+
 
 @Getter
 @Setter
 @AllArgsConstructor
-@Document(collection = "member")
-public class HistoryMember {
-
-    @Id
-    int userId;
+public class HistoryDTO {
 
     int allSolvedQuizCount;
     int allCorrectQuizCount;
@@ -35,5 +31,7 @@ public class HistoryMember {
     int globalSolvedQuizCount;
     int globalCorrectQuizCount;
 
-    List<Long> historyList;
+
+    List<History> allHistory;
+
 }
