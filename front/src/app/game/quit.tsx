@@ -15,7 +15,7 @@ export default function BackNav() {
       setIsQuit(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [pathName]);
 
   const handleClick = () => {
     if (pathName === "/game") {

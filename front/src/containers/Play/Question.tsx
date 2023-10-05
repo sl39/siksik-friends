@@ -1,30 +1,26 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import axios from "axios";
 import { useParams } from "next/navigation";
 import { useAtom } from "jotai";
 import type { Answer } from "@/types";
 import { userAtom } from "@/store/userAtom";
+import { socketAxios } from "@/services/api";
 import styles from "./play.module.scss";
 
 interface Props {
   data?: any;
+  isDone?: boolean;
 }
 
-// const quiz = {
-//   type: "경제",
-//   title: "문제 제목",
-//   description: "문제 주절주절",
-//   answer: "이건 정답",
-// };
-
-export default function Question({ data }: Props) {
+export default function Question({ data, isDone }: Props) {
   const { quiz, isQuiz, isResult } = data;
   const [user] = useAtom(userAtom);
-  console.log(user);
   const params = useParams();
   const roomId = Number(params.id);
   const [submitAnswer, setSubmitAnswer] = useState("");
+
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [isCorrect, setIsCorrect] = useState(false);
 
   const [myAnswer, setMyAnswer] = useState<Answer>({
     roomId,
@@ -36,6 +32,11 @@ export default function Question({ data }: Props) {
     // quiz 값이 변경될 때 실행
     if (quiz) {
       setMyAnswer({ ...myAnswer, answer: quiz.answer });
+      setIsSubmit(false);
+      setIsCorrect(false);
+    }
+    if (isQuiz) {
+      setSubmitAnswer("");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quiz]);
@@ -44,18 +45,17 @@ export default function Question({ data }: Props) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      // const response = await serverAxios.post("/", formData);
-      const response = await axios
-        .create({
-          baseURL: "https://j9e101.p.ssafy.io/socket",
-          // headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
-        })
-        .post("/score", myAnswer);
-      console.log(response);
+      await socketAxios.post("/score", myAnswer);
+      setIsSubmit(true);
+      // 정답 여부
+      if (myAnswer.answer === myAnswer.userAnswer) {
+        setIsCorrect(true);
+      } else {
+        setIsCorrect(false);
+      }
     } catch (err) {
-      console.log(err);
+      console.error("정답 전달", err);
     }
-    console.log(myAnswer, "답이 전달 됐나");
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,24 +66,41 @@ export default function Question({ data }: Props) {
   return (
     <div className={styles.quizContainer}>
       <div className={`${styles.backImage} z-9`}>
-        <Image src="/images/backclock.png" alt="" sizes="10vw" fill objectFit="contain" />
+        <Image src="/images/backclock.png" alt="" sizes="30vw" fill style={{ objectFit: "contain" }} priority />
       </div>
+      {/* eslint-disable-next-line no-nested-ternary */}
       {isQuiz && isResult === false ? (
+        // 문제
         <>
           {quiz ? <div className={`${styles.quizTitle} z-10`}>[{quiz.quizType}]</div> : "Start"}
-          {/* eslint-disable-next-line no-null/no-null */}
-          {quiz ? <div className={`${styles.quizDesc} z-10`}>{quiz.question}</div> : null}
+          {quiz ? <div className={`${styles.quizDesc} z-10`}>{quiz.question}</div> : undefined}
+        </>
+      ) : isDone ? (
+        // 퀴즈 끝
+        <>
+          {quiz ? <div className={`${styles.quizTitle} z-10`}>게임 끝!</div> : "Start"}
+          {quiz ? (
+            <div className={`${styles.quizDesc} ${styles.Isanswer} z-10`}>잠시 후 최종 결과가 공개됩니다</div>
+          ) : undefined}
         </>
       ) : (
+        // 정답
         <>
-          {quiz ? <div className={`${styles.quizTitle} z-10`}>[정답]</div> : "Start"}
-          {/* eslint-disable-next-line no-null/no-null */}
-          {quiz ? <div className={`${styles.quizDesc} z-10`}>{quiz.answer}</div> : null}
+          {quiz ? <div className={`${styles.quizTitle} z-10`}>[정답]{quiz.answer}</div> : "Start"}
+          {quiz ? (
+            <div className={`${styles.quizDesc} ${styles.Isanswer}  z-10`}>{isCorrect ? "정답" : "오답"}</div>
+          ) : undefined}
         </>
       )}
       <form onSubmit={handleSubmit} className={`${styles.answer} z-10`}>
         <div className={styles.quote}>
-          <input type="text" value={submitAnswer} onChange={handleChange} />
+          <input
+            disabled={isSubmit}
+            className={`${isSubmit ? styles.isSubmit : ""}`}
+            type="text"
+            value={submitAnswer}
+            onChange={handleChange}
+          />
         </div>
       </form>
     </div>

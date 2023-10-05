@@ -32,7 +32,7 @@ export interface Rank {
 export interface Room {
   roomId?: number;
   roomName?: string;
-  roomStatus?: boolean;
+  roomStatus?: number;
   quizDate?: string;
   category?: string;
   quizCount?: number;
