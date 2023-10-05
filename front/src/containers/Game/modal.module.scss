@@ -209,6 +209,9 @@ $font-title: "Chelsea Market", sans-serif;
 
 // 방 생성 모달
 .createModal {
+  .disabled {
+    background-color: lightgray;
+  }
   .modalImg {
     width: 80px;
     height: auto;
@@ -218,8 +221,8 @@ $font-title: "Chelsea Market", sans-serif;
   }
 
   .modalContainer {
-    max-width: 600px;
-    width: 40vw;
+    min-width: 500px;
+    width: 550px;
     height: 650px;
   }
   .form {
@@ -281,7 +284,7 @@ $font-title: "Chelsea Market", sans-serif;
   }
   .input3 {
     height: 15%;
-    margin-bottom: 10px;
+    margin-bottom: 25px;
 
     input {
       height: 40px;
@@ -296,15 +299,17 @@ $font-title: "Chelsea Market", sans-serif;
 }
 
 .groupContainer {
-  height: 100%;
+  box-sizing: border-box;
+  height: 80%;
   width: 110%;
+  min-width: 500px;
   display: flex;
   place-items: center;
-  align-items: flex-start;
+  align-items: center;
   justify-items: center;
   .wordButton {
     width: 100%;
-    margin-bottom: 10px;
+    // margin: 10px 0;
     font-size: 0;
     outline: 0;
   }
