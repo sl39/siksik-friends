@@ -76,7 +76,7 @@ export default function GameRank() {
         )}
 
         <div className={`${styles.myBoard} ${styles.right}`}>
-          {myInfo && roomInfoPlay && <MyData myInfo={myInfo} roomInfoPlay={roomInfoPlay} />}
+          {myInfo && roomInfoPlay && <MyData myInfo={myInfo} roomInfoPlay={roomInfoPlay} scoreData={scoreData} />}
         </div>
       </div>
 
