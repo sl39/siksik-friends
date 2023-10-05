@@ -30,22 +30,38 @@ export default function SignUpForm() {
   /** 회원가입 POST */
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const formData = {
       email,
       password: password1,
       nickname,
       profile: "/images/character/rabbit.png",
     };
-
-    try {
-      await serverAxios.post("/auth/sign-up", formData);
-      // 로그인 시키고 홈으로
-      const response = await serverAxios.post("/auth/sign-in", formData);
-      // 토큰 저장
-      await sessionStorage.setItem("accessToken", response.headers.authorization);
-      router.push("/home");
-    } catch (error) {
-      console.log("회원가입 에러", error);
+    if (password1 === "") {
+      setCheckPassword1("비밀번호를 입력하세요");
+    } else if (passwordValidation === 1) {
+      setCheckPassword2("비밀번호가 일치하지 않습니다.");
+    }
+    if (email === "") {
+      setCheckEmail("이메일을 입력하세요");
+    } else if (emailValidation === 1) {
+      setCheckEmail("이메일 중복확인이 필요합니다");
+    }
+    if (nickname === "") {
+      setCheckNickname("닉네임을 입력하세요");
+    } else if (nicknameValidation === 1) {
+      setCheckNickname("닉네임 중복확인이 필요합니다");
+    } else {
+      try {
+        await serverAxios.post("/auth/sign-up", formData);
+        // 로그인 시키고 홈으로
+        const response = await serverAxios.post("/auth/sign-in", formData);
+        // 토큰 저장
+        await sessionStorage.setItem("accessToken", response.headers.authorization);
+        router.push("/home");
+      } catch (error) {
+        console.log("회원가입 에러", error);
+      }
     }
   };
 
@@ -177,6 +193,7 @@ export default function SignUpForm() {
                 onChange={(e) => setEmail(e.target.value)}
                 onBlur={(e) => OnBlurSignUp(e)}
                 placeholder="Email"
+                autoComplete="off"
               />
               <button
                 type="button"
@@ -241,6 +258,7 @@ export default function SignUpForm() {
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
                 onBlur={(e) => onBlurNickname(e)}
+                autoComplete="off"
               />
 
               <button
@@ -258,7 +276,7 @@ export default function SignUpForm() {
 
         <button
           type="submit"
-          disabled={!(emailValidation === 2 && passwordValidation === 2 && nicknameValidation === 2)}
+          // disabled={!(emailValidation === 2 && passwordValidation === 2 && nicknameValidation === 2)}
           className={[styles.button, styles.btnAct].join(" ")}
         >
           회원가입
