@@ -56,14 +56,14 @@ export default function Timer({ time }: Props) {
   const widthProgress = (sec * 100) / maxItem;
 
   // transition 효과 제거하는 함수들
-  const getProgressBarClass = () => `${styles.progress} ${timerEnded ? styles.noTransition : ""} `;
-  const getImageClass = () => `${styles.image} ${timerEnded ? styles.noTransition : ""}  `;
+  // const getProgressBarClass = () => `${styles.progress} ${timerEnded ? styles.noTransition : ""} `;
+  // const getImageClass = () => `${styles.image} ${timerEnded ? styles.noTransition : ""}  `;
 
   return (
     <div className={styles.timerContainer}>
       <div className={styles.quizNum}>{Number.isInteger(quizNum / 2) ? `${quizNum / 2} 번째 문제` : ""}</div>
       <div className={styles.timerTime}>남은 시간: {(sec / 10).toFixed(1)} 초</div>
-      <div className={getImageClass()} style={{ right: `calc(${widthProgress}% - 20px)` }}>
+      {/* <div className={getImageClass()} style={{ right: `calc(${widthProgress}% - 20px)` }}>
         <Image
           src={movingImg[quizNum % movingImg.length]}
           alt="moving image"
@@ -72,10 +72,10 @@ export default function Timer({ time }: Props) {
           className={`${styles.movingImage} z-10`}
           style={{ objectFit: "contain" }}
         />
-      </div>
-      <div className={styles.progressBar}>
+      </div> */}
+      {/* <div className={styles.progressBar}>
         <div className={getProgressBarClass()} style={{ width: `calc(${widthProgress}% )`, float: "right" }} />
-      </div>
+      </div> */}
     </div>
   );
 }
