@@ -18,7 +18,7 @@ export default function SearchUser() {
   /** 닉네임으로 유저 검색 */
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(searchUser);
+    // console.log(searchUser);
     try {
       const response = await serverAxios(`/user/?nickname=${searchUser}`);
       setErrMsg("");
