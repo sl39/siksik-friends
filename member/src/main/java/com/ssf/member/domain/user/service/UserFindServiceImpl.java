@@ -40,7 +40,7 @@ public class UserFindServiceImpl implements UserFindService {
                 .nickname(user.getNickname())
                 .profile(user.getProfile())
                 .rank(findRank(user.getId()))
-                .level(user.getLevel())
+                .level(getLevel(user.getId()))
                 .exp(user.getExp())
                 .odds(user.getTotalGame() == 0L ? (user.getWin() == 0L ? "0.0%" : "100.0%")
                         : String.format("%.1f%%", user.getWin() / (double) user.getTotalGame() * 100))
@@ -58,7 +58,7 @@ public class UserFindServiceImpl implements UserFindService {
                 .nickname(user.getNickname())
                 .profile(user.getProfile())
                 .rank(findRank(userId.id()))
-                .level(user.getLevel())
+                .level(getLevel(user.getId()))
                 .odds(user.getTotalGame() == 0L ? (user.getWin() == 0L ? "0.0%" : "100.0%")
                         : String.format("%.1f%%", user.getWin() / (double) user.getTotalGame() * 100))
                 .build();
@@ -73,7 +73,7 @@ public class UserFindServiceImpl implements UserFindService {
                 .nickname(user.getNickname())
                 .profile(user.getProfile())
                 .rank(findRank(user.getId()))
-                .level(user.getLevel())
+                .level(getLevel(user.getId()))
                 .odds(user.getTotalGame() == 0L ? (user.getWin() == 0L ? "0.0%" : "100.0%") : String.format("%.1f%%", user.getWin() / (double) user.getTotalGame() * 100))
                 .build();
     }
@@ -106,7 +106,7 @@ public class UserFindServiceImpl implements UserFindService {
                     .user_id(user.getId())
                     .nickname(user.getNickname())
                     .profile(user.getProfile())
-                    .level(user.getLevel())
+                    .level(getLevel(user.getId()))
                     .rank(i.getAndSet(i.get() + 1))
                     .score(typedTuple.getScore().intValue())
                     .odds(user.getTotalGame() == 0L ? (user.getWin() == 0L ? "0.0%" : "100.0%") : String.format("%.1f%%", user.getWin() / (double) user.getTotalGame() * 100))
@@ -114,5 +114,10 @@ public class UserFindServiceImpl implements UserFindService {
         });
 
         return rankList;
+    }
+
+    @Override
+    public int getLevel(Long id) {
+        return (int) (redisTemplate.opsForZSet().score(KEY, String.valueOf(id)) / 1000);
     }
 }
