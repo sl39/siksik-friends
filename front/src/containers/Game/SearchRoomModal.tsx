@@ -29,7 +29,6 @@ export default function SearchRoomModal({ onClose }: Props) {
     setErrRoom("");
     try {
       const response = await socketAxios.post("/find", { roomId });
-      console.log(response);
       // eslint-disable-next-line no-null/no-null
       if (response.data === null) {
         setErrRoom("해당 방 정보가 없습니다.");
