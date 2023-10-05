@@ -65,7 +65,7 @@ public class StompGameController {
         roomInfo.setRoomStatus(1);
 
         messageTemplate.convertAndSend("/sub/game/quiz/" + roomId, start);
-        messageTemplate.convertAndSend("/sub/room/roomList/" + roomId, roomInfo);
+        messageTemplate.convertAndSend("/sub/room/roomList", roomInfo);
     }
 
     public void sendQuiz(int roomId, QuizDTO quiz) {
