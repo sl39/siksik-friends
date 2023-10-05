@@ -1,0 +1,399 @@
+$blue: #87ceeb;
+$softBlue: #cce5ff;
+$hardBlue: #6495ed;
+
+$border-radius: 0 0 125px 3px/3px 85px 5px 55px;
+$border-radius-rounded: 4px;
+$box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+
+$border: #37353f;
+
+$green: rgb(205, 220, 57);
+$purple: #965784;
+$pink: #fc8b93;
+$orange: #feac5e;
+$yellow: #fdc830;
+$font-title: "Chelsea Market", sans-serif;
+@mixin border($width) {
+  border: $width solid $border;
+}
+
+// 모달 전체
+.modalContainer {
+  width: 1000px;
+  height: 200px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+  margin: 20px;
+  margin-top: 50px;
+  padding: 2rem 2rem 0;
+
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8%);
+  background-color: rgba($color: #fff, $alpha: 1);
+  border-radius: 20px;
+  box-shadow:
+    0px 10px 18px -5px rgba(204, 229, 255, 0.8),
+    inset -10px -10px 7px 0px rgba(204, 229, 255, 0.4),
+    inset 15px 15px 7px 0px rgb(255, 255, 255);
+}
+
+.modalImg {
+  position: absolute;
+  z-index: 99;
+}
+.subText {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+.form {
+  position: relative;
+  width: 90%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+.label {
+  margin: 0.5rem 0;
+}
+.inputDiv {
+  position: relative;
+  height: 30%;
+}
+.input {
+  width: 95%;
+  margin: 0;
+  padding: 8px;
+  border: 1.5px solid $border;
+  border-radius: 4px;
+  outline: none;
+  &:focus,
+  &:active {
+    box-shadow: 0 0 0 2px rgba($blue, 0.5);
+  }
+}
+.errMsg {
+  font-size: 1.2rem;
+  color: red;
+}
+
+.btns {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+  .btn {
+    width: 90px;
+    height: 60px;
+    text-align: center;
+    outline: none;
+    color: #37353f;
+
+    backdrop-filter: blur(8px);
+    background-color: #cce5ff;
+    border-radius: 20px;
+  }
+  .btn,
+  .btn:link,
+  .btn:visited {
+    &:hover,
+    &:focus {
+      transition-timing-function: cubic-bezier(0.6, 4, 0.3, 0.8);
+      animation: gelatine 0.5s 1;
+    }
+  }
+  @mixin transform($properties) {
+    -webkit-transform: $properties;
+    -ms-transform: $properties;
+    transform: $properties;
+  }
+  @mixin keyframes($name) {
+    @-webkit-keyframes #{$name} {
+      @content;
+    }
+
+    @-moz-keyframes #{$name} {
+      @content;
+    }
+
+    @-ms-keyframes #{$name} {
+      @content;
+    }
+
+    @keyframes #{$name} {
+      @content;
+    }
+  }
+  @include keyframes(gelatine) {
+    from,
+    to {
+      @include transform(scale(1, 1));
+    }
+    25% {
+      @include transform(scale(0.9, 1.1));
+    }
+    50% {
+      @include transform(scale(1.1, 0.9));
+    }
+    75% {
+      @include transform(scale(0.95, 1.05));
+    }
+    from,
+    to {
+      @include transform(scale(1, 1));
+    }
+    25% {
+      @include transform(scale(0.9, 1.1));
+    }
+    50% {
+      @include transform(scale(1.1, 0.9));
+    }
+    75% {
+      @include transform(scale(0.95, 1.05));
+    }
+  }
+}
+
+// 방 찾기 모달
+.searchModal {
+  .modalImg {
+    width: 80px;
+    height: auto;
+    aspect-ratio: 2254 / 2373;
+    top: -10px;
+    left: calc(50% - (80px / 2));
+  }
+
+  .modalContainer {
+    max-width: 600px;
+    width: 30vw;
+    height: 270px;
+  }
+  .form {
+    justify-content: flex-start;
+    box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .inputDiv {
+    height: 80%;
+    position: relative;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+
+    label {
+      font-size: 1.6rem;
+      font-weight: lighter;
+      color: var(--color-grey-text);
+    }
+    input {
+      height: 40px;
+      width: 80%;
+      padding: 0 10px;
+    }
+  }
+}
+
+// 방 생성 모달
+.createModal {
+  .modalImg {
+    width: 80px;
+    height: auto;
+    aspect-ratio: 1014 / 749;
+    top: 15px;
+    left: calc(50% - (80px / 2));
+  }
+
+  .modalContainer {
+    max-width: 600px;
+    width: 40vw;
+    height: 650px;
+  }
+  .form {
+    justify-content: flex-start;
+    box-sizing: border-box;
+
+    // height: 100%;
+  }
+
+  .inputDiv {
+    height: 20%;
+    position: relative;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+
+    label {
+      font-size: 1.6rem;
+      font-weight: lighter;
+      color: var(--color-grey-text);
+    }
+    .div {
+      display: flex;
+    }
+    .Check {
+      width: 40px;
+      margin: 0 10px;
+    }
+    .col {
+      display: flex;
+      height: 100%;
+      width: 100%;
+
+      div {
+        width: 50%;
+        input {
+          margin: 0 10px;
+        }
+      }
+    }
+    input {
+      height: 40px;
+      width: 80%;
+      padding: 0 10px;
+      outline: none;
+    }
+    p {
+      padding: 0;
+      margin: 0;
+    }
+    .number {
+      width: 30%;
+    }
+  }
+  .input2 {
+    height: 10%;
+    margin-bottom: 10px;
+  }
+  .input3 {
+    height: 15%;
+    margin-bottom: 10px;
+
+    input {
+      height: 40px;
+      width: 80%;
+      padding: 0 10px;
+      outline: none;
+    }
+  }
+  .type {
+    display: block;
+  }
+}
+
+.groupContainer {
+  height: 100%;
+  width: 110%;
+  display: flex;
+  place-items: center;
+  align-items: flex-start;
+  justify-items: center;
+  .wordButton {
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 0;
+    outline: 0;
+  }
+
+  button {
+    border: 3px solid var(--color-blue-m2);
+    box-sizing: border-box;
+    color: var(--color-blue-m2);
+    text-align: center;
+    background-color: rgba($color: white, $alpha: 0.6);
+    height: 80%;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    display: inline-block;
+    padding: 10px 16px;
+    margin: 0 3px 0 0;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-in-out;
+  }
+  button:first-of-type {
+    border-radius: 30px 12px 12px 30px;
+  }
+  button:last-of-type {
+    border-radius: 12px 30px 30px 12px;
+  }
+  button:hover {
+    border-color: var(--color-blue-m2);
+    color: white;
+    background-color: var(--color-blue-m2);
+  }
+  .selected {
+    border-color: var(--color-blue-m2);
+    color: white;
+    background-color: var(--color-blue-m2);
+    padding: 16px 16px;
+    outline: 0;
+    border-radius: 12px;
+  }
+  .selected:focus:first-of-type {
+    border-radius: 30px 12px 12px 30px;
+  }
+  .selected:focus:last-of-type {
+    border-radius: 12px 30px 30px 12px;
+  }
+  .wordButton::-moz-focus-inner {
+    border: 0;
+  }
+}
+
+// 프로필 모달
+.profiileModal {
+  display: flex;
+  flex-direction: row;
+
+  width: 65vw;
+  height: 60vh;
+  .Card {
+    .profileCard {
+      height: 80%;
+      position: relative;
+      left: 8%;
+    }
+    width: 40%;
+    height: 100%;
+  }
+  .btns {
+    height: 20%;
+    button {
+      background: $softBlue;
+      color: var(--color-grey-text);
+    }
+    span {
+      font-size: 3vh;
+    }
+  }
+  .data {
+    width: 60%;
+    margin-top: -5%;
+    height: 95%;
+  }
+}
+.close {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: 5px;
+  right: 5px;
+
+  &:hover {
+    color: $hardBlue;
+  }
+}
