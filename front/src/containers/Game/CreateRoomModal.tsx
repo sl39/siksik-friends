@@ -295,8 +295,8 @@ export default function CreateRoomModal({ onClose }: Props) {
                   type="button"
                   name="type"
                   id="type"
-                  onClick={() => typeClick("It/과학")}
-                  className={formData.type === "It/과학" ? styles.selected : ""}
+                  onClick={() => typeClick("IT/과학")}
+                  className={formData.type === "IT/과학" ? styles.selected : ""}
                 >
                   It/과학
                 </button>

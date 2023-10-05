@@ -24,19 +24,12 @@ export default function WaitingUser({ data }: Props) {
       // eslint-disable-next-line no-empty
     } catch (err) {}
   };
-
   /** 받은 친구 요청 조회 */
   const myRequest = async () => {
     try {
       // response / request
       const response = await serverAxios("/user/friend/response");
-      const request = await serverAxios("/user/friend/request");
-
-      // 병합된 리스트 생성
-      const combinedList = [...response.data.friendList, ...request.data.friendsList];
-
-      // setCount(response.data.size);
-      setNotFriends(combinedList);
+      setNotFriends(response.data.friendList);
     } catch (err) {
       console.log("받은 요청 목록 에러", err);
     }
