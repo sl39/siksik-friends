@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import styles from "./play.module.scss";
-import { Answer, Quiz } from "@/types";
 import axios from "axios";
-import { userAtom } from "@/store/userAtom";
 import { useParams } from "next/navigation";
+import type { Answer } from "@/types";
+import { userAtom } from "@/store/userAtom";
+import styles from "./play.module.scss";
 
 interface Props {
   data?: any;
@@ -25,16 +25,17 @@ export default function Question({ data }: Props) {
   const [submitAnswer, setSubmitAnswer] = useState("");
 
   const [myAnswer, setMyAnswer] = useState<Answer>({
-    roomId: roomId,
-    userId: user.user_id,
+    roomId,
+    userId: user.user_id!,
     userAnswer: "",
     answer: quiz?.answer,
   });
   useEffect(() => {
     // quiz 값이 변경될 때 실행
     if (quiz) {
-      setMyAnswer({ ...myAnswer, ["answer"]: quiz.answer });
+      setMyAnswer({ ...myAnswer, answer: quiz.answer });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quiz]);
 
   /** 정답 제출 */
@@ -48,8 +49,7 @@ export default function Question({ data }: Props) {
           // headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
         })
         .post("/score", myAnswer);
-      // console.log(response);
-      // console.log("방 만들기");
+      console.log(response);
     } catch (err) {
       console.log(err);
     }
@@ -58,7 +58,7 @@ export default function Question({ data }: Props) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSubmitAnswer(e.target.value);
-    setMyAnswer({ ...myAnswer, ["userAnswer"]: e.target.value });
+    setMyAnswer({ ...myAnswer, userAnswer: e.target.value });
   };
 
   return (

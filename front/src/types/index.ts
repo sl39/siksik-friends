@@ -83,7 +83,7 @@ export interface Answer {
 
 export interface GamePlay {
   userId: number;
-  userName: String;
+  userName: string;
   gameScore: number;
   userScore: number;
   userRanking: number;
