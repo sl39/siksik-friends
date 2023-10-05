@@ -259,6 +259,7 @@ $hardBlue: #6495ed;
 
 // 채팅
 .chatLog {
+  backdrop-filter: blur(4px);
   height: 73%;
   width: 98%;
   background: rgba(255, 255, 255, 0.5);
