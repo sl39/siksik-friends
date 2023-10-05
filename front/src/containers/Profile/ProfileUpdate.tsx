@@ -6,13 +6,13 @@ import { useAtom } from "jotai";
 import Image from "next/image";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { serverAxios } from "@/services/api";
-import { ProfileImgAtom, userAtom } from "@/store/userAtom";
+import { profileAtom, ProfileImgAtom } from "@/store/userAtom";
 import styles from "./ProfileUpdate.module.scss";
 
 export default function ProfileUpdate() {
   const router = useRouter();
 
-  const [data, setData] = useAtom(userAtom);
+  const [data, setData] = useAtom(profileAtom);
 
   const [nickname, setNickname] = useState(data.nickname);
   const [preNickname] = useState(data.nickname);
@@ -74,6 +74,7 @@ export default function ProfileUpdate() {
     } else if (dir === "right") {
       setProfileIndex((prevIndex) => (prevIndex < profileImages.length - 1 ? prevIndex + 1 : 0));
     }
+    setUpdateValidation(false);
   };
 
   /** 정보 수정 요청 */
@@ -149,6 +150,7 @@ export default function ProfileUpdate() {
                 </label>
                 <div className={styles.input}>
                   <input
+                    style={{ width: "50%" }}
                     autoComplete="off"
                     type="text"
                     id="nickname"
@@ -190,7 +192,11 @@ export default function ProfileUpdate() {
             >
               수정
             </button>
-            <button type="button" className={styles.button} onClick={() => router.back()}>
+            <button
+              type="button"
+              className={styles.button}
+              onClick={() => router.replace(`/home/profile/${data.user_id}`)}
+            >
               취소
             </button>
           </div>

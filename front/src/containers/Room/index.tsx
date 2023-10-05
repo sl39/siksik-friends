@@ -2,6 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useAtom } from "jotai";
 import { useWebSocket } from "@/socket/WebSocketProvider";
 import type { Frame } from "stompjs";
 import type { Room, SoketUser } from "@/types";
@@ -17,7 +18,8 @@ export default function Index() {
   const roomId = Number(params.id);
 
   const [room, setRoom] = useState<Room | undefined>(undefined);
-  const user = userAtom.init;
+  const [user] = useAtom(userAtom);
+
   const [soketUser, setSoketUser] = useState<SoketUser>({
     userId: user.user_id,
     userName: user.nickname,
@@ -27,9 +29,12 @@ export default function Index() {
     ready: false,
     leader: false,
   });
+
   const stompClient = useWebSocket();
   // 이 방에 있는 사람들
   const [userInfo, setUserInfo] = useState<SoketUser[]>([]);
+
+  console.log("방 들어옴", userInfo);
   const [leaderReady, setleaderReady] = useState(0);
 
   // {
@@ -58,7 +63,7 @@ export default function Index() {
 
       stompClient.send(`/pub/room/entrance/${roomId}`, {}, JSON.stringify(soketUser));
       return () => {
-        // 컴포넌트가 언마운트될 때 이벤트 리스너  제거
+        // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
         // stompClient.send(`/pub/room/exit/${roomId}`, {}, JSON.stringify(soketUser));
         // subscription.unsubscribe();
       };
