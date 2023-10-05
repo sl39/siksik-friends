@@ -151,6 +151,11 @@
 
     position: relative;
   }
+  .Isanswer {
+    font-size: 5vh;
+    box-sizing: border-box;
+    text-align: center;
+  }
 
   .answer {
     display: flex;
@@ -190,6 +195,10 @@
       position: relative;
       top: -5%;
     }
+    .isSubmit {
+      background: #ccc;
+    }
+
     .quote {
       &::before {
         top: -22px;

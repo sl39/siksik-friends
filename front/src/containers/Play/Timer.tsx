@@ -45,7 +45,7 @@ export default function Timer({ time }: Props) {
           src={randomImage}
           alt="moving image"
           fill
-          sizes="10vw"
+          sizes="30vw"
           className={`${styles.movingImage} z-10`}
           style={{ objectFit: "contain" }}
           priority
