@@ -1,13 +1,15 @@
 "use client";
 
 import { BsTrophy } from "react-icons/bs";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import Image from "next/image";
-import type { SoketUser } from "@/types";
+import type { Room, SoketUser } from "@/types";
 import { TotalInfoContext } from "@/socket/SubscriptionQuiz";
 import { userAtom } from "@/store/userAtom";
+import { useWebSocket } from "@/socket/WebSocketProvider";
+import type { Frame } from "stompjs";
 import styles from "./rankpage.module.scss";
 import MyData from "./MyData";
 
@@ -17,6 +19,12 @@ export default function GameRank() {
   const { quizResult, roomInfoPlay } = useContext(TotalInfoContext);
   const [scoreData, setScoreData] = useState<SoketUser[] | undefined>(quizResult);
   const [myInfo, setMyInfo] = useState<SoketUser | undefined>(undefined);
+  const stompClient = useWebSocket();
+  const params = useParams();
+  const roomId = Number(params.id);
+
+  const [room, setRoom] = useState<Room | undefined>(roomInfoPlay);
+
   useEffect(() => {
     if (quizResult) {
       setScoreData(quizResult);
@@ -29,6 +37,25 @@ export default function GameRank() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quizResult]);
   // 이 게임에 대한 내 점수 정보
+  useEffect(() => {
+    if (stompClient) {
+      const subscription3 = stompClient.subscribe(
+        `/sub/room/info/${roomId}`,
+        function handleRoomInfo(frame: Frame) {
+          const gameEnd = JSON.parse(frame.body);
+          console.log(gameEnd);
+          setRoom(gameEnd || roomInfoPlay);
+        },
+        {}
+      );
+      stompClient.send(`/pub/room/entrance/${roomId}`, {}, JSON.stringify(myInfo));
+      return () => {
+        subscription3.unsubscribe();
+      };
+    }
+    return undefined;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stompClient, myInfo]);
 
   const router = useRouter();
 
@@ -56,7 +83,7 @@ export default function GameRank() {
           )}
 
           <div className={`${styles.myBoard} ${styles.right}`}>
-            {myInfo && roomInfoPlay && <MyData myInfo={myInfo} roomInfoPlay={roomInfoPlay} scoreData={scoreData} />}
+            {myInfo && room && <MyData myInfo={myInfo} room={room} scoreData={scoreData} />}
           </div>
         </div>
 
