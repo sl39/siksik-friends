@@ -31,7 +31,7 @@ export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }
       if (roomUser.leader) {
         if (leaderReady === 1) {
           // router.push(`/game/start/play/${gameId}`);
-          console.log("게임 시작", roomInfoPlay);
+          // console.log("게임 시작", roomInfoPlay);
           stompClient.send(`/pub/game/start/${gameId}`, {}, JSON.stringify(roomInfoPlay));
         }
       } else if (roomUser.ready) {

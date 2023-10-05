@@ -24,12 +24,17 @@ export default function Index() {
     userName: user.nickname,
     userScore: user.score,
     userRanking: user.rank,
+    profile: user.profile,
+    level: user.level,
+
     ready: false,
     leader: false,
   });
+
   const stompClient = useWebSocket();
   // 이 방에 있는 사람들
   const [userInfo, setUserInfo] = useState<SoketUser[]>([]);
+
   const [leaderReady, setleaderReady] = useState(0);
 
   // {
@@ -58,7 +63,7 @@ export default function Index() {
 
       stompClient.send(`/pub/room/entrance/${roomId}`, {}, JSON.stringify(soketUser));
       return () => {
-        // 컴포넌트가 언마운트될 때 이벤트 리스너  제거
+        // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
         // stompClient.send(`/pub/room/exit/${roomId}`, {}, JSON.stringify(soketUser));
         // subscription.unsubscribe();
       };
