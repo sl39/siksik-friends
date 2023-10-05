@@ -4,7 +4,7 @@ import styles from "./rankpage.module.scss";
 interface Props {
   myInfo: SoketUser;
   roomInfoPlay: Room;
-  scoreData: SoketUser[];
+  scoreData?: SoketUser[];
 }
 
 export default function MyData({ myInfo, roomInfoPlay, scoreData }: Props) {
