@@ -50,6 +50,7 @@ export default function SearchRoomModal({ onClose }: Props) {
           src="/images/actor/cat1.png"
           alt="방 찾기 캐릭터"
           fill
+          sizes="30vw"
           style={{
             objectFit: "contain",
           }}
