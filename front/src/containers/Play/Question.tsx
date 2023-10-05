@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import axios from "axios";
 import { useParams } from "next/navigation";
+import { useAtom } from "jotai";
 import type { Answer } from "@/types";
 import { userAtom } from "@/store/userAtom";
 import styles from "./play.module.scss";
@@ -19,7 +20,8 @@ interface Props {
 
 export default function Question({ data }: Props) {
   const { quiz, isQuiz, isResult } = data;
-  const user = userAtom.init;
+  const [user] = useAtom(userAtom);
+  console.log(user);
   const params = useParams();
   const roomId = Number(params.id);
   const [submitAnswer, setSubmitAnswer] = useState("");
