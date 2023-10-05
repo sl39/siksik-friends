@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import axios from "axios";
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/locale";
 import { format } from "date-fns";
@@ -11,6 +10,7 @@ import { useAtom } from "jotai";
 import type { RoomInfo } from "@/types";
 import { userAtom } from "@/store/userAtom";
 import { useWebSocket } from "@/socket/WebSocketProvider";
+import { socketAxios } from "@/services/api";
 import styles from "./modal.module.scss";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -68,15 +68,14 @@ export default function CreateRoomModal({ onClose }: Props) {
 
       /** 게임방 POST 요청 */
       try {
-        // const response = await serverAxios.post("/", formData);
-        const response = await axios
-          .create({
-            baseURL: "https://j9e101.p.ssafy.io/socket",
-            // headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
-          })
-          .post("/lobby", roomData);
-        // console.log(response);
-        // console.log("방 만들기");
+        const response = await socketAxios.post("/lobby", roomData);
+        // const response = await axios
+        //   .create({
+        //     baseURL: "https://j9e101.p.ssafy.io/socket",
+        //     // headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
+        //   })
+        //   .post("/lobby", roomData);
+        console.log("방 만듦", response);
         if (stompClient) {
           stompClient.send("/pub/room/roomList", {}, JSON.stringify({}));
         }
