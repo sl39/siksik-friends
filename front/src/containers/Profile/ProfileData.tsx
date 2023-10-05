@@ -18,7 +18,7 @@ export default function ProfileData({ userId }: Props) {
   const fetchHistory = async () => {
     try {
       const response = await socketAxios.post("/history", userId);
-      console.log(response);
+      console.log("히스토리", response);
     } catch (err) {
       console.error("히스토리 에러", err);
     }
@@ -168,7 +168,7 @@ export default function ProfileData({ userId }: Props) {
                   <div className={styles.ImgContainer}>
                     {badgeImg.map((item) => (
                       <div className={`${styles.imgItem} ${item.isGet ? styles.itemGet : ""}`} key={item.image}>
-                        <Image src={item.image} alt="뱃지" fill style={{ objectFit: "contain" }} />
+                        <Image src={item.image} alt="뱃지" sizes="10vw" fill style={{ objectFit: "contain" }} />
                       </div>
                     ))}
                   </div>
@@ -182,7 +182,7 @@ export default function ProfileData({ userId }: Props) {
                 <div className={styles.stat}>
                   <svg className={styles["design-tool"]} xmlns="http://www.w3.org/2000/svg" viewBox="0 80 420 340">
                     <g>
-                      <g className={styles.text} opacity=".87" font-size="16" fill="#333" font-weight="300">
+                      <g className={styles.text} opacity=".87" fill="#333" fontWeight="300">
                         <text className="tool-illustrator" transform="translate(190.31 114.99)">
                           경제
                         </text>
@@ -208,33 +208,33 @@ export default function ProfileData({ userId }: Props) {
                         <path
                           className="hexagon-2"
                           opacity=".4"
-                          stroke-dasharray="2"
+                          strokeDasharray="2"
                           d="M291.03 296.23L209 343.61l-82.03-47.38v-94.71L209 154.16l82.03 47.36v94.71z"
                         />
                         <path
                           className="hexagon-3"
                           opacity=".4"
-                          stroke-dasharray="2"
+                          strokeDasharray="2"
                           d="M152.45 283.78v-65.64l56.83-32.83 56.85 32.83v65.64l-56.85 32.82-56.83-32.82z"
                         />
                         <path
                           className="hexagon-4"
                           opacity=".4"
-                          stroke-dasharray="2"
+                          strokeDasharray="2"
                           d="M173.56 271.6v-41.26l35.72-20.64L245 230.34v41.26l-35.72 20.61-35.72-20.61z"
                         />
                         <path
                           className="hexagon-5"
                           opacity=".4"
-                          stroke-dasharray="2"
+                          strokeDasharray="2"
                           d="M194.7 258.73v-16.85l14.6-8.44 14.6 8.44v16.85l-14.6 8.43-14.6-8.43z"
                         />
-                        <path className="bar-1" opacity=".4" stroke-dasharray="2" d="M312.45 190.21l-88.55 51.67" />
-                        <path className="bar-2" opacity=".4" stroke-dasharray="2" d="M194.7 241.88l-88.57-51.67" />
-                        <path className="bar-3" opacity=".4" stroke-dasharray="2" d="M194.7 258.73l-88.57 50.6" />
-                        <path className="bar-4" opacity=".4" stroke-dasharray="2" d="M223.9 258.73l88.55 50.6" />
-                        <path className="bar-5" opacity=".4" stroke-dasharray="2" d="M209.3 267.16l-.02 101.73" />
-                        <path className="bar-6" opacity=".4" stroke-dasharray="2" d="M209.3 130.65l-.02 102.79" />
+                        <path className="bar-1" opacity=".4" strokeDasharray="2" d="M312.45 190.21l-88.55 51.67" />
+                        <path className="bar-2" opacity=".4" strokeDasharray="2" d="M194.7 241.88l-88.57-51.67" />
+                        <path className="bar-3" opacity=".4" strokeDasharray="2" d="M194.7 258.73l-88.57 50.6" />
+                        <path className="bar-4" opacity=".4" strokeDasharray="2" d="M223.9 258.73l88.55 50.6" />
+                        <path className="bar-5" opacity=".4" strokeDasharray="2" d="M209.3 267.16l-.02 101.73" />
+                        <path className="bar-6" opacity=".4" strokeDasharray="2" d="M209.3 130.65l-.02 102.79" />
                       </g>
 
                       <g className={styles.numbers} opacity=".3" fill="#333">
