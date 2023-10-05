@@ -35,7 +35,7 @@ public class HistoryController {
     @PostMapping("/socket/history")
     public HistoryDTO getHistory(@RequestBody Member user) {
         
-        HistoryDTO allAboutUser = null;
+        HistoryDTO allAboutUser = new HistoryDTO();
         
         // "member" 컬렉션에서 userId를 이용하여 historyList를 가져옵니다.
         Query memberQuery = new Query(Criteria.where("userId").is(user.getUserId()));
@@ -45,6 +45,25 @@ public class HistoryController {
             // 사용자를 찾을 수 없을 경우 적절한 처리를 수행합니다.
             return null;
         }
+
+        allAboutUser.setAllSolvedQuizCount(member.getAllSolvedQuizCount());
+        allAboutUser.setAllCorrectQuizCount(member.getAllCorrectQuizCount());
+
+        allAboutUser.setEconomySolvedQuizCount(member.getEconomySolvedQuizCount());
+        allAboutUser.setEconomyCorrectQuizCount(member.getEconomyCorrectQuizCount());
+
+        allAboutUser.setLivingSolvedQuizCount(member.getLivingSolvedQuizCount());
+        allAboutUser.setLivingCorrectQuizCount(member.getLivingCorrectQuizCount());
+
+        allAboutUser.setScienceSolvedQuizCount(member.getScienceSolvedQuizCount());
+        allAboutUser.setScienceCorrectQuizCount(member.getScienceCorrectQuizCount());
+
+        allAboutUser.setSocialSolvedQuizCount(member.getSocialSolvedQuizCount());
+        allAboutUser.setSocialCorrectQuizCount(member.getSocialCorrectQuizCount());
+
+        allAboutUser.setGlobalSolvedQuizCount(member.getGlobalSolvedQuizCount());
+        allAboutUser.setGlobalCorrectQuizCount(member.getGlobalCorrectQuizCount());
+
 
         List<History> allHistory = new ArrayList<>();
 
@@ -58,7 +77,7 @@ public class HistoryController {
             allHistory.add(history);
         }
 
-//        allAboutUser.setAllHistory(allHistory);
+        allAboutUser.setAllHistory(allHistory);
 
         // roomId에 대한 정보를 찾을 수 없을 경우 적절한 처리를 수행합니다.
         return allAboutUser;

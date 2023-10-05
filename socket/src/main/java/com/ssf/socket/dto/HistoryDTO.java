@@ -3,6 +3,7 @@ package com.ssf.socket.dto;
 import com.ssf.socket.domain.History;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@NoArgsConstructor
 public class HistoryDTO {
 
     int allSolvedQuizCount;

@@ -55,7 +55,7 @@ public class StompGameController {
             scheduler.schedule(() -> sendResult(roomId), time, TimeUnit.SECONDS);
             time += 1;
         }
-        scheduler.schedule(() -> endGame(roomId, quizList.getQuizSet()), time, TimeUnit.SECONDS);
+        scheduler.schedule(() -> endGame(roomId, quizList.getQuizSet(), category), time, TimeUnit.SECONDS);
     }
 
     public void loading(int roomId) {
@@ -88,13 +88,13 @@ public class StompGameController {
 
         messageTemplate.convertAndSend("/sub/game/result/" + roomId, result);
     }
-    public void endGame(int roomId, List<QuizDTO> quizzes) {
+    public void endGame(int roomId, List<QuizDTO> quizzes, String category) {
 
         String end = "end!";
 
         List<Member> members = roomRepository.findByRoomId(roomId).orElseThrow().getMembers();
 
-        quizSaveService.pushMember(roomId, members);
+        quizSaveService.pushMember(roomId, members, category);
 
         for (Member member : members) {
             redisTemplate.opsForZSet().incrementScore("rank", member.getUserId().toString(), member.getGameScore());

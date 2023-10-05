@@ -28,6 +28,9 @@ public class QuizSaveService {
 
     private final Map<String, String> categoryCountTable = new HashMap<>();
 
+    private final Map<String, String> categoryCorrectTable = new HashMap<>();
+
+
     @Autowired
     public QuizSaveService(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
@@ -37,11 +40,17 @@ public class QuizSaveService {
         categoryTable.put("IT/과학", "quiz4");
         categoryTable.put("세계", "quiz5");
 
-//        categoryCountTable.put("경제", "");
-//        categoryCountTable.put("사회", );
-//        categoryCountTable.put("생활/문화", );
-//        categoryCountTable.put("IT/과학", );
-//        categoryCountTable.put("세계", );
+        categoryCountTable.put("경제", "economySolvedQuizCount");
+        categoryCountTable.put("사회", "socialSolvedQuizCount");
+        categoryCountTable.put("생활/문화", "livingSolvedQuizCount");
+        categoryCountTable.put("IT/과학", "scienceSolvedQuizCount");
+        categoryCountTable.put("세계", "globalSolvedQuizCount");
+
+        categoryCorrectTable.put("경제", "economyCorrectQuizCount");
+        categoryCorrectTable.put("사회", "socialCorrectQuizCount");
+        categoryCorrectTable.put("생활/문화", "livingCorrectQuizCount");
+        categoryCorrectTable.put("IT/과학", "scienceCorrectQuizCount");
+        categoryCorrectTable.put("세계", "globalCorrectQuizCount");
     }
 
     public Quiz getQuiz(String date, String collectionName) {
@@ -49,12 +58,14 @@ public class QuizSaveService {
         return mongoTemplate.findOne(query, Quiz.class, categoryTable.get(collectionName));
     }
 
-    public  void  pushMember(int roomId, List<Member> memberList) {
+    public  void  pushMember(int roomId, List<Member> memberList, String quizType) {
         for (Member member : memberList) {
             Query query = new Query(Criteria.where("userId").is(member.getUserId()));
 
             Update update = new Update();
             update.addToSet("historyList", roomId);
+            update.inc(categoryCountTable.get(quizType), member.getGameQuizCount());
+            update.inc(categoryCorrectTable.get(quizType), member.getGameQuizCount());
 
 //            update.inc("allSolvedQuizCount", member.getGameQuizCount());
 //            update.inc("allCorrectQuizCount", member.getGameCorrect());
