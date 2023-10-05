@@ -1,6 +1,6 @@
 import { BsTrophy } from "react-icons/bs";
-import type { GamePlay, SoketUser } from "@/types";
 import { useEffect, useState } from "react";
+import type { SoketUser } from "@/types";
 import styles from "./play.module.scss";
 
 interface Props {
