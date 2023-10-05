@@ -86,7 +86,14 @@ export default function Question({ data, isDone }: Props) {
         // 문제
         <>
           {quiz ? <div className={`${styles.quizTitle} z-10`}>[{quiz.quizType}]</div> : "Start"}
-          {quiz ? <div className={`${styles.quizDesc} z-10`}>{quiz.question}</div> : undefined}
+          {quiz ? <div className={`${styles.quizDesc} z-10`}>{quiz.question.title}</div> : undefined}
+          {quiz ? (
+            <div className={`${styles.quizDesc} z-10`}>
+              {quiz.question.hints.map((hint) => {
+                <div>{hint}</div>;
+              })}
+            </div>
+          ) : undefined}
         </>
       ) : isDone ? (
         // 퀴즈 끝

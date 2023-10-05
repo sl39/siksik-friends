@@ -7,6 +7,10 @@ interface Props {
 }
 
 export default function MyData({ myInfo, roomInfoPlay }: Props) {
+  console.log(myInfo, roomInfoPlay);
+  const { userId } = myInfo;
+  const index = roomInfoPlay?.members?.findIndex((member) => member.userId === userId);
+
   return (
     <>
       <div className={`${styles.clay} ${styles.rankRoomInfo}`}>
@@ -31,7 +35,7 @@ export default function MyData({ myInfo, roomInfoPlay }: Props) {
         </div>
         <div className={styles.rankB}>
           <span>등수</span>
-          {myInfo.userRanking} 위
+          {index! + 1}위
         </div>
       </div>
     </>
