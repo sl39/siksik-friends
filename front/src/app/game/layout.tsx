@@ -20,7 +20,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         // setUser(response.data);
       } catch (err) {
         console.error("새로고침", err);
-        router.replace("/");
+        router.replace("/sign-up");
       }
     };
     fetchUserData();
