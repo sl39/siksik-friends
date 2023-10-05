@@ -82,8 +82,8 @@ export default function Question({ data, isDone }: Props) {
         <Image src="/images/backclock.png" alt="" sizes="30vw" fill style={{ objectFit: "contain" }} priority />
       </div>
 
-      {/* eslint-disable-next-line no-nested-ternary */}
       {!isQuiz && !isResult && <div className={`${styles.quizType} z-10`}>잠시만 기다려 주세요 곧 시작합니다</div>}
+      {/* eslint-disable-next-line no-nested-ternary */}
       {isQuiz && isResult === false ? (
         // 문제
         <>
