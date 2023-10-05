@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useAtom } from "jotai";
@@ -76,6 +76,14 @@ export default function Question({ data, isDone }: Props) {
     setMyAnswer({ ...myAnswer, userAnswer: e.target.value });
   };
 
+  // eslint-disable-next-line no-null/no-null
+  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
+
   return (
     <div className={styles.quizContainer}>
       <div className={`${styles.backImage} z-9`}>
@@ -140,6 +148,7 @@ export default function Question({ data, isDone }: Props) {
       <form onSubmit={handleSubmit} className={`${styles.answer} z-10`}>
         <div className={styles.quote}>
           <input
+            ref={inputRef}
             disabled={isSubmit}
             className={`${isSubmit ? styles.isSubmit : ""}`}
             type="text"

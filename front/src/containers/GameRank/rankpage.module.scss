@@ -332,3 +332,19 @@ $end-color: #d3e0ea;
     }
   }
 }
+
+.backImg1 {
+  position: absolute;
+  top: 30%;
+  right: 0;
+  width: 30%;
+  aspect-ratio: 1;
+}
+.backImg2 {
+  position: absolute;
+  opacity: 0.7;
+  top: 30%;
+  left: 0;
+  width: 30%;
+  aspect-ratio: 1;
+}

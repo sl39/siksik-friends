@@ -44,7 +44,7 @@ export default function CreateRoomModal({ onClose }: Props) {
   });
   const stompClient = useWebSocket();
   const [user] = useAtom(userAtom);
-  const [allCheck, setAllCheck] = useState(false);
+  const [, setAllCheck] = useState(false);
 
   /** 게임 방 생성 */
   const handleCreateGame = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -153,6 +153,7 @@ export default function CreateRoomModal({ onClose }: Props) {
   };
   /**  종류 체크 */
   const typeClick = (val: string) => {
+    setCheckType("");
     // val이 typeList에 이미 포함되어 있는지 확인
     const typeList = formData.type;
     // const index = typeList.indexOf(val);
@@ -342,7 +343,7 @@ export default function CreateRoomModal({ onClose }: Props) {
             {checkpassword && <div className={styles.checkText}>{checkpassword}</div>}
           </div> */}
           <div className={styles.btns}>
-            <button className={`${styles.btn} ${allCheck ? styles.disabled : ""}`} type="submit">
+            <button className={`${styles.btn} `} type="submit">
               확인
             </button>
             <button className={`${styles.btn}`} type="button" onClick={onClose}>
