@@ -14,7 +14,7 @@
   height: 15%;
 }
 
-$base-color: #89cff0;
+$base-color: #cce5ff;
 $end-color: #d3e0ea;
 
 .flex {
@@ -31,14 +31,13 @@ $end-color: #d3e0ea;
 }
 .right {
   width: 50%;
-
   margin: 0 2%;
-  background: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  padding: 10px;
+  // background: rgba(255, 255, 255, 0.5);
+  // box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(1px);
   -webkit-backdrop-filter: blur(1px);
   border-radius: 20px;
-
   box-sizing: border-box;
 }
 .leaderboard {
@@ -49,7 +48,9 @@ $end-color: #d3e0ea;
   height: 100%;
   margin: 0 auto;
   border-radius: 10px;
-  background: linear-gradient(to bottom, #f0f8ff, #d3e0ea);
+  // background: linear-gradient(to bottom, #f0f8ff, #d3e0ea);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
   overflow-y: auto;
   &::-webkit-scrollbar {
     width: 10px;
@@ -87,7 +88,7 @@ $end-color: #d3e0ea;
     padding: 0;
 
     box-sizing: border-box;
-    height: 100%;
+    height: auto;
 
     li {
       position: relative;
@@ -194,7 +195,7 @@ $end-color: #d3e0ea;
   align-items: center;
 
   margin: 0 auto;
-  width: 80%;
+  width: 60%;
   height: 15%;
 
   .btn {
@@ -209,7 +210,7 @@ $end-color: #d3e0ea;
   .btn,
   .btn:link,
   .btn:visited {
-    background-color: var(--color-blue-m1);
+    background-color: var(--color-softblue);
 
     &:hover,
     &:focus {
@@ -278,4 +279,56 @@ $end-color: #d3e0ea;
     inset -10px -10px 7px 0px rgba(204, 229, 255, 0.4),
     inset 15px 15px 7px 0px rgb(255, 255, 255);
   transition: all 0.3s ease;
+}
+
+.rankRoomInfo {
+  margin-top: 5%;
+  height: 30%;
+
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 3vh;
+
+  .roomName {
+    font-size: 5vh;
+  }
+
+  .roomCate,
+  .roomDate {
+    display: inline;
+    width: 60%;
+    span {
+      width: 50%;
+      color: var(--color-grey-text);
+      padding-right: 10px;
+    }
+  }
+}
+
+.rankMyInfo {
+  margin-top: 5%;
+  height: 60%;
+
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 4vh;
+  .rankB {
+    font-size: 3.5vh;
+    width: 70%;
+
+    span {
+      display: inline-block;
+      width: 50%;
+      padding-right: 10px;
+      color: var(--color-grey-text);
+    }
+  }
 }
