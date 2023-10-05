@@ -25,6 +25,8 @@ export default function Index() {
     userName: user.nickname,
     userScore: user.score,
     userRanking: user.rank,
+    profile: user.profile,
+    level: user.level,
 
     ready: false,
     leader: false,
@@ -34,7 +36,6 @@ export default function Index() {
   // 이 방에 있는 사람들
   const [userInfo, setUserInfo] = useState<SoketUser[]>([]);
 
-  console.log("방 들어옴", userInfo);
   const [leaderReady, setleaderReady] = useState(0);
 
   // {
