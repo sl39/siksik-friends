@@ -136,7 +136,7 @@ export default function ProfileData({ userId }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [activeTab, setActiveTab] = useState(2);
+  const [activeTab, setActiveTab] = useState(1);
   const handleTabClick = (tabId: number) => {
     setActiveTab(tabId);
   };
@@ -252,14 +252,14 @@ export default function ProfileData({ userId }: Props) {
             >
               <p>데이터</p>
             </button>
-            {userId === undefined && (
+            {/* {userId === undefined && (
               <button
                 onClick={() => handleTabClick(3)}
                 className={`${styles.tablinks} ${activeTab === 3 ? styles.active : ""}`}
               >
                 <p>친구</p>
               </button>
-            )}
+            )} */}
           </div>
 
           <div className={`${styles.wrapper_tabcontent}`}>

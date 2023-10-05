@@ -364,8 +364,10 @@ $font-title: "Chelsea Market", sans-serif;
   display: flex;
   flex-direction: row;
 
+  min-width: 950px;
   width: 65vw;
-  height: 60vh;
+  max-width: 1000px;
+  height: 500px;
   .Card {
     .profileCard {
       height: 80%;
