@@ -73,3 +73,20 @@ export interface SoketUser {
   level?: number;
   profile?: string;
 }
+
+export interface Answer {
+  roomId: number;
+  userId: number;
+  userAnswer: string;
+  answer: string;
+}
+
+export interface GamePlay {
+  userId: number;
+  userName: String;
+  gameScore: number;
+  userScore: number;
+  userRanking: number;
+  ready: boolean;
+  leader: boolean;
+}
