@@ -7,23 +7,37 @@ interface Props {
 }
 
 export default function MyData({ myInfo, roomInfoPlay }: Props) {
-  // const { myInfo, roomInfoPlay } = data;
+  console.log(myInfo, roomInfoPlay);
+  const { userId } = myInfo;
+  const index = roomInfoPlay?.members?.findIndex((member) => member.userId === userId);
+
   return (
-    <div>
-      <div>내정보 데이터</div>
-      <div className={styles.clay}>
-        <p>유저 이름: {myInfo.userName}</p> <br />
-        <p>유저 맞힌 점수: {myInfo.gameScore}</p>
-        <br />
-        <p>유저 점수: {myInfo.userScore}</p>
-        <br />
-        <p>유저 랭킹: {myInfo.userRanking}</p>
-        <br />
-        <p>
-          유저 맞힌 문제 수: {myInfo.gameCorrect}/{roomInfoPlay.quizCount}
-        </p>
-        <br />
+    <>
+      <div className={`${styles.clay} ${styles.rankRoomInfo}`}>
+        <div className={styles.roomName}>{roomInfoPlay.roomName}</div>
+        <div className={styles.roomCate}>
+          <span>카테고리</span> {roomInfoPlay.category}
+        </div>
+        <div className={styles.roomDate}>
+          <span>문제날짜</span> {roomInfoPlay.quizDate}
+        </div>
       </div>
-    </div>
+
+      <div className={`${styles.clay} ${styles.rankMyInfo}`}>
+        <div className={styles.rankName}>{myInfo.userName}</div>
+        <div className={styles.rankB}>
+          <span>얻은 점수</span>
+          {myInfo.gameScore} 점
+        </div>
+        <div className={styles.rankB}>
+          <span>맞춘 문제</span>
+          {myInfo.gameCorrect} / {roomInfoPlay.quizCount} 문제
+        </div>
+        <div className={styles.rankB}>
+          <span>등수</span>
+          {index! + 1}위
+        </div>
+      </div>
+    </>
   );
 }
