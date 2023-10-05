@@ -3,21 +3,18 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useAtom } from "jotai";
-import { resetTimerAtom, timerEndedAtom } from "@/store/gameAtom";
+import { timerEndedAtom } from "@/store/gameAtom";
 import styles from "./play.module.scss";
 
 interface Props {
   time: number;
-  resetTime: number;
-  count: number;
 }
 
-export default function Timer({ time, resetTime, count }: Props) {
+export default function Timer({ time }: Props) {
   const [sec, setSec] = useState(time * 10);
   // 문제 시간 종료 여부
   const [timerEnded, setTimerEnded] = useAtom(timerEndedAtom);
   // 답 보는 시간
-  const [resetTimer, setResetTimer] = useAtom(resetTimerAtom);
 
   const [quizNum, setQuizNum] = useState(0);
 
@@ -31,38 +28,31 @@ export default function Timer({ time, resetTime, count }: Props) {
   useEffect(() => {
     setQuizNum((prevQuizNum) => prevQuizNum + 1);
 
-    if (!resetTimer) {
-      setSec(time * 10);
-    } else {
-      setSec(resetTime * 10);
-    }
-  }, [time, resetTime, resetTimer]);
+    setSec(time * 10);
+  }, [time]);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-
-    if (quizNum < count * 2) {
-      interval = setInterval(() => {
-        setTimerEnded(false);
-        if (sec > 0) {
-          setSec((prevSec) => prevSec - 1);
-        }
-        // 시간 종료
-        else {
-          clearInterval(interval);
-          // 스위칭
-          setTimeout(() => {
-            setTimerEnded(!timerEnded);
-            setResetTimer(!resetTimer);
-          }, 900);
-        }
-      }, 100);
-    }
+    // let interval: NodeJS.Timeout;
+    const interval = setInterval(() => {
+      setTimerEnded(false);
+      if (sec > 0) {
+        setSec((prevSec) => prevSec - 1);
+      }
+      // 시간 종료
+      else {
+        clearInterval(interval);
+        // 스위칭
+        setTimeout(() => {
+          setTimerEnded(!timerEnded);
+        }, 900);
+      }
+    }, 100);
 
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [time, sec]);
 
-  const maxItem = (!resetTimer ? time : resetTime) * 10;
+  const maxItem = time * 10;
   const widthProgress = (sec * 100) / maxItem;
 
   // transition 효과 제거하는 함수들
