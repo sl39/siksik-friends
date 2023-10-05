@@ -33,8 +33,6 @@
 
 <a name="contents"></a>
 
-
-
 ### 1. 메인 페이지
 
 ![메인](/uploads/79fe71eca732b49aa6b99b98eae57cfb/메인.gif)
@@ -46,6 +44,32 @@
 - 배경음악 on/off 기능
 
 - 로그인 및 회원가입 모달 애니메이션 효과
+
+
+
+## 2. 워드 클라우드
+
+![ezgif.com-video-to-gif](/uploads/aa87487adf689be172d7063f5997e3e0/ezgif.com-video-to-gif.gif)
+
+
+
+## 3. 내 프로필
+
+![ezgif.com-video-to-gif__2_](/uploads/08f039045eac411fdd2bf59872151976/ezgif.com-video-to-gif__2_.gif)
+
+
+
+## 4. 게임
+
+![ezgif.com-video-to-gif__1_](/uploads/98fdcf21d91e6e3309a709ac17401880/ezgif.com-video-to-gif__1_.gif)
+
+
+
+## 5. 대기실
+
+![ezgif.com-video-to-gif__3_](/uploads/ad441cabaa2703b8c0e6bf0e1b93b25b/ezgif.com-video-to-gif__3_.gif)
+
+
 
 
 
@@ -77,8 +101,6 @@
 
 <img title="" src="https://img.shields.io/badge/Airflow-017CEE?style=for-the-badge&logo=apacheairflow&logoColor=white" alt=""> 
 
-
-
 # 데이터 파이프라인
 
 <a name="dataPipelines"></a>
@@ -89,7 +111,19 @@
 
 <a name="systemArchitecture"></a>
 
-아키텍쳐 사진
+![architecture](./assets/arch.png)
+
+## 메인 서버 (좌)
+
+
+
+## 분산 클러스터링 서버 (우)
+
+- AWS EC2 t2.xlarge 인스턴스
+
+- Ubuntu 20.04
+
+
 
 # 기획 및 설계 산출물
 
