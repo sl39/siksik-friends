@@ -2,7 +2,11 @@
 
 import { BsTrophy } from "react-icons/bs";
 import { useRouter } from "next/navigation";
+import { useContext, useEffect, useState } from "react";
+import { useAtom } from "jotai";
 import type { SoketUser } from "@/types";
+import { TotalInfoContext } from "@/socket/SubscriptionQuiz";
+import { userAtom } from "@/store/userAtom";
 import styles from "./rankpage.module.scss";
 import MyData from "./MyData";
 
@@ -29,10 +33,23 @@ export default function GameRank() {
   //     ready: false,
   //   },
   // ]);
+  const [user] = useAtom(userAtom);
   const data: Array<SoketUser> = [];
-
+  const { quizResult, roomInfoPlay } = useContext(TotalInfoContext);
+  const [scoreData, setScoreData] = useState<SoketUser[] | undefined>(quizResult);
+  const [myInfo, setMyInfo] = useState<SoketUser | undefined>(undefined);
+  useEffect(() => {
+    if (quizResult) {
+      setScoreData(quizResult);
+      quizResult.forEach((userInfo) => {
+        if (userInfo.userId === user.user_id) {
+          setMyInfo(userInfo);
+        }
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [quizResult]);
   // 이 게임에 대한 내 점수 정보
-  const myData = {};
 
   const router = useRouter();
 
@@ -48,7 +65,7 @@ export default function GameRank() {
               전체 순위
             </h1>
             <ol>
-              {data?.map((item) => (
+              {scoreData?.map((item) => (
                 <li key={item.userName!}>
                   <mark>{item.userName!}</mark>
                   <small>{item.gameScore!}</small>
@@ -57,8 +74,9 @@ export default function GameRank() {
             </ol>
           </div>
         )}
+
         <div className={`${styles.myBoard} ${styles.right}`}>
-          <MyData data={myData} />
+          {myInfo && roomInfoPlay && <MyData myInfo={myInfo} roomInfoPlay={roomInfoPlay} />}
         </div>
       </div>
 
