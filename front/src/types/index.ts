@@ -72,6 +72,7 @@ export interface SoketUser {
   leader?: boolean;
   level?: number;
   profile?: string;
+  gameCorrect?: number;
 }
 
 export interface Answer {
