@@ -173,7 +173,6 @@ export default function CreateRoomModal({ onClose }: Props) {
     // }
 
     if (val === typeList) {
-      // console.log(val);
       setFormData({ ...formData, type: "" });
       setTypeValidation(false);
     } else {
