@@ -70,7 +70,7 @@ export default function UpdateButton({ userPropId, isMyShow = false }: Props) {
     } else if (userType === 4 || userType === 1) {
       // 친구 삭제, 친구 요청 취소
       try {
-        await serverAxios.delete(`user/friend/${userId}`);
+        await serverAxios.delete(`/user/friend/${userId}`);
         setUserType(3);
       } catch (err) {
         console.log("친구 삭제 | 취소 에러", err);
@@ -79,7 +79,7 @@ export default function UpdateButton({ userPropId, isMyShow = false }: Props) {
       if (text === "친구 요청 수락") {
         // 친구 수락
         try {
-          await serverAxios.put(`user/friend/${userId}`);
+          await serverAxios.put(`/user/friend/${userId}`);
           setUserType(4);
         } catch (err) {
           console.log("친구 수락 에러", err);
@@ -87,7 +87,7 @@ export default function UpdateButton({ userPropId, isMyShow = false }: Props) {
       } else if (text === "친구 요청 거절") {
         // 친구 삭제
         try {
-          await serverAxios.delete(`user/friend/${userId}`);
+          await serverAxios.delete(`/user/friend/${userId}`);
           setUserType(3);
         } catch (err) {
           console.log("친구 거절 에러", err);
@@ -103,7 +103,7 @@ export default function UpdateButton({ userPropId, isMyShow = false }: Props) {
   /** 로그아웃 */
   const handleLogout = async () => {
     try {
-      await serverAxios("/user/sign-out");
+      await serverAxios("/auth/sign-out");
       router.push("/");
     } catch (err) {
       console.log("로그아웃 에러", err);
