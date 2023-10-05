@@ -1,0 +1,213 @@
+@font-face {
+  font-family: "Katuri";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_13@1.0/Katuri.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "SUITE-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Bazzi";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/Bazzi.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Chosunilbo_myungjo";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+  background-color: var(--color-bg);
+  font-family: "Bazzi", var(--font-poor), sans-serif;
+  margin: 0;
+  font-size: 1.4rem;
+  width: 100vw;
+  height: 100vh;
+
+  min-height: 720px;
+  min-width: 1280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: url("../../public/images/cursor/mouse_cursor2.png"), default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+body * {
+  cursor: url("../../public/images/cursor/mouse_cursor2.png"), default !important;
+}
+* {
+  cursor: url("../../public/images/cursor/mouse_cursor2.png"), default !important;
+}
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+button,
+a {
+  all: unset;
+}
+input {
+  font-family: "Bazzi", var(--font-poor), sans-serif;
+  font-size: 1.2rem;
+  padding: 0 5px;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  border-bottom-width: 2px;
+}
+input:focus {
+  border-color: #6495ed;
+}
+/* home layout */
+.body-container {
+  /* 16:9 비율 지정 */
+  width: 100vw;
+  height: 56.25vw;
+  margin: 0;
+  padding: 0;
+  max-height: 100vh;
+  max-width: 177.78vh;
+
+  min-height: 648px;
+  min-width: 1152px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.book-cover {
+  background-color: var(--color-book);
+  width: 98%;
+  height: 90%;
+  position: relative;
+  bottom: -4%;
+  border-radius: 10px;
+}
+.book-page1 {
+  width: 94%;
+  height: 10px;
+  background-color: var(--color-page1);
+  margin: auto;
+  position: relative;
+  top: 20px;
+}
+.book-page2 {
+  width: 96%;
+  height: 20px;
+  background-color: var(--color-page2);
+  margin: auto;
+  position: relative;
+  top: 20px;
+}
+.book-page {
+  width: 98%;
+  height: calc(100% - 50px);
+
+  overflow: hidden;
+  position: relative;
+  bottom: 0;
+  left: 1%;
+}
+.book-page::after {
+  content: "";
+  background: url("/images/background/background2.png");
+
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  box-shadow: inset 0 0 0 1000px rgba(255, 255, 255, 0.6);
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.main-container {
+  position: relative;
+  top: 20px;
+  padding-top: 20px;
+  box-sizing: border-box;
+  overflow: auto;
+  width: 100%;
+  height: calc(100% - 20px);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+/* 스크롤 CSS */
+.main-container::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 10px;
+}
+.main-container::-webkit-scrollbar-thumb {
+  height: 30%;
+  background: var(--color-page1);
+  border-radius: 10px;
+}
+.main-container::-webkit-scrollbar-track {
+  background: var(--color-gray);
+  border-radius: 10px;
+}
+
+/* home Nav */
+.home-nav {
+  box-sizing: border-box;
+  position: absolute;
+  top: -50px;
+  width: 90%;
+  left: 5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+/* 뒤로가기 버튼 위치 */
+.back-nav {
+  position: absolute;
+  top: -50px;
+  left: 10vw;
+  width: 60vw;
+  height: 80px;
+  display: flex;
+}
+.nav-item {
+  background-color: var(--color-nav);
+  border-radius: 20px 20px 0 0;
+  width: 20%;
+  min-width: 150px;
+  height: 80px;
+}
+.active {
+  height: 115px;
+  background-color: var(--color-nav-active);
+  border: solid var(--color-nav-stroke);
+  box-sizing: border-box;
+}
+.back {
+  height: 100px;
+  background-color: var(--color-nav-active);
+  border: solid var(--color-nav-stroke);
+  box-sizing: border-box;
+}
+.nav-text {
+  font-size: 40px;
+  color: var(--color-nav-font);
+  text-align: center;
+  padding-top: 12px;
+}

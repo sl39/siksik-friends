@@ -1,0 +1,47 @@
+:root {
+  /* color */
+  --color-temp: orange;
+  --color-point: orange;
+
+  --color-bg: #f4f2e6;
+  --color-book: #dba741;
+  --color-page1: #e7d19f;
+  --color-page2: #fafad2;
+  --color-page3: #f8ffff;
+
+  --color-gray: #666;
+
+  --color-nav: #c8c8c8;
+  --color-nav-active: #ff7a49;
+  --color-nav-stroke: #f76127;
+  --color-nav-font: white;
+
+  /* 버튼 컬러 */
+  --color-login-btn: orange;
+  --color-login-text: black;
+
+  --color-close-btn: white;
+  --color-btn: grey;
+
+  /* 워드클라우드 버튼 컬러 */
+  --color-word-border: #ffa500;
+  --color-word-text: #ffa500;
+  --color-word-back: #ff4500;
+  --color-word-hover: #ff6347;
+  --color-word-hover-back: #ff8c00;
+
+  /* 게임 유저 */
+  --color-wait: #ff6347;
+
+  --scale-factor: 0.01;
+
+  --color-button: #ffdab9;
+
+  --color-grey-text: #686868;
+  --color-blue-m1: #89cff0;
+  --color-blue-m2: #7ec0ee;
+  --color-blue-n1: #f0f8ff;
+  --color-blue-n2: #d3e0ea;
+
+  --color-softblue: #cce5ff;
+}
