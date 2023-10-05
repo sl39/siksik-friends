@@ -56,3 +56,4 @@ export const levelAtom = atom<Array<string>>([
 
 export const friendsAtom = atom<Array<Friend>>([]);
 export const notFriendsAtom = atom<Array<Friend>>([]);
+export const wishFriendsAtom = atom<Array<Friend>>([]);

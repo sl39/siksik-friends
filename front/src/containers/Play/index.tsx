@@ -48,17 +48,11 @@ export default function GamePlay() {
 
   useEffect(() => {
     if (end) {
-      router.push("/home");
+      // 모든 문제가 끝나면 결과 페이지로 이동;
+      router.push(`/game/rank/${roomId}`);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [end]);
-
-  // 현재 스코어 상태 받아오기
-
-  // eslint-disable-next-line consistent-return
-
-  // 모든 문제가 끝나면 결과 페이지로 이동;
-  // const router = useRouter();
-  // router.push(`/game/rank/${roomId}`);
 
   return (
     <div className={styles.flex}>
