@@ -150,7 +150,7 @@ export default function Question({ data, isDone }: Props) {
           <input
             ref={inputRef}
             disabled={isSubmit}
-            className={`${isSubmit ? styles.isSubmit : ""}`}
+            className={`${styles.noCaret} ${isSubmit ? styles.isSubmit : ""}`}
             type="text"
             value={submitAnswer}
             onChange={handleChange}
