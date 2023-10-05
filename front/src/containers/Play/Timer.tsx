@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function Timer({ time }: Props) {
-  const [sec] = useState(time * 10);
+  const [sec, setSec] = useState(time * 10);
 
   const [movingImg] = useState([
     "/images/actor/rabbit3.png",
@@ -24,7 +24,7 @@ export default function Timer({ time }: Props) {
   useEffect(() => {
     const randomIndex = Math.floor(Math.random() * movingImg.length);
     setRandomImage(movingImg[randomIndex]);
-    console.log("======", time);
+    setSec(time * 10);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [time]);

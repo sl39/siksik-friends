@@ -49,13 +49,9 @@ export default function GamePlay() {
   useEffect(() => {
     if (end) {
       // 모든 문제가 끝나면 결과 페이지로 이동;
-<<<<<<< HEAD
-      router.push(`/game/start/rank/${roomId}`);
-=======
       setTimeout(() => {
         router.replace(`/game/start/rank/${roomId}`);
       }, 3000);
->>>>>>> front/develop
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [end]);
