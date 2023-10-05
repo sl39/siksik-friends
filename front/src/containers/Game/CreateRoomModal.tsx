@@ -23,6 +23,7 @@ export default function CreateRoomModal({ onClose }: Props) {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
   const [checkTitle, setCheckTitle] = useState("");
+  const [checkType, setCheckType] = useState("");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [checkpassword, setCheckPassword] = useState("");
 
@@ -43,16 +44,18 @@ export default function CreateRoomModal({ onClose }: Props) {
   });
   const stompClient = useWebSocket();
   const [user] = useAtom(userAtom);
+  const [allCheck, setAllCheck] = useState(false);
 
   /** 게임 방 생성 */
   const handleCreateGame = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (titleValidation && passwordValidation && typeValidation) {
+      setAllCheck(true);
       const leaderMember = {
         userId: user.user_id,
         userName: user.nickname,
-        userScore: user.score,
-        userRanking: user.rank,
+        level: user.level,
+        profile: user.profile,
         ready: false,
         leader: true,
       };
@@ -69,18 +72,22 @@ export default function CreateRoomModal({ onClose }: Props) {
       /** 게임방 POST 요청 */
       try {
         const response = await socketAxios.post("/lobby", roomData);
-        // const response = await axios
-        //   .create({
-        //     baseURL: "https://j9e101.p.ssafy.io/socket",
-        //     // headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
-        //   })
-        //   .post("/lobby", roomData);
+
+        // console.log("방 만듦", response);
         if (stompClient) {
           stompClient.send("/pub/room/roomList", {}, JSON.stringify({}));
         }
         router.push(`/game/start/room/${response.data.roomId}`);
       } catch (err) {
         console.log(err);
+      }
+    } else {
+      setAllCheck(true);
+      if (formData.title === "") {
+        setCheckTitle("방 제목을 입력하세요");
+      }
+      if (formData.type === "") {
+        setCheckType("문제 종류를 선택하세요");
       }
     }
   };
@@ -249,7 +256,9 @@ export default function CreateRoomModal({ onClose }: Props) {
           </div>
           {/* 문제 종류 */}
           <div className={`${styles.inputDiv} ${styles.type} ${styles.input3}`}>
-            <label htmlFor="type">문제 종류</label>
+            <label htmlFor="type">
+              문제 종류 <span className={styles.errMsg}>{checkType}</span>
+            </label>
             <div className={styles.groupContainer}>
               <div className={styles.wordButton}>
                 <button
@@ -333,7 +342,7 @@ export default function CreateRoomModal({ onClose }: Props) {
             {checkpassword && <div className={styles.checkText}>{checkpassword}</div>}
           </div> */}
           <div className={styles.btns}>
-            <button className={`${styles.btn}`} type="submit">
+            <button className={`${styles.btn} ${allCheck ? styles.disabled : ""}`} type="submit">
               확인
             </button>
             <button className={`${styles.btn}`} type="button" onClick={onClose}>
