@@ -2,6 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useAtom } from "jotai";
 import { useWebSocket } from "@/socket/WebSocketProvider";
 import type { Frame } from "stompjs";
 import type { Room, SoketUser } from "@/types";
@@ -17,13 +18,12 @@ export default function Index() {
   const roomId = Number(params.id);
 
   const [room, setRoom] = useState<Room | undefined>(undefined);
-  const user = userAtom.init;
+  const [user] = useAtom(userAtom);
   const [soketUser, setSoketUser] = useState<SoketUser>({
     userId: user.user_id,
     userName: user.nickname,
     userScore: user.score,
     userRanking: user.rank,
-
     ready: false,
     leader: false,
   });
