@@ -11,6 +11,7 @@ interface Props {
 }
 
 export default function WaitingUser({ data }: Props) {
+  console.log("userInfo Props", data);
   const [openTab, setOpenTab] = useState(1);
   const [items, setItems] = useState(data);
   const [friends, setFriends] = useState<Array<User>>([]);
