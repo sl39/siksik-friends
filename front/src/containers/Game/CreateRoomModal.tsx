@@ -44,7 +44,7 @@ export default function CreateRoomModal({ onClose }: Props) {
   });
   const stompClient = useWebSocket();
   const [user] = useAtom(userAtom);
-  const [allCheck, setAllCheck] = useState(true);
+  const [allCheck, setAllCheck] = useState(false);
 
   /** 게임 방 생성 */
   const handleCreateGame = async (e: React.FormEvent<HTMLFormElement>) => {

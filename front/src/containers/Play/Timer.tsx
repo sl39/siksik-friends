@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
+// import Image from "next/image";
 import { useAtom } from "jotai";
 import { timerEndedAtom } from "@/store/gameAtom";
 import styles from "./play.module.scss";
@@ -18,12 +18,12 @@ export default function Timer({ time }: Props) {
 
   const [quizNum, setQuizNum] = useState(0);
 
-  const [movingImg] = useState([
-    "/images/actor/rabbit3.png",
-    "/images/actor/bulea2.png",
-    "/images/actor/rabbit3.png",
-    "/images/actor/dodo1.png",
-  ]);
+  // const [movingImg] = useState([
+  //   "/images/actor/rabbit3.png",
+  //   "/images/actor/bulea2.png",
+  //   "/images/actor/rabbit3.png",
+  //   "/images/actor/dodo1.png",
+  // ]);
 
   useEffect(() => {
     setQuizNum((prevQuizNum) => prevQuizNum + 1);
@@ -52,8 +52,8 @@ export default function Timer({ time }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [time, sec]);
 
-  const maxItem = time * 10;
-  const widthProgress = (sec * 100) / maxItem;
+  // const maxItem = time * 10;
+  // const widthProgress = (sec * 100) / maxItem;
 
   // transition 효과 제거하는 함수들
   // const getProgressBarClass = () => `${styles.progress} ${timerEnded ? styles.noTransition : ""} `;
@@ -62,7 +62,12 @@ export default function Timer({ time }: Props) {
   return (
     <div className={styles.timerContainer}>
       <div className={styles.quizNum}>{Number.isInteger(quizNum / 2) ? `${quizNum / 2} 번째 문제` : ""}</div>
-      <div className={styles.timerTime}>남은 시간: {(sec / 10).toFixed(1)} 초</div>
+      {Number.isInteger(quizNum / 2) ? (
+        <div className={styles.timerTime}>{`남은 시간: ${(sec / 10).toFixed(1)} 초`}</div>
+      ) : (
+        ""
+      )}
+
       {/* <div className={getImageClass()} style={{ right: `calc(${widthProgress}% - 20px)` }}>
         <Image
           src={movingImg[quizNum % movingImg.length]}
