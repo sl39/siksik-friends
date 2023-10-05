@@ -98,7 +98,7 @@ export default function ProfileData({ userId }: Props) {
     const fetchHistory = async () => {
       try {
         const response = await socketAxios.post<ResponseData>("/history", {
-          userId: data.user_id,
+          userId: params.id,
         });
         console.log(response.data);
         setHistoryItems(response.data.allHistory);
