@@ -49,7 +49,13 @@ export default function GamePlay() {
   useEffect(() => {
     if (end) {
       // 모든 문제가 끝나면 결과 페이지로 이동;
+<<<<<<< HEAD
       router.push(`/game/start/rank/${roomId}`);
+=======
+      setTimeout(() => {
+        router.replace(`/game/start/rank/${roomId}`);
+      }, 3000);
+>>>>>>> front/develop
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [end]);
@@ -58,7 +64,7 @@ export default function GamePlay() {
     <div className={styles.flex}>
       <div className={styles.top}>
         {/* <Timer time={gameData.countTimer} resetTime={quiz ? 5 : 3} count={10} /> */}
-        <Timer time={quiz ? 5 : 0} resetTime={3} count={roomInfoPlay ? roomInfoPlay.quizCount || 10 : 10} />
+        <Timer time={isQuiz ? 5 : 3} />
       </div>
       <div className={styles.flex2}>
         <div className={styles.left}>{scoreData ? <Score data={scoreData} /> : undefined}</div>
