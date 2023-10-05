@@ -119,7 +119,6 @@ export default function UserItem({ dataProp, isRoom = false, isTab = true }: Pro
     status = "WAIT";
   }
 
-  status = "READY";
   return (
     <div
       className={`${styles.userItem} ${styles.friend} ${isActive ? styles.active : ""}`}
