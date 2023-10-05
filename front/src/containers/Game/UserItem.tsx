@@ -100,7 +100,7 @@ export default function UserItem({ dataProp, isRoom = false, isTab = true }: Pro
         try {
           await serverAxios.delete(`user/friend/${data.userId}`);
           // 요청 목록에서 삭제
-          newFriends = NotFriends.filter((item) => item.user_id !== data.userId);
+          newFriends = await NotFriends.filter((item) => item.user_id !== data.userId);
           setNotFriends(newFriends);
           setUserType(3);
         } catch (err) {
@@ -119,6 +119,7 @@ export default function UserItem({ dataProp, isRoom = false, isTab = true }: Pro
     status = "WAIT";
   }
 
+  status = "READY";
   return (
     <div
       className={`${styles.userItem} ${styles.friend} ${isActive ? styles.active : ""}`}

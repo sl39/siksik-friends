@@ -544,9 +544,10 @@ $hardBlue: #6495ed;
   }
   .name {
     width: 60%;
+    letter-spacing: -1px;
   }
   .isReader {
-    width: 15%;
+    box-sizing: border-box;
     color: $hardBlue;
     letter-spacing: -2px;
   }
