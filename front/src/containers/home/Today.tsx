@@ -13,7 +13,8 @@ export default function Today() {
 
   return (
     <div className={styles.date}>
-      <span>{formattedDate}</span>
+      {/* <span>{formattedDate}</span> */}
+      <span>2023.10.06.</span>
     </div>
   );
 }
