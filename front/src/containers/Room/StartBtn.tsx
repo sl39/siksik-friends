@@ -32,9 +32,7 @@ export default function StartBtn({ gameId, soketUser, leaderReady, stompClient, 
       if (roomUser.leader) {
         if (leaderReady === 1) {
           // router.push(`/game/start/play/${gameId}`);
-          console.log(roomInfoPlay, "전체", room, "지역");
           stompClient.send(`/pub/game/start/${gameId}`, {}, JSON.stringify(roomInfoPlay || room));
-          console.log("혼자일때는 콘솔이 찍히는지 확인");
         }
       } else if (roomUser.ready) {
         setRoomUser({ ...roomUser, ready: false });

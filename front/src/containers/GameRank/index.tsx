@@ -89,10 +89,10 @@ export default function GameRank() {
 
         <div className={styles.btns}>
           <button onClick={() => router.replace("/home")} className={styles.btn}>
-            메인 페이지
+            메인 페이지로 이동
           </button>
           <button onClick={() => router.replace("/game")} className={styles.btn}>
-            게임 대기실
+            게임 로비로 이동
           </button>
         </div>
       </div>
