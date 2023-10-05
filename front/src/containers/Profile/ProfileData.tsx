@@ -28,6 +28,7 @@ export default function ProfileData({ userId }: Props) {
   const [defaultData] = useAtom(profileAtom);
   useEffect(() => {
     fetchHistory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchUser = async () => {
