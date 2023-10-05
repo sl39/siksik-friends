@@ -24,7 +24,6 @@ export default function Timer({ time }: Props) {
   useEffect(() => {
     const randomIndex = Math.floor(Math.random() * movingImg.length);
     setRandomImage(movingImg[randomIndex]);
-    console.log("======", time);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [time]);
@@ -45,7 +44,7 @@ export default function Timer({ time }: Props) {
           src={randomImage}
           alt="moving image"
           fill
-          sizes="10vw"
+          sizes="30vw"
           className={`${styles.movingImage} z-10`}
           style={{ objectFit: "contain" }}
           priority

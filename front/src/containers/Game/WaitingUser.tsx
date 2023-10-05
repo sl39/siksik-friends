@@ -24,7 +24,6 @@ export default function WaitingUser() {
   const myFriends = async () => {
     try {
       const response = await serverAxios("/user/friend/list");
-      console.log("친구목록", response.data);
       setFriends(response.data.friendList);
     } catch (err) {
       console.log("친구 목록 에러", err);
@@ -36,8 +35,6 @@ export default function WaitingUser() {
     try {
       // response / request
       const response = await serverAxios("/user/friend/response");
-      console.log("받은목록", response.data);
-
       setNotFriends(response.data.friendList);
     } catch (err) {
       console.log("받은 요청 목록 에러", err);
