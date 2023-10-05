@@ -89,7 +89,6 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
         `/sub/room/info/${roomId}`,
         function handleRoomInfo(frame: Frame) {
           const gameEnd = JSON.parse(frame.body);
-          console.log(gameEnd);
           setRoomInfoPlay(gameEnd);
           gameEnd.members.forEach((member: SoketUser) => {
             if (member.userId === soketUserRef.current.userId) {
