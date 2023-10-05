@@ -6,13 +6,13 @@ import { useAtom } from "jotai";
 import Image from "next/image";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { serverAxios } from "@/services/api";
-import { ProfileImgAtom, userAtom } from "@/store/userAtom";
+import { profileAtom, ProfileImgAtom } from "@/store/userAtom";
 import styles from "./ProfileUpdate.module.scss";
 
 export default function ProfileUpdate() {
   const router = useRouter();
 
-  const [data, setData] = useAtom(userAtom);
+  const [data, setData] = useAtom(profileAtom);
 
   const [nickname, setNickname] = useState(data.nickname);
   const [preNickname] = useState(data.nickname);
