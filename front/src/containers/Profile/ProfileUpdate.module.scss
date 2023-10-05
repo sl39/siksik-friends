@@ -206,9 +206,14 @@
 .checkText {
   font-size: 2vh;
   padding-left: 5px;
-  // height: 35px;
+  height: 35px;
+  color: red;
 }
 .deleteUser {
   margin-top: 10px;
   font-size: 2vh;
+}
+
+.disabled {
+  background-color: #ccc;
 }

@@ -41,6 +41,7 @@ export default function Timer({ time, resetTime, count }: Props) {
     } else {
       setSec(resetTime * 10);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [time, resetTime, resetTimer]);
 
   useEffect(() => {

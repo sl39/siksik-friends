@@ -13,17 +13,19 @@ export const userAtom = atom<User>({
   level: 99,
 });
 
-export const profileAtom = atom<User>({
-  user_id: 0,
-  email: "",
-  nickname: ".",
-  profile: "/images/character/rabbit.png",
-  odds: "",
-  rank: 0,
-  exp: 0,
-  score: 0,
-  level: 1,
-});
+export const profileAtom = atom<User>({} as User);
+
+// export const profileAtom = atom<User>({
+//   user_id: 0,
+//   email: "",
+//   nickname: "",
+//   profile: "/images/character/rabbit.png",
+//   odds: "",
+//   rank: 0,
+//   exp: 0,
+//   score: 0,
+//   level: 0,
+// });
 
 export const ProfileImgAtom = atom<Array<string>>([
   "/images/character/rabbit.png",
