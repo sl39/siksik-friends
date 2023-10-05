@@ -94,7 +94,6 @@ export default function CreateRoomModal({ onClose }: Props) {
   const handleDate = (date: Date) => {
     const formatDate = new Date(date.toLocaleString("en-US", { timeZone: "Asia/Seoul" }));
     const formQuizDate = format(formatDate, "yyyy-MM-dd");
-    console.log(typeof formQuizDate);
     setSelectedDate(date);
     setFormData({ ...formData, quizDate: formQuizDate });
   };
