@@ -35,6 +35,8 @@ export default function EnterRoom({ rooms }: Props) {
     });
     // console.log(arr);
     if (arr.length === 0) {
+      // eslint-disable-next-line no-alert
+      alert("입장할 수 있는 방이 없습니다.");
       return undefined;
     }
     const randomIndex = Math.floor(Math.random() * arr.length);
