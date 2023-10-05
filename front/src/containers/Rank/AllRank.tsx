@@ -127,11 +127,7 @@ export default function AllRank() {
 
   return (
     <div className={styles.RankArray}>
-      <div className={styles.RankFlex}>
-        {ranks.map((rank) => (
-          <RankItem key={rank.user_id} item={rank} />
-        ))}
-      </div>
+      <div className={styles.RankFlex}>{ranks?.map((rank) => <RankItem key={rank.user_id} item={rank} />)}</div>
     </div>
   );
 }
