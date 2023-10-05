@@ -17,7 +17,7 @@ export default function ProfileData({ userId }: Props) {
   // 전적 데이터
   const fetchHistory = async () => {
     try {
-      const response = await socketAxios.post("/history", userId);
+      const response = await socketAxios.post("/history", { userId });
       console.log("히스토리", response);
     } catch (err) {
       console.error("히스토리 에러", err);
@@ -26,6 +26,10 @@ export default function ProfileData({ userId }: Props) {
 
   const [profileData, setProfileData] = useState<User>({});
   const [defaultData] = useAtom(profileAtom);
+  useEffect(() => {
+    fetchHistory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const fetchUser = async () => {
     try {
@@ -38,7 +42,6 @@ export default function ProfileData({ userId }: Props) {
   useEffect(() => {
     if (userId) {
       fetchUser();
-      fetchHistory();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
