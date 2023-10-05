@@ -18,14 +18,13 @@ export default function Index() {
   const roomId = Number(params.id);
 
   const [room, setRoom] = useState<Room | undefined>(undefined);
+  // 내 정보 User -> SocketUser
   const [user] = useAtom(userAtom);
   const [soketUser, setSoketUser] = useState<SoketUser>({
     userId: user.user_id,
     userName: user.nickname,
-    userScore: user.score,
-    userRanking: user.rank,
-    profile: user.profile,
     level: user.level,
+    profile: user.profile,
 
     ready: false,
     leader: false,
