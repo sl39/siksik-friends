@@ -81,27 +81,58 @@ export default function Question({ data, isDone }: Props) {
       <div className={`${styles.backImage} z-9`}>
         <Image src="/images/backclock.png" alt="" sizes="30vw" fill style={{ objectFit: "contain" }} priority />
       </div>
+
       {/* eslint-disable-next-line no-nested-ternary */}
       {isQuiz && isResult === false ? (
         // 문제
         <>
-          {quiz ? <div className={`${styles.quizTitle} z-10`}>[{quiz.quizType}]</div> : "Start"}
-          {quiz ? <div className={`${styles.quizDesc} z-10`}>{quiz.question}</div> : undefined}
+          {quiz ? (
+            <>
+              <div className={`${styles.quizType} z-10`}>[{quiz.quizType}]</div>
+              <div className={`${styles.quizTitle} z-10`}>{quiz.question.title}</div>
+            </>
+          ) : undefined}
+          {quiz ? (
+            <div className={`${styles.quizDesc} ${styles.quizDescHint} z-10`}>
+              {quiz?.question.hints.map((hint: any) => (
+                <div key={hint} className={`${styles.hint} z-10`}>
+                  {hint}
+                </div>
+              ))}
+            </div>
+          ) : undefined}
         </>
       ) : isDone ? (
         // 퀴즈 끝
         <>
-          {quiz ? <div className={`${styles.quizTitle} z-10`}>게임 끝!</div> : "Start"}
+          {quiz ? <div className={`${styles.quizTitle} ${styles.endTitle} z-10`}>게임 종료!</div> : undefined}
           {quiz ? (
-            <div className={`${styles.quizDesc} ${styles.Isanswer} z-10`}>잠시 후 최종 결과가 공개됩니다</div>
+            <div className={`${styles.quizDesc} ${styles.IsEnd} z-10`}>잠시 후 최종 결과가 공개됩니다</div>
           ) : undefined}
         </>
       ) : (
-        // 정답
+        // 정답 또는 시작 전
         <>
-          {quiz ? <div className={`${styles.quizTitle} z-10`}>[정답]{quiz.answer}</div> : "Start"}
           {quiz ? (
-            <div className={`${styles.quizDesc} ${styles.Isanswer}  z-10`}>{isCorrect ? "정답" : "오답"}</div>
+            <>
+              <div className={`${styles.quizType} z-10`}>[{quiz.quizType}]</div>
+              <div className={`${styles.quizTitle} z-10`}>{quiz.question.title}</div>
+            </>
+          ) : undefined}
+          {quiz ? (
+            <>
+              <div className={styles.correctImage}>
+                <Image
+                  src={isCorrect ? "/images/correct.png" : "/images/no.png"}
+                  alt="채점"
+                  sizes="30vw"
+                  fill
+                  style={{ objectFit: "contain" }}
+                  priority
+                />
+              </div>
+              <div className={`${styles.quizDesc} ${styles.Isanswer}  z-10`}>{quiz.answer}</div>
+            </>
           ) : undefined}
         </>
       )}
