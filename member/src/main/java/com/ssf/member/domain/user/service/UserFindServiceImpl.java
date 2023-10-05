@@ -7,6 +7,7 @@ import com.ssf.member.domain.user.dto.UserResponse;
 import com.ssf.member.domain.user.repository.UserRepository;
 import com.ssf.member.global.jwt.dto.JwtDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Service
+@Slf4j
 @Transactional
 @RequiredArgsConstructor
 public class UserFindServiceImpl implements UserFindService {
@@ -47,7 +49,9 @@ public class UserFindServiceImpl implements UserFindService {
 
     @Override
     public UserResponse.UserDetail findUserById(UserRequest.UserId userId) {
+        log.info("service 시작");
         User user = userRepository.findById(userId.id()).orElseThrow(null);
+        log.info("db user 생성");
 
         return UserResponse.UserDetail.builder()
                 .user_id(user.getId())

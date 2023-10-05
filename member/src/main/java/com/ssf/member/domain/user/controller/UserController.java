@@ -33,9 +33,12 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public UserDto.Response findUserById(@PathVariable UserRequest.UserId userId) {
-//        return userFindService.findUserById(userId);
-        return null;
+    public UserResponse.UserDetail findUserById(@PathVariable long userId) {
+        log.info("controller 통과");
+        return userFindService.findUserById(UserRequest.UserId.
+                builder()
+                .id(userId)
+                .build());
     }
 
     @GetMapping("/")
