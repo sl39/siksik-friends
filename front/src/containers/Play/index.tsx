@@ -2,9 +2,7 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
-// import { useWebSocket } from "@/socket/WebSocketProvider";
 import type { SoketUser } from "@/types";
-// import type { Frame } from "stompjs";
 import { TotalInfoContext } from "@/socket/SubscriptionQuiz";
 import Timer from "./Timer";
 import styles from "./play.module.scss";
@@ -13,20 +11,21 @@ import Score from "./Score";
 import Chatting from "../Room/Chatting";
 
 export default function GamePlay() {
+  const router = useRouter();
+
   const params = useParams();
   const roomId = Number(params.id);
-  // const [time] = useState<number>(3);
+
   // 문제 정보 받아오기
   // eslint-disable-next-line no-null/no-null
   const { quiz, quizResult, end, roomInfoPlay } = useContext(TotalInfoContext);
-  console.log(quiz, quizResult, end, roomInfoPlay);
+  console.log("?", quiz, quizResult, end, roomInfoPlay);
   const [scoreData, setScoreData] = useState<SoketUser[] | undefined>(quizResult);
-  const [isQuiz, setIsQuiz] = useState<boolean>(false);
-  const [isResult, setIsResult] = useState<boolean>(false);
-  const router = useRouter();
+  const [isQuiz, setIsQuiz] = useState(false);
+  const [isResult, setIsResult] = useState(false);
 
+  /** quiz 값이 변경되면, 데이터 전달 */
   useEffect(() => {
-    // quiz 값이 변경될 때 실행
     if (quiz) {
       setIsQuiz(true);
       setIsResult(false);
@@ -46,12 +45,14 @@ export default function GamePlay() {
     }
   }, [quizResult]);
 
+  const [isDone, setIsDone] = useState(false);
   useEffect(() => {
     if (end) {
       // 모든 문제가 끝나면 결과 페이지로 이동;
-      setTimeout(() => {
-        router.replace(`/game/start/rank/${roomId}`);
-      }, 3000);
+      setIsDone(true);
+      // setTimeout(() => {
+      //   router.replace(`/game/start/rank/${roomId}`);
+      // }, 3000);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [end]);
@@ -65,7 +66,7 @@ export default function GamePlay() {
       <div className={styles.flex2}>
         <div className={styles.left}>{scoreData ? <Score data={scoreData} /> : undefined}</div>
         <div className={styles.center}>
-          <Question data={{ quiz, isQuiz, isResult }} />
+          <Question data={{ quiz, isQuiz, isResult }} isDone={isDone} />
         </div>
         <div className={styles.right}>
           {/* room이랑 같은 채팅 */}
