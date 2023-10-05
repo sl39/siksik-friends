@@ -97,8 +97,6 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
           gameEnd.members.forEach((member: SoketUser) => {
             if (member.userId === soketUserRef.current.userId) {
               soketUserRef.current.leader = member.leader;
-
-              return;
             }
           });
         },
