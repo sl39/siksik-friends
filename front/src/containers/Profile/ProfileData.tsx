@@ -57,7 +57,7 @@ export default function ProfileData({ userId }: Props) {
         const response = await serverAxios(`/user/${profileId}`);
         setDefaultData(response.data);
       } catch (err) {
-        console.error("프로필 다시 에러", err);
+        console.error("Params 없는 프로필 조회", err);
       }
     };
     if (defaultData.user_id === 0) {

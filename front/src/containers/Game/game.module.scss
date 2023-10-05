@@ -587,10 +587,9 @@ $hardBlue: #6495ed;
     width: 100%;
     height: 100%;
   }
-
   .subBtn {
     height: 100%;
-    width: 30%;
+    margin-right: 15px;
   }
 }
 
@@ -606,7 +605,7 @@ $hardBlue: #6495ed;
 
 .highlight:hover {
   // padding: 3px 5px;
-  // width: 100%;
+  height: inherit;
   background: linear-gradient(
     to right,
     rgba(94, 172, 254, 0.3) 0%,
