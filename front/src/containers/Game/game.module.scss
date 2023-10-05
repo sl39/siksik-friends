@@ -22,8 +22,8 @@ $hardBlue: #6495ed;
   box-sizing: border-box;
   background: rgba(255, 255, 255, 0.5);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(1px);
-  -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 .chatBox {
   margin-top: 1%;
@@ -92,7 +92,8 @@ $hardBlue: #6495ed;
   }
   &::-webkit-scrollbar-track {
     /*스크롤바 뒷 배경 색상*/
-    background: grey;
+    background: var(--color-blue-n2);
+
     border-radius: 10px;
   }
 }
@@ -294,7 +295,7 @@ $hardBlue: #6495ed;
   }
 }
 .chatInput {
-  height: 18%;
+  // height: 18%;
   width: 100%;
 
   display: flex;
@@ -302,6 +303,7 @@ $hardBlue: #6495ed;
   align-items: center;
   justify-content: space-evenly;
   padding: 0 10px;
+  margin: auto 0;
   box-sizing: border-box;
 
   .sender {
@@ -354,8 +356,17 @@ $hardBlue: #6495ed;
   height: 100%;
   padding: 5px 8px;
 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  position: relative;
   .chatLog {
     height: 85%;
+    margin-bottom: 1%;
+  }
+  .chatInput {
+    box-sizing: border-box;
   }
 }
 // 대기실 유저
@@ -506,7 +517,7 @@ $hardBlue: #6495ed;
     border-radius: 10px;
   }
   &::-webkit-scrollbar-track {
-    background: rgba(211, 211, 211, 0.5);
+    background: var(--color-blue-n2);
   }
 }
 
@@ -615,4 +626,13 @@ $hardBlue: #6495ed;
     rgba(94, 172, 254, 0.6) 85%,
     rgba(94, 172, 254, 0.8) 100%
   );
+}
+
+.backImage {
+  position: absolute;
+  top: 6%;
+  left: 45%;
+  width: 10%;
+  opacity: 0.5;
+  aspect-ratio: 1;
 }
