@@ -30,6 +30,7 @@ export default function ProfileData({ userId }: Props) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
+
   // data는 userId가 있는 경우 profileData를 사용
   const data = userId ? profileData : defaultData;
 
@@ -122,6 +123,12 @@ export default function ProfileData({ userId }: Props) {
               className={`${styles.tablinks} ${activeTab === 2 ? styles.active : ""}`}
             >
               <p>데이터</p>
+            </button>
+            <button
+              onClick={() => handleTabClick(3)}
+              className={`${styles.tablinks} ${activeTab === 3 ? styles.active : ""}`}
+            >
+              <p>친구</p>
             </button>
           </div>
 
@@ -236,9 +243,19 @@ export default function ProfileData({ userId }: Props) {
                     </g>
                   </svg>
                 </div>
-
-                <div className={styles.item}>전적 관련 데이터</div>
+                <div className={styles.items}>
+                  <div className={styles.item}>전적 관련 데이터</div>
+                  <div className={styles.item}>전적 관련 데이터</div>
+                  <div className={styles.item}>전적 관련 데이터</div>
+                  <div className={styles.item}>전적 관련 데이터</div>
+                  <div className={styles.item}>전적 관련 데이터</div>
+                </div>
               </div>
+            </div>
+
+            <div className={`${styles.tabcontent} ${activeTab === 3 ? styles.active : ""}`}>
+              <h3>친구</h3>
+              <div className={`${styles.p} `}>ㅇㅅㅇ</div>
             </div>
           </div>
         </div>

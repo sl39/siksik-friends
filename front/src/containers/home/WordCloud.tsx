@@ -12,7 +12,6 @@ interface Config {
   backgroundColor?: string;
   options?: {
     words?: any;
-    minLength?: number;
     ignore?: string[];
     maxItems?: number;
     aspect?: string;
@@ -95,9 +94,8 @@ export default function WordCloud() {
         backgroundColor: "rgba(255, 255, 255, 0)",
         options: {
           words,
-          minLength: 1,
+          minFontSize: 30,
           ignore: [""],
-          maxItems: 50,
           aspect: "spiral",
           colorType: "palette",
           palette,
@@ -136,9 +134,9 @@ export default function WordCloud() {
         backgroundColor: "rgba(255, 255, 255, 0)",
         options: {
           words,
-          minLength: 1,
+          minFontSize: 30,
+          // maxFontSize: 60,
           ignore: [""],
-          maxItems: 50,
           aspect: "spiral",
           colorType: "palette",
           palette,

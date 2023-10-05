@@ -1,12 +1,10 @@
 "use client";
 
-import { useAtom } from "jotai";
 import { useParams, useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
-import { roomAtom } from "@/store/gameAtom";
-import { useWebSocket } from "@/socket/WebSocketProvider";
-import type { Quiz, SoketUser } from "@/types";
-import type { Frame } from "stompjs";
+// import { useWebSocket } from "@/socket/WebSocketProvider";
+import type { SoketUser } from "@/types";
+// import type { Frame } from "stompjs";
 import { TotalInfoContext } from "@/socket/SubscriptionQuiz";
 import Timer from "./Timer";
 import styles from "./play.module.scss";
@@ -15,7 +13,6 @@ import Score from "./Score";
 import Chatting from "../Room/Chatting";
 
 export default function GamePlay() {
-  // const [gameData] = useAtom(roomAtom);
   const params = useParams();
   const roomId = Number(params.id);
   // const [time] = useState<number>(3);
