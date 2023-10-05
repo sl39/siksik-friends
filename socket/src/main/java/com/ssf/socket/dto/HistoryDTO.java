@@ -14,23 +14,23 @@ import java.util.List;
 @NoArgsConstructor
 public class HistoryDTO {
 
-    int allSolvedQuizCount;
-    int allCorrectQuizCount;
+    Integer allSolvedQuizCount;
+    Integer allCorrectQuizCount;
 
-    int economySolvedQuizCount;
-    int economyCorrectQuizCount;
+    Integer economySolvedQuizCount;
+    Integer economyCorrectQuizCount;
 
-    int livingSolvedQuizCount;
-    int livingCorrectQuizCount;
+    Integer livingSolvedQuizCount;
+    Integer livingCorrectQuizCount;
 
-    int scienceSolvedQuizCount;
-    int scienceCorrectQuizCount;
+    Integer scienceSolvedQuizCount;
+    Integer scienceCorrectQuizCount;
 
-    int socialSolvedQuizCount;
-    int socialCorrectQuizCount;
+    Integer socialSolvedQuizCount;
+    Integer socialCorrectQuizCount;
 
-    int globalSolvedQuizCount;
-    int globalCorrectQuizCount;
+    Integer globalSolvedQuizCount;
+    Integer globalCorrectQuizCount;
 
 
     List<History> allHistory;

@@ -39,6 +39,7 @@ public class HistoryController {
         
         // "member" 컬렉션에서 userId를 이용하여 historyList를 가져옵니다.
         Query memberQuery = new Query(Criteria.where("userId").is(user.getUserId()));
+
         HistoryMember member = mongoTemplate.findOne(memberQuery, HistoryMember.class);
 
         if (member == null) {

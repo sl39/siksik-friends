@@ -58,34 +58,31 @@ public class QuizSaveService {
         return mongoTemplate.findOne(query, Quiz.class, categoryTable.get(collectionName));
     }
 
-    public  void  pushMember(int roomId, List<Member> memberList, String quizType) {
+    public  void  pushMember(int roomId, List<Member> memberList, String quizType, int allQuizCount) {
+
+
         for (Member member : memberList) {
-            Query query = new Query(Criteria.where("userId").is(member.getUserId()));
+            Query query1 = new Query(Criteria.where("userId").is(member.getUserId()));
+            HistoryMember historyMember = mongoTemplate.findOne(query1, HistoryMember.class);
 
-            Update update = new Update();
-            update.addToSet("historyList", roomId);
-            update.inc(categoryCountTable.get(quizType), member.getGameQuizCount());
-            update.inc(categoryCorrectTable.get(quizType), member.getGameQuizCount());
 
-//            update.inc("allSolvedQuizCount", member.getGameQuizCount());
-//            update.inc("allCorrectQuizCount", member.getGameCorrect());
-//
-//            update.inc("economySolvedQuizCount", member.getGameQuizCount());
-//            update.inc("economyCorrectQuizCount", member.getGameCorrect());
-//
-//            update.inc("livingSolvedQuizCount", member.getGameQuizCount());
-//            update.inc("livingCorrectQuizCount", member.getGameCorrect());
-//
-//            update.inc("scienceSolvedQuizCount", member.getGameQuizCount());
-//            update.inc("scienceCorrectQuizCount", member.getGameCorrect());
-//
-//            update.inc("socialSolvedQuizCount", member.getGameQuizCount());
-//            update.inc("socialCorrectQuizCount", member.getGameCorrect());
-//
-//            update.inc("globalSolvedQuizCount", member.getGameQuizCount());
-//            update.inc("globalCorrectQuizCount", member.getGameCorrect());
+            if (historyMember == null) {
+                HistoryMember newHistoryMember = new HistoryMember();
+                newHistoryMember.setUserId(member.getUserId());
+                newHistoryMember.setHistoryList(new ArrayList<>());
+                mongoTemplate.save(newHistoryMember);
+            }
 
-            mongoTemplate.upsert(query, update, HistoryMember.class);
+            Query query2 = new Query(Criteria.where("userId").is(member.getUserId()));
+
+            Update update2 = new Update();
+            update2.addToSet("historyList", roomId);
+            update2.inc("allSolvedQuizCount", allQuizCount);
+            update2.inc("allCorrectQuizCount", member.getGameCorrect());
+            update2.inc(categoryCountTable.get(quizType), allQuizCount);
+            update2.inc(categoryCorrectTable.get(quizType), member.getGameCorrect());
+
+            mongoTemplate.upsert(query2, update2, HistoryMember.class);
         }
     }
 
