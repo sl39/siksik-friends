@@ -14,4 +14,5 @@ public interface UserFindService {
     UserDto.Response findNickname(String nickname);
     Long findRank(Long id);
     List<UserDto.Response> findRankList();
+    int getLevel(Long id);
 }
