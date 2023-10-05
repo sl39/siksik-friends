@@ -47,6 +47,7 @@ public class QuizSaveService {
 
             Update update = new Update();
             update.addToSet("historyList", roomId);
+            update.inc("allCorrect", member.getGameCorrect());
 
             mongoTemplate.upsert(query, update, HistoryMember.class);
         }

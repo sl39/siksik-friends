@@ -16,5 +16,6 @@ public class HistoryMember {
 
     @Id
     int userId;
+    int allCorrect;
     List<Long> historyList;
 }
