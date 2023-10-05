@@ -11,8 +11,7 @@ import lombok.ToString;
 @ToString
 public class QuizDTO {
     String quizType;
-    String question;
-    String hint;
+    QuestionDTO question;
     String answer;
     String articleTitle;
     String articleContent;
