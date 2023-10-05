@@ -14,6 +14,7 @@ public class MemoryRoomRepository implements RoomRepository{
         for (Member member : store.get(roomId).getMembers()) {
             if (userId == member.getUserId()) {
                 member.setGameScore(member.getGameScore() + 100);
+                member.setGameCorrect(member.getGameCorrect() + 1);
             }
         }
     }

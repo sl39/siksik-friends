@@ -15,6 +15,8 @@ public class Member {
     private int userScore;
     private int userRanking;
 
+    private int gameCorrect;
+
     private int level;
     private String profile;
 

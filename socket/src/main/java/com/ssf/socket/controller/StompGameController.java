@@ -92,8 +92,6 @@ public class StompGameController {
 
         String end = "end!";
 
-        log.info("end 되나");
-
         List<Member> members = roomRepository.findByRoomId(roomId).orElseThrow().getMembers();
 
         quizSaveService.pushMember(roomId, members);
@@ -102,29 +100,11 @@ public class StompGameController {
             redisTemplate.opsForZSet().incrementScore("rank", member.getUserId().toString(), member.getGameScore());
         }
 
-        log.info("end 되나2");
 
-        try {
-            for (QuizDTO quiz : quizzes) {
+        for (QuizDTO quiz : quizzes) {
 
-                log.info("end 되나4");
-
-                quizSaveService.pushHistory(roomId, quiz);
-            }
-        } catch (Exception ex) {
-            // 예외 처리: 예외 정보를 로그에 기록
-            log.info("안되네"); // 또는 로깅 프레임워크를 사용하여 로그에 기록
-            // 예외 처리를 위한 추가 작업을 수행할 수 있습니다.
+            quizSaveService.pushHistory(roomId, quiz);
         }
-
-//        for (QuizDTO quiz : quizzes) {
-//
-//            log.info("end 되나4");
-//
-//            quizSaveService.pushHistory(roomId, quiz);
-//        }
-
-        log.info("end 되나3");
 
 
         messageTemplate.convertAndSend("/sub/game/end/" + roomId, end);
