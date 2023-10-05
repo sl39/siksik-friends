@@ -11,28 +11,6 @@ import styles from "./rankpage.module.scss";
 import MyData from "./MyData";
 
 export default function GameRank() {
-  // 전체 순위 정보
-  // 더미 스코어 상태
-  // setScoreData([
-  //   {
-  //     userId: 11,
-  //     userName: "z상식지존z",
-  //     gameScore: 600,
-  //     userScore: 9999,
-  //     userRanking: 1,
-  //     leader: true,
-  //     ready: false,
-  //   },
-  //   {
-  //     userId: 12,
-  //     userName: "z상식지존z11",
-  //     gameScore: 300,
-  //     userScore: 789,
-  //     userRanking: 103,
-  //     leader: false,
-  //     ready: false,
-  //   },
-  // ]);
   const [user] = useAtom(userAtom);
   const data: Array<SoketUser> = [];
   const { quizResult, roomInfoPlay } = useContext(TotalInfoContext);
@@ -76,7 +54,7 @@ export default function GameRank() {
         )}
 
         <div className={`${styles.myBoard} ${styles.right}`}>
-          {myInfo && roomInfoPlay && <MyData myInfo={myInfo} roomInfoPlay={roomInfoPlay} />}
+          {myInfo && roomInfoPlay && <MyData myInfo={myInfo} roomInfoPlay={roomInfoPlay} scoreData={scoreData} />}
         </div>
       </div>
 
