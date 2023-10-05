@@ -32,6 +32,14 @@ interface ResponseData extends QuizData {
   allHistory: any[];
 }
 
+type Coordinate = [number, number];
+interface StepData {
+  [key: number]: Coordinate;
+}
+interface DataXY {
+  [key: number]: StepData;
+}
+
 export default function ProfileData({ userId }: Props) {
   const [profileData, setProfileData] = useState<User>({});
   const [defaultData, setDefaultData] = useAtom(profileAtom);
@@ -71,6 +79,7 @@ export default function ProfileData({ userId }: Props) {
 
   // data는 userId가 있는 경우 profileData를 사용
   const data = userId ? profileData : defaultData;
+  const fetchId = userId || params.id;
 
   type History = {
     historyId: number;
@@ -98,7 +107,7 @@ export default function ProfileData({ userId }: Props) {
     const fetchHistory = async () => {
       try {
         const response = await socketAxios.post<ResponseData>("/history", {
-          userId: data.user_id,
+          userId: fetchId,
         });
         console.log(response.data);
         setHistoryItems(response.data.allHistory);
@@ -129,16 +138,6 @@ export default function ProfileData({ userId }: Props) {
   const handleTabClick = (tabId: number) => {
     setActiveTab(tabId);
   };
-
-  type Coordinate = [number, number];
-
-  interface StepData {
-    [key: number]: Coordinate;
-  }
-
-  interface DataXY {
-    [key: number]: StepData;
-  }
 
   const dataXY: DataXY = {
     1: {
