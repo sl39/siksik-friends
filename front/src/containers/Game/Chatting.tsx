@@ -49,23 +49,6 @@ export default function Chatting() {
     e.preventDefault();
     if (message.msg !== "") {
       if (stompClient) {
-        // const curr = new Date();
-        // let hour = String(curr.getHours());
-        // let minutes = String(curr.getMinutes());
-        // let sec = String(curr.getSeconds());
-        // if (hour.length === 1) {
-        //   hour = `0${hour}`;
-        // }
-        // if (minutes.length === 1) {
-        //   minutes = `0${minutes}`;
-        // }
-        // if (sec.length === 1) {
-        //   sec = `0${sec}`;
-        // }
-        // const time = `${hour}:${minutes}:${sec}`;
-
-        // message.sendTime = String(time);
-
         // 펴블리셔
         stompClient.send("/pub/lobby/chat", {}, JSON.stringify(message));
 
