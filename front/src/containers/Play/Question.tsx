@@ -1,5 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import axios from "axios";
+import { useParams } from "next/navigation";
+import type { Answer } from "@/types";
+import { userAtom } from "@/store/userAtom";
 import styles from "./play.module.scss";
 
 interface Props {
@@ -14,18 +18,47 @@ interface Props {
 // };
 
 export default function Question({ data }: Props) {
-  const [myAnswer, setMyAnswer] = useState("");
   const { quiz, isQuiz, isResult } = data;
-  console.log("여기가 문제 페이지", quiz, isQuiz, isResult);
-  /** 정답 제출 */
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const user = userAtom.init;
+  const params = useParams();
+  const roomId = Number(params.id);
+  const [submitAnswer, setSubmitAnswer] = useState("");
 
-    console.log(myAnswer);
+  const [myAnswer, setMyAnswer] = useState<Answer>({
+    roomId,
+    userId: user.user_id!,
+    userAnswer: "",
+    answer: quiz?.answer,
+  });
+  useEffect(() => {
+    // quiz 값이 변경될 때 실행
+    if (quiz) {
+      setMyAnswer({ ...myAnswer, answer: quiz.answer });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [quiz]);
+
+  /** 정답 제출 */
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      // const response = await serverAxios.post("/", formData);
+      const response = await axios
+        .create({
+          baseURL: "https://j9e101.p.ssafy.io/socket",
+          // headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
+        })
+        .post("/score", myAnswer);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+    console.log(myAnswer, "답이 전달 됐나");
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMyAnswer(e.target.value);
+    setSubmitAnswer(e.target.value);
+    setMyAnswer({ ...myAnswer, userAnswer: e.target.value });
   };
 
   return (
@@ -48,7 +81,7 @@ export default function Question({ data }: Props) {
       )}
       <form onSubmit={handleSubmit} className={`${styles.answer} z-10`}>
         <div className={styles.quote}>
-          <input type="text" value={myAnswer} onChange={handleChange} />
+          <input type="text" value={submitAnswer} onChange={handleChange} />
         </div>
       </form>
     </div>
