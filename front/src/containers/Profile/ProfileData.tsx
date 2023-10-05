@@ -15,6 +15,7 @@ interface Props {
 }
 
 export default function ProfileData({ userId }: Props) {
+
   const [profileData, setProfileData] = useState<User>({});
   const [defaultData, setDefaultData] = useAtom(profileAtom);
 
@@ -71,7 +72,7 @@ export default function ProfileData({ userId }: Props) {
     setActiveTab(tabId);
     fetchHistory();
   };
-
+  
   const dataXY = {
     1: {
       5: [209.29, 130.65],
