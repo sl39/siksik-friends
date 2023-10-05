@@ -35,14 +35,24 @@ export default function Question({ data, isDone }: Props) {
       setIsSubmit(false);
       setIsCorrect(false);
     }
-    if (isQuiz) {
-      setSubmitAnswer("");
-    }
-    if (isResult) {
-      setIsSubmit(true);
-    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quiz]);
+
+  useEffect(() => {
+    if (isResult) {
+      setIsSubmit(true);
+    } else {
+      setIsSubmit(false);
+      setSubmitAnswer("");
+    }
+  }, [isResult]);
+
+  useEffect(() => {
+    if (isDone) {
+      setSubmitAnswer("");
+    }
+  }, [isDone]);
 
   /** 정답 제출 */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
