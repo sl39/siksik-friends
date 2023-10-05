@@ -89,9 +89,9 @@ export default function Question({ data, isDone }: Props) {
           {quiz ? <div className={`${styles.quizDesc} z-10`}>{quiz.question.title}</div> : undefined}
           {quiz ? (
             <div className={`${styles.quizDesc} z-10`}>
-              {quiz.question.hints.map((hint) => {
-                <div>{hint}</div>;
-              })}
+              {quiz.question.hints.map((hint: any) => (
+                <div key={hint}>{hint}</div>
+              ))}
             </div>
           ) : undefined}
         </>
