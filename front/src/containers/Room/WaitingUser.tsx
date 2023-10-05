@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { SoketUser, User } from "@/types";
+import { useAtom } from "jotai";
+import type { SoketUser } from "@/types";
 import { serverAxios } from "@/services/api";
+import { friendsAtom, notFriendsAtom } from "@/store/userAtom";
 import UserItem from "../Game/UserItem";
 import styles from "../Game/game.module.scss";
 
@@ -13,8 +15,10 @@ interface Props {
 export default function WaitingUser({ data }: Props) {
   const [openTab, setOpenTab] = useState(1);
   const [items, setItems] = useState(data);
-  const [friends, setFriends] = useState<Array<User>>([]);
-  const [NotFriends, setNotFriends] = useState<Array<User>>([]);
+  // const [friends, setFriends] = useState<Array<User>>([]);
+  // const [NotFriends, setNotFriends] = useState<Array<User>>([]);
+  const [friends, setFriends] = useAtom(friendsAtom);
+  const [NotFriends, setNotFriends] = useAtom(notFriendsAtom);
 
   /** 내 친구 조회 */
   const myFriends = async () => {
