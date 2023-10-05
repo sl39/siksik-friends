@@ -9,6 +9,7 @@ import com.ssf.member.domain.user.domain.User;
 import com.ssf.member.domain.user.dto.UserDto;
 import com.ssf.member.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
+@Slf4j
 @Transactional
 @RequiredArgsConstructor
 public class FriendFindServiceImpl implements FriendFindService {
@@ -47,16 +49,18 @@ public class FriendFindServiceImpl implements FriendFindService {
         List<UserDto.Response> requestList = new ArrayList<>();
 
         for (Friend friend : friends) {
-            User user = userRepository.findById(friend.getUser().getId()).orElseThrow();
+            if (friendRepository.existsByToUserIdAndUser_IdAndActivated(friend.getUser().getId(), friend.getToUserId(), true)) {
+                User user = userRepository.findById(friend.getUser().getId()).orElseThrow();
 
-            requestList.add(UserDto.Response
-                    .builder()
-                    .user_id(user.getId())
-                    .nickname(user.getNickname())
-                    .level(user.getLevel())
-                    .profile(user.getProfile())
-                    .activated(user.isActivated())
-                    .build());
+                requestList.add(UserDto.Response
+                        .builder()
+                        .user_id(user.getId())
+                        .nickname(user.getNickname())
+                        .level(user.getLevel())
+                        .profile(user.getProfile())
+                        .activated(user.isActivated())
+                        .build());
+            }
         }
 
         Collections.sort(requestList);
