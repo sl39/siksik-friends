@@ -81,10 +81,10 @@ export default function GameRank() {
       </div>
 
       <div className={styles.btns}>
-        <button onClick={() => router.push("/home")} className={styles.btn}>
+        <button onClick={() => router.replace("/home")} className={styles.btn}>
           메인 페이지
         </button>
-        <button onClick={() => router.push("/game")} className={styles.btn}>
+        <button onClick={() => router.replace("/game")} className={styles.btn}>
           게임 대기실
         </button>
       </div>
