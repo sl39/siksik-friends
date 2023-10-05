@@ -1,7 +1,33 @@
+"use client";
+
+import { useAtom } from "jotai";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import WebSocketProvider from "@/socket/WebSocketProvider";
+import { userAtom } from "@/store/userAtom";
+import { serverAxios } from "@/services/api";
 import Exit from "./quit";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useAtom(userAtom);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await serverAxios("/user/my-info");
+        setUser(response.data);
+      } catch (err) {
+        console.error("새로고침", err);
+        router.replace("/");
+      }
+    };
+    if (user.user_id === 0) {
+      fetchUserData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="book-cover">
       <WebSocketProvider>
