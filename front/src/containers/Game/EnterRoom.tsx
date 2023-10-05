@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAtom } from "jotai";
 import type { Room } from "@/types";
+import { userAtom } from "@/store/userAtom";
 import styles from "./game.module.scss";
 import Modal from "@/components/gameModal";
 import SearchRoomModal from "./SearchRoomModal";
@@ -42,6 +44,7 @@ export default function EnterRoom({ rooms }: Props) {
     router.push(`/game/start/room/${randomRoomNum}`);
     return 0;
   };
+
 
   return (
     <>

@@ -46,9 +46,11 @@ export default function CreateRoomModal({ onClose }: Props) {
   const [user] = useAtom(userAtom);
   const [, setAllCheck] = useState(false);
 
+  // 방 생성은 관계자만 가능
   /** 게임 방 생성 */
   const handleCreateGame = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // 유효성
     if (titleValidation && passwordValidation && typeValidation) {
       setAllCheck(true);
       const leaderMember = {
@@ -68,18 +70,23 @@ export default function CreateRoomModal({ onClose }: Props) {
         roomSize: formData.count,
         quizDate: formData.quizDate,
       };
+      if (user.user_id! >= 1 && user.user_id! <= 6) {
+        /** 게임방 POST 요청 */
+        try {
+          const response = await socketAxios.post("/lobby", roomData);
 
-      /** 게임방 POST 요청 */
-      try {
-        const response = await socketAxios.post("/lobby", roomData);
-
-        // console.log("방 만듦", response);
-        if (stompClient) {
-          stompClient.send("/pub/room/roomList", {}, JSON.stringify({}));
+          // console.log("방 만듦", response);
+          if (stompClient) {
+            stompClient.send("/pub/room/roomList", {}, JSON.stringify({}));
+          }
+          router.push(`/game/start/room/${response.data.roomId}`);
+        } catch (err) {
+          console.log(err);
         }
-        router.push(`/game/start/room/${response.data.roomId}`);
-      } catch (err) {
-        console.log(err);
+      } else {
+        // eslint-disable-next-line no-alert
+        alert("현재 방 생성은 관리자만 가능합니다");
+        onClose();
       }
     } else {
       setAllCheck(true);
@@ -91,6 +98,7 @@ export default function CreateRoomModal({ onClose }: Props) {
       }
     }
   };
+
   const handleDate = (date: Date) => {
     const formatDate = new Date(date.toLocaleString("en-US", { timeZone: "Asia/Seoul" }));
     const formQuizDate = format(formatDate, "yyyy-MM-dd");
@@ -319,7 +327,7 @@ export default function CreateRoomModal({ onClose }: Props) {
               onChange={(date: Date) => handleDate(date)}
               dateFormat="yyyy-MM-dd"
               placeholderText="날짜를 선택하세요!"
-              minDate={new Date("2010-01-01")}
+              minDate={new Date("2013-01-01")}
               maxDate={new Date()}
               showMonthDropdown
               showYearDropdown
