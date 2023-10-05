@@ -12,7 +12,7 @@ interface Props {
 
 export default function EnterRoom({ rooms }: Props) {
   const router = useRouter();
-  console.log(rooms);
+  // console.log(rooms);
 
   // 방 생성 모달
   const [openCreateRoom, setOpenCreateRoom] = useState(false);
@@ -33,7 +33,7 @@ export default function EnterRoom({ rooms }: Props) {
         }
       }
     });
-    console.log(arr);
+    // console.log(arr);
     if (arr.length === 0) {
       return undefined;
     }
