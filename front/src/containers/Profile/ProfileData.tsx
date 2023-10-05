@@ -100,7 +100,9 @@ export default function ProfileData({ userId }: Props) {
         const response = await socketAxios.post<ResponseData>("/history", {
           userId: data.user_id,
         });
+        console.log(response.data);
         setHistoryItems(response.data.allHistory);
+        console.log(historyItems);
         setStatCount({
           economyCorrectQuizCount: response.data.economyCorrectQuizCount,
           economySolvedQuizCount: response.data.economySolvedQuizCount,
@@ -304,13 +306,13 @@ export default function ProfileData({ userId }: Props) {
                 {userId === undefined ? (
                   <>
                     <Stat d={d} />
-                    <div className={styles.items}>
+                    {/* <div className={styles.items}>
                       {historyItems.map((item) => (
                         <div key={item.historyId!} className={styles.item}>
                           {item.historyId} 번 id 의 전적 관련 데이터
                         </div>
                       ))}
-                    </div>
+                    </div> */}
                   </>
                 ) : (
                   <Stat d={d} statStyle />
