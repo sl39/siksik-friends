@@ -1,4 +1,4 @@
-import styles from "./Profile.module.scss";
+// import styles from "./Profile.module.scss";
 
 export default function ProfileHistory() {
   return (

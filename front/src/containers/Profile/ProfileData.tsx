@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default function ProfileData({ userId }: Props) {
-  // 내 데이터 받아오기
+  // 전적 데이터
   const fetchHistory = async () => {
     try {
       const response = await socketAxios.post("/history", userId);
@@ -38,6 +38,7 @@ export default function ProfileData({ userId }: Props) {
   useEffect(() => {
     if (userId) {
       fetchUser();
+      fetchHistory();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
