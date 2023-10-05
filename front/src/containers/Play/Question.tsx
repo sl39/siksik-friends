@@ -38,6 +38,9 @@ export default function Question({ data, isDone }: Props) {
     if (isQuiz) {
       setSubmitAnswer("");
     }
+    if (isResult) {
+      setIsSubmit(true);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quiz]);
 
