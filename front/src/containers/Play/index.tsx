@@ -20,17 +20,16 @@ export default function GamePlay() {
   // eslint-disable-next-line no-null/no-null
   const { quiz, quizResult, end, roomInfoPlay } = useContext(TotalInfoContext);
   console.log(quiz, quizResult, end, roomInfoPlay);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [scoreData, setScoreData] = useState<SoketUser[] | undefined>(roomInfoPlay?.members);
+  const [scoreData, setScoreData] = useState<SoketUser[] | undefined>(quizResult);
   const [isQuiz, setIsQuiz] = useState<boolean>(false);
   const [isResult, setIsResult] = useState<boolean>(false);
+  const router = useRouter();
 
   useEffect(() => {
     // quiz 값이 변경될 때 실행
     if (quiz) {
       setIsQuiz(true);
       setIsResult(false);
-      console.log("문제가 들어왔나?");
     } else {
       setIsQuiz(false);
     }
@@ -41,11 +40,21 @@ export default function GamePlay() {
     if (quizResult.length > 0) {
       setIsResult(true);
       setIsQuiz(false);
-      console.log("결과가 들어왔나?");
+      setScoreData(quizResult);
     } else {
       setIsResult(false);
     }
   }, [quizResult]);
+
+  useEffect(() => {
+    if (end) {
+      router.push("/home");
+    }
+  }, [end]);
+
+  // 현재 스코어 상태 받아오기
+
+  // eslint-disable-next-line consistent-return
 
   // 모든 문제가 끝나면 결과 페이지로 이동;
   // const router = useRouter();
