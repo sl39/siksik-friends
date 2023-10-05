@@ -43,7 +43,6 @@ export default function GameRank() {
         `/sub/room/info/${roomId}`,
         function handleRoomInfo(frame: Frame) {
           const gameEnd = JSON.parse(frame.body);
-          console.log(gameEnd);
           setRoom(gameEnd || roomInfoPlay);
         },
         {}
