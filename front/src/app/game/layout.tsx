@@ -9,21 +9,23 @@ import { serverAxios } from "@/services/api";
 import Exit from "./quit";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useAtom(userAtom);
+  const [user] = useAtom(userAtom);
   const router = useRouter();
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await serverAxios("/user/my-info");
-        setUser(response.data);
+        await serverAxios("/user/my-info");
+        // const response = await serverAxios("/user/my-info");
+        // setUser(response.data);
       } catch (err) {
         console.error("새로고침", err);
-        router.replace("/");
+        router.replace("/sign-up");
       }
     };
+    fetchUserData();
     if (user.user_id === 0) {
-      fetchUserData();
+      router.replace("/");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
