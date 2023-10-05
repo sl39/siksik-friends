@@ -24,7 +24,11 @@
   height: 100%;
   width: 90%;
   margin: 0 auto;
-
+  .quizNum {
+    position: absolute;
+    padding-top: 10px;
+    font-size: 3.5vh;
+  }
   .timerTime {
     padding-top: 10px;
     box-sizing: border-box;
