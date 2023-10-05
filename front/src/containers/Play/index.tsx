@@ -62,7 +62,7 @@ export default function GamePlay() {
       <div className={`${styles.flex} z-15`}>
         <div className={styles.top}>
           {/* <Timer time={gameData.countTimer} resetTime={quiz ? 5 : 3} count={10} /> */}
-          <Timer time={isQuiz ? 5 : 3} />
+          <Timer time={isQuiz ? 10 : 5} />
         </div>
         <div className={styles.flex2}>
           <div className={styles.left}>{scoreData ? <Score data={scoreData} /> : undefined}</div>
