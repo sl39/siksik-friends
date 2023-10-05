@@ -1,7 +1,7 @@
 import { BsTrophy } from "react-icons/bs";
-import type { GamePlay, SoketUser } from "@/types";
-import styles from "./play.module.scss";
 import { useEffect, useState } from "react";
+import type { SoketUser } from "@/types";
+import styles from "./play.module.scss";
 
 interface Props {
   data?: SoketUser[];
@@ -53,7 +53,7 @@ export default function Score({ data }: Props) {
             </li>
           ))}
         </ol>
-      ) : null}
+      ) : undefined}
     </div>
   );
 }
