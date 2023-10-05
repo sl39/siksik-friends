@@ -130,10 +130,10 @@ export default function ProfileData({ userId }: Props) {
   } ${y6 - y5} ${x1 - x6} ${y1 - y6}z`;
 
   const badgeImg = [
-    { image: "/images/actor/alice1.png", isGet: true },
+    { image: "/images/actor/alice1.png", isGet: false },
     { image: "/images/actor/alice2.png", isGet: false },
     { image: "/images/actor/card.png", isGet: false },
-    { image: "/images/actor/cat1.png", isGet: true },
+    { image: "/images/actor/cat1.png", isGet: false },
     { image: "/images/actor/dodo1.png", isGet: false },
     { image: "/images/actor/queen.png", isGet: false },
     { image: "/images/actor/rabbit1.png", isGet: false },
@@ -157,12 +157,14 @@ export default function ProfileData({ userId }: Props) {
             >
               <p>데이터</p>
             </button>
-            <button
-              onClick={() => handleTabClick(3)}
-              className={`${styles.tablinks} ${activeTab === 3 ? styles.active : ""}`}
-            >
-              <p>친구</p>
-            </button>
+            {/* {userId === undefined && (
+              <button
+                onClick={() => handleTabClick(3)}
+                className={`${styles.tablinks} ${activeTab === 3 ? styles.active : ""}`}
+              >
+                <p>친구</p>
+              </button>
+            )} */}
           </div>
 
           <div className={`${styles.wrapper_tabcontent}`}>
@@ -189,7 +191,7 @@ export default function ProfileData({ userId }: Props) {
                   <div className={styles.ImgContainer}>
                     {badgeImg.map((item) => (
                       <div className={`${styles.imgItem} ${item.isGet ? styles.itemGet : ""}`} key={item.image}>
-                        <Image src={item.image} alt="뱃지" sizes="10vw" fill style={{ objectFit: "contain" }} />
+                        <Image src={item.image} alt="뱃지" sizes="30vw" fill style={{ objectFit: "contain" }} />
                       </div>
                     ))}
                   </div>
