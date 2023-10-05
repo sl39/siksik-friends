@@ -51,9 +51,9 @@ public class StompGameController {
         for (int i = 0; i < body.getQuizCount(); i++) {
             int idx = i;
             scheduler.schedule(() -> sendQuiz(roomId, quizList.getQuizSet().get(idx)), time, TimeUnit.SECONDS);
-            time += 1;
+            time += 5;
             scheduler.schedule(() -> sendResult(roomId), time, TimeUnit.SECONDS);
-            time += 1;
+            time += 3;
         }
         scheduler.schedule(() -> endGame(roomId, quizList.getQuizSet(), category, body.getQuizCount()), time, TimeUnit.SECONDS);
     }
