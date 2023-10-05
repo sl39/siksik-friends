@@ -10,7 +10,7 @@ export default function GameRoomItem({ room }: GameRoomItemProps) {
   const router = useRouter();
 
   const enterRoom = (id: number) => {
-    if (room.roomSize! > room.roomCurrent!) {
+    if (room.roomSize! > room.roomCurrent! && room.roomStatus! === 0) {
       router.push(`/game/start/room/${id}`);
     }
   };
