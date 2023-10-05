@@ -14,27 +14,7 @@ export default function Score({ data }: Props) {
       setScoreData(data);
     }
   }, [data]);
-  // 더미 스코어 상태
-  // setScoreData([
-  //   {
-  //     userId: 11,
-  //     userName: "z상식지존z",
-  //     gameScore: 600,
-  //     userScore: 9999,
-  //     userRanking: 1,
-  //     leader: true,
-  //     ready: false,
-  //   },
-  //   {
-  //     userId: 12,
-  //     userName: "z상식지존z11",
-  //     gameScore: 300,
-  //     userScore: 789,
-  //     userRanking: 103,
-  //     leader: false,
-  //     ready: false,
-  //   },
-  // ]);
+
   return (
     <div className={styles.leaderboard}>
       <h1>

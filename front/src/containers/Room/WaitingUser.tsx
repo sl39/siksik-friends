@@ -11,8 +11,6 @@ interface Props {
 }
 
 export default function WaitingUser({ data }: Props) {
-  console.log("userInfo Props", data);
-
   const [openTab, setOpenTab] = useState(1);
   const [items, setItems] = useState(data);
   const [friends, setFriends] = useState<Array<User>>([]);
@@ -23,7 +21,6 @@ export default function WaitingUser({ data }: Props) {
     try {
       const response = await serverAxios("/user/friend/list");
       setFriends(response.data.friendList);
-      // eslint-disable-next-line no-empty
     } catch (err) {
       console.log("친구 목록 에러", err);
     }
@@ -31,7 +28,6 @@ export default function WaitingUser({ data }: Props) {
   /** 받은 친구 요청 조회 */
   const myRequest = async () => {
     try {
-      // response / request
       const response = await serverAxios("/user/friend/response");
       setNotFriends(response.data.friendList);
     } catch (err) {
@@ -72,7 +68,7 @@ export default function WaitingUser({ data }: Props) {
       <div className={`${styles.content} ${styles[`tab_${openTab}`]}`}>
         <div className={`${styles.page} ${styles.userBox} ${openTab === 1 ? styles.tabContentActive : ""}`}>
           {items.map((item) => (
-            <UserItem key={item.userId} dataProp={item} isRoom />
+            <UserItem key={item.userId} dataProp={item} isRoom isTab={false} />
           ))}
         </div>
         <div className={`${styles.page} ${styles.userBox} ${openTab === 2 ? styles.tabContentActive : ""}`}>

@@ -39,6 +39,10 @@ interface StepData {
 interface DataXY {
   [key: number]: StepData;
 }
+type QuizCount = {
+  correct: number;
+  solved: number;
+};
 
 export default function ProfileData({ userId }: Props) {
   const [profileData, setProfileData] = useState<User>({});
@@ -50,10 +54,10 @@ export default function ProfileData({ userId }: Props) {
     const profileId = params.id;
     const profileUser = async () => {
       try {
-        const resposne = await serverAxios(`/user/${profileId}`);
-        setDefaultData(resposne.data);
+        const response = await serverAxios(`/user/${profileId}`);
+        setDefaultData(response.data);
       } catch (err) {
-        console.error("프로필 다시 에러", err);
+        console.error("Params 없는 프로필 조회", err);
       }
     };
     if (defaultData.user_id === 0) {
@@ -65,8 +69,8 @@ export default function ProfileData({ userId }: Props) {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const resposne = await serverAxios(`/user/${userId}`);
-        setProfileData(resposne.data);
+        const response = await serverAxios(`/user/${userId}`);
+        setProfileData(response.data);
       } catch (err) {
         console.error("프로필 에러", err);
       }
@@ -81,11 +85,11 @@ export default function ProfileData({ userId }: Props) {
   const data = userId ? profileData : defaultData;
   const fetchId = userId || params.id;
 
-  type History = {
-    historyId: number;
-    articles: string[];
-  };
-  const [historyItems, setHistoryItems] = useState<Array<History>>([]);
+  // type History = {
+  //   historyId: number;
+  //   articles: string[];
+  // };
+  // const [historyItems, setHistoryItems] = useState<Array<History>>([]);
 
   const [statCount, setStatCount] = useState({
     economyCorrectQuizCount: 0,
@@ -109,9 +113,7 @@ export default function ProfileData({ userId }: Props) {
         const response = await socketAxios.post<ResponseData>("/history", {
           userId: fetchId,
         });
-        console.log(response.data);
-        setHistoryItems(response.data.allHistory);
-        console.log(historyItems);
+        // setHistoryItems(response.data.allHistory);
         setStatCount({
           economyCorrectQuizCount: response.data.economyCorrectQuizCount,
           economySolvedQuizCount: response.data.economySolvedQuizCount,
@@ -191,10 +193,7 @@ export default function ProfileData({ userId }: Props) {
    * 4단계: 0.7, 0.8
    * 5단계: 0.9, 1
    */
-  type QuizCount = {
-    correct: number;
-    solved: number;
-  };
+
   const calculateStep = ({ correct, solved }: QuizCount): number => {
     // 푼 문제가 없음
     if (solved === 0) return 1;
@@ -253,14 +252,14 @@ export default function ProfileData({ userId }: Props) {
             >
               <p>데이터</p>
             </button>
-            {userId === undefined && (
+            {/* {userId === undefined && (
               <button
                 onClick={() => handleTabClick(3)}
                 className={`${styles.tablinks} ${activeTab === 3 ? styles.active : ""}`}
               >
                 <p>친구</p>
               </button>
-            )}
+            )} */}
           </div>
 
           <div className={`${styles.wrapper_tabcontent}`}>
@@ -305,6 +304,46 @@ export default function ProfileData({ userId }: Props) {
                 {userId === undefined ? (
                   <>
                     <Stat d={d} />
+                    <div className={styles.items}>
+                      <div className={`${styles.item} ${styles.titleItem}`}>맞춘 문제 / 푼 문제</div>
+                      <div className={`${styles.item} ${styles.quizCount}`}>
+                        <span>종합</span>{" "}
+                        <span className={styles.countcount}>
+                          {statCount.allCorrectQuizCount}/{statCount.allSolvedQuizCount}
+                        </span>
+                      </div>
+                      <div className={`${styles.item} ${styles.quizCount}`}>
+                        <span>경제</span>{" "}
+                        <span className={styles.countcount}>
+                          {statCount.economyCorrectQuizCount}/{statCount.economySolvedQuizCount}
+                        </span>
+                      </div>
+                      <div className={`${styles.item} ${styles.quizCount}`}>
+                        <span>사회</span>{" "}
+                        <span className={styles.countcount}>
+                          {statCount.socialCorrectQuizCount}/{statCount.socialSolvedQuizCount}
+                        </span>
+                      </div>
+                      <div className={`${styles.item} ${styles.quizCount}`}>
+                        <span>생활/문화</span>{" "}
+                        <span className={styles.countcount}>
+                          {statCount.livingCorrectQuizCount}/{statCount.livingSolvedQuizCount}
+                        </span>
+                      </div>
+                      <div className={`${styles.item} ${styles.quizCount}`}>
+                        <span>세계</span>{" "}
+                        <span className={styles.countcount}>
+                          {statCount.globalCorrectQuizCount}/{statCount.globalSolvedQuizCount}
+                        </span>
+                      </div>
+
+                      <div className={`${styles.item} ${styles.quizCount}`}>
+                        <span>IT/과학</span>{" "}
+                        <span className={styles.countcount}>
+                          {statCount.scienceCorrectQuizCount}/{statCount.scienceSolvedQuizCount}
+                        </span>
+                      </div>
+                    </div>
                     {/* <div className={styles.items}>
                       {historyItems.map((item) => (
                         <div key={item.historyId!} className={styles.item}>
