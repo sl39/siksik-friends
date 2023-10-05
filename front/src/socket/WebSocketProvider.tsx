@@ -27,7 +27,7 @@ export default function WebSocketProvider({ children }: WebSocketProviderProps) 
     const client = Stomp.over(socket);
     client.debug = () => {};
     // client.configure({
-    //   reconnectDelay: 5000,
+    //    reconnectDelay: 5000,
     // });
     function connect() {
       client.connect({}, function connection() {
