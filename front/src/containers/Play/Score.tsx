@@ -1,4 +1,5 @@
 import { BsTrophy } from "react-icons/bs";
+import { useEffect, useState } from "react";
 import type { SoketUser } from "@/types";
 import styles from "./play.module.scss";
 
@@ -7,6 +8,12 @@ interface Props {
 }
 
 export default function Score({ data }: Props) {
+  const [scoreData, setScoreData] = useState<SoketUser[]>([]);
+  useEffect(() => {
+    if (data) {
+      setScoreData(data);
+    }
+  }, [data]);
   // 더미 스코어 상태
   // setScoreData([
   //   {
@@ -37,14 +44,16 @@ export default function Score({ data }: Props) {
         현재 순위
       </h1>
 
-      <ol>
-        {data?.map((item: any) => (
-          <li key={item.userName}>
-            <mark>{item.userName}</mark>
-            <small>{item.gameScore}</small>
-          </li>
-        ))}
-      </ol>
+      {scoreData ? (
+        <ol>
+          {scoreData.map((item: any) => (
+            <li key={item.userName}>
+              <mark>{item.userName}</mark>
+              <small>{item.gameScore}</small>
+            </li>
+          ))}
+        </ol>
+      ) : undefined}
     </div>
   );
 }
