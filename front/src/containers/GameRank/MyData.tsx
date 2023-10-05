@@ -8,7 +8,6 @@ interface Props {
 }
 
 export default function MyData({ myInfo, roomInfoPlay, scoreData }: Props) {
-  console.log(myInfo, roomInfoPlay);
   const { userId } = myInfo;
   const index = scoreData?.findIndex((member) => member.userId === userId);
 
