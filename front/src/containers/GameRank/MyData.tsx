@@ -4,12 +4,12 @@ import styles from "./rankpage.module.scss";
 interface Props {
   myInfo: SoketUser;
   roomInfoPlay: Room;
+  scoreData?: SoketUser[];
 }
 
-export default function MyData({ myInfo, roomInfoPlay }: Props) {
-  console.log(myInfo, roomInfoPlay);
+export default function MyData({ myInfo, roomInfoPlay, scoreData }: Props) {
   const { userId } = myInfo;
-  const index = roomInfoPlay?.members?.findIndex((member) => member.userId === userId);
+  const index = scoreData?.findIndex((member) => member.userId === userId);
 
   return (
     <>
