@@ -201,6 +201,7 @@ export default function CreateRoomModal({ onClose }: Props) {
           src="/images/actor/gosm1.png"
           alt="방 생성 캐릭터"
           fill
+          sizes="30vw"
           style={{
             objectFit: "contain",
           }}
