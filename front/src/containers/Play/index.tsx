@@ -19,8 +19,7 @@ export default function GamePlay() {
 
   // 문제 정보 받아오기
   // eslint-disable-next-line no-null/no-null
-  const { quiz, quizResult, end, roomInfoPlay } = useContext(TotalInfoContext);
-  console.log(quiz, quizResult, end, roomInfoPlay);
+  const { quiz, quizResult, end } = useContext(TotalInfoContext);
   const [scoreData, setScoreData] = useState<SoketUser[] | undefined>(quizResult);
   const [isQuiz, setIsQuiz] = useState(false);
   const [isResult, setIsResult] = useState(false);

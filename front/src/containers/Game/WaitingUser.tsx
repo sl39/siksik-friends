@@ -57,7 +57,6 @@ export default function WaitingUser() {
         "/sub/lobby/list",
         function handleRoomList(frame: Frame) {
           const lobbyUserList = JSON.parse(frame.body);
-          // console.log(lobbyUserList);
           setItems(lobbyUserList);
         },
         {}

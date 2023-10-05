@@ -75,7 +75,6 @@ export default function CreateRoomModal({ onClose }: Props) {
         //     // headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
         //   })
         //   .post("/lobby", roomData);
-        console.log("방 만듦", response);
         if (stompClient) {
           stompClient.send("/pub/room/roomList", {}, JSON.stringify({}));
         }
@@ -88,7 +87,6 @@ export default function CreateRoomModal({ onClose }: Props) {
   const handleDate = (date: Date) => {
     const formatDate = new Date(date.toLocaleString("en-US", { timeZone: "Asia/Seoul" }));
     const formQuizDate = format(formatDate, "yyyy-MM-dd");
-    console.log(typeof formQuizDate);
     setSelectedDate(date);
     setFormData({ ...formData, quizDate: formQuizDate });
   };
@@ -168,7 +166,6 @@ export default function CreateRoomModal({ onClose }: Props) {
     // }
 
     if (val === typeList) {
-      console.log(val);
       setFormData({ ...formData, type: "" });
       setTypeValidation(false);
     } else {

@@ -31,7 +31,6 @@ export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }
       if (roomUser.leader) {
         if (leaderReady === 1) {
           // router.push(`/game/start/play/${gameId}`);
-          console.log("게임 시작", roomInfoPlay);
           stompClient.send(`/pub/game/start/${gameId}`, {}, JSON.stringify(roomInfoPlay));
         }
       } else if (roomUser.ready) {
@@ -46,7 +45,6 @@ export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }
 
   useEffect(() => {
     setRoomUser(soketUser);
-    console.log(roomUser);
     if (roomUser) {
       if (!roomUser.leader) {
         if (!roomUser.ready) {
@@ -56,7 +54,6 @@ export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }
         }
       } else if (leaderReady === 1) {
         setTitle("게임 시작!");
-        console.log("게임 시작!");
       } else {
         setTitle("모든 유저가 레디 하지 않았습니다");
       }
