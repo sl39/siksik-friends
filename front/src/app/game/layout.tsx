@@ -13,24 +13,24 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   useEffect(() => {
+    // const isClient = typeof window !== "undefined";
+
+    // if (isClient) {
     const fetchUserData = async () => {
       try {
         const response = await serverAxios("/user/my-info");
         setUser(response.data);
       } catch (err) {
-        console.error("새로고침", err);
         // eslint-disable-next-line no-alert
         alert("잘못된 접근입니다");
         router.replace("/sign-up");
       }
     };
-    fetchUserData();
     if (user.user_id === 0) {
-      // eslint-disable-next-line no-alert
-      alert("잘못된 접근입니다");
-      router.replace("/sign-up");
-      // router.replace("/");
+      fetchUserData();
     }
+    // }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
