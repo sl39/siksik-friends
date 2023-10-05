@@ -1,10 +1,8 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { CompatClient } from "node_modules/@stomp/stompjs";
-import type { SoketUser } from "@/types";
-import { TotalInfoContext } from "@/socket/SubscriptionQuiz";
+import type { Room, SoketUser } from "@/types";
 import styles from "./room.module.scss";
 
 interface Props {
@@ -12,14 +10,12 @@ interface Props {
   soketUser: SoketUser;
   leaderReady: number;
   stompClient: CompatClient;
+  room: Room | undefined;
 }
 
-export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }: Props) {
+export default function StartBtn({ gameId, soketUser, leaderReady, stompClient, room }: Props) {
   const [btnActive, setBtnActive] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { quiz, quizResult, end, roomInfoPlay } = useContext(TotalInfoContext);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const router = useRouter();
+
   const [roomUser, setRoomUser] = useState<SoketUser>();
 
   const [title, setTitle] = useState("레디 하세요");
@@ -31,7 +27,8 @@ export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }
       if (roomUser.leader) {
         if (leaderReady === 1) {
           // router.push(`/game/start/play/${gameId}`);
-          stompClient.send(`/pub/game/start/${gameId}`, {}, JSON.stringify(roomInfoPlay));
+          stompClient.send(`/pub/game/start/${gameId}`, {}, JSON.stringify(room));
+          console.log(room);
           console.log("혼자일때는 콘솔이 찍히는지 확인");
         }
       } else if (roomUser.ready) {
