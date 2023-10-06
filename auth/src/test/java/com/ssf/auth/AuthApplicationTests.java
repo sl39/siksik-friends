@@ -1,10 +1,10 @@
-package com.ssf.socket;
+package com.ssf.auth;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SocketApplicationTests {
+class AuthApplicationTests {
 
 	@Test
 	void contextLoads() {
