@@ -1,0 +1,17 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+
+  profiles:
+    include: auth
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://lab.ssafy.com/kimta2hwan/yaml.git
+          default-label: master
+          search-paths: yaml/**
