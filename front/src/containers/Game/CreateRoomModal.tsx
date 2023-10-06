@@ -70,23 +70,18 @@ export default function CreateRoomModal({ onClose }: Props) {
         roomSize: formData.count,
         quizDate: formData.quizDate,
       };
-      if (user.user_id! >= 1 && user.user_id! <= 6) {
-        /** 게임방 POST 요청 */
-        try {
-          const response = await socketAxios.post("/lobby", roomData);
 
-          // console.log("방 만듦", response);
-          if (stompClient) {
-            stompClient.send("/pub/room/roomList", {}, JSON.stringify({}));
-          }
-          router.push(`/game/start/room/${response.data.roomId}`);
-        } catch (err) {
-          console.log(err);
+      /** 게임방 POST 요청 */
+      try {
+        const response = await socketAxios.post("/lobby", roomData);
+
+        // console.log("방 만듦", response);
+        if (stompClient) {
+          stompClient.send("/pub/room/roomList", {}, JSON.stringify({}));
         }
-      } else {
-        // eslint-disable-next-line no-alert
-        alert("현재 방 생성은 관리자만 가능합니다");
-        onClose();
+        router.push(`/game/start/room/${response.data.roomId}`);
+      } catch (err) {
+        console.log(err);
       }
     } else {
       setAllCheck(true);
