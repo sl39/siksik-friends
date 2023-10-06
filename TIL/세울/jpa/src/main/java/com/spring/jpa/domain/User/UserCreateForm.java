@@ -1,4 +1,4 @@
-package com.spring.jpa.domain.member;
+package com.spring.jpa.domain.User;
 
 
 import lombok.Getter;
