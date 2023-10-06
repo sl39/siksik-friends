@@ -1,0 +1,151 @@
+.left {
+  width: 30%;
+  height: 100%;
+  margin: 0;
+}
+.right {
+  width: 70%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+/* 프로필 */
+.profile {
+  width: 100%;
+  height: 70%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  top: -3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 5%;
+}
+/* 내 등수 */
+.RankDiv {
+  width: 100%;
+  height: 20%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  top: -5%;
+}
+/* 내 랭킹 도장 */
+.myRank {
+  height: 160% !important;
+  width: auto !important;
+  margin: 0 auto;
+  position: relative;
+  top: -10%;
+  border-radius: 50%;
+}
+.rankContainer {
+  position: absolute;
+  width: 34%;
+  aspect-ratio: 1 / 1;
+  height: auto;
+  top: 20%;
+  left: 33%;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+}
+.rankNum {
+  position: absolute;
+  width: 30%;
+  bottom: -20%;
+  left: 37%;
+  font-size: 3vh;
+  font-weight: bold;
+  transform: rotate(-7.634deg);
+  text-align: center;
+}
+
+/* 상위 랭크 */
+.RankArray {
+  width: 95%;
+  height: 98%;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  /* 글래스모피즘 */
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  position: relative;
+}
+.RankFlex {
+  height: 95%;
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.RankItem {
+  position: relative;
+  width: 100%;
+  height: 8%;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 20px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 30px;
+
+  font-size: 3vh;
+}
+.dummy {
+  border: none;
+  background: none;
+  box-shadow: none;
+  /* backdrop-filter: none; */
+}
+.itemNum {
+  width: 60px;
+  font-size: 3.5vh;
+  text-align: end;
+  color: black;
+}
+.first {
+  color: #ffd700;
+}
+.second {
+  color: #c0c0c0;
+}
+.third {
+  color: #cd7f32;
+}
+
+.rankLevel {
+  width: 80px;
+}
+.rankName {
+  width: 350px;
+  text-align: center;
+}
+.highlight:hover {
+  padding: 3px 10px;
+  width: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(254, 172, 94, 0.3) 0%,
+    rgba(254, 172, 94, 0.4) 60%,
+    rgba(254, 172, 94, 0.4) 60%,
+    rgba(254, 172, 94, 0.6) 85%,
+    rgba(254, 172, 94, 0.8) 100%
+  );
+}
+.score {
+  font-size: 3vh;
+}
