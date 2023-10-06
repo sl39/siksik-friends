@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { SoketUser, User } from "@/types";
+import { useAtom } from "jotai";
+import type { SoketUser } from "@/types";
 import { serverAxios } from "@/services/api";
+import { friendsAtom, notFriendsAtom } from "@/store/userAtom";
 import UserItem from "../Game/UserItem";
 import styles from "../Game/game.module.scss";
 
@@ -13,30 +15,25 @@ interface Props {
 export default function WaitingUser({ data }: Props) {
   const [openTab, setOpenTab] = useState(1);
   const [items, setItems] = useState(data);
-  const [friends, setFriends] = useState<Array<User>>([]);
-  const [NotFriends, setNotFriends] = useState<Array<User>>([]);
+  // const [friends, setFriends] = useState<Array<User>>([]);
+  // const [NotFriends, setNotFriends] = useState<Array<User>>([]);
+  const [friends, setFriends] = useAtom(friendsAtom);
+  const [NotFriends, setNotFriends] = useAtom(notFriendsAtom);
 
   /** 내 친구 조회 */
   const myFriends = async () => {
     try {
       const response = await serverAxios("/user/friend/list");
       setFriends(response.data.friendList);
-      // eslint-disable-next-line no-empty
-    } catch (err) {}
+    } catch (err) {
+      console.log("친구 목록 에러", err);
+    }
   };
-
   /** 받은 친구 요청 조회 */
   const myRequest = async () => {
     try {
-      // response / request
       const response = await serverAxios("/user/friend/response");
-      const request = await serverAxios("/user/friend/request");
-
-      // 병합된 리스트 생성
-      const combinedList = [...response.data.friendList, ...request.data.friendsList];
-
-      // setCount(response.data.size);
-      setNotFriends(combinedList);
+      setNotFriends(response.data.friendList);
     } catch (err) {
       console.log("받은 요청 목록 에러", err);
     }
@@ -75,7 +72,7 @@ export default function WaitingUser({ data }: Props) {
       <div className={`${styles.content} ${styles[`tab_${openTab}`]}`}>
         <div className={`${styles.page} ${styles.userBox} ${openTab === 1 ? styles.tabContentActive : ""}`}>
           {items.map((item) => (
-            <UserItem key={item.userId} dataProp={item} isRoom />
+            <UserItem key={item.userId} dataProp={item} isRoom isTab={false} />
           ))}
         </div>
         <div className={`${styles.page} ${styles.userBox} ${openTab === 2 ? styles.tabContentActive : ""}`}>

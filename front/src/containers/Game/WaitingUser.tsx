@@ -24,7 +24,6 @@ export default function WaitingUser() {
   const myFriends = async () => {
     try {
       const response = await serverAxios("/user/friend/list");
-      console.log("친구목록", response.data);
       setFriends(response.data.friendList);
     } catch (err) {
       console.log("친구 목록 에러", err);
@@ -36,8 +35,6 @@ export default function WaitingUser() {
     try {
       // response / request
       const response = await serverAxios("/user/friend/response");
-      console.log("받은목록", response.data);
-
       setNotFriends(response.data.friendList);
     } catch (err) {
       console.log("받은 요청 목록 에러", err);
@@ -60,7 +57,6 @@ export default function WaitingUser() {
         "/sub/lobby/list",
         function handleRoomList(frame: Frame) {
           const lobbyUserList = JSON.parse(frame.body);
-          // console.log(lobbyUserList);
           setItems(lobbyUserList);
         },
         {}
@@ -99,7 +95,7 @@ export default function WaitingUser() {
       <div className={`${styles.content} ${styles[`tab_${openTab}`]}`}>
         <div className={`${styles.page} ${styles.userBox} ${openTab === 1 ? styles.tabContentActive : ""}`}>
           {items.map((item) => (
-            <UserItem key={item.userId} dataProp={item} />
+            <UserItem key={item.userId} dataProp={item} isTab={false} />
           ))}
         </div>
         <div className={`${styles.page} ${styles.userBox} ${openTab === 2 ? styles.tabContentActive : ""}`}>
