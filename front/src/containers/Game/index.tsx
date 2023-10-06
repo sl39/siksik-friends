@@ -1,3 +1,4 @@
+import Image from "next/image";
 import SimpleMyProfile from "./SimpleMyProfile";
 import Chatting from "./Chatting";
 import GameRoom from "./GameRoom";
@@ -8,11 +9,11 @@ export default function Index() {
   return (
     <>
       <div id="game-modal" className="z-99" />
-      <div className={styles.left}>
+      <div className={`${styles.left} z-10`}>
         <div className={styles.GameRoom}>
           <GameRoom />
         </div>
-        <div className={styles.chatBox}>
+        <div className={`${styles.chatBox}`}>
           <Chatting />
         </div>
       </div>
@@ -23,6 +24,16 @@ export default function Index() {
         <div className={styles.profileItem}>
           <SimpleMyProfile />
         </div>
+      </div>
+      <div className={`${styles.backImage} z-1`}>
+        <Image
+          src="/images/actor/dodo3.png"
+          alt="배경이미지"
+          sizes="30vw"
+          fill
+          style={{ objectFit: "contain" }}
+          priority
+        />
       </div>
     </>
   );

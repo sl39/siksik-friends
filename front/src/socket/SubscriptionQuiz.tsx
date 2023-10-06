@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAtom } from "jotai";
 import type { Frame } from "stompjs";
@@ -30,7 +30,7 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
   const [end, setEnd] = useState<string>("");
   const [roomInfoPlay, setRoomInfoPlay] = useState<Room | undefined>(undefined);
   const [user] = useAtom(userAtom);
-  const [soketUser] = useState<SoketUser>({
+  const soketUserRef = useRef<SoketUser>({
     userId: user.user_id,
     userName: user.nickname,
     userScore: user.score,
@@ -41,13 +41,20 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
+    soketUserRef.current = {
+      userId: user.user_id,
+      userName: user.nickname,
+      userScore: user.score,
+      userRanking: user.rank,
+      ready: false,
+      leader: false,
+    };
     if (stompClient) {
       // 게임 퀴즈 구독
       const subscription = stompClient.subscribe(
         `/sub/game/quiz/${roomId}`,
         function handleRoomInfo(frame: Frame) {
           const roomQuiz = frame.body;
-          console.log(frame.body);
           // eslint-disable-next-line no-empty
           if (roomQuiz === "start!") {
             router.push(`/game/start/play/${roomId}`);
@@ -63,7 +70,6 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
         function handleRoomInfo(frame: Frame) {
           const resultUsers = JSON.parse(frame.body);
           setQuizResult(resultUsers);
-          console.log(resultUsers, "게임 결과");
         },
         {}
       );
@@ -73,7 +79,6 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
         `/sub/game/end/${roomId}`,
         function handleRoomInfo(frame: Frame) {
           const gameEnd = frame.body;
-          console.log(gameEnd, "게임 end 구독");
           setEnd(gameEnd);
         },
         {}
@@ -85,15 +90,21 @@ export default function SubscriptionQuiz({ roomId, children }: { roomId: number;
         function handleRoomInfo(frame: Frame) {
           const gameEnd = JSON.parse(frame.body);
           setRoomInfoPlay(gameEnd);
-          console.log(gameEnd, "gameinfo");
+          gameEnd.members.forEach((member: SoketUser) => {
+            if (member.userId === soketUserRef.current.userId) {
+              soketUserRef.current.leader = member.leader;
+              if (member.ready && member.leader) {
+                stompClient.send(`/pub/room/unready/${roomId}`, {}, JSON.stringify(member));
+              }
+            }
+          });
         },
         {}
       );
-      stompClient.send(`/pub/room/entrance/${roomId}`, {}, JSON.stringify(soketUser));
+      stompClient.send(`/pub/room/entrance/${roomId}`, {}, JSON.stringify(soketUserRef));
 
       return () => {
-        stompClient.send(`/pub/room/exit/${roomId}`, {}, JSON.stringify(soketUser));
-        console.log("URL 접근했을때 ");
+        stompClient.send(`/pub/room/exit/${roomId}`, {}, JSON.stringify(soketUserRef.current));
 
         subscription.unsubscribe();
         subscription1.unsubscribe();

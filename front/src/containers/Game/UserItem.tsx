@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useAtom } from "jotai";
 import type { SoketUser, User } from "@/types";
@@ -14,6 +14,7 @@ import SimpleProfileModal from "./SimpleProfileModal";
 interface Props {
   dataProp: any;
   isRoom?: boolean;
+  isTab?: boolean;
 }
 
 interface TypeTextType {
@@ -25,23 +26,13 @@ function isUser(dataProp?: SoketUser | User): dataProp is User {
   return (dataProp as User)?.user_id !== undefined;
 }
 
-export default function UserItem({ dataProp, isRoom = false }: Props) {
+export default function UserItem({ dataProp, isRoom = false, isTab = true }: Props) {
   const data = isUser(dataProp) ? convertUserToSoketUser(dataProp) : dataProp;
 
   /** 간단한 프로필 모달 열기 */
   const [openProfile, setOpenProfile] = useState(false);
 
   const [isActive, setIsActive] = useState(false);
-
-  // eslint-disable-next-line no-null/no-null
-  const buttonRef = useRef<HTMLDivElement>(null);
-
-  const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
-    // e.relatedTarget이 buttonRef.current 또는 그 자식 요소인지 확인
-    if (buttonRef.current && !buttonRef.current.contains(e.relatedTarget as Node)) {
-      setIsActive(false);
-    }
-  };
 
   /** data.user_id 로 친구 여부에 따른 버튼 */
   const TypeText: TypeTextType = {
@@ -86,7 +77,7 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
       try {
         await serverAxios.delete(`user/friend/${data.userId}`);
         // 친구 목록에서 삭제
-        newFriends = friends.filter((item) => item.user_id !== data.userId);
+        newFriends = await friends.filter((item) => item.user_id !== data.userId);
         setFriends(newFriends);
         setUserType(3);
       } catch (err) {
@@ -98,7 +89,7 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
         try {
           await serverAxios.put(`user/friend/${data.userId}`);
           // 요청 목록에서 삭제
-          newFriends = NotFriends.filter((item) => item.user_id !== data.userId);
+          newFriends = await NotFriends.filter((item) => item.user_id !== data.userId);
           setNotFriends(newFriends);
           setUserType(4);
         } catch (err) {
@@ -109,7 +100,7 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
         try {
           await serverAxios.delete(`user/friend/${data.userId}`);
           // 요청 목록에서 삭제
-          newFriends = NotFriends.filter((item) => item.user_id !== data.userId);
+          newFriends = await NotFriends.filter((item) => item.user_id !== data.userId);
           setNotFriends(newFriends);
           setUserType(3);
         } catch (err) {
@@ -129,15 +120,10 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
   }
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div
-      role="button"
       className={`${styles.userItem} ${styles.friend} ${isActive ? styles.active : ""}`}
-      onClick={() => setIsActive(true)}
-      onBlur={handleBlur}
-      ref={buttonRef}
-      tabIndex={0}
+      onMouseEnter={() => setIsActive(true)}
+      onMouseLeave={() => setIsActive(false)}
     >
       <div className={styles.profile}>
         <Image
@@ -166,7 +152,7 @@ export default function UserItem({ dataProp, isRoom = false }: Props) {
             <SimpleProfileModal user={convertSoketUserToUser(data)} onClose={() => setOpenProfile(false)} />
           </Modal>
 
-          {data.userId !== useAtom(userAtom)[0].user_id && (
+          {data.userId !== useAtom(userAtom)[0].user_id && isTab && (
             <>
               {TypeText[userType].map((text) => (
                 <button

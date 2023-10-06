@@ -12,7 +12,7 @@ interface Props {
 
 export default function EnterRoom({ rooms }: Props) {
   const router = useRouter();
-  console.log(rooms);
+  // console.log(rooms);
 
   // 방 생성 모달
   const [openCreateRoom, setOpenCreateRoom] = useState(false);
@@ -33,8 +33,10 @@ export default function EnterRoom({ rooms }: Props) {
         }
       }
     });
-    console.log(arr);
+    // console.log(arr);
     if (arr.length === 0) {
+      // eslint-disable-next-line no-alert
+      alert("입장할 수 있는 방이 없습니다.");
       return undefined;
     }
     const randomIndex = Math.floor(Math.random() * arr.length);

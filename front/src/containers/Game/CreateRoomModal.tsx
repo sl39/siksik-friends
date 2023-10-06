@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import axios from "axios";
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/locale";
 import { format } from "date-fns";
@@ -11,6 +10,7 @@ import { useAtom } from "jotai";
 import type { RoomInfo } from "@/types";
 import { userAtom } from "@/store/userAtom";
 import { useWebSocket } from "@/socket/WebSocketProvider";
+import { socketAxios } from "@/services/api";
 import styles from "./modal.module.scss";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -23,6 +23,7 @@ export default function CreateRoomModal({ onClose }: Props) {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
   const [checkTitle, setCheckTitle] = useState("");
+  const [checkType, setCheckType] = useState("");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [checkpassword, setCheckPassword] = useState("");
 
@@ -43,16 +44,20 @@ export default function CreateRoomModal({ onClose }: Props) {
   });
   const stompClient = useWebSocket();
   const [user] = useAtom(userAtom);
+  const [, setAllCheck] = useState(false);
 
+  // 방 생성은 관계자만 가능
   /** 게임 방 생성 */
   const handleCreateGame = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // 유효성
     if (titleValidation && passwordValidation && typeValidation) {
+      setAllCheck(true);
       const leaderMember = {
         userId: user.user_id,
         userName: user.nickname,
-        userScore: user.score,
-        userRanking: user.rank,
+        level: user.level,
+        profile: user.profile,
         ready: false,
         leader: true,
       };
@@ -68,15 +73,9 @@ export default function CreateRoomModal({ onClose }: Props) {
 
       /** 게임방 POST 요청 */
       try {
-        // const response = await serverAxios.post("/", formData);
-        const response = await axios
-          .create({
-            baseURL: "https://j9e101.p.ssafy.io/socket",
-            // headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
-          })
-          .post("/lobby", roomData);
-        // console.log(response);
-        // console.log("방 만들기");
+        const response = await socketAxios.post("/lobby", roomData);
+
+        // console.log("방 만듦", response);
         if (stompClient) {
           stompClient.send("/pub/room/roomList", {}, JSON.stringify({}));
         }
@@ -84,12 +83,20 @@ export default function CreateRoomModal({ onClose }: Props) {
       } catch (err) {
         console.log(err);
       }
+    } else {
+      setAllCheck(true);
+      if (formData.title === "") {
+        setCheckTitle("방 제목을 입력하세요");
+      }
+      if (formData.type === "") {
+        setCheckType("문제 종류를 선택하세요");
+      }
     }
   };
+
   const handleDate = (date: Date) => {
     const formatDate = new Date(date.toLocaleString("en-US", { timeZone: "Asia/Seoul" }));
     const formQuizDate = format(formatDate, "yyyy-MM-dd");
-    console.log(typeof formQuizDate);
     setSelectedDate(date);
     setFormData({ ...formData, quizDate: formQuizDate });
   };
@@ -149,6 +156,7 @@ export default function CreateRoomModal({ onClose }: Props) {
   };
   /**  종류 체크 */
   const typeClick = (val: string) => {
+    setCheckType("");
     // val이 typeList에 이미 포함되어 있는지 확인
     const typeList = formData.type;
     // const index = typeList.indexOf(val);
@@ -169,7 +177,6 @@ export default function CreateRoomModal({ onClose }: Props) {
     // }
 
     if (val === typeList) {
-      console.log(val);
       setFormData({ ...formData, type: "" });
       setTypeValidation(false);
     } else {
@@ -197,6 +204,7 @@ export default function CreateRoomModal({ onClose }: Props) {
           src="/images/actor/gosm1.png"
           alt="방 생성 캐릭터"
           fill
+          sizes="30vw"
           style={{
             objectFit: "contain",
           }}
@@ -253,7 +261,9 @@ export default function CreateRoomModal({ onClose }: Props) {
           </div>
           {/* 문제 종류 */}
           <div className={`${styles.inputDiv} ${styles.type} ${styles.input3}`}>
-            <label htmlFor="type">문제 종류</label>
+            <label htmlFor="type">
+              문제 종류 <span className={styles.errMsg}>{checkType}</span>
+            </label>
             <div className={styles.groupContainer}>
               <div className={styles.wordButton}>
                 <button
@@ -296,10 +306,10 @@ export default function CreateRoomModal({ onClose }: Props) {
                   type="button"
                   name="type"
                   id="type"
-                  onClick={() => typeClick("It/과학")}
-                  className={formData.type === "It/과학" ? styles.selected : ""}
+                  onClick={() => typeClick("IT/과학")}
+                  className={formData.type === "IT/과학" ? styles.selected : ""}
                 >
-                  It/과학
+                  IT/과학
                 </button>
               </div>
             </div>
@@ -312,7 +322,7 @@ export default function CreateRoomModal({ onClose }: Props) {
               onChange={(date: Date) => handleDate(date)}
               dateFormat="yyyy-MM-dd"
               placeholderText="날짜를 선택하세요!"
-              minDate={new Date("2010-01-01")}
+              minDate={new Date("2013-01-01")}
               maxDate={new Date()}
               showMonthDropdown
               showYearDropdown
@@ -337,7 +347,7 @@ export default function CreateRoomModal({ onClose }: Props) {
             {checkpassword && <div className={styles.checkText}>{checkpassword}</div>}
           </div> */}
           <div className={styles.btns}>
-            <button className={`${styles.btn}`} type="submit">
+            <button className={`${styles.btn} `} type="submit">
               확인
             </button>
             <button className={`${styles.btn}`} type="button" onClick={onClose}>

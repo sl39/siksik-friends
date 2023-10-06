@@ -2,9 +2,8 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
-// import { useWebSocket } from "@/socket/WebSocketProvider";
+import Image from "next/image";
 import type { SoketUser } from "@/types";
-// import type { Frame } from "stompjs";
 import { TotalInfoContext } from "@/socket/SubscriptionQuiz";
 import Timer from "./Timer";
 import styles from "./play.module.scss";
@@ -13,20 +12,20 @@ import Score from "./Score";
 import Chatting from "../Room/Chatting";
 
 export default function GamePlay() {
-  const params = useParams();
-  const roomId = Number(params.id);
-  // const [time] = useState<number>(3);
-  // 문제 정보 받아오기
-  // eslint-disable-next-line no-null/no-null
-  const { quiz, quizResult, end, roomInfoPlay } = useContext(TotalInfoContext);
-  console.log(quiz, quizResult, end, roomInfoPlay);
-  const [scoreData, setScoreData] = useState<SoketUser[] | undefined>(quizResult);
-  const [isQuiz, setIsQuiz] = useState<boolean>(false);
-  const [isResult, setIsResult] = useState<boolean>(false);
   const router = useRouter();
 
+  const params = useParams();
+  const roomId = Number(params.id);
+
+  // 문제 정보 받아오기
+  // eslint-disable-next-line no-null/no-null
+  const { quiz, quizResult, end } = useContext(TotalInfoContext);
+  const [scoreData, setScoreData] = useState<SoketUser[] | undefined>(quizResult);
+  const [isQuiz, setIsQuiz] = useState(false);
+  const [isResult, setIsResult] = useState(false);
+
+  /** quiz 값이 변경되면, 데이터 전달 */
   useEffect(() => {
-    // quiz 값이 변경될 때 실행
     if (quiz) {
       setIsQuiz(true);
       setIsResult(false);
@@ -46,30 +45,39 @@ export default function GamePlay() {
     }
   }, [quizResult]);
 
+  const [isDone, setIsDone] = useState(false);
   useEffect(() => {
     if (end) {
       // 모든 문제가 끝나면 결과 페이지로 이동;
-      router.push(`/game/rank/${roomId}`);
+      setIsDone(true);
+      setTimeout(() => {
+        router.replace(`/game/start/rank/${roomId}`);
+      }, 3000);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [end]);
 
   return (
-    <div className={styles.flex}>
-      <div className={styles.top}>
-        {/* <Timer time={gameData.countTimer} resetTime={quiz ? 5 : 3} count={10} /> */}
-        <Timer time={quiz ? 5 : 0} resetTime={3} count={roomInfoPlay ? roomInfoPlay.quizCount || 10 : 10} />
-      </div>
-      <div className={styles.flex2}>
-        <div className={styles.left}>{scoreData ? <Score data={scoreData} /> : undefined}</div>
-        <div className={styles.center}>
-          <Question data={{ quiz, isQuiz, isResult }} />
+    <>
+      <div className={`${styles.flex} z-15`}>
+        <div className={styles.top}>
+          {/* <Timer time={gameData.countTimer} resetTime={quiz ? 5 : 3} count={10} /> */}
+          <Timer time={isQuiz ? 10 : 5} />
         </div>
-        <div className={styles.right}>
-          {/* room이랑 같은 채팅 */}
-          <Chatting roomId={roomId} />
+        <div className={styles.flex2}>
+          <div className={styles.left}>{scoreData ? <Score data={scoreData} /> : undefined}</div>
+          <div className={styles.center}>
+            <Question data={{ quiz, isQuiz, isResult }} isDone={isDone} />
+          </div>
+          <div className={styles.right}>
+            {/* room이랑 같은 채팅 */}
+            <Chatting roomId={roomId} />
+          </div>
         </div>
       </div>
-    </div>
+      <div className={`${styles.image1} z-11`}>
+        <Image src="/images/actor/queen.png" alt="이미지" sizes="30vw" fill priority style={{ objectFit: "contain" }} />
+      </div>
+    </>
   );
 }

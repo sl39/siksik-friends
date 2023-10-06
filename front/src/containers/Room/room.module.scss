@@ -50,24 +50,22 @@ $hardBlue: #6495ed;
   }
 }
 
-////////////
-
-
 .roomName {
-  height: 30px;
-  margin-bottom: 20px;
-  position: absolute;
-  top: 10px;
-}
+  height: 30%;
+  position: relative;
+  color: black;
+  padding-bottom: 10px;
 
-.roomName>span{
-  font-size: 28px;
-  font-weight: bold;
-  margin-left: 12px;
+  box-sizing: border-box;
+  span {
+    font-size: 4vh;
+    font-weight: bold;
+    margin-left: 12px;
+  }
 }
 
 .bottomInfo {
-  height: 70px;
+  // height: 70%;
   display: flex;
   justify-content: space-around;
 }
@@ -80,38 +78,57 @@ $hardBlue: #6495ed;
 }
 
 .quizInfoTitle {
-  flex: 1;
+  flex: 0.4;
   margin: 0 5px;
+
+  font-size: 3.5vh;
 }
 
 .quizInfoContent {
   flex: 1;
   margin: 0 5px;
   color: #554f4f;
-}
+  height: 100%;
+  p {
+    margin: 0;
+    font-size: 3vh;
+  }
 
-.quizInfoContent > p {
-  margin: 0;
-  font-size: 18px;
+  &.left {
+    border-right: 1px solid lightgray;
+  }
 }
-
 .numberInfo {
   flex: 1;
   margin: 0 5px;
 }
 
-.worm{
-  position: relative;
-  top: 50px; right: 0px;
+.worm {
+  position: absolute;
+  width: auto;
+  height: 100%;
+  aspect-ratio: 1;
+  top: 5vh;
+  right: 0px;
 }
+.alice {
+  position: absolute;
+  height: auto;
+  width: 45%;
+  aspect-ratio: 1;
+  top: 120%;
+  right: 0px;
+  overflow: hidden;
+}
+
 ///////////////////
 
 .chatting {
   height: 70%;
   background: rgba($color: $softBlue, $alpha: 0.5);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   border-radius: 30px;
   display: flex;
   flex-direction: column;
