@@ -1,0 +1,350 @@
+.container {
+  width: 80%;
+  height: 95%;
+  margin: 0 auto;
+
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+}
+
+.roomInfo {
+  height: 15%;
+}
+
+$base-color: #cce5ff;
+$end-color: #d3e0ea;
+
+.flex {
+  display: flex;
+  width: 80%;
+  height: 80%;
+  margin: 2% auto 0;
+
+  box-sizing: border-box;
+}
+.left {
+  width: 40%;
+  height: 100%;
+}
+.right {
+  width: 50%;
+  margin: 0 2%;
+  padding: 10px;
+  // background: rgba(255, 255, 255, 0.5);
+  // box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+.leaderboard {
+  box-sizing: border-box;
+  position: relative;
+  top: 0px;
+  width: 50%;
+  height: 100%;
+  margin: 0 auto;
+  border-radius: 10px;
+  // background: linear-gradient(to bottom, #f0f8ff, #d3e0ea);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 30%;
+    background: var(--color-blue-m2);
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background: var(--color-blue-n2);
+    border-radius: 10px;
+  }
+
+  h1 {
+    font-weight: 500;
+    font-size: 3vh;
+    color: #333333;
+    padding: 8px 13px 4px 18px;
+    text-align: center;
+    height: 5%;
+    margin-bottom: 0;
+    & .icon {
+      position: relative;
+      top: 3px;
+      margin-right: 8px;
+      vertical-align: baseline;
+    }
+  }
+
+  ol {
+    counter-reset: leaderboard;
+    margin: 5% 0;
+    padding: 0;
+
+    box-sizing: border-box;
+    height: auto;
+
+    li {
+      position: relative;
+      font-size: 2.5vh;
+      padding: 9px 10px 9px 50px;
+      backface-visibility: hidden;
+      transform: translateZ(0) scale(1, 1);
+      list-style-type: none;
+
+      height: 10%;
+      box-sizing: border-box;
+      background-image: linear-gradient(90deg, transparent 70%, rgba(255, 255, 255, 0.2) 100%);
+
+      // 등수
+      &::before {
+        content: counter(leaderboard);
+        counter-increment: leaderboard;
+        position: absolute;
+        top: 40%;
+        left: 15px;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        color: $base-color;
+        background: #fff;
+        border-radius: 20px;
+        text-align: center;
+      }
+
+      // 이름
+      mark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: 18px 10px 18px 50px;
+        margin: 0;
+        background: none;
+        color: #686868;
+        box-sizing: border-box;
+      }
+
+      small {
+        position: relative;
+        display: block;
+        text-align: right;
+        margin-right: 20px;
+        padding-top: 8px;
+        box-sizing: border-box;
+        color: #686868;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 10%;
+        background: $base-color;
+        box-shadow: 0 3px 0 rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease-in-out;
+        opacity: 0;
+      }
+
+      @for $i from 1 through 10 {
+        &:nth-child(#{$i}) {
+          $color: mix($end-color, $base-color, ($i - 1) * 10%);
+          background: $color;
+
+          &::after {
+            background: $color;
+            box-shadow: 0 -#{$i / 2}px 0 rgba(0, 0, 0, 0.1);
+          }
+          & mark {
+            &::before,
+            &::after {
+              border-bottom: #{$i * 2}px solid darken($color, 20%);
+              top: -#{$i + 3}px;
+              bottom: auto;
+              border-top: none;
+            }
+          }
+        }
+
+        &:last-child {
+          border-radius: 0px 0px #{$i * 2}px #{$i * 2}px;
+
+          &::after {
+            border-radius: 0px 0px #{$i * 2}px #{$i * 2}px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.btns {
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  margin: 0 auto;
+  width: 60%;
+  height: 15%;
+
+  .btn {
+    font-size: 2rem;
+    width: 220px;
+    height: 70px;
+    text-align: center;
+    border-radius: 13px;
+    outline: none;
+    color: #686868;
+  }
+  .btn,
+  .btn:link,
+  .btn:visited {
+    background-color: var(--color-softblue);
+
+    &:hover,
+    &:focus {
+      transition-timing-function: cubic-bezier(0.6, 4, 0.3, 0.8);
+      animation: gelatine 0.5s 1;
+    }
+  }
+  @mixin transform($properties) {
+    -webkit-transform: $properties;
+    -ms-transform: $properties;
+    transform: $properties;
+  }
+  @mixin keyframes($name) {
+    @-webkit-keyframes #{$name} {
+      @content;
+    }
+
+    @-moz-keyframes #{$name} {
+      @content;
+    }
+
+    @-ms-keyframes #{$name} {
+      @content;
+    }
+
+    @keyframes #{$name} {
+      @content;
+    }
+  }
+  @include keyframes(gelatine) {
+    from,
+    to {
+      @include transform(scale(1, 1));
+    }
+    25% {
+      @include transform(scale(0.9, 1.1));
+    }
+    50% {
+      @include transform(scale(1.1, 0.9));
+    }
+    75% {
+      @include transform(scale(0.95, 1.05));
+    }
+    from,
+    to {
+      @include transform(scale(1, 1));
+    }
+    25% {
+      @include transform(scale(0.9, 1.1));
+    }
+    50% {
+      @include transform(scale(1.1, 0.9));
+    }
+    75% {
+      @include transform(scale(0.95, 1.05));
+    }
+  }
+}
+
+.clay {
+  backdrop-filter: blur(8px);
+  background-color: rgba($color: #fff, $alpha: 1);
+  border-radius: 20px;
+  box-shadow:
+    0px 10px 18px -5px rgba(204, 229, 255, 0.8),
+    inset -10px -10px 7px 0px rgba(204, 229, 255, 0.4),
+    inset 15px 15px 7px 0px rgb(255, 255, 255);
+  transition: all 0.3s ease;
+}
+
+.rankRoomInfo {
+  margin-top: 5%;
+  height: 30%;
+
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 3vh;
+
+  .roomName {
+    font-size: 5vh;
+  }
+
+  .roomCate,
+  .roomDate {
+    display: inline;
+    width: 60%;
+    span {
+      width: 50%;
+      color: var(--color-grey-text);
+      padding-right: 10px;
+    }
+  }
+}
+
+.rankMyInfo {
+  margin-top: 5%;
+  height: 60%;
+
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 4vh;
+  .rankB {
+    font-size: 3.5vh;
+    width: 70%;
+
+    span {
+      display: inline-block;
+      width: 50%;
+      padding-right: 10px;
+      color: var(--color-grey-text);
+    }
+  }
+}
+
+.backImg1 {
+  position: absolute;
+  top: 30%;
+  right: 0;
+  width: 30%;
+  aspect-ratio: 1;
+}
+.backImg2 {
+  position: absolute;
+  opacity: 0.7;
+  top: 30%;
+  left: 0;
+  width: 30%;
+  aspect-ratio: 1;
+}
