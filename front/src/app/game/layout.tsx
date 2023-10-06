@@ -25,6 +25,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     // };
     if (user.user_id === 0) {
       // fetchUserData();
+      // eslint-disable-next-line no-alert
       alert("잘못된 접근입니다");
       router.replace("/sign-up");
     }
