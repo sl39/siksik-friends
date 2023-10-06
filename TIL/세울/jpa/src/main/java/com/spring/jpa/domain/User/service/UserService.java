@@ -1,7 +1,7 @@
-package com.spring.jpa.domain.member.service;
+package com.spring.jpa.domain.User.service;
 
-import com.spring.jpa.domain.member.SiteUser;
-import com.spring.jpa.domain.member.repository.UserReository;
+import com.spring.jpa.domain.User.SiteUser;
+import com.spring.jpa.domain.User.repository.UserReository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
