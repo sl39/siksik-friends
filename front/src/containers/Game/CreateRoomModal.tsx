@@ -20,7 +20,7 @@ interface Props {
 
 export default function CreateRoomModal({ onClose }: Props) {
   const [adminMinDate, setAdminMinDate] = useState("");
-  const [adminMaxDate, setAdminMaxDate] = useState("2023-10-09");
+  const [adminMaxDate, setAdminMaxDate] = useState("2023-10-06");
 
   useEffect(() => {
     const fetchAdminDate = async () => {
