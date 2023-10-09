@@ -41,6 +41,7 @@ public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Conf
 
             for (CommonConstants constant : CommonConstants.values()) {
                 if (uri.startsWith(constant.getValue())) {
+                    log.info("헤더가 필요없는 요청");
                     return chain.filter(exchange);
                 }
             }
@@ -48,18 +49,21 @@ public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Conf
             HttpHeaders headers = request.getHeaders();
 
             if (!jwtService.hasAccessHeader(headers)) {
+                log.info("토큰이 없음");
                 return handleForbidden(response, NO_TOKEN.getValue());
             }
 
             String token = jwtService.extractToken(headers);
 
             if (!jwtService.hasAuthType(token)) {
+                log.info("방식이 틀린 토큰");
                 return handleForbidden(response, INVALID_AUTH_TYPE.getValue());
             }
 
             String accessToken = jwtService.extractAccessToken(token);
 
             if (jwtService.hasKeyBlackList(accessToken)) {
+                log.info("블랙리스트인 토큰");
                 return handleForbidden(response, INVALID_TOKEN.getValue());
             }
 
@@ -68,16 +72,20 @@ public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Conf
                 String refreshToken = jwtService.getRefreshToken(id);
 
                 if (jwtService.isTokenValid(refreshToken)) {
+                    log.info("유효한 리프래쉬 토큰 요청");
                     return chain.filter(exchange);
                 }
 
+                log.info("유효하지 않는 리프래쉬 토큰 요청");
                 return handleForbidden(response, SIGN_IN_REQUIRED.getValue());
             }
 
             if (jwtService.isTokenValid(accessToken)) {
+                log.info("유효한 액세스 토큰 요청");
                 return chain.filter(exchange);
             }
 
+            log.info("유효하지 않는 액세스 토큰 요청");
             return handleUnAuthorized(response, EXPIRED_TOKEN.getValue());
         });
     }
