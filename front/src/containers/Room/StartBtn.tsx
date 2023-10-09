@@ -49,14 +49,14 @@ export default function StartBtn({ gameId, soketUser, leaderReady, stompClient, 
     if (roomUser) {
       if (!roomUser.leader) {
         if (!roomUser.ready) {
-          setTitle("레디 하세요");
+          setTitle("준비");
         } else {
-          setTitle("레디 중입니다");
+          setTitle("준비 해제");
         }
       } else if (leaderReady === 1) {
         setTitle("게임 시작!");
       } else {
-        setTitle("모든 유저가 레디 하지 않았습니다");
+        setTitle("준비 안 된 유저가 있습니다");
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
