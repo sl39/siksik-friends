@@ -85,7 +85,7 @@ public class QuizSaveService {
         }
     }
 
-    public void pushHistory(int roomId, List<QuizDTO> solvedQuiz, String category, String quizDate, String roomDate) {
+    public void pushHistory(int roomId, List<QuizDTO> solvedQuiz, String category, String quizDate, String roomDate, String roomName) {
 
         List<ArticleDTO> articles = new ArrayList<>();
 
@@ -104,6 +104,7 @@ public class QuizSaveService {
         update.set("solvedDate", roomDate);
         update.set("articlesDate", quizDate);
         update.set("articles", articles);
+        update.set("roomName", roomName);
 
         mongoTemplate.upsert(query, update, History.class);
 

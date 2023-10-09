@@ -69,7 +69,7 @@ public class StompGameController {
             scheduler.schedule(() -> sendResult(roomId), time, TimeUnit.SECONDS);
             time += 5;
         }
-        scheduler.schedule(() -> endGame(roomId, solvedQuiz, category, body.getQuizCount(), body.getQuizDate(), roomDate), time, TimeUnit.SECONDS);
+        scheduler.schedule(() -> endGame(roomId, solvedQuiz, category, body.getQuizCount(), body.getQuizDate(), roomDate, body.getRoomName()), time, TimeUnit.SECONDS);
     }
 
     public void loading(int roomId, Room roomInfo) {
@@ -109,7 +109,7 @@ public class StompGameController {
 
         messageTemplate.convertAndSend("/sub/game/result/" + roomId, result);
     }
-    public void endGame(int roomId, List<QuizDTO> solvedQuiz, String category, int allQuizCount, String quizDate, String roomDate) {
+    public void endGame(int roomId, List<QuizDTO> solvedQuiz, String category, int allQuizCount, String quizDate, String roomDate, String roomName) {
 
         String end = "end!";
 
@@ -122,7 +122,7 @@ public class StompGameController {
         }
 
 
-        quizSaveService.pushHistory(roomId, solvedQuiz, category, quizDate, roomDate);
+        quizSaveService.pushHistory(roomId, solvedQuiz, category, quizDate, roomDate, roomName);
 
 
         messageTemplate.convertAndSend("/sub/game/end/" + roomId, end);
