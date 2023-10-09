@@ -32,7 +32,7 @@ export default function ProfileHistory({ data }: Props) {
   };
   const handleBack = () => {
     setIsSelected(!isSelected);
-    setSelectedItem({});
+    // setSelectedItem({});
   };
   return (
     <>
