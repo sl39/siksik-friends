@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import { profileAtom, userAtom } from "@/store/userAtom";
 import { serverAxios, socketAxios } from "@/services/api";
-import type { User } from "@/types";
+import type { History, User } from "@/types";
 import styles from "./Profile.module.scss";
 import Stat from "./Stat";
 import ProfileHistory from "./ProfileHistory";
@@ -87,84 +87,7 @@ export default function ProfileData({ userId }: Props) {
   const data = userId ? profileData : defaultData;
   const fetchId = userId || params.id;
 
-  // type History = {
-  //   historyId: number;
-  //   articles: string[];
-  // };
-  // const [historyItems, setHistoryItems] = useState<Array<History>>([]);
-  const historyItems = [
-    {
-      historyId: 8,
-      roomtitle: "방제목",
-      category: "경제",
-      solvedDate: "문제 푼 날짜",
-      articlesDate: "기사 날짜",
-      articles: [
-        {
-          articleTitle: "제목",
-          articleAnswer: "정답",
-          articleQuiz: ["문제1", "문제2", "문제3", "문제4", "문제5"],
-        },
-      ],
-    },
-
-    {
-      historyId: 9,
-      roomtitle: "방제목2",
-      category: "경제",
-      solvedDate: "문제 푼 날짜2",
-      articlesDate: "기사 날짜2",
-      articles: [
-        {
-          articleTitle: "제목",
-          articleAnswer: "정답",
-          articleQuiz: ["문제1", "문제2", "문제3", "문제4", "문제5"],
-        },
-      ],
-    },
-    {
-      historyId: 9,
-      roomtitle: "방제목2",
-      category: "경제",
-      solvedDate: "문제 푼 날짜2",
-      articlesDate: "기사 날짜2",
-      articles: [
-        {
-          articleTitle: "제목",
-          articleAnswer: "정답",
-          articleQuiz: ["문제1", "문제2", "문제3", "문제4", "문제5"],
-        },
-      ],
-    },
-    {
-      historyId: 9,
-      roomtitle: "방제목2",
-      category: "경제",
-      solvedDate: "문제 푼 날짜2",
-      articlesDate: "기사 날짜2",
-      articles: [
-        {
-          articleTitle: "제목",
-          articleAnswer: "정답",
-          articleQuiz: ["문제1", "문제2", "문제3", "문제4", "문제5"],
-        },
-      ],
-    },
-    {
-      historyId: 9,
-      roomtitle: "방제목2",
-      category: "경제",
-      solvedDate: "문제 푼 날짜2",
-      articlesDate: "기사 날짜2",
-      articles: [
-        {
-          articleTitle: "제목",
-          articleAnswer: "정답",
-          articleQuiz: ["문제1", "문제2", "문제3", "문제4", "문제5"],
-        },
-      ],
-    },
-  ];
+  const [historyItems, setHistoryItems] = useState<Array<History>>([]);
 
   const [statCount, setStatCount] = useState({
     economyCorrectQuizCount: 0,
@@ -188,7 +111,8 @@ export default function ProfileData({ userId }: Props) {
         const response = await socketAxios.post<ResponseData>("/history", {
           userId: fetchId,
         });
-        // setHistoryItems(response.data.allHistory);
+        console.log(response);
+        setHistoryItems(response.data.allHistory);
         setStatCount({
           economyCorrectQuizCount: response.data.economyCorrectQuizCount,
           economySolvedQuizCount: response.data.economySolvedQuizCount,
@@ -444,7 +368,7 @@ export default function ProfileData({ userId }: Props) {
 
             <div className={`${styles.tabcontent} ${activeTab === 3 ? styles.active : ""}`}>
               <h3>오답노트</h3>
-              <div className={`${styles.p} `}>
+              <div className={`${styles.p}`}>
                 <ProfileHistory data={historyItems} />
               </div>
             </div>
