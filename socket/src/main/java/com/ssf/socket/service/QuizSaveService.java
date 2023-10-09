@@ -100,10 +100,10 @@ public class QuizSaveService {
         Query query = new Query(Criteria.where("historyId").is(roomId));
 
         Update update = new Update();
-        update.addToSet("category", category);
-        update.addToSet("solvedDate", roomDate);
-        update.addToSet("articlesDate", quizDate);
-        update.addToSet("articles", articles);
+        update.set("category", category);
+        update.set("solvedDate", roomDate);
+        update.set("articlesDate", quizDate);
+        update.set("articles", articles);
 
         mongoTemplate.upsert(query, update, History.class);
 
