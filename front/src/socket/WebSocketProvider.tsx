@@ -28,7 +28,7 @@ export default function WebSocketProvider({ children }: WebSocketProviderProps) 
     const header = `Bearer ${accessToken}`;
     console.log(header);
     const client = Stomp.over(socket);
-    client.debug = () => {};
+    // client.debug = () => {};
     // client.configure({
     //    reconnectDelay: 5000,
     // });
