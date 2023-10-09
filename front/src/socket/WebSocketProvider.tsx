@@ -23,7 +23,7 @@ export default function WebSocketProvider({ children }: WebSocketProviderProps) 
   useEffect(() => {
     const socket = new SockJS("https://j9e101.p.ssafy.io/api/socket/ws");
     const accessToken = sessionStorage.getItem("accessToken");
-    console.log(accessToken)
+    console.log(accessToken);
     const headers = {
       "Content-Type": "application/json",
       "Cache-Control": "no-store",
