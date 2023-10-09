@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import DatePicker from "react-datepicker";
@@ -10,7 +10,7 @@ import { useAtom } from "jotai";
 import type { RoomInfo } from "@/types";
 import { userAtom } from "@/store/userAtom";
 import { useWebSocket } from "@/socket/WebSocketProvider";
-import { socketAxios } from "@/services/api";
+import { serverAxios, socketAxios } from "@/services/api";
 import styles from "./modal.module.scss";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -35,8 +35,8 @@ export default function CreateRoomModal({ onClose }: Props) {
 
   const [formData, setFormData] = useState<RoomInfo>({
     title: "",
-    count: 1,
-    countProblem: 1,
+    count: 5,
+    countProblem: 3,
     type: "",
     password: "",
     countTimer: 5,
@@ -46,7 +46,23 @@ export default function CreateRoomModal({ onClose }: Props) {
   const [user] = useAtom(userAtom);
   const [, setAllCheck] = useState(false);
 
-  // 방 생성은 관계자만 가능
+  // 방 생성 권한 막기
+  const [adminLocked, setAdminLocked] = useState(true);
+
+  useEffect(() => {
+    const getIsLocked = async () => {
+      try {
+        const response = serverAxios(`/user/lock`);
+        console.log(response);
+        setAdminLocked(response.data.isLock);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getIsLocked();
+  }, []);
+
   /** 게임 방 생성 */
   const handleCreateGame = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -72,16 +88,24 @@ export default function CreateRoomModal({ onClose }: Props) {
       };
 
       /** 게임방 POST 요청 */
-      try {
-        const response = await socketAxios.post("/lobby", roomData);
+      // 방 생성 관리
 
-        // console.log("방 만듦", response);
-        if (stompClient) {
-          stompClient.send("/pub/room/roomList", {}, JSON.stringify({}));
+      if (adminLocked === true) {
+        // eslint-disable-next-line no-alert
+        alert("현재 방 생성은 관리자만 가능합니다");
+        onClose();
+      } else {
+        try {
+          const response = await socketAxios.post("/lobby", roomData);
+
+          // console.log("방 만듦", response);
+          if (stompClient) {
+            stompClient.send("/pub/room/roomList", {}, JSON.stringify({}));
+          }
+          router.push(`/game/start/room/${response.data.roomId}`);
+        } catch (err) {
+          console.log(err);
         }
-        router.push(`/game/start/room/${response.data.roomId}`);
-      } catch (err) {
-        console.log(err);
       }
     } else {
       setAllCheck(true);
@@ -215,6 +239,14 @@ export default function CreateRoomModal({ onClose }: Props) {
       <div className={styles.modalContainer}>
         <form className={`${styles.form}`} onSubmit={handleCreateGame}>
           <div className={styles.subText}>방 만들기</div>
+          {/* 관리자 체크 */}
+          {user.user_id! >= 1 && user.user_id! <= 6 && (
+            <div>
+              <input type="checkbox" checked={adminLocked} onChange={() => setAdminLocked(!adminLocked)} />
+              <label htmlFor="isLocked">방 생성 허용</label>
+            </div>
+          )}
+
           {/* 방제목 */}
           <div className={styles.inputDiv}>
             <label htmlFor="title">제목</label>
