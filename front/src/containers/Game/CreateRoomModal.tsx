@@ -229,6 +229,35 @@ export default function CreateRoomModal({ onClose }: Props) {
     }
   };
 
+  const [adminMinDate, setAdminMinDate] = useState("");
+  const [adminMaxDate, setAdminMaxDate] = useState("");
+
+  useEffect(() => {
+    const fetchAdminDate = async () => {
+      try {
+        const response = await serverAxios("/user/date");
+        setAdminMinDate(response.data.minDate);
+        setAdminMaxDate(response.data.maxDate);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAdminDate();
+  }, []);
+
+  const handleAdminDateChange = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const adminData = {
+      minDate: adminMinDate,
+      maxDate: adminMaxDate,
+    };
+    try {
+      await serverAxios.put("/user/date", adminData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className={styles.createModal}>
       <div className={styles.modalImg}>
@@ -245,16 +274,33 @@ export default function CreateRoomModal({ onClose }: Props) {
         />
       </div>
       <div className={styles.modalContainer}>
-        <form className={`${styles.form}`} onSubmit={handleCreateGame}>
-          <div className={styles.subText}>방 만들기</div>
-          {/* 관리자 체크 */}
-          {user.user_id! >= 1 && user.user_id! <= 6 && (
-            <div>
+        {/* 관리자 체크 */}
+        {user.user_id! >= 1 && user.user_id! <= 6 && (
+          <div className={styles.adminContainer}>
+            <div className={styles.admin}>
               <input type="checkbox" checked={adminLocked} onChange={setLocked} />
               <label htmlFor="isLocked">방 생성 제한</label>
             </div>
-          )}
 
+            <form className={styles.admin} onSubmit={handleAdminDateChange}>
+              <p>출제 날짜 제한</p>
+              <span className={styles.adminDate}>
+                <label htmlFor="minDate">최소 날짜</label>
+                <input type="text" value={adminMinDate} onChange={(e) => setAdminMinDate(e.target.value)} />
+              </span>
+              <span className={styles.adminDate}>
+                <label htmlFor="maxDate">최대 날짜</label>
+                <input type="text" value={adminMaxDate} onChange={(e) => setAdminMaxDate(e.target.value)} />
+              </span>
+              <button className={styles.adminBtn} type="submit">
+                수정
+              </button>
+            </form>
+          </div>
+        )}
+
+        <form className={`${styles.form}`} onSubmit={handleCreateGame}>
+          <div className={styles.subText}>방 만들기</div>
           {/* 방제목 */}
           <div className={styles.inputDiv}>
             <label htmlFor="title">제목</label>
@@ -362,8 +408,8 @@ export default function CreateRoomModal({ onClose }: Props) {
               onChange={(date: Date) => handleDate(date)}
               dateFormat="yyyy-MM-dd"
               placeholderText="날짜를 선택하세요!"
-              minDate={new Date("2013-01-01")}
-              maxDate={new Date()}
+              minDate={new Date(adminMinDate)}
+              maxDate={new Date(adminMaxDate)}
               showMonthDropdown
               showYearDropdown
               locale={ko}
