@@ -1,5 +1,3 @@
-"use client";
-
 import React, { createContext, useContext, useEffect, useState } from "react";
 import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
@@ -25,15 +23,17 @@ export default function WebSocketProvider({ children }: WebSocketProviderProps) 
   useEffect(() => {
     const socket = new SockJS("https://j9e101.p.ssafy.io/api/socket/ws");
     const accessToken = sessionStorage.getItem("accessToken");
-    const header = `Bearer ${accessToken}`;
-    // console.log(header);
+    const headers = {
+      Authorization: `Bearer ${accessToken}`,
+    };
+
     const client = Stomp.over(socket);
-    client.debug = () => {};
+    // client.debug = () => {};
     // client.configure({
     //    reconnectDelay: 5000,
     // });
     function connect() {
-      client.connect({ connectHeaders: header }, function connection() {
+      client.connect(headers, function connection() {
         setStompClient(client);
       });
     }
