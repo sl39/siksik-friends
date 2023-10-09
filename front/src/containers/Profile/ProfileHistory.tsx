@@ -11,7 +11,7 @@ interface Props {
 
 export default function ProfileHistory({ data }: Props) {
   const [selectedItem, setSelectedItem] = useState<History>({});
-  const [isSelected, setIsSelected] = useState(true);
+  const [isSelected, setIsSelected] = useState(false);
 
   // 방 정보 자세히 보기
   const handleItemClick = (item: History) => {
