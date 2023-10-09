@@ -20,6 +20,6 @@ public class History {
     String category;
     String solvedDate;
     String articlesDate;
-    List<ArticleDTO> articles;
+    List<List<ArticleDTO>> articles;
 
 }
