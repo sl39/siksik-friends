@@ -69,4 +69,5 @@ serverAxios.interceptors.response.use(
 /** 소켓 서버 Axios */
 export const socketAxios = axios.create({
   baseURL: `${SERVER_ADDRESS}/api/socket`,
+  headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
 });
