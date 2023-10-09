@@ -8,6 +8,7 @@ export default function Today() {
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
+      timeZone: "Asia/Seoul",
     })
     .replace(/. /g, "."); // '.'과 공백 사이를 '.'으로 교체
 

@@ -95,8 +95,8 @@ export default function Question({ data, isDone }: Props) {
         <>
           <div className={`${styles.quizTitle} ${styles.endTitle}   z-10`}>잠시 후 시작합니다</div>
           <div className={`${styles.quizDesc} ${styles.IsEnd} z-10`}>
-            <p>빈 칸에 들어갈 낱말을 입력하여 이슈 기사의 제목을 완성해주세요</p>
-            <p>정답은 한 번만 입력 가능합니다</p>
+            <div>빈 칸에 들어갈 낱말을 입력하여 이슈 기사의 제목을 완성해주세요</div>
+            <div>정답은 한 번만 입력 가능합니다</div>
           </div>
         </>
       )}
