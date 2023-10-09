@@ -98,7 +98,7 @@ export default function CreateRoomModal({ onClose }: Props) {
       /** 게임방 POST 요청 */
       // 방 생성 관리
 
-      if (adminLocked === true) {
+      if (adminLocked === true && !(user.user_id! >= 1 && user.user_id! <= 6)) {
         // eslint-disable-next-line no-alert
         alert("현재 방 생성은 관리자만 가능합니다");
         onClose();
