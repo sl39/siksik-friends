@@ -24,8 +24,8 @@ export default function WebSocketProvider({ children }: WebSocketProviderProps) 
     const socket = new SockJS("https://j9e101.p.ssafy.io/api/socket/ws");
     const accessToken = sessionStorage.getItem("accessToken");
     const headers = {
-      "Content-Type": "application/json", 
-      "Cache-Control": "no-store" ,
+      "Content-Type": "application/json",
+      "Cache-Control": "no-store",
       authorization: `Bearer ${accessToken}`,
     };
 
