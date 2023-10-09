@@ -19,8 +19,36 @@ interface Props {
 }
 
 export default function CreateRoomModal({ onClose }: Props) {
+  const [adminMinDate, setAdminMinDate] = useState("");
+  const [adminMaxDate, setAdminMaxDate] = useState("");
+
+  useEffect(() => {
+    const fetchAdminDate = async () => {
+      try {
+        const response = await serverAxios("/user/date");
+        setAdminMinDate(response.data.minDate);
+        setAdminMaxDate(response.data.maxDate);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAdminDate();
+  }, []);
+
+  const handleAdminDateChange = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const adminData = {
+      minDate: adminMinDate,
+      maxDate: adminMaxDate,
+    };
+    try {
+      await serverAxios.put("/user/date", adminData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const router = useRouter();
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date(adminMaxDate));
 
   const [checkTitle, setCheckTitle] = useState("");
   const [checkType, setCheckType] = useState("");
@@ -226,35 +254,6 @@ export default function CreateRoomModal({ onClose }: Props) {
       setPasswordValidation(true);
     } else {
       setPasswordValidation(false);
-    }
-  };
-
-  const [adminMinDate, setAdminMinDate] = useState("");
-  const [adminMaxDate, setAdminMaxDate] = useState("");
-
-  useEffect(() => {
-    const fetchAdminDate = async () => {
-      try {
-        const response = await serverAxios("/user/date");
-        setAdminMinDate(response.data.minDate);
-        setAdminMaxDate(response.data.maxDate);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchAdminDate();
-  }, []);
-
-  const handleAdminDateChange = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const adminData = {
-      minDate: adminMinDate,
-      maxDate: adminMaxDate,
-    };
-    try {
-      await serverAxios.put("/user/date", adminData);
-    } catch (err) {
-      console.log(err);
     }
   };
 
