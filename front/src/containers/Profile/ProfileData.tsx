@@ -111,22 +111,23 @@ export default function ProfileData({ userId }: Props) {
         const response = await socketAxios.post<ResponseData>("/history", {
           userId: fetchId,
         });
-        console.log(response);
-        setHistoryItems(response.data.allHistory);
-        setStatCount({
-          economyCorrectQuizCount: response.data.economyCorrectQuizCount,
-          economySolvedQuizCount: response.data.economySolvedQuizCount,
-          socialCorrectQuizCount: response.data.socialCorrectQuizCount,
-          socialSolvedQuizCount: response.data.socialSolvedQuizCount,
-          livingCorrectQuizCount: response.data.livingCorrectQuizCount,
-          livingSolvedQuizCount: response.data.livingSolvedQuizCount,
-          globalCorrectQuizCount: response.data.globalCorrectQuizCount,
-          globalSolvedQuizCount: response.data.globalSolvedQuizCount,
-          scienceCorrectQuizCount: response.data.scienceCorrectQuizCount,
-          scienceSolvedQuizCount: response.data.scienceSolvedQuizCount,
-          allCorrectQuizCount: response.data.allCorrectQuizCount,
-          allSolvedQuizCount: response.data.allSolvedQuizCount,
-        });
+        if (response.data) {
+          setHistoryItems(response.data.allHistory);
+          setStatCount({
+            economyCorrectQuizCount: response.data.economyCorrectQuizCount,
+            economySolvedQuizCount: response.data.economySolvedQuizCount,
+            socialCorrectQuizCount: response.data.socialCorrectQuizCount,
+            socialSolvedQuizCount: response.data.socialSolvedQuizCount,
+            livingCorrectQuizCount: response.data.livingCorrectQuizCount,
+            livingSolvedQuizCount: response.data.livingSolvedQuizCount,
+            globalCorrectQuizCount: response.data.globalCorrectQuizCount,
+            globalSolvedQuizCount: response.data.globalSolvedQuizCount,
+            scienceCorrectQuizCount: response.data.scienceCorrectQuizCount,
+            scienceSolvedQuizCount: response.data.scienceSolvedQuizCount,
+            allCorrectQuizCount: response.data.allCorrectQuizCount,
+            allSolvedQuizCount: response.data.allSolvedQuizCount,
+          });
+        }
       } catch (err) {
         console.error("히스토리 에러", err);
       }
@@ -135,7 +136,7 @@ export default function ProfileData({ userId }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [activeTab, setActiveTab] = useState(3);
+  const [activeTab, setActiveTab] = useState(1);
   const handleTabClick = (tabId: number) => {
     setActiveTab(tabId);
   };
