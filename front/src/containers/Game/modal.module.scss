@@ -404,3 +404,26 @@ $font-title: "Chelsea Market", sans-serif;
     color: $hardBlue;
   }
 }
+
+.admin {
+  box-sizing: border-box;
+
+  margin-bottom: 10px;
+  p {
+    padding: 0;
+    margin: 0;
+  }
+  input[type="text"] {
+    width: 20%;
+  }
+
+  .adminDate {
+    width: 40%;
+    margin-right: 10px;
+  }
+  .adminBtn {
+    background-color: var(--color-softblue);
+    padding: 5px 10px;
+    border-radius: 10px;
+  }
+}
