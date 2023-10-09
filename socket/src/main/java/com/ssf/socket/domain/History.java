@@ -1,5 +1,6 @@
 package com.ssf.socket.domain;
 
+import com.ssf.socket.dto.ArticlesDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +21,6 @@ public class History {
     String category;
     String solvedDate;
     String articlesDate;
-    List<List<String>> articles;
+    ArticlesDTO articles;
 
 }
