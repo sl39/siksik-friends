@@ -92,7 +92,7 @@ public class QuizSaveService {
         for (QuizDTO hint : solvedQuiz) {
             ArticleDTO article = new ArticleDTO();
             article.setArticleQuiz(hint.getQuestion().getHints());
-            article.setArticleTitle(hint.getArticleTitle());
+            article.setArticleTitle(hint.getQuestion().getTitle());
             article.setArticleAnswer(hint.getAnswer());
             articles.add(article);
         }
