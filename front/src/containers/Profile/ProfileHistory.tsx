@@ -2,48 +2,75 @@
 
 import { useState } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
+import type { Article, History } from "@/types";
 import styles from "./Profile.module.scss";
 
 interface Props {
-  data: any[];
+  data: History[];
 }
 
 export default function ProfileHistory({ data }: Props) {
-  const [selectedItem, setSelectedItem] = useState({
-    historyId: 9,
-    roomtitle: "방제목2",
-    category: "경제",
-    solvedDate: "문제 푼 날짜2",
-    articlesDate: "기사 날짜2",
-    articles: [
-      {
-        articleTitle: "제목",
-        articleAnswer: "정답",
-        articleQuiz: ["문제1", "문제2", "문제3", "문제4", "문제5"],
-      },
-    ],
-  });
+  const [selectedItem, setSelectedItem] = useState<History>({});
   const [isSelected, setIsSelected] = useState(true);
 
-  const handleItemClick = (item: any) => {
+  // 방 정보 자세히 보기
+  const handleItemClick = (item: History) => {
     setSelectedItem(item);
-    console.log(item);
     setIsSelected(!isSelected);
   };
   const handleBack = () => {
     setIsSelected(!isSelected);
-    // setSelectedItem({});
+    setSelectedItem({});
   };
+
+  // 문제 하나 자세히 보기
+  const [expandedArticles, setExpandedArticles] = useState<Record<string, boolean>>({});
+  const handleButtonClick = (articleTitle: string) => {
+    setExpandedArticles((prevState) => ({
+      ...prevState,
+      [articleTitle]: !prevState[articleTitle],
+    }));
+  };
+
+  // 문제 정답 맞추기
+  const [articleAnswers, setArticleAnswers] = useState<{ [key: string]: string }>({});
+  const [isAnswer, setIsAnswer] = useState<{ [key: string]: number }>({});
+  // input 수정
+  const handleInputChange = (articleTitle: string, value: string) => {
+    setArticleAnswers((prevState) => ({
+      ...prevState,
+      [articleTitle]: value,
+    }));
+
+    setIsAnswer((prevState) => ({
+      ...prevState,
+      [articleTitle]: 0,
+    }));
+  };
+
+  // 제출 버튼 클릭
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>, article: Article) => {
+    e.preventDefault();
+
+    if (article.articleAnswer === articleAnswers[article.articleTitle]) {
+      setIsAnswer((prevState) => ({ ...prevState, [article.articleTitle]: 1 }));
+    } else {
+      setIsAnswer((prevState) => ({ ...prevState, [article.articleTitle]: -1 }));
+    }
+  };
+
   return (
     <>
       {!isSelected && (
         <div className={styles.historyItems}>
           {data.map((item) => (
-            <button key={item} className={styles.item} onClick={() => handleItemClick(item)}>
-              <p>{item.roomtitle}</p>
-              <p>{item.category}</p>
-              <p>{item.articlesDate}</p>
-              <p>{item.solvedDate}</p>
+            <button key={item.historyId} className={styles.item} onClick={() => handleItemClick(item)}>
+              <p className={styles.detailTitle}>{item.roomName}</p>
+              <p className={styles.detailQuiz}>
+                <span>[{item.category}] </span>
+                <span>{item.articlesDate}</span>
+              </p>
+              <p className={styles.detailDate}>게임 플레이: {item.solvedDate}</p>
               {/* <p>당시 내 점수</p> */}
             </button>
           ))}
@@ -57,8 +84,53 @@ export default function ProfileHistory({ data }: Props) {
           </button>
 
           <div className={styles.detailItem}>
-            <div className={`${styles.detailRoom} ${styles.boxStyle}`}>{selectedItem.roomtitle}</div>
-            <div>문제정보</div>
+            <div className={`${styles.detailRoom} ${styles.boxStyle}`}>
+              <p className={styles.detailTitle}>{selectedItem.roomName}</p>
+              <div>
+                <span className={styles.detailQuiz}>
+                  <span>[{selectedItem.category}] </span>
+                  <span>{selectedItem.articlesDate}</span>
+                </span>
+                <span className={styles.solvedDate}>게임 플레이: {selectedItem.solvedDate}</span>
+              </div>
+            </div>
+
+            <div className={styles.detailArticles}>
+              {selectedItem.articles?.map((article, index) => (
+                <div key={article.articleTitle} className={`${styles.boxContainer}`}>
+                  <button
+                    className={`${styles.boxStyle} ${styles.detailArticle}`}
+                    onClick={() => handleButtonClick(article.articleTitle)}
+                  >
+                    {index + 1}. {article.articleTitle}
+                  </button>
+
+                  <div className={`${styles.content} ${expandedArticles[article.articleTitle] ? styles.open : ""}`}>
+                    {expandedArticles[article.articleTitle] && (
+                      <form onSubmit={(e) => handleSubmit(e, article)} className={`${styles.articleHint}`}>
+                        {article.articleQuiz.map((hint) => (
+                          <div key={hint} className={styles.hintText}>
+                            {hint}
+                          </div>
+                        ))}
+                        <div className={styles.inputBox}>
+                          <input
+                            type="text"
+                            onChange={(e) => handleInputChange(article.articleTitle, e.target.value)}
+                            className={`${styles.inputAnswer} ${
+                              isAnswer[article.articleTitle] === 1 ? styles.isAnswer : ""
+                            } ${isAnswer[article.articleTitle] === -1 ? styles.notAnswer : ""}`}
+                          />
+                          <button className={styles.BtnAnswer} type="submit">
+                            제출
+                          </button>
+                        </div>
+                      </form>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
