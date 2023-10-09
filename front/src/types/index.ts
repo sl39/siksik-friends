@@ -91,3 +91,17 @@ export interface GamePlay {
   ready: boolean;
   leader: boolean;
 }
+
+export interface Article {
+  articleTitle: string;
+  articleAnswer: string;
+  articleQuiz: string[];
+}
+export interface History {
+  historyId?: number;
+  roomName?: string;
+  category?: string;
+  solvedDate?: string;
+  articlesDate?: string;
+  articles?: Article[];
+}
