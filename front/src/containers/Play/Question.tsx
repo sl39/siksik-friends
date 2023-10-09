@@ -91,7 +91,15 @@ export default function Question({ data, isDone }: Props) {
         <Image src="/images/backclock.png" alt="" sizes="30vw" fill style={{ objectFit: "contain" }} priority />
       </div>
 
-      {!isQuiz && !isResult && <div className={`${styles.quizDesc} ${styles.IsEnd} z-10`}>잠시 후 시작합니다</div>}
+      {!isQuiz && !isResult && (
+        <>
+          <div className={`${styles.quizTitle} ${styles.endTitle}   z-10`}>잠시 후 시작합니다</div>
+          <div className={`${styles.quizDesc} ${styles.IsEnd} z-10`}>
+            <p>빈 칸에 들어갈 낱말을 입력하여 이슈 기사의 제목을 완성해주세요</p>
+            <p>정답은 한 번만 입력 가능합니다</p>
+          </div>
+        </>
+      )}
       {/* eslint-disable-next-line no-nested-ternary */}
       {isQuiz && isResult === false ? (
         // 문제

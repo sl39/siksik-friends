@@ -186,7 +186,9 @@ $hardBlue: #6495ed;
     background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/323909/yellow-top.png);
     background-repeat: no-repeat;
     background-size: cover;
-    transition: all 0.3s;
+    // transition: all 0.3s;
+
+    transition: none;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -196,12 +198,20 @@ $hardBlue: #6495ed;
     transform: translate(2.5%, 5%);
     text-shadow: 2px 2px 1px white;
     color: black;
+
+    transition: none;
+    -webkit-filter: hue-rotate(324deg);
+    filter: hue-rotate(324deg);
   }
   &:active:after {
     -webkit-transform: translate(2.5%, 10%);
     transform: translate(2.5%, 10%);
     text-shadow: 2px 2px 1px white;
     color: black;
+
+    transition: none;
+    -webkit-filter: hue-rotate(324deg);
+    filter: hue-rotate(324deg);
   }
 }
 .button-wrapper {
@@ -220,5 +230,9 @@ $hardBlue: #6495ed;
     transform: translate(2.5%, 10%);
     text-shadow: 2px 2px 1px white;
     color: black;
+
+    transition: none;
+    -webkit-filter: hue-rotate(324deg);
+    filter: hue-rotate(324deg);
   }
 }
