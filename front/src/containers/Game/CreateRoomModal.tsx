@@ -53,7 +53,6 @@ export default function CreateRoomModal({ onClose }: Props) {
     const getIsLocked = async () => {
       try {
         const response = await serverAxios(`/user/lock`);
-        console.log(response);
         setAdminLocked(response.data.isLock);
       } catch (err) {
         console.log(err);
@@ -252,7 +251,7 @@ export default function CreateRoomModal({ onClose }: Props) {
           {user.user_id! >= 1 && user.user_id! <= 6 && (
             <div>
               <input type="checkbox" checked={adminLocked} onChange={setLocked} />
-              <label htmlFor="isLocked">방 생성 허용</label>
+              <label htmlFor="isLocked">방 생성 제한</label>
             </div>
           )}
 
