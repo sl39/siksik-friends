@@ -87,18 +87,14 @@ public class QuizSaveService {
 
     public void pushHistory(int roomId, List<QuizDTO> solvedQuiz, String category, String quizDate, String roomDate) {
 
-        List<List<ArticleDTO>> articles = new ArrayList<>();
+        List<ArticleDTO> articles = new ArrayList<>();
 
         for (QuizDTO hint : solvedQuiz) {
             ArticleDTO article = new ArticleDTO();
             article.setArticleQuiz(hint.getQuestion().getHints());
             article.setArticleTitle(hint.getArticleTitle());
             article.setArticleAnswer(hint.getAnswer());
-
-            List<ArticleDTO> articleItem = new ArrayList<>();
-            articleItem.add(article);
-
-            articles.add(articleItem);
+            articles.add(article);
         }
 
         Query query = new Query(Criteria.where("historyId").is(roomId));
