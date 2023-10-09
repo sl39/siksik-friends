@@ -55,11 +55,11 @@ public class StompGameController {
         String date = body.getQuizDate();
         Quiz quizList = quizSaveService.getQuiz(date, category);
 
-        Quiz solvedQuiz = new Quiz();
+        List<QuizDTO> solvedQuiz = quizList.getQuizSet().subList(0, body.getQuizCount());
 
         scheduler.schedule(() -> loading(roomId, body), 0, TimeUnit.SECONDS); // 0, 23, 46, 69, ...
 
-        solvedQuiz.setQuizDate(quizList.getQuizDate());
+
 
         int time = 3;
         for (int i = 0; i < body.getQuizCount(); i++) {
@@ -69,7 +69,7 @@ public class StompGameController {
             scheduler.schedule(() -> sendResult(roomId), time, TimeUnit.SECONDS);
             time += 5;
         }
-        scheduler.schedule(() -> endGame(roomId, quizList.getQuizSet(), category, body.getQuizCount(), body.getQuizDate(), roomDate), time, TimeUnit.SECONDS);
+        scheduler.schedule(() -> endGame(roomId, solvedQuiz, category, body.getQuizCount(), body.getQuizDate(), roomDate), time, TimeUnit.SECONDS);
     }
 
     public void loading(int roomId, Room roomInfo) {
@@ -109,7 +109,7 @@ public class StompGameController {
 
         messageTemplate.convertAndSend("/sub/game/result/" + roomId, result);
     }
-    public void endGame(int roomId, List<QuizDTO> quizzes, String category, int allQuizCount, String quizDate, String roomDate) {
+    public void endGame(int roomId, List<QuizDTO> solvedQuiz, String category, int allQuizCount, String quizDate, String roomDate) {
 
         String end = "end!";
 
@@ -122,10 +122,7 @@ public class StompGameController {
         }
 
 
-        for (QuizDTO quiz : quizzes) {
-
-            quizSaveService.pushHistory(roomId, quiz, category, quizDate, roomDate);
-        }
+        quizSaveService.pushHistory(roomId, solvedQuiz, category, quizDate, roomDate);
 
 
         messageTemplate.convertAndSend("/sub/game/end/" + roomId, end);

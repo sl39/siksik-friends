@@ -6,16 +6,14 @@ import com.ssf.socket.domain.History;
 import com.ssf.socket.domain.HistoryMember;
 import com.ssf.socket.domain.Member;
 import com.ssf.socket.domain.Quiz;
-import com.ssf.socket.dto.ArticlesDTO;
+import com.ssf.socket.dto.ArticleDTO;
 import com.ssf.socket.dto.QuizDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.data.mongodb.core.query.UpdateDefinition;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -87,21 +85,25 @@ public class QuizSaveService {
         }
     }
 
-    public void pushHistory(int roomId, QuizDTO article, String category, String quizDate, String roomDate) {
+    public void pushHistory(int roomId, List<QuizDTO> solvedQuiz, String category, String quizDate, String roomDate) {
+
+        List<ArticleDTO> articles = new ArrayList<>();
+
+        for (QuizDTO hint : solvedQuiz) {
+            ArticleDTO article = new ArticleDTO();
+            article.setArticleQuiz(hint.getQuestion().getHints());
+            article.setArticleTitle(hint.getArticleTitle());
+            article.setArticleAnswer(hint.getAnswer());
+            articles.add(article);
+        }
 
         Query query = new Query(Criteria.where("historyId").is(roomId));
 
-        ArticlesDTO articles = new ArticlesDTO();
-
-        articles.setArticleTitle(article.getQuestion().getTitle());
-        articles.setArticleQuiz(article.getQuestion().getHints());
-        articles.setArticleAnswer(article.getAnswer());
-
         Update update = new Update();
-        update.addToSet("articles", articles);
         update.addToSet("category", category);
         update.addToSet("solvedDate", roomDate);
         update.addToSet("articlesDate", quizDate);
+        update.addToSet("articles", articles);
 
         mongoTemplate.upsert(query, update, History.class);
 
