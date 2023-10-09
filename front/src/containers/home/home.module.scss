@@ -1,0 +1,180 @@
+.left {
+  width: 70%;
+  height: 100%;
+  margin: 0 15px 0;
+}
+.right {
+  width: 30%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+// 오늘 날짜
+.leftDay {
+  width: 98%;
+  height: 50px;
+  border-bottom: 1px solid var(--color-gray);
+  margin-bottom: 15px;
+  .date {
+    background-color: var(--color-point);
+    clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+    height: 50px;
+    width: 220px;
+    font-size: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+// 워드클라우드
+.wordCloud {
+  width: 95%;
+  height: calc(100% - 100px);
+  margin-left: 10px;
+}
+// 진짜 클라우드
+.wordChart {
+  position: relative;
+  height: 75%;
+  margin-top: 5%;
+  padding-top: 5%;
+
+  background-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border-radius: 50px;
+}
+/* 워드클라우드 버튼 */
+.groupContainer {
+  height: 10%;
+  width: 90%;
+  display: flex;
+  place-items: center;
+  align-items: flex-start;
+  justify-items: center;
+  .wordButton {
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 0;
+    outline: 0;
+  }
+}
+.button {
+  border: 3px solid var(--color-word-border);
+  color: var(--color-word-text);
+  text-align: center;
+  background-color: rgba($color: white, $alpha: 0.6);
+  height: 100%;
+  font-size: 24px;
+  letter-spacing: 2px;
+  min-width: 100px;
+  border-radius: 8px;
+  display: inline-block;
+  padding: 10px 16px;
+  margin: 0 3px 0 0;
+  transition-duration: 0.1s;
+  transition-timing-function: ease-in-out;
+}
+.button:first-of-type {
+  border-radius: 30px 12px 12px 30px;
+}
+.button:last-of-type {
+  border-radius: 12px 30px 30px 12px;
+}
+.button:hover {
+  border-color: var(--color-word-hover);
+  color: white;
+  background-color: var(--color-word-hover-back);
+}
+.active {
+  border-color: var(--color-word-hover);
+  color: white;
+  background-color: var(--color-word-hover-back);
+  padding: 16px 16px;
+  outline: 0;
+  border-radius: 12px;
+}
+.active:focus:first-of-type {
+  border-radius: 30px 12px 12px 30px;
+}
+.active:focus:last-of-type {
+  border-radius: 12px 30px 30px 12px;
+}
+.wordButton::-moz-focus-inner {
+  border: 0;
+}
+
+// 프로필 카드
+.cardContainer {
+  width: 100%;
+  height: 75%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// 게임 시작 버튼
+.buttonContainer {
+  position: relative;
+  width: 100%;
+  height: 20%;
+}
+.button-wrapper {
+  display: inline-block;
+  position: relative;
+  width: 90%;
+  height: 100%;
+  left: -10px;
+}
+.span {
+  position: relative;
+  width: 100%;
+  padding-top: 25.92%;
+  display: block;
+  background-size: 100% 100%;
+  font-size: calc(16px + 3vh);
+  text-decoration: none;
+  color: #333;
+  margin: 0;
+}
+.background-button {
+  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/323909/yellow-shadow.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  &:after {
+    content: attr(title);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/323909/yellow-top.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: all 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &:hover:after {
+    -webkit-transform: translate(2.5%, 5%);
+    transform: translate(2.5%, 5%);
+    text-shadow: 2px 2px 1px white;
+    color: black;
+  }
+  &:active:after {
+    -webkit-transform: translate(2.5%, 10%);
+    transform: translate(2.5%, 10%);
+    text-shadow: 2px 2px 1px white;
+    color: black;
+  }
+}
