@@ -92,6 +92,79 @@ export default function ProfileData({ userId }: Props) {
   //   articles: string[];
   // };
   // const [historyItems, setHistoryItems] = useState<Array<History>>([]);
+  const historyItems = [
+    {
+      historyId: 8,
+      roomtitle: "방제목",
+      category: "경제",
+      solvedDate: "문제 푼 날짜",
+      articlesDate: "기사 날짜",
+      articles: [
+        {
+          articleTitle: "제목",
+          articleAnswer: "정답",
+          articleQuiz: ["문제1", "문제2", "문제3", "문제4", "문제5"],
+        },
+      ],
+    },
+
+    {
+      historyId: 9,
+      roomtitle: "방제목2",
+      category: "경제",
+      solvedDate: "문제 푼 날짜2",
+      articlesDate: "기사 날짜2",
+      articles: [
+        {
+          articleTitle: "제목",
+          articleAnswer: "정답",
+          articleQuiz: ["문제1", "문제2", "문제3", "문제4", "문제5"],
+        },
+      ],
+    },
+    {
+      historyId: 9,
+      roomtitle: "방제목2",
+      category: "경제",
+      solvedDate: "문제 푼 날짜2",
+      articlesDate: "기사 날짜2",
+      articles: [
+        {
+          articleTitle: "제목",
+          articleAnswer: "정답",
+          articleQuiz: ["문제1", "문제2", "문제3", "문제4", "문제5"],
+        },
+      ],
+    },
+    {
+      historyId: 9,
+      roomtitle: "방제목2",
+      category: "경제",
+      solvedDate: "문제 푼 날짜2",
+      articlesDate: "기사 날짜2",
+      articles: [
+        {
+          articleTitle: "제목",
+          articleAnswer: "정답",
+          articleQuiz: ["문제1", "문제2", "문제3", "문제4", "문제5"],
+        },
+      ],
+    },
+    {
+      historyId: 9,
+      roomtitle: "방제목2",
+      category: "경제",
+      solvedDate: "문제 푼 날짜2",
+      articlesDate: "기사 날짜2",
+      articles: [
+        {
+          articleTitle: "제목",
+          articleAnswer: "정답",
+          articleQuiz: ["문제1", "문제2", "문제3", "문제4", "문제5"],
+        },
+      ],
+    },
+  ];
 
   const [statCount, setStatCount] = useState({
     economyCorrectQuizCount: 0,
@@ -138,7 +211,7 @@ export default function ProfileData({ userId }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [activeTab, setActiveTab] = useState(1);
+  const [activeTab, setActiveTab] = useState(3);
   const handleTabClick = (tabId: number) => {
     setActiveTab(tabId);
   };
@@ -372,7 +445,7 @@ export default function ProfileData({ userId }: Props) {
             <div className={`${styles.tabcontent} ${activeTab === 3 ? styles.active : ""}`}>
               <h3>오답노트</h3>
               <div className={`${styles.p} `}>
-                <ProfileHistory />
+                <ProfileHistory data={historyItems} />
               </div>
             </div>
             <div className={`${styles.tabcontent} ${activeTab === 4 ? styles.active : ""}`}>
