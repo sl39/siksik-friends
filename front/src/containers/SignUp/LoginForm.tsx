@@ -28,8 +28,6 @@ export default function LoginForm() {
     } catch (error) {
       console.log("로그인 에러", error);
       setLoginError("이메일 또는 비밀번호를 확인해주세요");
-
-      console.log(location.origin);
     }
   };
 
