@@ -25,7 +25,7 @@ export default function WebSocketProvider({ children }: WebSocketProviderProps) 
   useEffect(() => {
     const socket = new SockJS("https://j9e101.p.ssafy.io/api/socket/ws");
     const accessToken = sessionStorage.getItem("accessToken");
-    const header = `Authorization ${accessToken}`;
+    const header = `${accessToken}`;
     const client = Stomp.over(socket);
     client.debug = () => {};
     // client.configure({
