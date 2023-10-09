@@ -1,4 +1,4 @@
-package com.ssf.member.domain.maxDate;
+package com.ssf.member.domain.date;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,15 +12,20 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MaxDate {
+public class Date {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String date;
+    private String minDate;
+    private String maxDate;
 
-    public void changeDate(String date) {
-        this.date = date;
+    public void changeMinDate(String minDate) {
+        this.minDate = minDate;
+    }
+
+    public void changeMaxDate(String maxDate) {
+        this.maxDate = maxDate;
     }
 }
