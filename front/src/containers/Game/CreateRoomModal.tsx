@@ -52,7 +52,7 @@ export default function CreateRoomModal({ onClose }: Props) {
   useEffect(() => {
     const getIsLocked = async () => {
       try {
-        const response = serverAxios(`/user/lock`);
+        const response = await serverAxios(`/user/lock`);
         console.log(response);
         setAdminLocked(response.data.isLock);
       } catch (err) {
@@ -62,6 +62,15 @@ export default function CreateRoomModal({ onClose }: Props) {
 
     getIsLocked();
   }, []);
+
+  const setLocked = async () => {
+    try {
+      await serverAxios.put(`/user/lock`);
+      setAdminLocked(!adminLocked);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   /** 게임 방 생성 */
   const handleCreateGame = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -242,7 +251,7 @@ export default function CreateRoomModal({ onClose }: Props) {
           {/* 관리자 체크 */}
           {user.user_id! >= 1 && user.user_id! <= 6 && (
             <div>
-              <input type="checkbox" checked={adminLocked} onChange={() => setAdminLocked(!adminLocked)} />
+              <input type="checkbox" checked={adminLocked} onChange={setLocked} />
               <label htmlFor="isLocked">방 생성 허용</label>
             </div>
           )}
