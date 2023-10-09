@@ -26,14 +26,14 @@ export default function WebSocketProvider({ children }: WebSocketProviderProps) 
     const socket = new SockJS("https://j9e101.p.ssafy.io/api/socket/ws");
     const accessToken = sessionStorage.getItem("accessToken");
     const header = `Bearer ${accessToken}`;
-    console.log(header);
+    // console.log(header);
     const client = Stomp.over(socket);
-    // client.debug = () => {};
+    client.debug = () => {};
     // client.configure({
     //    reconnectDelay: 5000,
     // });
     function connect() {
-      client.connect({ header }, function connection() {
+      client.connect({ connectHeaders: header }, function connection() {
         setStompClient(client);
       });
     }
