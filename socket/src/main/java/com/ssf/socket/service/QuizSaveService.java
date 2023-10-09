@@ -6,6 +6,7 @@ import com.ssf.socket.domain.History;
 import com.ssf.socket.domain.HistoryMember;
 import com.ssf.socket.domain.Member;
 import com.ssf.socket.domain.Quiz;
+import com.ssf.socket.dto.ArticlesDTO;
 import com.ssf.socket.dto.QuizDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +74,7 @@ public class QuizSaveService {
                 mongoTemplate.save(newHistoryMember);
             }
 
-            Query query2 = new Query(Criteria.where("userId").is(member.getUserId()));
+            Query query = new Query(Criteria.where("userId").is(member.getUserId()));
 
             Update update2 = new Update();
             update2.addToSet("historyList", roomId);
@@ -82,27 +83,29 @@ public class QuizSaveService {
             update2.inc(categoryCountTable.get(quizType), allQuizCount);
             update2.inc(categoryCorrectTable.get(quizType), member.getGameCorrect());
 
-            mongoTemplate.upsert(query2, update2, HistoryMember.class);
+            mongoTemplate.upsert(query, update2, HistoryMember.class);
         }
     }
 
-    public void pushHistory(int roomId, QuizDTO article) {
+    public void pushHistory(int roomId, QuizDTO article, String category, String quizDate, String roomDate) {
 
         Query query = new Query(Criteria.where("historyId").is(roomId));
 
-        List<List<String>> articles = new ArrayList<>();
+        ArticlesDTO articles = new ArticlesDTO();
 
-        List<String> container = new ArrayList<>();
-
-        container.add(0, article.getArticleTitle());
-        container.add(1, article.getArticleContent());
-
-        articles.add(container);
+        articles.setArticleTitle(article.getQuestion().getTitle());
+        articles.setArticleQuiz(article.getQuestion().getHints());
+        articles.setArticleAnswer(article.getAnswer());
 
         Update update = new Update();
         update.addToSet("articles", articles);
+        update.addToSet("category", category);
+        update.addToSet("solvedDate", roomDate);
+        update.addToSet("articlesDate", quizDate);
 
         mongoTemplate.upsert(query, update, History.class);
+
+
 
     }
 

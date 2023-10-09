@@ -17,6 +17,9 @@ public class History {
 
     @Id
     int historyId;
+    String category;
+    String solvedDate;
+    String articlesDate;
     List<List<String>> articles;
 
 }

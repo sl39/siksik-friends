@@ -10,6 +10,7 @@ import com.ssf.socket.service.QuizSaveService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -40,12 +44,22 @@ public class StompGameController {
     public void gameStart(@DestinationVariable int roomId,
                           @Payload Room body) {
 
+        LocalDateTime currentDateTime = LocalDateTime.now();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        String roomDate = currentDateTime.format(formatter);
+
         String category = body.getCategory();
 
         String date = body.getQuizDate();
         Quiz quizList = quizSaveService.getQuiz(date, category);
 
+        Quiz solvedQuiz = new Quiz();
+
         scheduler.schedule(() -> loading(roomId, body), 0, TimeUnit.SECONDS); // 0, 23, 46, 69, ...
+
+        solvedQuiz.setQuizDate(quizList.getQuizDate());
 
         int time = 3;
         for (int i = 0; i < body.getQuizCount(); i++) {
@@ -55,7 +69,7 @@ public class StompGameController {
             scheduler.schedule(() -> sendResult(roomId), time, TimeUnit.SECONDS);
             time += 5;
         }
-        scheduler.schedule(() -> endGame(roomId, quizList.getQuizSet(), category, body.getQuizCount()), time, TimeUnit.SECONDS);
+        scheduler.schedule(() -> endGame(roomId, quizList.getQuizSet(), category, body.getQuizCount(), body.getQuizDate(), roomDate), time, TimeUnit.SECONDS);
     }
 
     public void loading(int roomId, Room roomInfo) {
@@ -95,7 +109,7 @@ public class StompGameController {
 
         messageTemplate.convertAndSend("/sub/game/result/" + roomId, result);
     }
-    public void endGame(int roomId, List<QuizDTO> quizzes, String category, int allQuizCount) {
+    public void endGame(int roomId, List<QuizDTO> quizzes, String category, int allQuizCount, String quizDate, String roomDate) {
 
         String end = "end!";
 
@@ -110,7 +124,7 @@ public class StompGameController {
 
         for (QuizDTO quiz : quizzes) {
 
-            quizSaveService.pushHistory(roomId, quiz);
+            quizSaveService.pushHistory(roomId, quiz, category, quizDate, roomDate);
         }
 
 
