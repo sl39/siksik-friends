@@ -36,20 +36,20 @@ public class QuizSaveService {
         categoryTable.put("경제", "quiz1");
         categoryTable.put("사회", "quiz2");
         categoryTable.put("생활/문화", "quiz3");
-        categoryTable.put("IT/과학", "quiz4");
-        categoryTable.put("세계", "quiz5");
+        categoryTable.put("세계", "quiz4");
+        categoryTable.put("IT/과학", "quiz5");
 
         categoryCountTable.put("경제", "economySolvedQuizCount");
         categoryCountTable.put("사회", "socialSolvedQuizCount");
         categoryCountTable.put("생활/문화", "livingSolvedQuizCount");
-        categoryCountTable.put("IT/과학", "scienceSolvedQuizCount");
         categoryCountTable.put("세계", "globalSolvedQuizCount");
+        categoryCountTable.put("IT/과학", "scienceSolvedQuizCount");
 
         categoryCorrectTable.put("경제", "economyCorrectQuizCount");
         categoryCorrectTable.put("사회", "socialCorrectQuizCount");
         categoryCorrectTable.put("생활/문화", "livingCorrectQuizCount");
-        categoryCorrectTable.put("IT/과학", "scienceCorrectQuizCount");
         categoryCorrectTable.put("세계", "globalCorrectQuizCount");
+        categoryCorrectTable.put("IT/과학", "scienceCorrectQuizCount");
     }
 
     public Quiz getQuiz(String date, String collectionName) {
