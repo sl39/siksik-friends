@@ -85,7 +85,13 @@ export default function Index() {
         </div>
         {stompClient && (
           <div className={styles.startBtn}>
-            <StartBtn gameId={roomId} soketUser={soketUser} leaderReady={leaderReady} stompClient={stompClient} />
+            <StartBtn
+              gameId={roomId}
+              soketUser={soketUser}
+              leaderReady={leaderReady}
+              stompClient={stompClient}
+              room={room}
+            />
           </div>
         )}
       </div>

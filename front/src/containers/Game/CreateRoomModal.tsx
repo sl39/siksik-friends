@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import DatePicker from "react-datepicker";
@@ -10,7 +10,7 @@ import { useAtom } from "jotai";
 import type { RoomInfo } from "@/types";
 import { userAtom } from "@/store/userAtom";
 import { useWebSocket } from "@/socket/WebSocketProvider";
-import { socketAxios } from "@/services/api";
+import { serverAxios, socketAxios } from "@/services/api";
 import styles from "./modal.module.scss";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -19,8 +19,36 @@ interface Props {
 }
 
 export default function CreateRoomModal({ onClose }: Props) {
+  const [adminMinDate, setAdminMinDate] = useState("");
+  const [adminMaxDate, setAdminMaxDate] = useState("2023-10-06");
+
+  useEffect(() => {
+    const fetchAdminDate = async () => {
+      try {
+        const response = await serverAxios("/user/date");
+        setAdminMinDate(response.data.minDate);
+        setAdminMaxDate(response.data.maxDate);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAdminDate();
+  }, []);
+
+  const handleAdminDateChange = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const adminData = {
+      minDate: adminMinDate,
+      maxDate: adminMaxDate,
+    };
+    try {
+      await serverAxios.put("/user/date", adminData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const router = useRouter();
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date(adminMaxDate));
 
   const [checkTitle, setCheckTitle] = useState("");
   const [checkType, setCheckType] = useState("");
@@ -35,8 +63,8 @@ export default function CreateRoomModal({ onClose }: Props) {
 
   const [formData, setFormData] = useState<RoomInfo>({
     title: "",
-    count: 1,
-    countProblem: 1,
+    count: 5,
+    countProblem: 3,
     type: "",
     password: "",
     countTimer: 5,
@@ -46,7 +74,31 @@ export default function CreateRoomModal({ onClose }: Props) {
   const [user] = useAtom(userAtom);
   const [, setAllCheck] = useState(false);
 
-  // 방 생성은 관계자만 가능
+  // 방 생성 권한 막기
+  const [adminLocked, setAdminLocked] = useState(true);
+
+  useEffect(() => {
+    const getIsLocked = async () => {
+      try {
+        const response = await serverAxios(`/user/lock`);
+        setAdminLocked(response.data.isLock);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getIsLocked();
+  }, []);
+
+  const setLocked = async () => {
+    try {
+      await serverAxios.put(`/user/lock`);
+      setAdminLocked(!adminLocked);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   /** 게임 방 생성 */
   const handleCreateGame = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -70,8 +122,15 @@ export default function CreateRoomModal({ onClose }: Props) {
         roomSize: formData.count,
         quizDate: formData.quizDate,
       };
-      if (user.user_id! >= 1 && user.user_id! <= 6) {
-        /** 게임방 POST 요청 */
+
+      /** 게임방 POST 요청 */
+      // 방 생성 관리
+
+      if (adminLocked === true && !(user.user_id! >= 1 && user.user_id! <= 6)) {
+        // eslint-disable-next-line no-alert
+        alert("현재 방 생성은 관리자만 가능합니다");
+        onClose();
+      } else {
         try {
           const response = await socketAxios.post("/lobby", roomData);
 
@@ -83,10 +142,6 @@ export default function CreateRoomModal({ onClose }: Props) {
         } catch (err) {
           console.log(err);
         }
-      } else {
-        // eslint-disable-next-line no-alert
-        alert("현재 방 생성은 관리자만 가능합니다");
-        onClose();
       }
     } else {
       setAllCheck(true);
@@ -218,6 +273,31 @@ export default function CreateRoomModal({ onClose }: Props) {
         />
       </div>
       <div className={styles.modalContainer}>
+        {/* 관리자 체크 */}
+        {user.user_id! >= 1 && user.user_id! <= 6 && (
+          <div className={styles.adminContainer}>
+            <div className={styles.admin}>
+              <input type="checkbox" checked={adminLocked} onChange={setLocked} />
+              <label htmlFor="isLocked">방 생성 제한</label>
+            </div>
+
+            <form className={styles.admin} onSubmit={handleAdminDateChange}>
+              <p>출제 날짜 제한</p>
+              <span className={styles.adminDate}>
+                <label htmlFor="minDate">최소 날짜</label>
+                <input type="text" value={adminMinDate} onChange={(e) => setAdminMinDate(e.target.value)} />
+              </span>
+              <span className={styles.adminDate}>
+                <label htmlFor="maxDate">최대 날짜</label>
+                <input type="text" value={adminMaxDate} onChange={(e) => setAdminMaxDate(e.target.value)} />
+              </span>
+              <button className={styles.adminBtn} type="submit">
+                수정
+              </button>
+            </form>
+          </div>
+        )}
+
         <form className={`${styles.form}`} onSubmit={handleCreateGame}>
           <div className={styles.subText}>방 만들기</div>
           {/* 방제목 */}
@@ -327,8 +407,8 @@ export default function CreateRoomModal({ onClose }: Props) {
               onChange={(date: Date) => handleDate(date)}
               dateFormat="yyyy-MM-dd"
               placeholderText="날짜를 선택하세요!"
-              minDate={new Date("2013-01-01")}
-              maxDate={new Date()}
+              minDate={new Date(adminMinDate)}
+              maxDate={new Date(adminMaxDate)}
               showMonthDropdown
               showYearDropdown
               locale={ko}

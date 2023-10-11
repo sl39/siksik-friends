@@ -222,7 +222,7 @@ $n02: var(--color-blue-n2);
   justify-content: space-around;
   align-items: center;
   height: 15%;
-  width: 70%;
+  width: 75%;
   border-radius: 2px 2px 0px 0px;
 }
 .tablinks {
@@ -433,7 +433,7 @@ $n02: var(--color-blue-n2);
   }
   .imgItem {
     position: relative;
-    height: 150px;
+    height: 120px;
     width: auto;
     aspect-ratio: 1 / 1;
 
@@ -613,4 +613,181 @@ $n02: var(--color-blue-n2);
 }
 .noFlow {
   overflow-y: hidden;
+}
+
+.historyItems {
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  width: 100%;
+  height: 100%;
+
+  .item {
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+    width: 48%;
+
+    align-items: center;
+    justify-content: center;
+    p {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      text-align: center;
+    }
+    span {
+      padding: 0;
+      margin: 0;
+    }
+
+    box-sizing: border-box;
+    .detailTitle {
+      font-size: 4vh;
+    }
+    .detailQuiz {
+      font-size: 3.5vh;
+    }
+    .detailDate {
+      color: var(--color-nav);
+    }
+  }
+}
+.backBtn {
+  &:hover {
+    color: var(--color-blue-m2);
+  }
+
+  position: absolute;
+}
+.boxStyle {
+  backdrop-filter: blur(8px);
+  background-color: rgba($color: #fff, $alpha: 1);
+  border-radius: 20px;
+  box-shadow:
+    0px 10px 18px -5px rgba(204, 229, 255, 0.8),
+    inset -10px -10px 7px 0px rgba(204, 229, 255, 0.4),
+    inset 15px 15px 7px 0px rgb(255, 255, 255);
+  transition: all 0.3s ease;
+}
+
+.detail {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+
+  .detailItem {
+    box-sizing: border-box;
+
+    width: 85%;
+    height: 100%;
+    margin: 0 auto;
+  }
+  // 방 정보
+  .detailRoom {
+    box-sizing: border-box;
+
+    width: 100%;
+    height: auto;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    p {
+      padding: 0;
+      margin: 0;
+    }
+    .detailTitle {
+      font-size: 3.5vh;
+    }
+    .detailQuiz {
+      font-size: 3vh;
+    }
+    .solvedDate {
+      color: var(--color-nav);
+      float: right;
+      padding-right: 10px;
+    }
+  }
+
+  .detailArticles {
+    .boxContainer {
+      border-radius: 20px;
+      margin-bottom: 15px;
+
+      background: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 8px 32px 0 rgba(191, 194, 244, 0.37);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+
+    // 문제 하나
+    .detailArticle {
+      box-sizing: border-box;
+      width: 100%;
+      height: auto;
+      padding: 10px 10px 10px 15px;
+      // margin: 0 0 15px 0;
+      font-size: 3.5vh;
+
+      &:hover {
+        box-shadow:
+          0px 15px 30px -2px rgba(204, 229, 255, 0.8),
+          inset 10px 10px 7px 0px rgba(204, 229, 255, 0.4),
+          inset -15px -15px 7px 0px rgb(255, 255, 255);
+      }
+    }
+
+    .articleHint {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      padding-top: 15px;
+      padding-left: 10px;
+
+      .hintText {
+        font-size: 3vh;
+        word-break: keep-all;
+
+        border-bottom: 0.5px solid var(--color-nav);
+        padding: 5px 10px;
+      }
+
+      .inputBox {
+        width: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .inputAnswer {
+          width: 70%;
+          font-size: 3vh;
+          padding: 3px 10px;
+          margin: 5px;
+          background-color: inherit;
+        }
+        .BtnAnswer {
+          background-color: var(--color-softblue);
+          width: 20%;
+          height: 90%;
+          border-radius: 20px;
+          text-align: center;
+          justify-content: center;
+        }
+        .isAnswer {
+          background-color: #98fb98;
+        }
+        .notAnswer {
+          background-color: #ffb6c1;
+        }
+      }
+    }
+  }
 }

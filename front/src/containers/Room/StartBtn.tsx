@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import type { CompatClient } from "node_modules/@stomp/stompjs";
-import type { SoketUser } from "@/types";
+import type { Room, SoketUser } from "@/types";
 import { TotalInfoContext } from "@/socket/SubscriptionQuiz";
 import styles from "./room.module.scss";
 
@@ -12,9 +12,10 @@ interface Props {
   soketUser: SoketUser;
   leaderReady: number;
   stompClient: CompatClient;
+  room: Room | undefined;
 }
 
-export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }: Props) {
+export default function StartBtn({ gameId, soketUser, leaderReady, stompClient, room }: Props) {
   const [btnActive, setBtnActive] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { quiz, quizResult, end, roomInfoPlay } = useContext(TotalInfoContext);
@@ -31,8 +32,7 @@ export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }
       if (roomUser.leader) {
         if (leaderReady === 1) {
           // router.push(`/game/start/play/${gameId}`);
-          stompClient.send(`/pub/game/start/${gameId}`, {}, JSON.stringify(roomInfoPlay));
-          console.log("혼자일때는 콘솔이 찍히는지 확인");
+          stompClient.send(`/pub/game/start/${gameId}`, {}, JSON.stringify(roomInfoPlay || room));
         }
       } else if (roomUser.ready) {
         setRoomUser({ ...roomUser, ready: false });
@@ -49,14 +49,14 @@ export default function StartBtn({ gameId, soketUser, leaderReady, stompClient }
     if (roomUser) {
       if (!roomUser.leader) {
         if (!roomUser.ready) {
-          setTitle("레디 하세요");
+          setTitle("준비");
         } else {
-          setTitle("레디 중입니다");
+          setTitle("준비 해제");
         }
       } else if (leaderReady === 1) {
         setTitle("게임 시작!");
       } else {
-        setTitle("모든 유저가 레디 하지 않았습니다");
+        setTitle("준비 안 된 유저가 있습니다");
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

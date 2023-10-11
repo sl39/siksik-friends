@@ -4,11 +4,12 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { profileAtom } from "@/store/userAtom";
+import { profileAtom, userAtom } from "@/store/userAtom";
 import { serverAxios, socketAxios } from "@/services/api";
-import type { User } from "@/types";
+import type { History, User } from "@/types";
 import styles from "./Profile.module.scss";
 import Stat from "./Stat";
+import ProfileHistory from "./ProfileHistory";
 // import FriendsTab from "./FriendsTab";
 
 interface Props {
@@ -47,6 +48,7 @@ type QuizCount = {
 export default function ProfileData({ userId }: Props) {
   const [profileData, setProfileData] = useState<User>({});
   const [defaultData, setDefaultData] = useAtom(profileAtom);
+  const [user] = useAtom(userAtom);
 
   const params = useParams();
 
@@ -85,11 +87,7 @@ export default function ProfileData({ userId }: Props) {
   const data = userId ? profileData : defaultData;
   const fetchId = userId || params.id;
 
-  // type History = {
-  //   historyId: number;
-  //   articles: string[];
-  // };
-  // const [historyItems, setHistoryItems] = useState<Array<History>>([]);
+  const [historyItems, setHistoryItems] = useState<Array<History>>([]);
 
   const [statCount, setStatCount] = useState({
     economyCorrectQuizCount: 0,
@@ -113,21 +111,23 @@ export default function ProfileData({ userId }: Props) {
         const response = await socketAxios.post<ResponseData>("/history", {
           userId: fetchId,
         });
-        // setHistoryItems(response.data.allHistory);
-        setStatCount({
-          economyCorrectQuizCount: response.data.economyCorrectQuizCount,
-          economySolvedQuizCount: response.data.economySolvedQuizCount,
-          socialCorrectQuizCount: response.data.socialCorrectQuizCount,
-          socialSolvedQuizCount: response.data.socialSolvedQuizCount,
-          livingCorrectQuizCount: response.data.livingCorrectQuizCount,
-          livingSolvedQuizCount: response.data.livingSolvedQuizCount,
-          globalCorrectQuizCount: response.data.globalCorrectQuizCount,
-          globalSolvedQuizCount: response.data.globalSolvedQuizCount,
-          scienceCorrectQuizCount: response.data.scienceCorrectQuizCount,
-          scienceSolvedQuizCount: response.data.scienceSolvedQuizCount,
-          allCorrectQuizCount: response.data.allCorrectQuizCount,
-          allSolvedQuizCount: response.data.allSolvedQuizCount,
-        });
+        if (response.data) {
+          setHistoryItems(response.data.allHistory);
+          setStatCount({
+            economyCorrectQuizCount: response.data.economyCorrectQuizCount,
+            economySolvedQuizCount: response.data.economySolvedQuizCount,
+            socialCorrectQuizCount: response.data.socialCorrectQuizCount,
+            socialSolvedQuizCount: response.data.socialSolvedQuizCount,
+            livingCorrectQuizCount: response.data.livingCorrectQuizCount,
+            livingSolvedQuizCount: response.data.livingSolvedQuizCount,
+            globalCorrectQuizCount: response.data.globalCorrectQuizCount,
+            globalSolvedQuizCount: response.data.globalSolvedQuizCount,
+            scienceCorrectQuizCount: response.data.scienceCorrectQuizCount,
+            scienceSolvedQuizCount: response.data.scienceSolvedQuizCount,
+            allCorrectQuizCount: response.data.allCorrectQuizCount,
+            allSolvedQuizCount: response.data.allSolvedQuizCount,
+          });
+        }
       } catch (err) {
         console.error("히스토리 에러", err);
       }
@@ -252,10 +252,19 @@ export default function ProfileData({ userId }: Props) {
             >
               <p>데이터</p>
             </button>
-            {/* {userId === undefined && (
+            {/* 내 프로필에서만 오답노트 */}
+            {userId === undefined && +params.id === +user.user_id! && (
               <button
                 onClick={() => handleTabClick(3)}
                 className={`${styles.tablinks} ${activeTab === 3 ? styles.active : ""}`}
+              >
+                <p>오답노트</p>
+              </button>
+            )}
+            {/* {userId === undefined && (
+              <button
+                onClick={() => handleTabClick(4)}
+                className={`${styles.tablinks} ${activeTab === 4 ? styles.active : ""}`}
               >
                 <p>친구</p>
               </button>
@@ -359,8 +368,14 @@ export default function ProfileData({ userId }: Props) {
             </div>
 
             <div className={`${styles.tabcontent} ${activeTab === 3 ? styles.active : ""}`}>
+              <h3>오답노트</h3>
+              <div className={`${styles.p}`}>
+                <ProfileHistory data={historyItems} />
+              </div>
+            </div>
+            <div className={`${styles.tabcontent} ${activeTab === 4 ? styles.active : ""}`}>
               <h3>친구</h3>
-              <div className={`${styles.p} `}>{/* <FriendsTab /> */}</div>
+              <div className={`${styles.p} `}>{/* <FriendTab /> */}</div>
             </div>
           </div>
         </div>

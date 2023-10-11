@@ -14,7 +14,7 @@ interface Props {
 
 export default function Question({ data, isDone }: Props) {
   const { quiz, isQuiz, isResult } = data;
-  console.log(quiz, isQuiz, isResult);
+  // console.log(quiz, isQuiz, isResult);
   const [user] = useAtom(userAtom);
   const params = useParams();
   const roomId = Number(params.id);
@@ -91,7 +91,22 @@ export default function Question({ data, isDone }: Props) {
         <Image src="/images/backclock.png" alt="" sizes="30vw" fill style={{ objectFit: "contain" }} priority />
       </div>
 
-      {!isQuiz && !isResult && <div className={`${styles.quizDesc} ${styles.IsEnd} z-10`}>잠시 후 시작합니다</div>}
+      {!isQuiz && !isResult && (
+        <>
+          <div className={`${styles.quizTitle} ${styles.endTitle}   z-10`}>잠시 후 시작합니다</div>
+          <div className={`${styles.quizDesc} ${styles.IsEnd} z-10`}>
+            <div>
+              <div style={{ margin: "10px 0" }}>
+                빈 칸에 들어갈 낱말을 입력하여 <br />
+                <span style={{ color: "#7ec0ee" }}>이슈 기사의 제목을 완성</span>해주세요
+              </div>
+              <div>
+                정답은 <span style={{ color: "#7ec0ee" }}>한 번</span>만 입력 가능합니다
+              </div>
+            </div>
+          </div>
+        </>
+      )}
       {/* eslint-disable-next-line no-nested-ternary */}
       {isQuiz && isResult === false ? (
         // 문제
