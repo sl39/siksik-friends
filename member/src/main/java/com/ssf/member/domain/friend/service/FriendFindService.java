@@ -7,8 +7,9 @@ import java.util.List;
 
 public interface FriendFindService {
 
-    public FriendResponseDto findFriend(String accessHeader);
-    public FriendResponseDto findFriendResponse(String accessHeader);
-    public FriendResponseDto findFriendRequest(String accessHeader);
-    public int isFriends(String accessHeader, Long targetUserId);
+    FriendResponseDto findFriend(String accessHeader);
+    FriendResponseDto findFriendResponse(String accessHeader);
+    FriendResponseDto findFriendRequest(String accessHeader);
+    int isFriends(String accessHeader, Long targetUserId);
+    int getLevel(Long id);
 }
