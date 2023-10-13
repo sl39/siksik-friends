@@ -11,6 +11,7 @@ import com.ssf.member.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,9 +25,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FriendFindServiceImpl implements FriendFindService {
 
+    private final RedisTemplate<String, String> redisTemplate;
     private final FriendRepository friendRepository;
     private final UserRepository userRepository;
 
+    private static final String KEY = "rank";
     private static final String ID_CLAIM = "id";
     private static final String BEARER = "Bearer ";
 
@@ -56,7 +59,7 @@ public class FriendFindServiceImpl implements FriendFindService {
                         .builder()
                         .user_id(user.getId())
                         .nickname(user.getNickname())
-                        .level(user.getLevel())
+                        .level(getLevel(user.getId()))
                         .profile(user.getProfile())
                         .activated(user.isActivated())
                         .build());
@@ -95,7 +98,7 @@ public class FriendFindServiceImpl implements FriendFindService {
                     .builder()
                     .user_id(user.getId())
                     .nickname(user.getNickname())
-                    .level(user.getLevel())
+                    .level(getLevel(user.getId()))
                     .profile(user.getProfile())
                     .activated(user.isActivated())
                     .build());
@@ -131,7 +134,7 @@ public class FriendFindServiceImpl implements FriendFindService {
                     .builder()
                     .user_id(user.getId())
                     .nickname(user.getNickname())
-                    .level(user.getLevel())
+                    .level(getLevel(user.getId()))
                     .profile(user.getProfile())
                     .activated(user.isActivated())
                     .build());
@@ -173,5 +176,10 @@ public class FriendFindServiceImpl implements FriendFindService {
         }
 
         return 3;
+    }
+
+    @Override
+    public int getLevel(Long id) {
+        return (int) (redisTemplate.opsForZSet().score(KEY, String.valueOf(id)) / 1000);
     }
 }
