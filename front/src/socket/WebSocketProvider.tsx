@@ -23,14 +23,16 @@ export default function WebSocketProvider({ children }: WebSocketProviderProps) 
   const [stompClient, setStompClient] = useState<WebSocketContextType | undefined>(undefined);
 
   useEffect(() => {
-    const socket = new SockJS("https://j9e101.p.ssafy.io/socket/ws");
+    const socket = new SockJS("https://j9e101.p.ssafy.io/api/socket/ws");
+    const accessToken = sessionStorage.getItem("accessToken");
+    const header = `Authorization ${accessToken}`;
     const client = Stomp.over(socket);
     client.debug = () => {};
     // client.configure({
     //    reconnectDelay: 5000,
     // });
     function connect() {
-      client.connect({}, function connection() {
+      client.connect(header, function connection() {
         setStompClient(client);
       });
     }
